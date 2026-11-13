@@ -75,8 +75,8 @@
 
     <section class="section" id="roster">
       <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="users"></span>全職業路線總覽</h2>
-        <span class="section-sub">依定位篩選或搜尋職業，點選卡片切換完整天賦與加點</span>
+        <h2 class="section-title"><span class="icon" data-icon="users"></span>全職業路線總覽（點選下方卡片切換詳情）</h2>
+        <span class="section-sub">點擊任一職業卡片，下方「目前選中職業詳細攻略」區會即時切換成該職業完整內容</span>
       </div>
 
       <div class="roster-controls">
@@ -94,7 +94,14 @@
       <div id="roster-container"></div>
     </section>
 
-    <section class="section" id="detail">
+    <section class="section detail-section" id="detail">
+      <div class="detail-connector" aria-hidden="true">
+        <span class="detail-connector-pill"><span class="icon" data-icon="arrowDown"></span>以下為上方所選職業的專屬攻略內容（點選上方其他職業可即時切換）</span>
+      </div>
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="target"></span>目前選中職業詳細攻略：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
+        <span class="section-sub">包含該職業屬性加點順序、實戰技能格、推薦寵物與各部位裝備插卡、雙層 50 點天賦樹</span>
+      </div>
       <div class="detail-shell" id="detail-shell"></div>
     </section>
 
