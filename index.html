@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RO Survivors Top 3 職業攻略與互動配點模擬器</title>
+  <style>
+:root {
+  --bg: #0b101d;
+  --bg-elevated: #121a2e;
+  --bg-card: #162038;
+  --bg-card-soft: #1b2744;
+  --border: #2a395e;
+  --border-gold: rgba(212, 168, 83, 0.45);
+  --text: #eef2fa;
+  --text-muted: #9aa9c7;
+  --text-dim: #6f80a3;
+  --gold: #e5b963;
+  --gold-soft: rgba(229, 185, 99, 0.14);
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.14);
+  --accent-border: rgba(56, 189, 248, 0.42);
+  --wizard: #38bdf8;
+  --hunter: #34d399;
+  --priest: #fbbf24;
+  --danger: #f87171;
+  --ok: #4ade80;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 14px 36px rgba(3, 7, 18, 0.45);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(1200px 560px at 15% -8%, rgba(56, 189, 248, 0.11), transparent 60%),
+    radial-gradient(900px 520px at 88% 0%, rgba(229, 185, 99, 0.09), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-job="wizard"] {
+  --accent: var(--wizard);
+  --accent-soft: rgba(56, 189, 248, 0.14);
+  --accent-border: rgba(56, 189, 248, 0.45);
+}
+
+body[data-job="hunter"] {
+  --accent: var(--hunter);
+  --accent-soft: rgba(52, 211, 153, 0.14);
+  --accent-border: rgba(52, 211, 153, 0.45);
+}
+
+body[data-job="priest"] {
+  --accent: var(--priest);
+  --accent-soft: rgba(251, 191, 36, 0.14);
+  --accent-border: rgba(251, 191, 36, 0.45);
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.88em;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 5px;
+  padding: 0.1em 0.42em;
+  color: #f8fafc;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(14px);
+  background: rgba(11, 16, 29, 0.85);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.brand-crest {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(145deg, rgba(229, 185, 99, 0.22), rgba(56, 189, 248, 0.16));
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+}
+
+.brand-sub {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Main container */
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, rgba(22, 32, 56, 0.96), rgba(14, 21, 39, 0.96));
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 28px 30px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}
+
+.pill.gold {
+  border-color: var(--border-gold);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.pill.accent {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.hero-lead {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  max-width: 82ch;
+  font-size: 15px;
+}
+
+.notice-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  background: rgba(229, 185, 99, 0.08);
+  border: 1px solid rgba(229, 185, 99, 0.28);
+  font-size: 13.5px;
+  color: #e9dec2;
+}
+
+.notice-box .icon {
+  color: var(--gold);
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+/* Section */
+.section {
+  margin-top: 34px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title .icon {
+  color: var(--gold);
+  font-size: 20px;
+}
+
+.section-sub {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+/* Rule cards grid */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  gap: 14px;
+}
+
+.rule-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.rule-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  font-size: 14.5px;
+  margin-bottom: 8px;
+  color: var(--gold);
+}
+
+.rule-head .icon {
+  font-size: 17px;
+}
+
+.rule-card p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+/* Top 3 overview cards */
+.podium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.podium-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: transform 0.16s, border-color 0.16s, box-shadow 0.16s;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  position: relative;
+}
+
+.podium-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-gold);
+}
+
+.podium-card.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), var(--shadow);
+  background: linear-gradient(160deg, var(--bg-card-soft), var(--bg-card));
+}
+
+.podium-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.podium-card[data-job="wizard"] .rank-badge {
+  background: rgba(56, 189, 248, 0.16);
+  color: var(--wizard);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+.podium-card[data-job="hunter"] .rank-badge {
+  background: rgba(52, 211, 153, 0.16);
+  color: var(--hunter);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+.podium-card[data-job="priest"] .rank-badge {
+  background: rgba(251, 191, 36, 0.16);
+  color: var(--priest);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+
+.job-emblem {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+}
+
+.podium-card[data-job="wizard"] .job-emblem { color: var(--wizard); }
+.podium-card[data-job="hunter"] .job-emblem { color: var(--hunter); }
+.podium-card[data-job="priest"] .job-emblem { color: var(--priest); }
+
+.podium-card h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.podium-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.podium-desc {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.podium-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.melee-note {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 13.5px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.melee-note .icon {
+  color: var(--text-muted);
+  font-size: 18px;
+}
+
+/* Detail panel */
+.detail-shell {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.detail-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+}
+
+.detail-title-group h2 {
+  margin: 0 0 4px;
+  font-size: 23px;
+}
+
+.detail-base-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 9px;
+  border: 1px solid var(--border-gold);
+  background: var(--gold-soft);
+  color: var(--gold);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.btn:hover {
+  background: rgba(229, 185, 99, 0.24);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn.secondary {
+  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Variant toggle strip */
+.controls-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 18px 0 22px;
+  align-items: center;
+}
+
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toggle-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.segmented {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.segmented button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.segmented button.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+/* Layout inside detail */
+.two-col {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 960px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.panel h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel h3 .icon {
+  color: var(--accent);
+  font-size: 17px;
+}
+
+/* Stat Bars */
+.stat-bars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 560px) {
+  .stat-bars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.stat-chip {
+  background: rgba(11, 16, 29, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.stat-chip.primary {
+  border-color: var(--accent-border);
+  background: linear-gradient(150deg, var(--accent-soft), rgba(11, 16, 29, 0.85));
+}
+
+.stat-chip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.stat-chip-val {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  margin: 2px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-chip.primary .stat-chip-val {
+  color: var(--accent);
+}
+
+.stat-chip-note {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+.stat-reason {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+
+/* Timeline */
+.timeline {
+  display: grid;
+  gap: 9px;
+}
+
+.step-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 9px 12px;
+  border-radius: 9px;
+  background: rgba(11, 16, 29, 0.55);
+  border: 1px solid rgba(42, 57, 94, 0.7);
+  font-size: 13.5px;
+}
+
+.step-badge {
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Active skill cards */
+.skills-list {
+  display: grid;
+  gap: 9px;
+}
+
+.skill-slot-card {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(11, 16, 29, 0.58);
+  border: 1px solid var(--border);
+}
+
+.slot-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 13px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+.skill-slot-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.skill-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.skill-slot-desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* Talent Trees Section */
+.trees-wrap {
+  display: grid;
+  gap: 18px;
+}
+
+.tree-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.tree-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.tree-card-head h3 {
+  margin: 0;
+  font-size: 16.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tree-card-head h3 .icon {
+  color: var(--gold);
+}
+
+.tree-split {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 1020px) {
+  .tree-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.branch-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.branch-tab {
+  border: 1px solid var(--border);
+  background: rgba(11, 16, 29, 0.7);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.branch-tab.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.talent-grid {
+  display: grid;
+  gap: 7px;
+  background: rgba(9, 13, 24, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  overflow-x: auto;
+}
+
+.talent-row {
+  display: grid;
+  align-items: stretch;
+  gap: 7px;
+}
+
+.talent-row.cols-4 {
+  grid-template-columns: 44px repeat(4, minmax(105px, 1fr));
+}
+
+.talent-row.cols-5 {
+  grid-template-columns: 44px repeat(5, minmax(96px, 1fr));
+}
+
+.row-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(42, 57, 94, 0.6);
+  border-radius: 8px;
+  padding: 4px 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-gate small {
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.t-empty {
+  border: 1px dashed rgba(42, 57, 94, 0.35);
+  border-radius: 8px;
+  min-height: 54px;
+}
+
+.t-node {
+  border: 1px solid var(--border);
+  background: rgba(22, 32, 56, 0.6);
+  border-radius: 9px;
+  padding: 7px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-muted);
+  font: inherit;
+  min-height: 54px;
+  transition: border-color 0.14s, background 0.14s, transform 0.12s;
+}
+
+.t-node:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.t-node.allocated {
+  background: linear-gradient(155deg, rgba(229, 185, 99, 0.16), rgba(22, 32, 56, 0.92));
+  border-color: var(--border-gold);
+  color: var(--text);
+}
+
+.t-node.capstone {
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+  background: linear-gradient(155deg, var(--accent-soft), rgba(229, 185, 99, 0.14));
+}
+
+.t-node.selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.t-node-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.t-node-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.t-pts {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text-dim);
+}
+
+.t-node.allocated .t-pts {
+  background: rgba(229, 185, 99, 0.22);
+  color: var(--gold);
+}
+
+.t-node.capstone .t-pts {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.t-tag {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* Inspector & Summary side panel */
+.inspector-box {
+  background: rgba(11, 16, 29, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.inspector-box h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--gold);
+}
+
+.inspector-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.inspector-desc {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.alloc-list {
+  background: rgba(11, 16, 29, 0.52);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.alloc-list-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.alloc-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(42, 57, 94, 0.45);
+  font-size: 12.5px;
+}
+
+.alloc-item:last-child {
+  border-bottom: none;
+}
+
+.alloc-item strong {
+  color: var(--text);
+}
+
+.alloc-item span {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.alloc-item .pts-pill {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Interactive Simulator */
+.calc-shell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.calc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .calc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-sliders {
+  display: grid;
+  gap: 10px;
+}
+
+.slider-row {
+  display: grid;
+  grid-template-columns: 78px 1fr 48px 72px;
+  gap: 10px;
+  align-items: center;
+  background: rgba(11, 16, 29, 0.55);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.slider-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.slider-val {
+  text-align: right;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.slider-cost {
+  text-align: right;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-content: start;
+}
+
+.res-box {
+  background: rgba(11, 16, 29, 0.65);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 12px 14px;
+}
+
+.res-box.wide {
+  grid-column: 1 / -1;
+}
+
+.res-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.res-val {
+  font-size: 20px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.res-val.ok { color: var(--ok); }
+.res-val.warn { color: var(--danger); }
+.res-val.gold { color: var(--gold); }
+
+/* Comparison table */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+th, td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: rgba(11, 16, 29, 0.72);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #17233d;
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+  z-index: 60;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Footer */
+.footer {
+  margin-top: 44px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--text-dim);
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+  </style>
+</head>
+<body data-job="wizard">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-crest" data-icon="crest" aria-hidden="true"></div>
+        <div>
+          <span>RO Survivors 職業流派攻略</span>
+          <span class="brand-sub">BETA 0.6.6 實碼公式與 50 點雙天賦驗證版</span>
+        </div>
+      </div>
+      <nav class="nav-links" aria-label="頁面導覽">
+        <a href="#rules">核心機制</a>
+        <a href="#podium">前三強總覽</a>
+        <a href="#detail">完整配點詳解</a>
+        <a href="#calculator">素質計算機</a>
+        <a href="#compare">流派總表</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-badge-row">
+        <span class="pill gold"><span class="icon" data-icon="scroll"></span>版本基準 Beta 0.6.6（2026-11-13）</span>
+        <span class="pill accent"><span class="icon" data-icon="check"></span>10 套 50/50 天賦實碼檢核通過</span>
+        <span class="pill"><span class="icon" data-icon="gear"></span>單一 HTML 離線完整版・全 SVG 向量圖示</span>
+      </div>
+      <h1>RO Survivors 熱門前三強職業與終局配點指南</h1>
+      <p class="hero-lead">
+        彙整高密度生存彈幕機制下最穩定清場與推圖的三強路線：<strong>Top 1 魔法師 → 巫師</strong>、<strong>Top 2 弓箭手 → 獵人</strong>、<strong>Top 3 服事 → 祭司</strong>。完整收錄 Lv 1–99 屬性配點、升級加點順序、一轉／二轉各 50 點合法天賦樹路徑與 1 武器＋5 格主動技能配置。
+      </p>
+      <div class="notice-box" role="note">
+        <span class="icon" data-icon="warning" aria-hidden="true"></span>
+        <div>
+          <strong>資料口徑與版本說明：</strong>官方全服職業使用率與無盡塔即時排行榜僅存於登入後遊戲用戶端介面；本頁所有數值公式、屬性費用表、上下限規定與天賦節點資料，均核對自公開前端模組（<code>Beta 0.6.6 / v2026.11.13</code>）。因官方仍會持續微調技能平衡，實戰配置請依實際版號為準。
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="scroll"></span>核心機制與配點鐵則</h2>
+        <span class="section-sub">先懂公式與上限，每一點素質都不浪費</span>
+      </div>
+      <div class="rules-grid">
+        <article class="rule-card">
+          <div class="rule-head"><span class="icon" data-icon="target"></span>Lv 99 總素質點與階梯成本</div>
+          <p>
+            Lv 1 起手 <span class="num">48</span> 點，升至 Lv 99 累積 <strong class="num">1,273</strong> 點可用（每 5 級增加成長配給）。單項由 <span class="num">1→99</span> 需 <span class="num">628</span> 點；前 <span class="num">80</span> 僅需 <span class="num">431</span> 點，故雙核配點常以 <code>99 / 80 / 53</code> 達成零浪費收斂。
+          </p>
+        </article>
+        <article class="rule-card">
+          <div class="rule-head"><span class="icon" data-icon="spark"></span>攻擊公式與高階倍率曲線</div>
+          <p>
+            基礎攻防為 <code>MATK = 3×INT</code>、<code>近戰 = 3×STR</code>、<code>遠程 = STR + 3×DEX</code>。主屬性除線性面板外，還帶動力量倍率 <code>ji(t, rank)</code>：一轉採二次方成長、二轉提升至三次方且保底 <strong>1.5× 一轉倍率</strong>，因此主屬性必衝 <span class="num">99</span>。
+          </p>
+        </article>
+        <article class="rule-card">
+          <div class="rule-head"><span class="icon" data-icon="speed"></span>AGI 急速與 DEX 詠唱減免</div>
+          <p>
+            每點 <code>AGI</code> 提供冷卻急速：<code>AGI 99</code> 剩餘冷卻 <span class="num">60.0%</span>（-40% CD）、<code>AGI 80</code> 約 <span class="num">65.0%</span>、<code>AGI 70</code> 約 <span class="num">68.0%</span>。<code>DEX</code> 依單體基準 <span class="num">100</span> 與範圍基準 <span class="num">150</span> 縮減詠唱，並與天賦 <code>castHaste</code> 相乘。
+          </p>
+        </article>
+        <article class="rule-card">
+          <div class="rule-head"><span class="icon" data-icon="lock"></span>雙層 50 點天賦與上限鎖定</div>
+          <p>
+            <strong>Job Lv 上限 50</strong>：一轉 <span class="num">50</span> 點可跨三條分支自由混點，轉職後完整保留；二轉再獲 <span class="num">50</span> 點，但強制<strong>只能投資單一分支</strong>（每層門檻 <code>列號 × 5</code>）。實戰全域上限為減傷 <span class="num">60%</span>、閃避 <span class="num">50%</span>、穿透 <span class="num">75%</span>、範圍/移速軟上限 <span class="num">+200%</span>。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="podium" class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="crest"></span>前三強職業流派（點擊切換詳解）</h2>
+        <span class="section-sub">畫面共 1 格武器普攻＋4 格技能＝開局 5 格（二轉擴充為 1＋5＝6 格）</span>
+      </div>
+      <div class="podium-grid" id="podium-grid">
+        <button type="button" class="podium-card active" data-job="wizard" aria-pressed="true">
+          <div class="podium-top">
+            <span class="rank-badge">TOP 1・全圖控場與清屏王者</span>
+            <span class="job-emblem" data-icon="wizard" aria-hidden="true"></span>
+          </div>
+          <h3>魔法師 → 巫師</h3>
+          <div class="podium-sub">基礎 HP 80→205・移速 145・物防 0・主屬性 INT</div>
+          <p class="podium-desc">
+            憑藉 <code>MATK = 3×INT</code> 與冰凍／擊退全圖連鎖，將敵群鎖死在安全距離外；轉職後兼具「冰河控場」與「暴風雨高頻雷電」雙路線。
+          </p>
+          <div class="podium-meta">
+            <span class="pill accent">INT 99 / AGI 80 / DEX 53</span>
+            <span class="pill">主力分支：冰 / 暴風雨</span>
+          </div>
+        </button>
+
+        <button type="button" class="podium-card" data-job="hunter" aria-pressed="false">
+          <div class="podium-top">
+            <span class="rank-badge">TOP 2・全能風箏與穿透單王殺手</span>
+            <span class="job-emblem" data-icon="hunter" aria-hidden="true"></span>
+          </div>
+          <h3>弓箭手 → 獵人</h3>
+          <div class="podium-sub">基礎 HP 95→230・移速 165・物防 0・主屬性 DEX</div>
+          <p class="podium-desc">
+            全職業頂級基礎移速（<span class="num">165</span>）與弓箭手內建 <span class="num">+20%</span> 穿透起步，零詠唱延遲搭配獵鷹自動追擊，跑打與推王極度絲滑。
+          </p>
+          <div class="podium-meta">
+            <span class="pill accent">DEX 99 / AGI 80 / LUK 53</span>
+            <span class="pill">主力分支：獵鷹 / 大型獵物</span>
+          </div>
+        </button>
+
+        <button type="button" class="podium-card" data-job="priest" aria-pressed="false">
+          <div class="podium-top">
+            <span class="rank-badge">TOP 3・不死系絞肉與半自動坦推</span>
+            <span class="job-emblem" data-icon="priest" aria-hidden="true"></span>
+          </div>
+          <h3>服事 → 祭司</h3>
+          <div class="podium-sub">基礎 HP 105→270・移速 150・物防 1・主屬性 INT</div>
+          <p class="podium-desc">
+            神聖屬性對不死族直接 <strong>×2 傷害</strong>，滿溢治癒轉換額外脈衝傷害，搭配光耀之堂與十字驅魔，容錯率與掛圖續戰力極高。
+          </p>
+          <div class="podium-meta">
+            <span class="pill accent">INT 99 / AGI 80 / VIT 53</span>
+            <span class="pill">主力分支：驅魔 / 聖域</span>
+          </div>
+        </button>
+      </div>
+      <div class="melee-note">
+        <span class="icon" data-icon="sword" aria-hidden="true"></span>
+        <div>
+          <strong>為何近戰系（騎士／十字軍／刺客／武僧）未進前三？</strong>
+          貼身輸出必須承受高密度包夾傷害，對減傷（上限 60%）、吸血（上限每秒 3% HP）與閃避（上限 50%）的成型門檻依賴較高；反觀法系範圍控場、弓手高速穿透風箏與祭司神聖治療脈衝，在低裝階段即可穩定滾雪球通關。
+        </div>
+      </div>
+    </section>
+
+    <section id="detail" class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="gear"></span>職業流派與雙層天賦完整配置</h2>
+        <span class="section-sub">切換上方三強卡片或下方分支按鈕，即時檢視各節點與實碼效果</span>
+      </div>
+      <div id="detail-shell" class="detail-shell">
+        <!-- Rendered dynamically by inline script -->
+      </div>
+    </section>
+
+    <section id="calculator" class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="calc"></span>實碼素質與詠唱冷卻模擬機（Base Lv 1–99）</h2>
+        <span class="section-sub">套用一鍵範本或自訂滑桿，驗證點數預算與真實收益</span>
+      </div>
+      <div class="calc-shell">
+        <div class="calc-top">
+          <div class="toggle-group">
+            <span class="toggle-label">一鍵帶入範本：</span>
+            <div class="segmented" id="calc-presets">
+              <button type="button" data-preset="wizard_main" class="active">Top 1 巫師主力</button>
+              <button type="button" data-preset="wizard_cast">巫師高詠 (DEX 65)</button>
+              <button type="button" data-preset="hunter_main">Top 2 獵人主力</button>
+              <button type="button" data-preset="hunter_luk">獵人高爆 (LUK 65)</button>
+              <button type="button" data-preset="priest_tank">Top 3 祭司坦攻</button>
+              <button type="button" data-preset="priest_bal">祭司雙修 (VIT/DEX)</button>
+              <button type="button" data-preset="lv50_start">Lv 50 一轉參考</button>
+            </div>
+          </div>
+          <div class="toggle-group">
+            <span class="toggle-label">計分參考職業：</span>
+            <div class="segmented" id="calc-job-mode">
+              <button type="button" data-calc-job="wizard" class="active">魔法/巫師 (INT)</button>
+              <button type="button" data-calc-job="hunter">弓手/獵人 (DEX)</button>
+              <button type="button" data-calc-job="priest">服事/祭司 (INT)</button>
+            </div>
+          </div>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-sliders" id="calc-sliders"></div>
+          <div class="calc-results" id="calc-results"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="check"></span>Top 3 流派終局配置速查總表</h2>
+        <span class="section-sub">方便開局對照與轉職快速檢查</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>排名與路線</th>
+              <th>Lv 99 主推配點</th>
+              <th>升級加點順序</th>
+              <th>一轉核心 (50 點)</th>
+              <th>二轉推薦分岐 (50 點)</th>
+              <th>左格武器攻擊＋右側 5 格主動技能推薦</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Top 1<br />魔法師 → 巫師</strong></td>
+              <td class="num">INT 99 / AGI 80 / DEX 53<br /><span style="color:var(--text-dim)">備選：INT 99 / AGI 70 / DEX 65</span></td>
+              <td>Lv1–30：INT→50<br />Lv31–55：AGI→45、DEX→20<br />Lv56–75：INT→99<br />Lv76–99：補滿 AGI 80 → DEX 53</td>
+              <td><strong>冰流：冰 40 + 奧術 10</strong><br />禪心、冰霜附加、能量外套、冰霜導管、殘留冰霜、深度冰凍、迅速詠唱<br /><span style="color:var(--text-dim)">暴風雨建議改配：奧術 32 + 冰 13 + 火 5</span></td>
+              <td><strong>主推【冰】</strong>：霜凍之術＋暴風雪（毀滅新星＋絕對零度）<br /><span style="color:var(--text-dim)">備選【暴風雨】：雷鳴術＋怒雷強擊</span></td>
+              <td><strong>左格：攻擊：法杖 → 屬性附加</strong><br />1. 冰箭術（冰霜導管開局送）<br />2. 火箭術（第 1 次升級招牌）<br />3. 雷擊術<br />4. 暴風雪（或怒雷強擊）<br />5. 霜凍之術（或雷鳴術）</td>
+            </tr>
+            <tr>
+              <td><strong>Top 2<br />弓箭手 → 獵人</strong></td>
+              <td class="num">DEX 99 / AGI 80 / LUK 53<br /><span style="color:var(--text-dim)">備選：DEX 99 / AGI 70 / LUK 65</span></td>
+              <td>Lv1–30：DEX→50<br />Lv31–55：AGI→45、LUK→20<br />Lv56–75：DEX→99<br />Lv76–99：補滿 AGI 80 → LUK 53</td>
+              <td><strong>神射手 40 + 奧術 10</strong><br />Owl's Eye、銳利箭矢、弓手步伐、貫穿之箭、弱點、齊射風暴、敏捷心智、奧術射擊精通</td>
+              <td><strong>主推【獵鷹】</strong>：閃電衝擊＋獵鷹尋敵（自由之鷹＋狩獵號令）<br /><span style="color:var(--text-dim)">備選【大型獵物】：動物猛擊＋幻影箭</span></td>
+              <td><strong>左格：攻擊：弓</strong><br />1. 二連矢（齊射風暴開局送／招牌）<br />2. 閃電衝擊（或動物猛擊）<br />3. 獵鷹尋敵（或幻影箭）<br />4. 奧術射擊（聚怪吃 +30%／或箭矢暴雨）<br />5. 心神凝聚</td>
+            </tr>
+            <tr>
+              <td><strong>Top 3<br />服事 → 祭司</strong></td>
+              <td class="num">INT 99 / AGI 80 / VIT 53<br /><span style="color:var(--text-dim)">雙修：INT 99 / AGI 80 / VIT 45 / DEX 21</span></td>
+              <td>Lv1–30：INT→45、VIT→15<br />Lv31–55：AGI→45、VIT→25<br />Lv56–75：INT→99<br />Lv76–99：AGI→80 → VIT 53</td>
+              <td><strong>神聖 40 + 驅魔 10</strong><br />神聖治療、Angelus、共享賜福、生命之水、魔力回充、生命之泉、天使之擊、致盲之光</td>
+              <td><strong>主推【驅魔】</strong>：聖母之祈福＋十字驅魔攻擊（反射祝福＋Judex）<br /><span style="color:var(--text-dim)">備選【聖域】：光耀之堂＋暗之障壁</span></td>
+              <td><strong>左格：攻擊：鈍器（預設武器）</strong><br />1. 治癒術（生命之泉開局送／招牌）<br />2. 天使之賜福<br />3. 聖母之祈福（或光耀之堂）<br />4. 十字驅魔攻擊（或暗之障壁）<br />5. 神聖之光</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>RO Survivors 桌面靜態攻略站・公式與天賦節點資料核對自 <code>Beta 0.6.6</code>（2026-11-13）</div>
+      <div><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">回到頂端</a></div>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+// Auto-bundled verified game data (Beta 0.6.6 / v2026.11.13) + interactive guide logic
+const GAME_DATA = {"trees":{"mage":{"job":{"id":"mage","name":"魔法師","desc":"脆弱，但遠距離致命。","hp":80,"speed":145,"armor":0,"start":"firebolt","tier":"first","scaling":"magic","base":null},"branches":[{"index":0,"name":"火","desc":"火箭術、火焰之壁與環繞火焰。","nodes":[{"id":"mage.0.firebolt_dmg","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"生命之焰","d1":"火箭術：+4% 傷害。","dm":"火箭術：+20% 傷害。"},{"id":"mage.0.inner_heat","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"內在熱能","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"mage.0.firebolt_bolts","r":0,"c":3,"m":2,"req":null,"req2":null,"path":null,"name":"火焰彈幕","d1":"+1 bolt de 火箭術 sobre cada objetivo.","dm":"+2 bolts de 火箭術 sobre cada objetivo."},{"id":"mage.0.fire_infusion","r":1,"c":0,"m":1,"req":"mage.0.firebolt_dmg","req2":null,"path":null,"name":"火焰附加","d1":"無論使用何種武器，普通攻擊都會變成隨 MATK 成長的火焰魔法彈，傷害比法杖攻擊高 75%，同時多擊中 1 個敵人，並獲得天賦給予火系法術的效果。有多種附加時，射擊會組合起來，取得全部的效果與加成並造成更多傷害：兩種 +150%，三種 +225%。","dm":"無論使用何種武器，普通攻擊都會變成隨 MATK 成長的火焰魔法彈，傷害比法杖攻擊高 75%，同時多擊中 1 個敵人，並獲得天賦給予火系法術的效果。有多種附加時，射擊會組合起來，取得全部的效果與加成並造成更多傷害：兩種 +150%，三種 +225%。"},{"id":"mage.0.firewall_dmg","r":1,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"灼熱之牆","d1":"火焰之壁：+4% 傷害。","dm":"火焰之壁：+20% 傷害。"},{"id":"mage.0.pyro","r":1,"c":2,"m":2,"req":"mage.0.inner_heat","req2":null,"path":null,"name":"煙火術","d1":"+10% 爆擊傷害.","dm":"+20% 爆擊傷害."},{"id":"mage.0.combustion","r":1,"c":3,"m":3,"req":null,"req2":null,"path":null,"name":"燃燒","d1":"你的火系法術會點燃目標：在 10 秒內受到該擊 10% 的火焰傷害（若已在燃燒則疊加）。","dm":"你的火系法術會點燃目標：在 10 秒內受到該擊 30% 的火焰傷害（若已在燃燒則疊加）。"},{"id":"mage.0.firewall_cd","r":2,"c":1,"m":3,"req":"mage.0.firewall_dmg","req2":null,"path":null,"name":"快速火牆","d1":"火焰之壁：+6 冷卻縮減。","dm":"火焰之壁：+18 冷卻縮減。"},{"id":"mage.0.sight_count","r":2,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"更多火焰","d1":"火狩：+1 團火焰。","dm":"火狩：+3 團火焰。"},{"id":"mage.0.firebolt_count","r":2,"c":3,"m":1,"req":"mage.0.combustion","req2":null,"path":null,"name":"多重火焰","d1":"你的指定目標火系法術（火箭術、火焰附加攻擊…）同時多擊中 1 個敵人（火箭術為 2）。","dm":"你的指定目標火系法術（火箭術、火焰附加攻擊…）同時多擊中 1 個敵人（火箭術為 2）。"},{"id":"mage.0.fire_conduit","r":3,"c":0,"m":1,"req":"mage.0.fire_infusion","req2":null,"path":null,"name":"火焰導管","d1":"Empiezas la partida con 火箭術. 火箭術 se lleva también las mejoras de 冰箭術 y 雷擊術: las que ganen en la partida (daño, objetivos, bolts, enfriamiento...), sus talentos y su Deity.","dm":"Empiezas la partida con 火箭術. 火箭術 se lleva también las mejoras de 冰箭術 y 雷擊術: las que ganen en la partida (daño, objetivos, bolts, enfriamiento...), sus talentos y su Deity."},{"id":"mage.0.warmth","r":3,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"舒適的溫暖","d1":"+0.2 HP/秒.","dm":"+1 HP/秒."},{"id":"mage.0.eternal_fire","r":4,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"永恆之火","d1":"你的火系法術 +5 冷卻縮減（含火焰附加攻擊）。","dm":"你的火系法術 +25 冷卻縮減（含火焰附加攻擊）。"},{"id":"mage.0.orbit_flames","r":4,"c":2,"m":2,"req":"mage.0.sight_count","req2":null,"path":null,"name":"環繞火焰","d1":"火狩傷害 +7%，旋轉速度加快 10%。","dm":"火狩傷害 +14%，旋轉速度加快 20%。"},{"id":"mage.0.firestorm","r":4,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"火焰風暴","d1":"雷爆術變成火焰風暴：以火焰龍捲取代閃電。它屬於火系法術：吃火系天賦（燃燒、多重火焰、永恆之火…）而非雷系天賦。","dm":"雷爆術變成火焰風暴：以火焰龍捲取代閃電。它屬於火系法術：吃火系天賦（燃燒、多重火焰、永恆之火…）而非雷系天賦。"},{"id":"mage.0.pyromaniac","r":5,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"縱火狂","d1":"燃燒效果也能爆擊：每一跳各自判定爆擊。","dm":"燃燒效果也能爆擊：每一跳各自判定爆擊。"},{"id":"mage.0.heat_wave","r":5,"c":3,"m":3,"req":null,"req2":null,"path":null,"name":"熱浪","d1":"+3% 範圍.","dm":"+9% 範圍."},{"id":"mage.0.meteor","r":6,"c":1,"m":1,"req":"mage.0.eternal_fire","req2":null,"path":null,"name":"雙生之火","d1":"你施放的每個火系法術會立即對另一個目標（若為範圍法術則對另一群敵人）重複一次，造成 20% 傷害：相同的發數與效果。若沒有其他敵人則消失。","dm":"你施放的每個火系法術會立即對另一個目標（若為範圍法術則對另一群敵人）重複一次，造成 20% 傷害：相同的發數與效果。若沒有其他敵人則消失。"}]},{"index":1,"name":"冰","desc":"冰凍並控制怪物群。","nodes":[{"id":"mage.1.coldbolt_dmg","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"刺骨寒冷","d1":"冰箭術：+8% 傷害。","dm":"冰箭術：+40% 傷害。"},{"id":"mage.1.frost_dmg","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"禪心","d1":"+4 冷卻縮減.","dm":"+20 冷卻縮減."},{"id":"mage.1.coldbolt_bolts","r":0,"c":3,"m":2,"req":null,"req2":null,"path":null,"name":"冰霜彈幕","d1":"+1 bolt de 冰箭術 sobre cada objetivo.","dm":"+2 bolts de 冰箭術 sobre cada objetivo."},{"id":"mage.1.water_infusion","r":1,"c":0,"m":1,"req":"mage.1.coldbolt_dmg","req2":null,"path":null,"name":"冰霜附加","d1":"無論使用何種武器，普通攻擊都會變成隨 MATK 成長的冰霜魔法彈，傷害比法杖攻擊高 75%，有 20% 機率貫穿另一個敵人，並獲得天賦給予冰系法術的效果。有多種附加時，射擊會組合起來，取得全部的效果與加成並造成更多傷害：兩種 +150%，三種 +225%。","dm":"無論使用何種武器，普通攻擊都會變成隨 MATK 成長的冰霜魔法彈，傷害比法杖攻擊高 75%，有 20% 機率貫穿另一個敵人，並獲得天賦給予冰系法術的效果。有多種附加時，射擊會組合起來，取得全部的效果與加成並造成更多傷害：兩種 +150%，三種 +225%。"},{"id":"mage.1.energy_coat","r":1,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"能量外套","d1":"-1.5% 受到傷害.","dm":"-7.5% 受到傷害."},{"id":"mage.1.frost_armor","r":1,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"冰霜護甲","d1":"+0.5 護甲.","dm":"+1.5 護甲."},{"id":"mage.1.freeze","r":1,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"冰凍","d1":"你的冰系法術冰凍機率 +6%。","dm":"你的冰系法術冰凍機率 +30%。"},{"id":"mage.1.glaciation","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"冰河化","d1":"冰凍術的冰凍延長 0.3 秒。","dm":"冰凍術的冰凍延長 1.5 秒。"},{"id":"mage.1.shatter","r":2,"c":3,"m":2,"req":"mage.1.freeze","req2":null,"path":null,"name":"粉碎","d1":"被你的冰系法術命中的敵人在 3 秒內受到傷害 +5%。","dm":"被你的冰系法術命中的敵人在 3 秒內受到傷害 +10%。"},{"id":"mage.1.water_conduit","r":3,"c":0,"m":1,"req":"mage.1.water_infusion","req2":null,"path":null,"name":"冰霜導管","d1":"Empiezas la partida con 冰箭術. 冰箭術 se lleva también las mejoras de 火箭術 y 雷擊術: las que ganen en la partida (daño, objetivos, bolts, enfriamiento...), sus talentos y su Deity.","dm":"Empiezas la partida con 冰箭術. 冰箭術 se lleva también las mejoras de 火箭術 y 雷擊術: las que ganen en la partida (daño, objetivos, bolts, enfriamiento...), sus talentos y su Deity."},{"id":"mage.1.frost_chain","r":3,"c":2,"m":2,"req":"mage.1.glaciation","req2":null,"path":null,"name":"連鎖冰霜","d1":"冰凍術：+1 目標。","dm":"冰凍術：+2 目標。"},{"id":"mage.1.winter_skin","r":3,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"冬之膚","d1":"+8 最大 HP.","dm":"+40 最大 HP."},{"id":"mage.1.ice_rain","r":4,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"冰雨","d1":"你的冰系法術 +1% 雙重詠唱（含冰霜附加攻擊）。","dm":"你的冰系法術 +5% 雙重詠唱（含冰霜附加攻擊）。"},{"id":"mage.1.slow","r":5,"c":0,"m":1,"req":"mage.1.water_conduit","req2":null,"path":null,"name":"殘留冰霜","d1":"火箭術與雷擊術變成冰箭術：它們仍是獨立技能，但三者共享本局強化（每個都會施放全部的發數）、天賦與冰箭術的神祇。","dm":"火箭術與雷擊術變成冰箭術：它們仍是獨立技能，但三者共享本局強化（每個都會施放全部的發數）、天賦與冰箭術的神祇。"},{"id":"mage.1.frost_area","r":5,"c":2,"m":1,"req":"mage.1.frost_chain","req2":null,"path":null,"name":"暴風雪","d1":"冰凍術命中時釋放冰霜新星，冰凍 2 公尺內所有敵人（隨範圍成長）。","dm":"冰凍術命中時釋放冰霜新星，冰凍 2 公尺內所有敵人（隨範圍成長）。"},{"id":"mage.1.eternal_winter","r":6,"c":1,"m":1,"req":"mage.1.ice_rain","req2":null,"path":null,"name":"深度冰凍","d1":"你的冰系法術對已冰凍的敵人造成 400% 傷害。","dm":"你的冰系法術對已冰凍的敵人造成 400% 傷害。"}]},{"index":2,"name":"奧術","desc":"靈魂、雷擊與風暴。冷卻與詠唱。","nodes":[{"id":"mage.2.lightning_dmg","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"高壓電","d1":"雷擊術：+4% 傷害。","dm":"雷擊術：+20% 傷害。"},{"id":"mage.2.lightning_bolts","r":0,"c":2,"m":2,"req":null,"req2":null,"path":null,"name":"電壓彈幕","d1":"+1 bolt de 雷擊術 sobre cada objetivo.","dm":"+2 bolts de 雷擊術 sobre cada objetivo."},{"id":"mage.2.soul_dmg","r":0,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"強大靈魂","d1":"聖靈召喚：+4% 傷害。","dm":"聖靈召喚：+20% 傷害。"},{"id":"mage.2.wind_infusion","r":1,"c":0,"m":1,"req":"mage.2.lightning_dmg","req2":null,"path":null,"name":"雷電附加","d1":"無論使用何種武器，普通攻擊都會變成隨 MATK 成長的雷電魔法彈，傷害比法杖攻擊高 75%，多發射 2 個投射物，並獲得天賦給予雷系法術的效果。有多種附加時，射擊會組合起來，取得全部的效果與加成並造成更多傷害：兩種 +150%，三種 +225%。","dm":"無論使用何種武器，普通攻擊都會變成隨 MATK 成長的雷電魔法彈，傷害比法杖攻擊高 75%，多發射 2 個投射物，並獲得天賦給予雷系法術的效果。有多種附加時，射擊會組合起來，取得全部的效果與加成並造成更多傷害：兩種 +150%，三種 +225%。"},{"id":"mage.2.storm_dmg","r":1,"c":1,"m":3,"req":null,"req2":null,"path":null,"name":"狂暴風暴","d1":"雷爆術：+5% 傷害。","dm":"雷爆術：+15% 傷害。"},{"id":"mage.2.quick_cast","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"迅速詠唱","d1":"+5 詠唱速度.","dm":"+25 詠唱速度."},{"id":"mage.2.soul_count","r":1,"c":3,"m":2,"req":"mage.2.soul_dmg","req2":null,"path":null,"name":"靈魂軍團","d1":"每個目標 +1 個聖靈召喚靈魂。","dm":"每個目標 +2 個聖靈召喚靈魂。"},{"id":"mage.2.storm_area","r":2,"c":1,"m":2,"req":"mage.2.storm_dmg","req2":null,"path":null,"name":"風暴前線","d1":"雷爆術：+10% 範圍。","dm":"雷爆術：+20% 範圍。"},{"id":"mage.2.stone_curse","r":2,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"石化術","d1":"命中時 +1% 石化, 石化的敵人受到任何來源的傷害 +100%.","dm":"命中時 +3% 石化, 石化的敵人受到任何來源的傷害 +100%."},{"id":"mage.2.wind_conduit","r":3,"c":0,"m":1,"req":"mage.2.wind_infusion","req2":null,"path":null,"name":"電壓導管","d1":"Empiezas la partida con 雷擊術. 雷擊術 se lleva también las mejoras de 火箭術 y 冰箭術: las que ganen en la partida (daño, objetivos, bolts, enfriamiento...), sus talentos y su Deity.","dm":"Empiezas la partida con 雷擊術. 雷擊術 se lleva también las mejoras de 火箭術 y 冰箭術: las que ganen en la partida (daño, objetivos, bolts, enfriamiento...), sus talentos y su Deity."},{"id":"mage.2.storm_cd","r":3,"c":1,"m":3,"req":"mage.2.storm_area","req2":null,"path":null,"name":"快速風暴","d1":"雷爆術 +5 詠唱速度。","dm":"雷爆術 +15 詠唱速度。"},{"id":"mage.2.napalm_area","r":3,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"強化心靈爆破","d1":"心靈爆破傷害 +4%，範圍 +4%。","dm":"心靈爆破傷害 +20%，範圍 +20%。"},{"id":"mage.2.soul_split","r":3,"c":3,"m":5,"req":"mage.2.soul_count","req2":null,"path":null,"name":"分裂靈魂","d1":"開局即擁有聖靈召喚。每個命中的聖靈召喚靈魂會向附近另一隻怪物釋放另一個靈魂，造成 20% 傷害。","dm":"開局即擁有聖靈召喚。每個命中的聖靈召喚靈魂會向附近另一隻怪物釋放另一個靈魂，造成 100% 傷害。"},{"id":"mage.2.clearcast","r":4,"c":2,"m":2,"req":"mage.2.napalm_area","req2":null,"path":null,"name":"清晰施法","d1":"施放聖靈召喚時，有 10% 機率重置心靈爆破的冷卻。","dm":"施放聖靈召喚時，有 20% 機率重置心靈爆破的冷卻。"},{"id":"mage.2.double_cast","r":5,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"雙重施法","d1":"+2% 雙重詠唱.","dm":"+6% 雙重詠唱."},{"id":"mage.2.arcane_power","r":5,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"奧術之力","d1":"+2% 傷害, +1 冷卻縮減.","dm":"+6% 傷害, +3 冷卻縮減."},{"id":"mage.2.lord_of_storms","r":6,"c":1,"m":1,"req":"mage.2.storm_cd","req2":null,"path":null,"name":"電力混沌","d1":"雷爆術範圍 +40%，會把怪物拉向中心並緩速 2 秒。","dm":"雷爆術範圍 +40%，會把怪物拉向中心並緩速 2 秒。"},{"id":"mage.2.soul_ward","r":6,"c":3,"m":1,"req":"mage.2.soul_split","req2":null,"path":null,"name":"靈魂之盾","d1":"每用聖靈召喚擊殺一隻怪物，6 秒內傷害減免 2%，最多疊加至 20%。","dm":"每用聖靈召喚擊殺一隻怪物，6 秒內傷害減免 2%，最多疊加至 20%。"}]}]},"wizard":{"job":{"id":"wizard","name":"巫師","desc":"大規模毀滅魔法：隕石、暴風雪與風暴。","hp":205,"speed":145,"armor":0,"start":"firebolt","tier":"first","scaling":"magic","base":"mage"},"branches":[{"index":0,"name":"火","desc":"隕石術與火柱攻擊：天空與大地都在燃燒。","nodes":[{"id":"wizard.0.s1","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"隕石術","d1":"學習技能隕石術: 隕石隨機落在一群敵人身上：每顆都會範圍爆炸並可能暈眩。","dm":"學習技能隕石術: 隕石隨機落在一群敵人身上：每顆都會範圍爆炸並可能暈眩。"},{"id":"wizard.0.p0","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"地獄之火","d1":"+2% 傷害.","dm":"+10% 傷害."},{"id":"wizard.0.s1a1","r":1,"c":0,"m":2,"req":"wizard.0.s1","req2":null,"path":"meteor_storm.a","name":"流星雨","d1":"隕石術：+1 顆隕石。","dm":"隕石術：+2 顆隕石。"},{"id":"wizard.0.s1b1","r":1,"c":1,"m":3,"req":"wizard.0.s1","req2":null,"path":"meteor_storm.b","name":"燃燒隕石","d1":"隕石術：+8% 傷害。","dm":"隕石術：+24% 傷害。"},{"id":"wizard.0.p1","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"熾熱皮膚","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"wizard.0.p2","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"火山之怒","d1":"+8% 爆擊傷害.","dm":"+40% 爆擊傷害."},{"id":"wizard.0.s1a2","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"meteor_storm.a","name":"隕石坑","d1":"隕石術：+10% 範圍。","dm":"隕石術：+30% 範圍。"},{"id":"wizard.0.s1b2","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"meteor_storm.b","name":"衝擊","d1":"隕石術有 5% 機率暈眩。","dm":"隕石術有 15% 機率暈眩。"},{"id":"wizard.0.s2","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"火柱攻擊","d1":"學習技能火柱攻擊: 火柱從一群敵人腳下噴發，連續燃燒四次。","dm":"學習技能火柱攻擊: 火柱從一群敵人腳下噴發，連續燃燒四次。"},{"id":"wizard.0.p3","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"過熱","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"wizard.0.s2a1","r":4,"c":3,"m":2,"req":"wizard.0.s2","req2":null,"path":"fire_pillar.a","name":"更多火柱","d1":"火柱攻擊：+1 團火焰。","dm":"火柱攻擊：+2 團火焰。"},{"id":"wizard.0.s2b1","r":4,"c":4,"m":3,"req":"wizard.0.s2","req2":null,"path":"fire_pillar.b","name":"灼熱火柱","d1":"火柱攻擊：+8% 傷害。","dm":"火柱攻擊：+24% 傷害。"},{"id":"wizard.0.p4","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"火焰術士","d1":"+2% 範圍.","dm":"+10% 範圍."},{"id":"wizard.0.s1a3","r":6,"c":0,"m":3,"req":null,"req2":null,"path":"meteor_storm.a","name":"燃燒天空","d1":"隕石術：+6 冷卻縮減。","dm":"隕石術：+18 冷卻縮減。"},{"id":"wizard.0.s1b3","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"meteor_storm.b","name":"餘燼","d1":"隕石術使敵人燃燒：3 秒內每秒 +3 傷害。","dm":"隕石術使敵人燃燒：3 秒內每秒 +6 傷害。"},{"id":"wizard.0.s2a2","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"fire_pillar.a","name":"快速之火","d1":"火柱攻擊：+6 冷卻縮減。","dm":"火柱攻擊：+18 冷卻縮減。"},{"id":"wizard.0.s2b2","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"fire_pillar.b","name":"貪婪之焰","d1":"火柱攻擊的爆擊傷害 +10%。","dm":"火柱攻擊的爆擊傷害 +30%。"},{"id":"wizard.0.p5","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"內在火焰","d1":"+6 最大 HP.","dm":"+30 最大 HP."},{"id":"wizard.0.s2a3","r":7,"c":3,"m":3,"req":null,"req2":null,"path":"fire_pillar.a","name":"火焰印記","d1":"被火柱攻擊命中的敵人在 4 秒內受到傷害 +5%。","dm":"被火柱攻擊命中的敵人在 4 秒內受到傷害 +15%。"},{"id":"wizard.0.s2b3","r":7,"c":4,"m":2,"req":null,"req2":null,"path":"fire_pillar.b","name":"窒息高溫","d1":"被火柱攻擊命中的敵人在 5 秒內造成的傷害減少 8%。","dm":"被火柱攻擊命中的敵人在 5 秒內造成的傷害減少 16%。"},{"id":"wizard.0.p6","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"餘燼","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"wizard.0.s1af","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"meteor_storm.a","name":"火雨","d1":"隕石術多波及 3 個目標。","dm":"隕石術多波及 3 個目標。"},{"id":"wizard.0.s1bf","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"meteor_storm.b","name":"天降岩石","d1":"隕石術傷害提高 150%，範圍擴大 50%。","dm":"隕石術傷害提高 150%，範圍擴大 50%。"},{"id":"wizard.0.s2af","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"fire_pillar.a","name":"燃燒大地","d1":"火柱攻擊命中處留下持續 4 秒的區域，每秒對其中所有敵人造成其打擊 15% 的傷害.","dm":"火柱攻擊命中處留下持續 4 秒的區域，每秒對其中所有敵人造成其打擊 15% 的傷害."},{"id":"wizard.0.s2bf","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"fire_pillar.b","name":"反射火柱","d1":"你的普通攻擊有 12% 機率免費施放火柱攻擊，造成其 60% 的傷害.","dm":"你的普通攻擊有 12% 機率免費施放火柱攻擊，造成其 60% 的傷害."}]},{"index":1,"name":"冰","desc":"霜凍之術與暴風雪：冰凍整群怪物。","nodes":[{"id":"wizard.1.s1","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"霜凍之術","d1":"學習技能霜凍之術: 在身邊爆發冰霜：傷害附近敵人並冰凍 2 秒。","dm":"學習技能霜凍之術: 在身邊爆發冰霜：傷害附近敵人並冰凍 2 秒。"},{"id":"wizard.1.p0","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"冰之心","d1":"+6 最大 HP.","dm":"+30 最大 HP."},{"id":"wizard.1.s1a1","r":1,"c":0,"m":3,"req":"wizard.1.s1","req2":null,"path":"frost_nova.a","name":"冰霜波","d1":"霜凍之術：+10% 範圍。","dm":"霜凍之術：+30% 範圍。"},{"id":"wizard.1.s1b1","r":1,"c":1,"m":3,"req":"wizard.1.s1","req2":null,"path":"frost_nova.b","name":"冰霜新星","d1":"霜凍之術：+8% 傷害。","dm":"霜凍之術：+24% 傷害。"},{"id":"wizard.1.p1","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"守護冰霜","d1":"+0.4 護甲.","dm":"+2 護甲."},{"id":"wizard.1.p2","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"冰河心智","d1":"+3 詠唱速度.","dm":"+15 詠唱速度."},{"id":"wizard.1.s1a2","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"frost_nova.a","name":"持續寒冷","d1":"霜凍之術：+8 冷卻縮減。","dm":"霜凍之術：+24 冷卻縮減。"},{"id":"wizard.1.s1b2","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"frost_nova.b","name":"永凍之冰","d1":"霜凍之術的冰凍延長 0.3 秒。","dm":"霜凍之術的冰凍延長 0.9 秒。"},{"id":"wizard.1.s2","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"暴風雪","d1":"學習技能暴風雪: 在敵群上降下巨大暴風雪：多次冰擊，擊退並可能冰凍。","dm":"學習技能暴風雪: 在敵群上降下巨大暴風雪：多次冰擊，擊退並可能冰凍。"},{"id":"wizard.1.p3","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"水晶","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"wizard.1.s2a1","r":4,"c":3,"m":2,"req":"wizard.1.s2","req2":null,"path":"storm_gust.a","name":"長暴風雪","d1":"暴風雪：+2 次衝擊。","dm":"暴風雪：+4 次衝擊。"},{"id":"wizard.1.s2b1","r":4,"c":4,"m":3,"req":"wizard.1.s2","req2":null,"path":"storm_gust.b","name":"猛烈暴風雪","d1":"暴風雪：+8% 傷害。","dm":"暴風雪：+24% 傷害。"},{"id":"wizard.1.p4","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"冰霜護盾","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"wizard.1.s1a3","r":6,"c":0,"m":2,"req":null,"req2":null,"path":"frost_nova.a","name":"冰霜","d1":"霜凍之術使命中的敵人緩速 0.5 秒。","dm":"霜凍之術使命中的敵人緩速 1 秒。"},{"id":"wizard.1.s1b3","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"frost_nova.b","name":"易碎之冰","d1":"冰凍的敵人受到傷害提高 6%.","dm":"冰凍的敵人受到傷害提高 12%."},{"id":"wizard.1.s2a2","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"storm_gust.a","name":"寒風","d1":"暴風雪的緩速延長 0.6 秒。","dm":"暴風雪的緩速延長 1.8 秒。"},{"id":"wizard.1.s2b2","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"storm_gust.b","name":"快速暴風雪","d1":"暴風雪：+6 冷卻縮減。","dm":"暴風雪：+18 冷卻縮減。"},{"id":"wizard.1.p5","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"寒冬","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"wizard.1.s2a3","r":7,"c":3,"m":3,"req":null,"req2":null,"path":"storm_gust.a","name":"寬廣暴風雪","d1":"暴風雪：+10% 範圍。","dm":"暴風雪：+30% 範圍。"},{"id":"wizard.1.s2b3","r":7,"c":4,"m":2,"req":null,"req2":null,"path":"storm_gust.b","name":"碎片","d1":"暴風雪的爆擊傷害 +10%。","dm":"暴風雪的爆擊傷害 +20%。"},{"id":"wizard.1.p6","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"內在寒冷","d1":"+1% 迴避.","dm":"+5% 迴避."},{"id":"wizard.1.s1af","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"frost_nova.a","name":"反射新星","d1":"你的普通攻擊有 12% 機率免費施放霜凍之術，造成其 60% 的傷害.","dm":"你的普通攻擊有 12% 機率免費施放霜凍之術，造成其 60% 的傷害."},{"id":"wizard.1.s1bf","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"frost_nova.b","name":"毀滅新星","d1":"霜凍之術傷害提高 150%，範圍擴大 50%。","dm":"霜凍之術傷害提高 150%，範圍擴大 50%。"},{"id":"wizard.1.s2af","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"storm_gust.a","name":"絕對零度","d1":"暴風雪冰凍所有命中的敵人 1 秒。","dm":"暴風雪冰凍所有命中的敵人 1 秒。"},{"id":"wizard.1.s2bf","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"storm_gust.b","name":"雙重暴風雪","d1":"暴風雪永遠連續發動兩次。","dm":"暴風雪永遠連續發動兩次。"}]},{"index":2,"name":"暴風雨","desc":"雷鳴術與怒雷強擊：永不停歇的雷電。","nodes":[{"id":"wizard.2.s1","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"雷鳴術","d1":"學習技能雷鳴術: 對最近的敵人發射雷球：沉重傷害並將其擊飛。貫穿一個敵人。","dm":"學習技能雷鳴術: 對最近的敵人發射雷球：沉重傷害並將其擊飛。貫穿一個敵人。"},{"id":"wizard.2.p0","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"靜電","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"wizard.2.s1a1","r":1,"c":0,"m":2,"req":"wizard.2.s1","req2":null,"path":"jupitel_thunder.a","name":"雙生氣彈","d1":"雷鳴術：+1 顆光球。","dm":"雷鳴術：+2 顆光球。"},{"id":"wizard.2.s1b1","r":1,"c":1,"m":3,"req":"wizard.2.s1","req2":null,"path":"jupitel_thunder.b","name":"強力雷鳴","d1":"雷鳴術：+8% 傷害。","dm":"雷鳴術：+24% 傷害。"},{"id":"wizard.2.p1","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"避雷針","d1":"+1% 迴避.","dm":"+5% 迴避."},{"id":"wizard.2.p2","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"快速咒文","d1":"+3 詠唱速度.","dm":"+15 詠唱速度."},{"id":"wizard.2.s1a2","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"jupitel_thunder.a","name":"貫穿之矢","d1":"雷鳴術：+6.7% 貫穿機率。","dm":"雷鳴術：+20% 貫穿機率。"},{"id":"wizard.2.s1b2","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"jupitel_thunder.b","name":"放電","d1":"雷鳴術有 6% 機率暈眩。","dm":"雷鳴術有 18% 機率暈眩。"},{"id":"wizard.2.s2","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"怒雷強擊","d1":"學習技能怒雷強擊: 在大範圍內降下無盡雷電：多次打擊並可能致盲敵人。","dm":"學習技能怒雷強擊: 在大範圍內降下無盡雷電：多次打擊並可能致盲敵人。"},{"id":"wizard.2.p3","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"過載","d1":"+8% 爆擊傷害.","dm":"+40% 爆擊傷害."},{"id":"wizard.2.s2a1","r":4,"c":3,"m":3,"req":"wizard.2.s2","req2":null,"path":"lord_of_vermilion.a","name":"開闊天空","d1":"怒雷強擊：+10% 範圍。","dm":"怒雷強擊：+30% 範圍。"},{"id":"wizard.2.s2b1","r":4,"c":4,"m":3,"req":"wizard.2.s2","req2":null,"path":"lord_of_vermilion.b","name":"雷霆之王","d1":"怒雷強擊：+8% 傷害。","dm":"怒雷強擊：+24% 傷害。"},{"id":"wizard.2.p4","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"永恆風暴","d1":"+2% 雙重詠唱.","dm":"+10% 雙重詠唱."},{"id":"wizard.2.s1a3","r":6,"c":0,"m":3,"req":null,"req2":null,"path":"jupitel_thunder.a","name":"快速雷鳴","d1":"雷鳴術：+6 冷卻縮減。","dm":"雷鳴術：+18 冷卻縮減。"},{"id":"wizard.2.s1b3","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"jupitel_thunder.b","name":"電離","d1":"被雷鳴術命中的敵人在 4 秒內受到傷害 +5%。","dm":"被雷鳴術命中的敵人在 4 秒內受到傷害 +10%。"},{"id":"wizard.2.s2a2","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"lord_of_vermilion.a","name":"閃光","d1":"怒雷強擊使命中的敵人致盲 0.6 秒。","dm":"怒雷強擊使命中的敵人致盲 1.8 秒。"},{"id":"wizard.2.s2b2","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"lord_of_vermilion.b","name":"電力過載","d1":"怒雷強擊的爆擊傷害 +10%。","dm":"怒雷強擊的爆擊傷害 +30%。"},{"id":"wizard.2.p5","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"電壓","d1":"+2% 傷害.","dm":"+10% 傷害."},{"id":"wizard.2.s2a3","r":7,"c":3,"m":2,"req":null,"req2":null,"path":"lord_of_vermilion.a","name":"迅捷閃電","d1":"怒雷強擊：+6 冷卻縮減。","dm":"怒雷強擊：+12 冷卻縮減。"},{"id":"wizard.2.s2b3","r":7,"c":4,"m":2,"req":null,"req2":null,"path":"lord_of_vermilion.b","name":"電擊","d1":"被怒雷強擊命中的敵人在 5 秒內造成的傷害減少 8%。","dm":"被怒雷強擊命中的敵人在 5 秒內造成的傷害減少 16%。"},{"id":"wizard.2.p6","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"絕緣體","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"wizard.2.s1af","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"jupitel_thunder.a","name":"連鎖閃電","d1":"雷鳴術的每次打擊都會彈到附近另一個敵人，造成一半傷害.","dm":"雷鳴術的每次打擊都會彈到附近另一個敵人，造成一半傷害."},{"id":"wizard.2.s1bf","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"jupitel_thunder.b","name":"朱比特之怒","d1":"雷鳴術傷害提高 150%，範圍擴大 50%。","dm":"雷鳴術傷害提高 150%，範圍擴大 50%。"},{"id":"wizard.2.s2af","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"lord_of_vermilion.a","name":"天空之怒","d1":"怒雷強擊多波及 4 個目標。","dm":"怒雷強擊多波及 4 個目標。"},{"id":"wizard.2.s2bf","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"lord_of_vermilion.b","name":"電場","d1":"怒雷強擊命中處留下持續 4 秒的區域，每秒對其中所有敵人造成其打擊 15% 的傷害.","dm":"怒雷強擊命中處留下持續 4 秒的區域，每秒對其中所有敵人造成其打擊 15% 的傷害."}]}]},"archer":{"job":{"id":"archer","name":"弓箭手","desc":"速度快，射出貫穿箭矢。","hp":95,"speed":165,"armor":0,"start":"double_strafe","tier":"first","scaling":"ranged","base":null},"branches":[{"index":0,"name":"神射手","desc":"普通攻擊、爆擊、二連矢與撤退。","nodes":[{"id":"archer.0.owls_eye","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"Owl's Eye","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"archer.0.ds_dmg","r":0,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"銳利箭矢","d1":"二連矢：+6% 傷害。","dm":"二連矢：+30% 傷害。"},{"id":"archer.0.bow_mastery","r":0,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"弓術精通","d1":"普通攻擊：+6% 傷害。","dm":"普通攻擊：+18% 傷害。"},{"id":"archer.0.kiting","r":1,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"弓手步伐","d1":"+2% 移動速度.","dm":"+10% 移動速度."},{"id":"archer.0.ds_cd","r":1,"c":1,"m":3,"req":"archer.0.ds_dmg","req2":null,"path":null,"name":"快速拔箭","d1":"二連矢：+5 冷卻縮減。","dm":"二連矢：+15 冷卻縮減。"},{"id":"archer.0.ds_count","r":2,"c":1,"m":1,"req":"archer.0.ds_cd","req2":null,"path":null,"name":"延伸齊射","d1":"二連矢同時多射擊 1 個敵人。","dm":"二連矢同時多射擊 1 個敵人。"},{"id":"archer.0.piercing","r":2,"c":2,"m":1,"req":"archer.0.bow_mastery","req2":null,"path":null,"name":"貫穿之箭","d1":"普通攻擊：+20% 貫穿機率。","dm":"普通攻擊：+20% 貫穿機率。"},{"id":"archer.0.retreat_cd","r":2,"c":3,"m":3,"req":null,"req2":null,"path":null,"name":"快速撤退","d1":"撤退：+6 冷卻縮減。","dm":"撤退：+18 冷卻縮減。"},{"id":"archer.0.hunter","r":3,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"獵人本能","d1":"對頭目與菁英傷害 +4%.","dm":"對頭目與菁英傷害 +12%."},{"id":"archer.0.serrated","r":3,"c":2,"m":3,"req":"archer.0.piercing","req2":null,"path":null,"name":"鋸齒箭頭","d1":"普通攻擊爆擊率 +3%。","dm":"普通攻擊爆擊率 +9%。"},{"id":"archer.0.covering_fire","r":3,"c":3,"m":3,"req":"archer.0.retreat_cd","req2":null,"path":null,"name":"掩護射擊","d1":"撤退：+8% 傷害。","dm":"撤退：+24% 傷害。"},{"id":"archer.0.ds_ramp","r":4,"c":1,"m":2,"req":null,"req2":null,"path":null,"name":"標記獵物","d1":"被二連矢命中的敵人會被標記 3 秒：你的普通攻擊對其傷害提高 8%。","dm":"被二連矢命中的敵人會被標記 3 秒：你的普通攻擊對其傷害提高 16%。"},{"id":"archer.0.twin_arrows","r":4,"c":2,"m":1,"req":"archer.0.serrated","req2":null,"path":null,"name":"雙生之箭","d1":"普通攻擊同時多射擊 1 個敵人。","dm":"普通攻擊同時多射擊 1 個敵人。"},{"id":"archer.0.vultures_eye","r":5,"c":0,"m":2,"req":null,"req2":null,"path":null,"name":"Vulture's Eye","d1":"+5% 投射物速度.","dm":"+10% 投射物速度."},{"id":"archer.0.weak_point","r":5,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"弱點","d1":"+8% 爆擊傷害.","dm":"+40% 爆擊傷害."},{"id":"archer.0.strafe_storm","r":6,"c":1,"m":1,"req":"archer.0.ds_ramp","req2":null,"path":null,"name":"齊射風暴","d1":"開局即擁有二連矢。普通攻擊每次爆擊有 40% 機率對該敵人免費射出一輪二連矢，造成 30% 傷害，不佔用冷卻。","dm":"開局即擁有二連矢。普通攻擊每次爆擊有 40% 機率對該敵人免費射出一輪二連矢，造成 30% 傷害，不佔用冷卻。"}]},{"index":1,"name":"奧術","desc":"冷卻縮減、範圍、奧術射擊與火焰箭。","nodes":[{"id":"archer.1.haste","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"敏捷心智","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"archer.1.arcane_dmg","r":0,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"奧術射擊精通","d1":"奧術射擊：+6% 傷害。","dm":"奧術射擊：+30% 傷害。"},{"id":"archer.1.pulse_area","r":1,"c":1,"m":3,"req":"archer.1.arcane_dmg","req2":null,"path":null,"name":"寬廣脈衝","d1":"奧術射擊：+8% 範圍。","dm":"奧術射擊：+24% 範圍。"},{"id":"archer.1.live_flame","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"生命之焰","d1":"火焰箭的燃燒傷害 +30%（無天賦時為 150%）。","dm":"火焰箭的燃燒傷害 +150%（無天賦時為 150%）。"},{"id":"archer.1.arcane_surge","r":2,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"奧術連發","d1":"每施放一次奧術射擊或火焰箭，另一個技能冷卻減少 0.4 秒。","dm":"每施放一次奧術射擊或火焰箭，另一個技能冷卻減少 1.2 秒。"},{"id":"archer.1.insight","r":2,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"洞察","d1":"+2 INT.","dm":"+10 INT."},{"id":"archer.1.embers","r":3,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"餘燼","d1":"火焰箭：+6 冷卻縮減。","dm":"火焰箭：+18 冷卻縮減。"},{"id":"archer.1.arcane_twin","r":3,"c":1,"m":1,"req":"archer.1.pulse_area","req2":null,"path":null,"name":"雙重射擊","d1":"奧術射擊：+1 目標。","dm":"奧術射擊：+1 目標。"},{"id":"archer.1.fire_area","r":3,"c":2,"m":3,"req":"archer.1.live_flame","req2":null,"path":null,"name":"蔓延之火","d1":"火焰箭：+8% 範圍。","dm":"火焰箭：+24% 範圍。"},{"id":"archer.1.elemental_focus","r":3,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"元素專注","d1":"元素箭（奧術射擊與火焰箭）傷害 +2%。","dm":"元素箭（奧術射擊與火焰箭）傷害 +10%。"},{"id":"archer.1.gravity","r":4,"c":1,"m":2,"req":null,"req2":null,"path":null,"name":"重力","d1":"奧術射擊使命中的敵人緩速 1 秒。","dm":"奧術射擊使命中的敵人緩速 2 秒。"},{"id":"archer.1.reach","r":4,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"奧術射程","d1":"+3% 範圍.","dm":"+9% 範圍."},{"id":"archer.1.fire_targets","r":5,"c":0,"m":2,"req":"archer.1.embers","req2":null,"path":null,"name":"火焰箭","d1":"火焰箭：+1 目標。","dm":"火焰箭：+2 目標。"},{"id":"archer.1.flow","r":5,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"奧術之流","d1":"+2% 雙重詠唱.","dm":"+10% 雙重詠唱."},{"id":"archer.1.convergence","r":6,"c":1,"m":1,"req":null,"req2":null,"path":null,"name":"元素匯聚","d1":"若奧術射擊的脈衝吸入任何燃燒中的怪物，收合時會爆發 3 公尺的火焰爆炸，依你的 ATK 與 INT 造成傷害並點燃所有命中目標。","dm":"若奧術射擊的脈衝吸入任何燃燒中的怪物，收合時會爆發 3 公尺的火焰爆炸，依你的 ATK 與 INT 造成傷害並點燃所有命中目標。"}]},{"index":2,"name":"圍攻","desc":"箭雨、箭矢暴雨與衝鋒箭：堅守陣地，讓箭矢覆蓋戰場。","nodes":[{"id":"archer.2.shower_dmg","r":0,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"致命扇射","d1":"箭雨：+6% 傷害。","dm":"箭雨：+30% 傷害。"},{"id":"archer.2.rain_dmg","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"致命之雨","d1":"箭矢暴雨：+6% 傷害。","dm":"箭矢暴雨：+30% 傷害。"},{"id":"archer.2.improve_concentration","r":1,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"持久專注","d1":"心神凝聚持續時間延長 15%，冷卻減少 5%。","dm":"心神凝聚持續時間延長 45%，冷卻減少 15%。"},{"id":"archer.2.weighted","r":1,"c":2,"m":2,"req":"archer.2.rain_dmg","req2":null,"path":null,"name":"加重箭矢","d1":"箭矢暴雨使命中的敵人緩速 0.5 秒。","dm":"箭矢暴雨使命中的敵人緩速 1 秒。"},{"id":"archer.2.repel_dmg","r":1,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"蓄力之箭","d1":"衝鋒箭：+6% 傷害。","dm":"衝鋒箭：+30% 傷害。"},{"id":"archer.2.siege_stance","r":2,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"圍攻架勢","d1":"站著不動時傷害 +3%。","dm":"站著不動時傷害 +15%。"},{"id":"archer.2.mark_prey","r":2,"c":1,"m":3,"req":"archer.2.shower_dmg","req2":null,"path":null,"name":"標記獵物","d1":"被箭雨命中的敵人在 3 秒內受到所有傷害提高 5%。","dm":"被箭雨命中的敵人在 3 秒內受到所有傷害提高 15%。"},{"id":"archer.2.repel_cd","r":2,"c":3,"m":3,"req":"archer.2.repel_dmg","req2":null,"path":null,"name":"快速裝填","d1":"衝鋒箭：+6 冷卻縮減。","dm":"衝鋒箭：+18 冷卻縮減。"},{"id":"archer.2.camouflage","r":3,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"偽裝","d1":"-2% 受到傷害.","dm":"-6% 受到傷害."},{"id":"archer.2.more_arrows","r":3,"c":2,"m":2,"req":"archer.2.weighted","req2":null,"path":null,"name":"更多箭矢","d1":"箭矢暴雨：+2 次衝擊。","dm":"箭矢暴雨：+4 次衝擊。"},{"id":"archer.2.shower_volley","r":4,"c":1,"m":1,"req":"archer.2.mark_prey","req2":null,"path":null,"name":"額外齊射","d1":"箭雨：+1 輪。","dm":"箭雨：+1 輪。"},{"id":"archer.2.repel_wide","r":4,"c":3,"m":3,"req":"archer.2.repel_cd","req2":null,"path":null,"name":"暈眩之箭","d1":"衝鋒箭範圍 +8%，並有 6% 機率暈眩。","dm":"衝鋒箭範圍 +24%，並有 18% 機率暈眩。"},{"id":"archer.2.field","r":5,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"射擊場","d1":"+2% 範圍.","dm":"+10% 範圍."},{"id":"archer.2.arrow_crafting","r":5,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"製作箭","d1":"範圍技能傷害 +10%。","dm":"範圍技能傷害 +10%。"},{"id":"archer.2.siege_rain","r":6,"c":1,"m":1,"req":null,"req2":null,"path":null,"name":"全面圍攻","d1":"施放箭雨、箭矢暴雨或衝鋒箭時，會免費對另一個目標隨機施放三者之一（不佔用其冷卻，即使你未學會）。","dm":"施放箭雨、箭矢暴雨或衝鋒箭時，會免費對另一個目標隨機施放三者之一（不佔用其冷卻，即使你未學會）。"}]}]},"hunter":{"job":{"id":"hunter","name":"獵人","desc":"帶著獵鷹與陷阱的獵人。","hp":230,"speed":165,"armor":0,"start":"double_strafe","tier":"first","scaling":"ranged","base":"archer"},"branches":[{"index":0,"name":"獵鷹","desc":"閃電衝擊與獵鷹尋敵：你的獵鷹與你一同狩獵並標記獵物。","nodes":[{"id":"hunter.0.blitz","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"閃電衝擊","d1":"學習技能閃電衝擊: 你的獵鷹對隨機敵人俯衝三次，也會傷害其周圍敵人。","dm":"學習技能閃電衝擊: 你的獵鷹對隨機敵人俯衝三次，也會傷害其周圍敵人。"},{"id":"hunter.0.hawk_eye","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"鷹之眼","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"hunter.0.blitz_cd","r":1,"c":0,"m":3,"req":"hunter.0.blitz","req2":null,"path":"blitz_beat.a","name":"迅捷飛行","d1":"閃電衝擊：+6 冷卻縮減。","dm":"閃電衝擊：+18 冷卻縮減。"},{"id":"hunter.0.blitz_dmg","r":1,"c":1,"m":3,"req":"hunter.0.blitz","req2":null,"path":"blitz_beat.b","name":"強力俯衝","d1":"閃電衝擊：+8% 傷害。","dm":"閃電衝擊：+24% 傷害。"},{"id":"hunter.0.plumage","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"羽毛","d1":"+1% 迴避.","dm":"+5% 迴避."},{"id":"hunter.0.keen_eye","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"銳利視野","d1":"+4% 投射物速度.","dm":"+20% 投射物速度."},{"id":"hunter.0.blitz_count","r":3,"c":0,"m":2,"req":null,"req2":null,"path":"blitz_beat.a","name":"鳥群","d1":"閃電衝擊：+1 目標。","dm":"閃電衝擊：+2 目標。"},{"id":"hunter.0.blitz_area","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"blitz_beat.b","name":"廣域俯衝","d1":"閃電衝擊：+10% 範圍。","dm":"閃電衝擊：+30% 範圍。"},{"id":"hunter.0.detecting","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"獵鷹尋敵","d1":"學習技能獵鷹尋敵: 你的獵鷹標記視野內最強的 3 個敵人：6 秒內受到傷害提高 20%。","dm":"學習技能獵鷹尋敵: 你的獵鷹標記視野內最強的 3 個敵人：6 秒內受到傷害提高 20%。"},{"id":"hunter.0.raptor","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"猛禽本能","d1":"+8% 爆擊傷害.","dm":"+40% 爆擊傷害."},{"id":"hunter.0.detect_count","r":4,"c":3,"m":2,"req":"hunter.0.detecting","req2":null,"path":"detecting.a","name":"鷹眼","d1":"獵鷹尋敵：+1 目標。","dm":"獵鷹尋敵：+2 目標。"},{"id":"hunter.0.hunt_focus","r":4,"c":4,"m":3,"req":"hunter.0.detecting","req2":null,"path":"detecting.b","name":"狩獵專注","d1":"獵鷹尋敵讓你在 6 秒內傷害提高 4%.","dm":"獵鷹尋敵讓你在 6 秒內傷害提高 12%."},{"id":"hunter.0.patient","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"耐心的獵人","d1":"對頭目與菁英傷害 +3%.","dm":"對頭目與菁英傷害 +15%."},{"id":"hunter.0.steel_crow","r":6,"c":0,"m":3,"req":null,"req2":null,"path":"blitz_beat.a","name":"鋼鐵利爪","d1":"閃電衝擊使敵人在 3 秒內流血，造成其傷害的 15%。","dm":"閃電衝擊使敵人在 3 秒內流血，造成其傷害的 45%。"},{"id":"hunter.0.dive","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"blitz_beat.b","name":"俯衝","d1":"閃電衝擊有 6% 機率暈眩。","dm":"閃電衝擊有 12% 機率暈眩。"},{"id":"hunter.0.detect_mark","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"detecting.a","name":"標記獵物","d1":"被獵鷹尋敵標記的敵人受到傷害提高 4%.","dm":"被獵鷹尋敵標記的敵人受到傷害提高 12%."},{"id":"hunter.0.hunt_crit","r":6,"c":4,"m":2,"req":null,"req2":null,"path":"detecting.b","name":"狩獵本能","d1":"獵鷹尋敵讓你在 6 秒內爆擊提高 3%.","dm":"獵鷹尋敵讓你在 6 秒內爆擊提高 6%."},{"id":"hunter.0.wind_sign","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"風之徵兆","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"hunter.0.detect_cd","r":7,"c":3,"m":3,"req":null,"req2":null,"path":"detecting.a","name":"瞭望","d1":"獵鷹尋敵：+6 冷卻縮減。","dm":"獵鷹尋敵：+18 冷卻縮減。"},{"id":"hunter.0.hunt_speed","r":7,"c":4,"m":3,"req":null,"req2":null,"path":"detecting.b","name":"狩獵步伐","d1":"獵鷹尋敵讓你在 6 秒內速度提高 5%.","dm":"獵鷹尋敵讓你在 6 秒內速度提高 15%."},{"id":"hunter.0.wingbeat","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"振翅","d1":"+2% 雙重詠唱.","dm":"+10% 雙重詠唱."},{"id":"hunter.0.auto_blitz","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"blitz_beat.a","name":"自由之鷹","d1":"每次普通攻擊有 15% 機率讓獵鷹對目標免費俯衝一次.","dm":"每次普通攻擊有 15% 機率讓獵鷹對目標免費俯衝一次."},{"id":"hunter.0.deadly_dive","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"blitz_beat.b","name":"致命俯衝","d1":"閃電衝擊改為對最大敵群俯衝一次：造成一次俯衝 4.5 倍的傷害，範圍加倍，並使所有敵人暈眩 0.6 秒.","dm":"閃電衝擊改為對最大敵群俯衝一次：造成一次俯衝 4.5 倍的傷害，範圍加倍，並使所有敵人暈眩 0.6 秒."},{"id":"hunter.0.prey_chain","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"detecting.a","name":"連鎖狩獵","d1":"被標記的敵人死亡時，標記會以剩餘時間跳到最近的敵人.","dm":"被標記的敵人死亡時，標記會以剩餘時間跳到最近的敵人."},{"id":"hunter.0.kill_order","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"detecting.b","name":"狩獵號令","d1":"擊殺被標記的敵人會讓獵鷹尋敵可以立即再次施放.","dm":"擊殺被標記的敵人會讓獵鷹尋敵可以立即再次施放."}]},{"index":1,"name":"陷阱","desc":"爆散陷阱與睡魔陷阱：牠們踏過的地面是你的。","nodes":[{"id":"hunter.1.claymore","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"爆散陷阱","d1":"學習技能爆散陷阱: 在敵人附近設置 2 個陷阱：第一個被踩到的會爆炸並傷害周圍所有敵人。持續 12 秒。","dm":"學習技能爆散陷阱: 在敵人附近設置 2 個陷阱：第一個被踩到的會爆炸並傷害周圍所有敵人。持續 12 秒。"},{"id":"hunter.1.camouflage","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"模仿","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"hunter.1.trap_count","r":1,"c":0,"m":2,"req":"hunter.1.claymore","req2":null,"path":"claymore_trap.a","name":"更多陷阱","d1":"爆散陷阱：+1 個陷阱。","dm":"爆散陷阱：+2 個陷阱。"},{"id":"hunter.1.trap_research","r":1,"c":1,"m":3,"req":"hunter.1.claymore","req2":null,"path":"claymore_trap.b","name":"陷阱研究","d1":"爆散陷阱：+8% 傷害。","dm":"爆散陷阱：+24% 傷害。"},{"id":"hunter.1.silent_step","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"無聲之步","d1":"+1.5% 移動速度.","dm":"+7.5% 移動速度."},{"id":"hunter.1.trapper","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"陷阱大師","d1":"+2% 範圍.","dm":"+10% 範圍."},{"id":"hunter.1.trap_dur","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"claymore_trap.a","name":"持久陷阱","d1":"爆散陷阱的陷阱持續時間延長 10%。","dm":"爆散陷阱的陷阱持續時間延長 30%。"},{"id":"hunter.1.trap_area","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"claymore_trap.b","name":"爆炸衝鋒","d1":"爆散陷阱：+10% 範圍。","dm":"爆散陷阱：+30% 範圍。"},{"id":"hunter.1.sandman","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"睡魔陷阱","d1":"學習技能睡魔陷阱: 向一群敵人撒出魔法沙：使其睡眠 2.5 秒（頭目減半）。","dm":"學習技能睡魔陷阱: 向一群敵人撒出魔法沙：使其睡眠 2.5 秒（頭目減半）。"},{"id":"hunter.1.ambush","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"守株待兔","d1":"站著不動時 +0.5 HP/秒.","dm":"站著不動時 +2.5 HP/秒."},{"id":"hunter.1.sleep_extra","r":4,"c":3,"m":3,"req":"hunter.1.sandman","req2":null,"path":"sandman.a","name":"沉睡","d1":"睡魔陷阱使敵人睡眠延長 0.3 秒.","dm":"睡魔陷阱使敵人睡眠延長 0.9 秒."},{"id":"hunter.1.sand_area","r":4,"c":4,"m":3,"req":"hunter.1.sandman","req2":null,"path":"sandman.b","name":"沙塵暴","d1":"睡魔陷阱：+10% 範圍。","dm":"睡魔陷阱：+30% 範圍。"},{"id":"hunter.1.survival","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"生存本能","d1":"最大 HP +2%.","dm":"最大 HP +10%."},{"id":"hunter.1.trap_cd","r":6,"c":0,"m":3,"req":null,"req2":null,"path":"claymore_trap.a","name":"引爆器","d1":"爆散陷阱：+6 冷卻縮減。","dm":"爆散陷阱：+18 冷卻縮減。"},{"id":"hunter.1.fire_trap","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"claymore_trap.b","name":"火焰陷阱","d1":"爆散陷阱使敵人燃燒：3 秒內每秒 +3 傷害。","dm":"爆散陷阱使敵人燃燒：3 秒內每秒 +6 傷害。"},{"id":"hunter.1.nightmare","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"sandman.a","name":"夢魘","d1":"暈眩或睡眠中的敵人受到傷害提高 5%.","dm":"暈眩或睡眠中的敵人受到傷害提高 15%."},{"id":"hunter.1.sand_weaken","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"sandman.b","name":"沙入眼","d1":"被睡魔陷阱催眠的敵人醒來後 4 秒內造成的傷害減少 6%.","dm":"被睡魔陷阱催眠的敵人醒來後 4 秒內造成的傷害減少 18%."},{"id":"hunter.1.ambusher","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"伏擊","d1":"+6% 爆擊傷害.","dm":"+30% 爆擊傷害."},{"id":"hunter.1.sand_cd","r":7,"c":3,"m":2,"req":null,"req2":null,"path":"sandman.a","name":"快速之沙","d1":"睡魔陷阱：+6 冷卻縮減。","dm":"睡魔陷阱：+12 冷卻縮減。"},{"id":"hunter.1.sand_slow","r":7,"c":4,"m":3,"req":null,"req2":null,"path":"sandman.b","name":"沉重之沙","d1":"被睡魔陷阱催眠的敵人醒來後緩速 0.6 秒.","dm":"被睡魔陷阱催眠的敵人醒來後緩速 1.8 秒."},{"id":"hunter.1.steady_hand","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"穩定之手","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"hunter.1.rearm","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"claymore_trap.a","name":"重新佈置","d1":"每個爆散陷阱爆炸後會重新佈置：爆炸兩次.","dm":"每個爆散陷阱爆炸後會重新佈置：爆炸兩次."},{"id":"hunter.1.big_charge","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"claymore_trap.b","name":"定時爆炸陷阱","d1":"爆散陷阱只放一個陷阱：造成 3 倍傷害，範圍擴大 60%，並把所有敵人炸飛.","dm":"爆散陷阱只放一個陷阱：造成 3 倍傷害，範圍擴大 60%，並把所有敵人炸飛."},{"id":"hunter.1.sleep_spread","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"sandman.a","name":"傳染睡眠","d1":"擊殺睡眠中的敵人時，其周圍的敵人會睡著 1.5 秒.","dm":"擊殺睡眠中的敵人時，其周圍的敵人會睡著 1.5 秒."},{"id":"hunter.1.sand_field","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"sandman.b","name":"地上的沙","d1":"睡魔陷阱讓沙子留在地上 5 秒：踩到的敵人會緩速且傷害降低.","dm":"睡魔陷阱讓沙子留在地上 5 秒：踩到的敵人會緩速且傷害降低."}]},{"index":2,"name":"大型獵物","desc":"動物猛擊與幻影箭：為大型獵物準備的箭。","nodes":[{"id":"hunter.2.beast_strafing","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"動物猛擊","d1":"學習技能動物猛擊: 對射程內最強的敵人射出兩支重箭：對頭目與菁英 +50% 傷害。","dm":"學習技能動物猛擊: 對射程內最強的敵人射出兩支重箭：對頭目與菁英 +50% 傷害。"},{"id":"hunter.2.beast_bane","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"動物殺手","d1":"+3% 對頭目與不死族傷害.","dm":"+15% 對頭目與不死族傷害."},{"id":"hunter.2.strafe_count","r":1,"c":0,"m":2,"req":"hunter.2.beast_strafing","req2":null,"path":"beast_strafing.a","name":"第三支箭","d1":"動物猛擊：+1 支箭。","dm":"動物猛擊：+2 支箭。"},{"id":"hunter.2.strafe_dmg","r":1,"c":1,"m":3,"req":"hunter.2.beast_strafing","req2":null,"path":"beast_strafing.b","name":"狩獵之箭","d1":"動物猛擊：+8% 傷害。","dm":"動物猛擊：+24% 傷害。"},{"id":"hunter.2.bite","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"咬擊","d1":"+8% 爆擊傷害.","dm":"+40% 爆擊傷害."},{"id":"hunter.2.longbow","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"長弓","d1":"普通攻擊：+5% 傷害。","dm":"普通攻擊：+25% 傷害。"},{"id":"hunter.2.strafe_cd","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"beast_strafing.a","name":"獵人裝填","d1":"動物猛擊：+6 冷卻縮減。","dm":"動物猛擊：+18 冷卻縮減。"},{"id":"hunter.2.strafe_pierce","r":3,"c":1,"m":2,"req":null,"req2":null,"path":"beast_strafing.b","name":"貫穿箭頭","d1":"動物猛擊：+10% 貫穿機率。","dm":"動物猛擊：+20% 貫穿機率。"},{"id":"hunter.2.phantasmic","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"幻影箭","d1":"學習技能幻影箭: 巨大的幻影之箭：貫穿所有敵人並將其遠遠擊退。","dm":"學習技能幻影箭: 巨大的幻影之箭：貫穿所有敵人並將其遠遠擊退。"},{"id":"hunter.2.tailwind","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"順風","d1":"+4% 投射物速度.","dm":"+20% 投射物速度."},{"id":"hunter.2.phantasm_size","r":4,"c":3,"m":3,"req":"hunter.2.phantasmic","req2":null,"path":"phantasmic_arrow.a","name":"巨箭","d1":"幻影箭大小 +12%。","dm":"幻影箭大小 +36%。"},{"id":"hunter.2.phantasm_dmg","r":4,"c":4,"m":3,"req":"hunter.2.phantasmic","req2":null,"path":"phantasmic_arrow.b","name":"幽靈之箭","d1":"幻影箭：+8% 傷害。","dm":"幻影箭：+24% 傷害。"},{"id":"hunter.2.tension","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"張力","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"hunter.2.blood_trail","r":6,"c":0,"m":3,"req":null,"req2":null,"path":"beast_strafing.a","name":"血跡","d1":"動物猛擊在 3 秒內造成其傷害 15% 的流血。","dm":"動物猛擊在 3 秒內造成其傷害 45% 的流血。"},{"id":"hunter.2.steel_tip","r":6,"c":1,"m":3,"req":null,"req2":null,"path":"beast_strafing.b","name":"鋼製箭頭","d1":"被動物猛擊命中的敵人在 4 秒內受到傷害 +4%。","dm":"被動物猛擊命中的敵人在 4 秒內受到傷害 +12%。"},{"id":"hunter.2.phantasm_stun","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"phantasmic_arrow.a","name":"幻影衝擊","d1":"幻影箭有 8% 機率暈眩。","dm":"幻影箭有 24% 機率暈眩。"},{"id":"hunter.2.execute","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"phantasmic_arrow.b","name":"終結者","d1":"對 HP 低於 30% 的敵人傷害提高 5%.","dm":"對 HP 低於 30% 的敵人傷害提高 15%."},{"id":"hunter.2.instinct","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"本能","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"hunter.2.phantasm_cd","r":7,"c":3,"m":2,"req":null,"req2":null,"path":"phantasmic_arrow.a","name":"幻影裝填","d1":"幻影箭：+6 冷卻縮減。","dm":"幻影箭：+12 冷卻縮減。"},{"id":"hunter.2.mortal_aim","r":7,"c":4,"m":3,"req":null,"req2":null,"path":"phantasmic_arrow.b","name":"致命瞄準","d1":"幻影箭的爆擊傷害 +10%。","dm":"幻影箭的爆擊傷害 +30%。"},{"id":"hunter.2.beast_hunter","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"野獸獵人","d1":"+2% 雙重詠唱.","dm":"+10% 雙重詠唱."},{"id":"hunter.2.double_volley","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"beast_strafing.a","name":"雙重齊射","d1":"動物猛擊永遠連續發動兩次。","dm":"動物猛擊永遠連續發動兩次。"},{"id":"hunter.2.heavy_shot","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"beast_strafing.b","name":"巨獸之箭","d1":"動物猛擊對頭目與菁英的額外傷害從 50% 提高到 150%.","dm":"動物猛擊對頭目與菁英的額外傷害從 50% 提高到 150%."},{"id":"hunter.2.ghost_trail","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"phantasmic_arrow.a","name":"幽靈軌跡","d1":"被幻影箭貫穿的敵人在 2 秒內再次受到該擊 50% 的傷害.","dm":"被幻影箭貫穿的敵人在 2 秒內再次受到該擊 50% 的傷害."},{"id":"hunter.2.coup_de_grace","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"phantasmic_arrow.b","name":"致命射擊","d1":"幻影箭會終結 HP 低於 25% 的非頭目敵人.","dm":"幻影箭會終結 HP 低於 25% 的非頭目敵人."}]}]},"acolyte":{"job":{"id":"acolyte","name":"服事","desc":"能自我治療，並懲戒不死族。","hp":105,"speed":150,"armor":1,"start":"heal","tier":"first","scaling":"magic","base":null},"branches":[{"index":0,"name":"神聖","desc":"治癒術、天使之淚與天使之賜福：在怪物群中自我治療撐下去。","nodes":[{"id":"acolyte.0.angelus","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"Angelus","d1":"+0.3 護甲.","dm":"+1.5 護甲."},{"id":"acolyte.0.heal_dmg","r":0,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"神聖治療","d1":"治癒術：+6% 傷害。","dm":"治癒術：+30% 傷害。"},{"id":"acolyte.0.aqua_dmg","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"聖水","d1":"Aqua Benedicta：+6% 傷害。","dm":"Aqua Benedicta：+30% 傷害。"},{"id":"acolyte.0.divine_protection","r":1,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"天使之護","d1":"+4 最大 HP, -0.5% 受到傷害.","dm":"+20 最大 HP, -2.5% 受到傷害."},{"id":"acolyte.0.heal_area","r":1,"c":1,"m":3,"req":"acolyte.0.heal_dmg","req2":null,"path":null,"name":"寬廣脈衝","d1":"治癒術：+8% 範圍。","dm":"治癒術：+24% 範圍。"},{"id":"acolyte.0.bless_dur","r":1,"c":3,"m":3,"req":null,"req2":null,"path":null,"name":"持久賜福","d1":"天使之賜福持續時間延長 15%。","dm":"天使之賜福持續時間延長 45%。"},{"id":"acolyte.0.heal_cd","r":2,"c":1,"m":3,"req":"acolyte.0.heal_area","req2":null,"path":null,"name":"快速治癒","d1":"治癒術：+6 冷卻縮減。","dm":"治癒術：+18 冷卻縮減。"},{"id":"acolyte.0.aqua_area","r":2,"c":2,"m":3,"req":"acolyte.0.aqua_dmg","req2":null,"path":null,"name":"寬廣水窪","d1":"Aqua Benedicta：+8% 範圍。","dm":"Aqua Benedicta：+24% 範圍。"},{"id":"acolyte.0.meditatio","r":3,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"Meditatio","d1":"+0.3 HP/秒.","dm":"+0.9 HP/秒."},{"id":"acolyte.0.grace_dmg","r":3,"c":1,"m":2,"req":null,"req2":null,"path":null,"name":"滿溢恩典","d1":"治癒術的恩典傷害提高 25%.","dm":"治癒術的恩典傷害提高 50%."},{"id":"acolyte.0.aqua_heal","r":3,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"生命之水","d1":"天使之淚的治療量提高 5%.","dm":"天使之淚的治療量提高 15%."},{"id":"acolyte.0.bless_haste","r":3,"c":3,"m":1,"req":"acolyte.0.bless_dur","req2":null,"path":null,"name":"共享賜福","d1":"天使之賜福持續期間另 +15 冷卻縮減.","dm":"天使之賜福持續期間另 +15 冷卻縮減."},{"id":"acolyte.0.assumptio","r":4,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"Assumptio","d1":"-2% 受到傷害.","dm":"-6% 受到傷害."},{"id":"acolyte.0.aqua_slow","r":4,"c":2,"m":2,"req":null,"req2":null,"path":null,"name":"神聖水窪","d1":"天使之淚使站在其中的敵人緩速 0.5 秒。","dm":"天使之淚使站在其中的敵人緩速 1 秒。"},{"id":"acolyte.0.mana_recharge","r":4,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"魔力回充","d1":"+2 冷卻縮減.","dm":"+10 冷卻縮減."},{"id":"acolyte.0.basilica","r":5,"c":1,"m":3,"req":null,"req2":null,"path":null,"name":"Basilica","d1":"每次治癒術治療你時，4 秒內最大 HP +4.","dm":"每次治癒術治療你時，4 秒內最大 HP +12."},{"id":"acolyte.0.fountain","r":6,"c":1,"m":1,"req":null,"req2":null,"path":null,"name":"生命之泉","d1":"開局即擁有治癒術。滿血時，治癒術改為落在射程內最大的敵群上，並獲得 +目標 強化：每個強化會對另一群敵人多一次脈衝。每次治癒術都會在落點留下一灘天使之淚，與你的天使之淚相同（含其天賦與本局強化），即使你沒有該技能。","dm":"開局即擁有治癒術。滿血時，治癒術改為落在射程內最大的敵群上，並獲得 +目標 強化：每個強化會對另一群敵人多一次脈衝。每次治癒術都會在落點留下一灘天使之淚，與你的天使之淚相同（含其天賦與本局強化），即使你沒有該技能。"}]},{"index":1,"name":"驅魔","desc":"神聖之光、天使之光與緩速術：淨化、標記並緩速的光。","nodes":[{"id":"acolyte.1.demon_bane","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"天使之擊","d1":"+3% 對頭目與不死族傷害.","dm":"+15% 對頭目與不死族傷害."},{"id":"acolyte.1.holy_dmg","r":0,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"致盲之光","d1":"神聖之光：+6% 傷害。","dm":"神聖之光：+30% 傷害。"},{"id":"acolyte.1.crucis_dmg","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"燃燒十字","d1":"Signum Crucis：+6% 傷害。","dm":"Signum Crucis：+30% 傷害。"},{"id":"acolyte.1.holy_cd","r":1,"c":1,"m":3,"req":"acolyte.1.holy_dmg","req2":null,"path":null,"name":"快速祈禱","d1":"神聖之光：+5 冷卻縮減。","dm":"神聖之光：+15 冷卻縮減。"},{"id":"acolyte.1.crucis_area","r":1,"c":2,"m":3,"req":"acolyte.1.crucis_dmg","req2":null,"path":null,"name":"寬廣十字","d1":"Signum Crucis：+8% 範圍。","dm":"Signum Crucis：+24% 範圍。"},{"id":"acolyte.1.decagi_area","r":1,"c":3,"m":2,"req":null,"req2":null,"path":null,"name":"神聖遲緩","d1":"緩速術：+10% 範圍。","dm":"緩速術：+20% 範圍。"},{"id":"acolyte.1.lex_divina","r":2,"c":0,"m":2,"req":null,"req2":null,"path":null,"name":"Lex Divina","d1":"神聖之光有 10% 機率暈眩 1 秒。","dm":"神聖之光有 20% 機率暈眩 1 秒。"},{"id":"acolyte.1.holy_count","r":2,"c":1,"m":2,"req":"acolyte.1.holy_cd","req2":null,"path":null,"name":"雙重之光","d1":"神聖之光：+1 目標。","dm":"神聖之光：+2 目標。"},{"id":"acolyte.1.sin","r":2,"c":3,"m":2,"req":null,"req2":null,"path":null,"name":"罪孽之重","d1":"緩速術的緩速延長 0.5 秒。","dm":"緩速術的緩速延長 1 秒。"},{"id":"acolyte.1.purify","r":3,"c":0,"m":3,"req":null,"req2":null,"path":null,"name":"淨化","d1":"神聖之光與光獵對緩速中的敵人傷害提高 10%.","dm":"神聖之光與光獵對緩速中的敵人傷害提高 30%."},{"id":"acolyte.1.condemn","r":3,"c":2,"m":3,"req":"acolyte.1.crucis_area","req2":null,"path":null,"name":"定罪","d1":"被天使之光命中的敵人在 2 秒內受到所有傷害提高 4%。","dm":"被天使之光命中的敵人在 2 秒內受到所有傷害提高 12%。"},{"id":"acolyte.1.zeal","r":3,"c":3,"m":2,"req":null,"req2":null,"path":null,"name":"熱忱","d1":"+2% 傷害, +4 冷卻縮減.","dm":"+4% 傷害, +8 冷卻縮減."},{"id":"acolyte.1.faith","r":4,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"信仰","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"acolyte.1.lex_aeterna","r":4,"c":1,"m":3,"req":"acolyte.1.holy_count","req2":null,"path":null,"name":"Lex Aeterna","d1":"神聖之光對被天使之光標記的敵人傷害提高 8%.","dm":"神聖之光對被天使之光標記的敵人傷害提高 24%."},{"id":"acolyte.1.suffragium","r":4,"c":3,"m":3,"req":null,"req2":null,"path":null,"name":"Suffragium","d1":"+5 詠唱速度.","dm":"+15 詠唱速度."},{"id":"acolyte.1.crucis_dur","r":5,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"聖化之地","d1":"你所有的神聖地面（天使之光、天使之淚與生命之泉的水窪）持續時間延長 15%。","dm":"你所有的神聖地面（天使之光、天使之淚與生命之泉的水窪）持續時間延長 45%。"},{"id":"acolyte.1.judgement","r":5,"c":3,"m":2,"req":null,"req2":null,"path":null,"name":"審判","d1":"+10% 爆擊傷害.","dm":"+20% 爆擊傷害."},{"id":"acolyte.1.divine_judgement","r":6,"c":1,"m":1,"req":null,"req2":null,"path":null,"name":"神聖審判","d1":"開局即擁有天使之光。天使之光的地面持續期間，每 2 秒會對圈內最強的敵人降下一道瞬發神聖之光（即使你沒有神聖之光）。若你擁有神聖之光，則沿用其傷害、目標數、範圍與效果。","dm":"開局即擁有天使之光。天使之光的地面持續期間，每 2 秒會對圈內最強的敵人降下一道瞬發神聖之光（即使你沒有神聖之光）。若你擁有神聖之光，則沿用其傷害、目標數、範圍與效果。"}]},{"index":2,"name":"懲戒","desc":"神聖重擊、鈍器／拳套／書本攻擊與光獵：通往武僧的路線。","nodes":[{"id":"acolyte.2.mace_mastery","r":0,"c":0,"m":5,"req":null,"req2":null,"path":null,"name":"權杖使用熟練度","d1":"普通攻擊：+6% 傷害。","dm":"普通攻擊：+30% 傷害。"},{"id":"acolyte.2.smite_dmg","r":0,"c":1,"m":5,"req":null,"req2":null,"path":null,"name":"錘擊","d1":"神聖重擊：+6% 傷害。","dm":"神聖重擊：+30% 傷害。"},{"id":"acolyte.2.ruwach_dmg","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"燃燒光球","d1":"Ruwach：+5% 傷害。","dm":"Ruwach：+25% 傷害。"},{"id":"acolyte.2.bless_proc","r":1,"c":0,"m":3,"req":"acolyte.2.mace_mastery","req2":null,"path":null,"name":"瞬間賜福","d1":"普通攻擊有 2% 機率對你施放天使之賜福（即使你未學會）.","dm":"普通攻擊有 6% 機率對你施放天使之賜福（即使你未學會）."},{"id":"acolyte.2.ruwach_count","r":1,"c":2,"m":1,"req":"acolyte.2.ruwach_dmg","req2":null,"path":null,"name":"更多光球","d1":"Ruwach：+1 顆光球。","dm":"Ruwach：+1 顆光球。"},{"id":"acolyte.2.increase_agi","r":1,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"加速術","d1":"+1.5% 移動速度, +1 冷卻縮減.","dm":"+7.5% 移動速度, +5 冷卻縮減."},{"id":"acolyte.2.holy_sweep","r":2,"c":0,"m":1,"req":"acolyte.2.bless_proc","req2":"acolyte.2.fervor","path":null,"name":"神聖橫掃","d1":"近戰普通攻擊改為錐形打擊：攻擊範圍內前方每個敵人都承受完整傷害。","dm":"近戰普通攻擊改為錐形打擊：攻擊範圍內前方每個敵人都承受完整傷害。"},{"id":"acolyte.2.fervor","r":2,"c":1,"m":2,"req":"acolyte.2.smite_dmg","req2":null,"path":null,"name":"熱忱","d1":"神聖重擊多祝福 1 次普通攻擊.","dm":"神聖重擊多祝福 2 次普通攻擊."},{"id":"acolyte.2.iron_hand","r":2,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"鐵沙掌","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"acolyte.2.ruwach_cd","r":3,"c":2,"m":1,"req":"acolyte.2.ruwach_count","req2":null,"path":null,"name":"迅捷光球","d1":"光獵冷卻減少 15%，光球爆裂後更快重新出現。","dm":"光獵冷卻減少 15%，光球爆裂後更快重新出現。"},{"id":"acolyte.2.triple_attack","r":3,"c":3,"m":5,"req":null,"req2":null,"path":null,"name":"六合拳","d1":"+1% 雙重詠唱.","dm":"+5% 雙重詠唱."},{"id":"acolyte.2.smite_cd","r":4,"c":0,"m":3,"req":"acolyte.2.holy_sweep","req2":null,"path":null,"name":"必然懲戒","d1":"普通攻擊與神聖重擊爆擊傷害 +10%。","dm":"普通攻擊與神聖重擊爆擊傷害 +30%。"},{"id":"acolyte.2.blessed_hand","r":4,"c":1,"m":1,"req":null,"req2":null,"path":null,"name":"受祝福之手","d1":"神聖重擊的暈眩延長 1 秒。","dm":"神聖重擊的暈眩延長 1 秒。"},{"id":"acolyte.2.investigate","r":4,"c":2,"m":3,"req":null,"req2":null,"path":null,"name":"浸透勁","d1":"對頭目與菁英傷害 +4%.","dm":"對頭目與菁英傷害 +12%."},{"id":"acolyte.2.holy_rhythm","r":5,"c":0,"m":3,"req":"acolyte.2.smite_cd","req2":null,"path":null,"name":"神聖節奏","d1":"普通攻擊與神聖重擊 +6 冷卻縮減。","dm":"普通攻擊與神聖重擊 +18 冷卻縮減。"},{"id":"acolyte.2.faith_power","r":5,"c":2,"m":2,"req":null,"req2":null,"path":null,"name":"信仰之力","d1":"近戰 ATK +6%.","dm":"近戰 ATK +12%."},{"id":"acolyte.2.light_strike","r":6,"c":1,"m":1,"req":"acolyte.2.blessed_hand","req2":null,"path":null,"name":"光之打擊","d1":"開局即擁有神聖重擊。每次受祝福的普通攻擊也會釋放一顆光獵光球並在目標身上爆裂（即使你沒有光獵）。","dm":"開局即擁有神聖重擊。每次受祝福的普通攻擊也會釋放一顆光獵光球並在目標身上爆裂（即使你沒有光獵）。"}]}]},"priest":{"job":{"id":"priest","name":"祭司","desc":"治療、祝福與驅魔。","hp":270,"speed":150,"armor":1,"start":"heal","tier":"first","scaling":"magic","base":"acolyte"},"branches":[{"index":0,"name":"聖域","desc":"光耀之堂與暗之障壁：神聖之地與屏障，讓你屹立不倒。","nodes":[{"id":"priest.0.s1","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"光耀之堂","d1":"學習技能光耀之堂: 淨化腳下地面 8 秒：在其中時每秒回復 1.5% HP，踏入的敵人會燃燒（對不死族 x2）。","dm":"學習技能光耀之堂: 淨化腳下地面 8 秒：在其中時每秒回復 1.5% HP，踏入的敵人會燃燒（對不死族 x2）。"},{"id":"priest.0.p0","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"神聖恩典","d1":"最大 HP +2%.","dm":"最大 HP +10%."},{"id":"priest.0.s1a1","r":1,"c":0,"m":3,"req":"priest.0.s1","req2":null,"path":"sanctuary.a","name":"寬廣聖域","d1":"光耀之堂：+10% 範圍。","dm":"光耀之堂：+30% 範圍。"},{"id":"priest.0.s1b1","r":1,"c":1,"m":3,"req":"priest.0.s1","req2":null,"path":"sanctuary.b","name":"燃燒之地","d1":"光耀之堂：+8% 傷害。","dm":"光耀之堂：+24% 傷害。"},{"id":"priest.0.p1","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"Oratio","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"priest.0.p2","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"Eucharistica","d1":"+0.4 護甲.","dm":"+2 護甲."},{"id":"priest.0.s1a2","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"sanctuary.a","name":"聖化","d1":"光耀之堂持續時間延長 15%。","dm":"光耀之堂持續時間延長 45%。"},{"id":"priest.0.s1b2","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"sanctuary.b","name":"沉重之地","d1":"光耀之堂使命中的敵人緩速 0.5 秒。","dm":"光耀之堂使命中的敵人緩速 1.5 秒。"},{"id":"priest.0.s2","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"暗之障壁","d1":"學習技能暗之障壁: 光之屏障環繞你，吸收接下來受到的 3 次攻擊。","dm":"學習技能暗之障壁: 光之屏障環繞你，吸收接下來受到的 3 次攻擊。"},{"id":"priest.0.p3","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"詠唱","d1":"+0.15 HP/秒.","dm":"+0.75 HP/秒."},{"id":"priest.0.s2a1","r":4,"c":3,"m":3,"req":"priest.0.s2","req2":null,"path":"safety_wall.a","name":"強化之牆","d1":"暗之障壁多承受 1 次攻擊.","dm":"暗之障壁多承受 3 次攻擊."},{"id":"priest.0.s2b1","r":4,"c":4,"m":3,"req":"priest.0.s2","req2":null,"path":"safety_wall.b","name":"治癒之牆","d1":"暗之障壁每承受一次攻擊，回復最大 HP 的 2%.","dm":"暗之障壁每承受一次攻擊，回復最大 HP 的 6%."},{"id":"priest.0.p4","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"Clementia","d1":"+10% 肉的治療量.","dm":"+50% 肉的治療量."},{"id":"priest.0.s1a3","r":6,"c":0,"m":2,"req":null,"req2":null,"path":"sanctuary.a","name":"受祝福之地","d1":"光耀之堂每秒多回復 0.3% HP.","dm":"光耀之堂每秒多回復 0.6% HP."},{"id":"priest.0.s1b3","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"sanctuary.b","name":"大地審判","d1":"被光耀之堂命中的敵人在 4 秒內受到傷害 +5%。","dm":"被光耀之堂命中的敵人在 4 秒內受到傷害 +10%。"},{"id":"priest.0.s2a2","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"safety_wall.a","name":"快速屏障","d1":"暗之障壁：+8 冷卻縮減。","dm":"暗之障壁：+24 冷卻縮減。"},{"id":"priest.0.s2b2","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"safety_wall.b","name":"神聖還擊","d1":"施放暗之障壁讓你在 6 秒內 傷害 提高 3%。","dm":"施放暗之障壁讓你在 6 秒內 傷害 提高 9%。"},{"id":"priest.0.p5","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"Silentium","d1":"+1% 迴避.","dm":"+5% 迴避."},{"id":"priest.0.s2a3","r":7,"c":3,"m":2,"req":null,"req2":null,"path":"safety_wall.a","name":"避難所","d1":"施放暗之障壁讓你在 6 秒內 速度 提高 4%。","dm":"施放暗之障壁讓你在 6 秒內 速度 提高 8%。"},{"id":"priest.0.s2b3","r":7,"c":4,"m":2,"req":null,"req2":null,"path":"safety_wall.b","name":"銳利信仰","d1":"施放暗之障壁讓你在 6 秒內 爆擊 提高 2%。","dm":"施放暗之障壁讓你在 6 秒內 爆擊 提高 4%。"},{"id":"priest.0.p6","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"奉獻","d1":"+6 最大 HP.","dm":"+30 最大 HP."},{"id":"priest.0.s1af","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"sanctuary.a","name":"聖地","d1":"光耀之堂持續時間延長 30%、範圍擴大 15%，每秒多回復 1% HP。","dm":"光耀之堂持續時間延長 30%、範圍擴大 15%，每秒多回復 1% HP。"},{"id":"priest.0.s1bf","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"sanctuary.b","name":"不息聖域","d1":"光耀之堂充能加快 37.5%。","dm":"光耀之堂充能加快 37.5%。"},{"id":"priest.0.s2af","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"safety_wall.a","name":"永恆之牆","d1":"暗之障壁持續時間延長 100%。","dm":"暗之障壁持續時間延長 100%。"},{"id":"priest.0.s2bf","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"safety_wall.b","name":"恆常之牆","d1":"暗之障壁充能加快 37.5%。","dm":"暗之障壁充能加快 37.5%。"}]},{"index":1,"name":"驅魔","desc":"聖母之祈福與十字驅魔攻擊：淨化怪物群的光。","nodes":[{"id":"priest.1.s1","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"聖母之祈福","d1":"學習技能聖母之祈福: 祝福周圍地面：傷害附近敵人（對不死族 x2），並使其在 5 秒內受到傷害提高 15%。","dm":"學習技能聖母之祈福: 祝福周圍地面：傷害附近敵人（對不死族 x2），並使其在 5 秒內受到傷害提高 15%。"},{"id":"priest.1.p0","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"淨化者","d1":"+3% 對頭目與不死族傷害.","dm":"+15% 對頭目與不死族傷害."},{"id":"priest.1.s1a1","r":1,"c":0,"m":3,"req":"priest.1.s1","req2":null,"path":"benedictio.a","name":"廣域祝福","d1":"聖母之祈福：+10% 範圍。","dm":"聖母之祈福：+30% 範圍。"},{"id":"priest.1.s1b1","r":1,"c":1,"m":3,"req":"priest.1.s1","req2":null,"path":"benedictio.b","name":"燃燒祝福","d1":"聖母之祈福：+8% 傷害。","dm":"聖母之祈福：+24% 傷害。"},{"id":"priest.1.p1","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"神聖封印","d1":"+1% 爆擊.","dm":"+5% 爆擊."},{"id":"priest.1.p2","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"受祝福之錘","d1":"普通攻擊：+5% 傷害。","dm":"普通攻擊：+25% 傷害。"},{"id":"priest.1.s1a2","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"benedictio.a","name":"咒逐","d1":"聖母之祈福的標記效果提高 4%。","dm":"聖母之祈福的標記效果提高 12%。"},{"id":"priest.1.s1b2","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"benedictio.b","name":"聖火","d1":"聖母之祈福的爆擊傷害 +10%。","dm":"聖母之祈福的爆擊傷害 +30%。"},{"id":"priest.1.s2","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"十字驅魔攻擊","d1":"學習技能十字驅魔攻擊: 神聖十字對一片區域打擊六次：對其中一切造成沉重傷害（對不死族 x2）。","dm":"學習技能十字驅魔攻擊: 神聖十字對一片區域打擊六次：對其中一切造成沉重傷害（對不死族 x2）。"},{"id":"priest.1.p3","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"迅捷祈禱","d1":"+3 詠唱速度.","dm":"+15 詠唱速度."},{"id":"priest.1.s2a1","r":4,"c":3,"m":2,"req":"priest.1.s2","req2":null,"path":"magnus_exorcismus.a","name":"更多十字","d1":"十字驅魔攻擊：+1 道十字。","dm":"十字驅魔攻擊：+2 道十字。"},{"id":"priest.1.s2b1","r":4,"c":4,"m":3,"req":"priest.1.s2","req2":null,"path":"magnus_exorcismus.b","name":"大驅魔","d1":"十字驅魔攻擊：+8% 傷害。","dm":"十字驅魔攻擊：+24% 傷害。"},{"id":"priest.1.p4","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"宣判","d1":"+8% 爆擊傷害.","dm":"+40% 爆擊傷害."},{"id":"priest.1.s1a3","r":6,"c":0,"m":2,"req":null,"req2":null,"path":"benedictio.a","name":"快速禮拜","d1":"聖母之祈福：+8 冷卻縮減。","dm":"聖母之祈福：+16 冷卻縮減。"},{"id":"priest.1.s1b3","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"benedictio.b","name":"神聖打擊","d1":"聖母之祈福有 6% 機率暈眩。","dm":"聖母之祈福有 12% 機率暈眩。"},{"id":"priest.1.s2a2","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"magnus_exorcismus.a","name":"巨大十字","d1":"十字驅魔攻擊：+10% 範圍。","dm":"十字驅魔攻擊：+30% 範圍。"},{"id":"priest.1.s2b2","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"magnus_exorcismus.b","name":"快速驅魔","d1":"十字驅魔攻擊：+6 冷卻縮減。","dm":"十字驅魔攻擊：+18 冷卻縮減。"},{"id":"priest.1.p5","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"神聖熱忱","d1":"+2% 雙重詠唱.","dm":"+10% 雙重詠唱."},{"id":"priest.1.s2a3","r":7,"c":3,"m":3,"req":null,"req2":null,"path":"magnus_exorcismus.a","name":"淨化之光","d1":"十字驅魔攻擊使命中的敵人致盲 0.6 秒。","dm":"十字驅魔攻擊使命中的敵人致盲 1.8 秒。"},{"id":"priest.1.s2b3","r":7,"c":4,"m":2,"req":null,"req2":null,"path":"magnus_exorcismus.b","name":"贖罪","d1":"被十字驅魔攻擊命中的敵人在 5 秒內造成的傷害減少 8%。","dm":"被十字驅魔攻擊命中的敵人在 5 秒內造成的傷害減少 16%。"},{"id":"priest.1.p6","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"神聖之鎧","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"priest.1.s1af","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"benedictio.a","name":"反射祝福","d1":"你的普通攻擊有 12% 機率免費施放聖母之祈福，造成其 60% 的傷害.","dm":"你的普通攻擊有 12% 機率免費施放聖母之祈福，造成其 60% 的傷害."},{"id":"priest.1.s1bf","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"benedictio.b","name":"燃燒審判","d1":"聖母之祈福傷害提高 150%，範圍擴大 50%。","dm":"聖母之祈福傷害提高 150%，範圍擴大 50%。"},{"id":"priest.1.s2af","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"magnus_exorcismus.a","name":"Judex","d1":"十字驅魔攻擊：+30% 傷害, +2 次衝擊。","dm":"十字驅魔攻擊：+30% 傷害, +2 次衝擊。"},{"id":"priest.1.s2bf","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"magnus_exorcismus.b","name":"淨化之地","d1":"十字驅魔攻擊命中處留下持續 4 秒的區域，每秒對其中所有敵人造成其打擊 15% 的傷害.","dm":"十字驅魔攻擊命中處留下持續 4 秒的區域，每秒對其中所有敵人造成其打擊 15% 的傷害."}]},{"index":2,"name":"禮拜","desc":"神威祈福與聖母之頌歌：讓你更強更快的祝福。","nodes":[{"id":"priest.2.s1","r":0,"c":0,"m":1,"req":null,"req2":null,"path":null,"name":"神威祈福","d1":"學習技能神威祈福: 15 秒內傷害提高 10%。","dm":"學習技能神威祈福: 15 秒內傷害提高 10%。"},{"id":"priest.2.p0","r":0,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"Gloria","d1":"+2% 傷害.","dm":"+10% 傷害."},{"id":"priest.2.s1a1","r":1,"c":0,"m":3,"req":"priest.2.s1","req2":null,"path":"impositio.a","name":"神聖之手","d1":"神威祈福的傷害提高 3%.","dm":"神威祈福的傷害提高 9%."},{"id":"priest.2.s1b1","r":1,"c":1,"m":3,"req":"priest.2.s1","req2":null,"path":"impositio.b","name":"銳利榮光","d1":"施放神威祈福讓你在 8 秒內 爆擊 提高 2%。","dm":"施放神威祈福讓你在 8 秒內 爆擊 提高 6%。"},{"id":"priest.2.p1","r":1,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"加速術+","d1":"+1.5% 移動速度.","dm":"+7.5% 移動速度."},{"id":"priest.2.p2","r":2,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"懇求","d1":"+3 詠唱速度.","dm":"+15 詠唱速度."},{"id":"priest.2.s1a2","r":3,"c":0,"m":3,"req":null,"req2":null,"path":"impositio.a","name":"持久祈福","d1":"神威祈福持續時間延長 15%。","dm":"神威祈福持續時間延長 45%。"},{"id":"priest.2.s1b2","r":3,"c":1,"m":3,"req":null,"req2":null,"path":"impositio.b","name":"受祝福的步伐","d1":"施放神威祈福讓你在 8 秒內 速度 提高 4%。","dm":"施放神威祈福讓你在 8 秒內 速度 提高 12%。"},{"id":"priest.2.s2","r":3,"c":3,"m":1,"req":null,"req2":null,"path":null,"name":"聖母之頌歌","d1":"學習技能聖母之頌歌: 12 秒內：+30 冷卻縮減。","dm":"學習技能聖母之頌歌: 12 秒內：+30 冷卻縮減。"},{"id":"priest.2.p3","r":4,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"Aspersio","d1":"普通攻擊對不死族傷害 +15%。","dm":"普通攻擊對不死族傷害 +75%。"},{"id":"priest.2.s2a1","r":4,"c":3,"m":3,"req":"priest.2.s2","req2":null,"path":"magnificat.a","name":"壯麗","d1":"聖母之頌歌多給 5 冷卻縮減.","dm":"聖母之頌歌多給 15 冷卻縮減."},{"id":"priest.2.s2b1","r":4,"c":4,"m":3,"req":"priest.2.s2","req2":null,"path":"magnificat.b","name":"恩典再臨","d1":"聖母之頌歌持續期間，每秒回復最大 HP 的 0.5%.","dm":"聖母之頌歌持續期間，每秒回復最大 HP 的 1.5%."},{"id":"priest.2.p4","r":5,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"神聖沉默","d1":"命中時 +2% 暈眩.","dm":"命中時 +10% 暈眩."},{"id":"priest.2.s1a3","r":6,"c":0,"m":2,"req":null,"req2":null,"path":"impositio.a","name":"恆常祝福","d1":"神威祈福：+8 冷卻縮減。","dm":"神威祈福：+16 冷卻縮減。"},{"id":"priest.2.s1b3","r":6,"c":1,"m":2,"req":null,"req2":null,"path":"impositio.b","name":"榮光之恩","d1":"施放神威祈福讓你在 8 秒內 傷害 提高 3%。","dm":"施放神威祈福讓你在 8 秒內 傷害 提高 6%。"},{"id":"priest.2.s2a2","r":6,"c":3,"m":3,"req":null,"req2":null,"path":"magnificat.a","name":"永恆詠唱","d1":"聖母之頌歌持續時間延長 15%。","dm":"聖母之頌歌持續時間延長 45%。"},{"id":"priest.2.s2b2","r":6,"c":4,"m":3,"req":null,"req2":null,"path":"magnificat.b","name":"神聖聖歌","d1":"施放聖母之頌歌讓你在 8 秒內 傷害 提高 3%。","dm":"施放聖母之頌歌讓你在 8 秒內 傷害 提高 9%。"},{"id":"priest.2.p5","r":7,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"信仰之盾","d1":"-1% 受到傷害.","dm":"-5% 受到傷害."},{"id":"priest.2.s2a3","r":7,"c":3,"m":2,"req":null,"req2":null,"path":"magnificat.a","name":"快速頌歌","d1":"聖母之頌歌：+6 冷卻縮減。","dm":"聖母之頌歌：+12 冷卻縮減。"},{"id":"priest.2.s2b3","r":7,"c":4,"m":2,"req":null,"req2":null,"path":"magnificat.b","name":"Kyrie","d1":"施放聖母之頌歌讓你在 8 秒內 爆擊 提高 2%。","dm":"施放聖母之頌歌讓你在 8 秒內 爆擊 提高 4%。"},{"id":"priest.2.p6","r":8,"c":2,"m":5,"req":null,"req2":null,"path":null,"name":"堅定信仰","d1":"+6 最大 HP.","dm":"+30 最大 HP."},{"id":"priest.2.s1af","r":9,"c":0,"m":1,"req":null,"req2":null,"path":"impositio.a","name":"永恆祈福","d1":"神威祈福持續時間延長 100%。","dm":"神威祈福持續時間延長 100%。"},{"id":"priest.2.s1bf","r":9,"c":1,"m":1,"req":null,"req2":null,"path":"impositio.b","name":"快速祈福","d1":"神威祈福充能加快 37.5%。","dm":"神威祈福充能加快 37.5%。"},{"id":"priest.2.s2af","r":9,"c":3,"m":1,"req":null,"req2":null,"path":"magnificat.a","name":"永恆頌歌","d1":"聖母之頌歌持續時間延長 100%。","dm":"聖母之頌歌持續時間延長 100%。"},{"id":"priest.2.s2bf","r":9,"c":4,"m":1,"req":null,"req2":null,"path":"magnificat.b","name":"完美禮拜","d1":"神威祈福與聖母之頌歌同時生效時，傷害 +12%.","dm":"神威祈福與聖母之頌歌同時生效時，傷害 +12%."}]}]}},"skills":{"firebolt":{"id":"firebolt","name":"火箭術","desc":"火球從天而降砸向最近的敵人。每級多一發。","descMax":"+25% 傷害。","type":"multi","maxLevel":8,"tags":["ranged_strike","multi","burst","magic","fire","cast"]},"coldbolt":{"id":"coldbolt","name":"冰箭術","desc":"冰箭從天而降並造成緩速（可學會冰凍）。每級多一發。","descMax":"+25% 傷害。","type":"multi","maxLevel":8,"tags":["ranged_strike","multi","burst","magic","water","cast"]},"lightning":{"id":"lightning","name":"雷擊術","desc":"對隨機敵人降下閃電。每級多一發。","descMax":"+2 發。","type":"multi","maxLevel":8,"tags":["ranged_strike","multi","burst","magic","wind","cast"]},"soul_strike":{"id":"soul_strike","name":"聖靈召喚","desc":"靈魂彎曲飛向敵人（對不死族 x2）。每級多一個靈魂。","descMax":"+1 個靈魂與 +10% 傷害。","type":"multi","maxLevel":8,"tags":["ranged_strike","multi","burst","magic","ghost","cast"]},"napalm":{"id":"napalm","name":"心靈爆破","desc":"對最近的敵人及其周圍施以幽靈打擊。","descMax":"+20% 傷害與 +10% 範圍。","type":"aoe","maxLevel":8,"tags":["ranged_strike","area","magic","ghost","cast"]},"fire_wall":{"id":"fire_wall","name":"火焰之壁","desc":"在你與敵人之間升起火牆。","descMax":"+1 團火焰、+15% 傷害、延長持續時間並縮短施放。","type":"zone","maxLevel":8,"tags":["ground","area","persistent","magic","fire","cast"]},"frost_diver":{"id":"frost_diver","name":"冰凍術","desc":"沿地面延伸的冰痕，凍結敵人。不造成傷害：純控場。","descMax":"冰凍 +0.3 秒。","type":"single","maxLevel":8,"tags":["ranged_strike","single","magic","water","cast"]},"sight":{"id":"sight","name":"火狩","desc":"兩團環繞你旋轉的火焰。","descMax":"+1 團火焰與 +15% 傷害。","type":"orbit","maxLevel":6,"tags":["orbit","magic","fire"]},"thunderstorm":{"id":"thunderstorm","name":"雷爆術","desc":"在一群敵人上方降下雷暴。","descMax":"+20% 傷害、+10% 範圍並延長施放。","type":"aoe","maxLevel":8,"tags":["ground","area","magic","wind","cast"]},"frost_nova":{"id":"frost_nova","name":"霜凍之術","desc":"在身邊爆發冰霜：傷害附近敵人並冰凍 2 秒。","descMax":"+20% 傷害與 +8% 範圍。","type":"aoe","maxLevel":8,"tags":["aura","area","magic","water","cast"]},"storm_gust":{"id":"storm_gust","name":"暴風雪","desc":"在敵群上降下巨大暴風雪：多次冰擊，擊退並可能冰凍。","descMax":"+2 次打擊與 +15% 傷害。","type":"aoe","maxLevel":8,"tags":["ground","area","magic","water","cast"]},"jupitel_thunder":{"id":"jupitel_thunder","name":"雷鳴術","desc":"對最近的敵人發射雷球：沉重傷害並將其擊飛。貫穿一個敵人。","descMax":"+20% 傷害。","type":"projectile","maxLevel":8,"tags":["projectile","single","magic","wind","cast"]},"lord_of_vermilion":{"id":"lord_of_vermilion","name":"怒雷強擊","desc":"在大範圍內降下無盡雷電：多次打擊並可能致盲敵人。","descMax":"+2 發與 +15% 傷害。","type":"aoe","maxLevel":8,"tags":["ground","area","magic","wind","cast"]},"meteor_storm":{"id":"meteor_storm","name":"隕石術","desc":"隕石隨機落在一群敵人身上：每顆都會範圍爆炸並可能暈眩。","descMax":"+1 顆隕石與 +15% 傷害。","type":"aoe","maxLevel":8,"tags":["ground","area","magic","fire","cast"]},"fire_pillar":{"id":"fire_pillar","name":"火柱攻擊","desc":"火柱從一群敵人腳下噴發，連續燃燒四次。","descMax":"+20% 傷害與 +8% 範圍。","type":"aoe","maxLevel":8,"tags":["ground","area","magic","fire","cast"]},"double_strafe":{"id":"double_strafe","name":"二連矢","desc":"極快的箭矢齊射，左右交替彎曲射向最近的敵人。","descMax":"+20% 傷害。","type":"projectile","maxLevel":8,"tags":["projectile","single","physical","neutral"]},"arrow_shower":{"id":"arrow_shower","name":"箭雨","desc":"對敵群射出扇形箭矢：命中前方所有敵人並擊退。射出 2 輪。","descMax":"+15% 傷害。","type":"aoe","maxLevel":8,"tags":["ranged_strike","area","physical","neutral"]},"arrow_rain":{"id":"arrow_rain","name":"箭矢暴雨","desc":"向天空射出一輪箭矢，隨即落在被標記的敵群上。","descMax":"+2 支箭與 +15% 傷害。","type":"aoe","maxLevel":8,"tags":["ground","area","physical","neutral"]},"arrow_repel":{"id":"arrow_repel","name":"衝鋒箭","desc":"巨大箭矢，貫穿所有敵人並將其遠遠擊退。","descMax":"+25% 傷害。","type":"projectile","maxLevel":8,"tags":["projectile","pierce","physical","neutral","cast"]},"retreat":{"id":"retreat","name":"撤退","desc":"你向後跳離最近的敵人，落地時射出強力一箭，貫穿直線上的一切。1.5 秒內免疫傷害。","descMax":"+20% 傷害。","type":"single","maxLevel":8,"tags":["projectile","single","pierce","physical","neutral"]},"arcane_shot":{"id":"arcane_shot","name":"奧術射擊","desc":"對射程內最大敵群的中心發射奧術射擊：命中時釋放脈衝，把附近怪物（頭目除外）拉向中心。","descMax":"+20% 傷害。","type":"single","maxLevel":8,"tags":["ranged_strike","single","physical","hybrid","ghost"]},"fire_arrow":{"id":"fire_arrow","name":"火焰箭","desc":"向最近的敵人拋射火焰箭：如火球般爆炸，對命中範圍內的一切造成傷害並點燃，火花濺射到更外圍燃燒周圍敵人。","descMax":"+20% 傷害與 +6% 範圍。","type":"aoe","maxLevel":8,"tags":["ranged_strike","area","physical","hybrid","fire"]},"concentration":{"id":"concentration","name":"心神凝聚","desc":"10 秒內：AGI 與 DEX +12%。","descMax":"10 秒內：AGI 與 DEX +12%。","type":"buff","maxLevel":6,"tags":["buff"]},"blitz_beat":{"id":"blitz_beat","name":"閃電衝擊","desc":"你的獵鷹對隨機敵人俯衝三次，也會傷害其周圍敵人。","descMax":"+20% 傷害。","type":"multi","maxLevel":8,"tags":["ranged_strike","multi","burst","physical","neutral"]},"detecting":{"id":"detecting","name":"獵鷹尋敵","desc":"你的獵鷹標記視野內最強的 3 個敵人：6 秒內受到傷害提高 20%。","descMax":"你的獵鷹標記視野內最強的 3 個敵人：6 秒內受到傷害提高 20%。","type":"control","maxLevel":8,"tags":["aura","area","physical","neutral"]},"beast_strafing":{"id":"beast_strafing","name":"動物猛擊","desc":"對射程內最強的敵人射出兩支重箭：對頭目與菁英 +50% 傷害。","descMax":"+20% 傷害。","type":"projectile","maxLevel":8,"tags":["projectile","single","physical","neutral"]},"phantasmic_arrow":{"id":"phantasmic_arrow","name":"幻影箭","desc":"巨大的幻影之箭：貫穿所有敵人並將其遠遠擊退。","descMax":"+20% 傷害。","type":"projectile","maxLevel":8,"tags":["projectile","pierce","physical","ghost"]},"claymore_trap":{"id":"claymore_trap","name":"爆散陷阱","desc":"在敵人附近設置 2 個陷阱：第一個被踩到的會爆炸並傷害周圍所有敵人。持續 12 秒。","descMax":"+20% 傷害與 +8% 範圍。","type":"zone","maxLevel":8,"tags":["ground","area","persistent","physical","neutral"]},"sandman":{"id":"sandman","name":"睡魔陷阱","desc":"向一群敵人撒出魔法沙：使其睡眠 2.5 秒（頭目減半）。","descMax":"向一群敵人撒出魔法沙：使其睡眠 2.5 秒（頭目減半）。","type":"control","maxLevel":8,"tags":["ground","area","physical","neutral"]},"heal":{"id":"heal","name":"治癒術","desc":"光之脈衝：治療自己並傷害周圍敵人（對不死族 x2）。超出最大 HP 的治療量會儲存為恩典：下一次治癒術會將其釋放為額外傷害（最多 +100%）。","descMax":"+治療、+傷害與 +範圍。","type":"aoe","maxLevel":8,"tags":["aura","area","magic","holy"]},"holy_light":{"id":"holy_light","name":"神聖之光","desc":"對視野內的頭目降下聖光柱；若無頭目則落在最大的敵群上：非常強的一擊，也會波及周圍（對不死族 x2）。","descMax":"+35% 傷害。","type":"multi","maxLevel":8,"tags":["ranged_strike","multi","magic","holy","cast"]},"ruwach":{"id":"ruwach","name":"Ruwach","desc":"環繞你旋轉的光球：碰到敵人時爆裂，傷害周圍所有人，不久後再出現（對不死族 x2）。依 ATK 或 MATK 中較高者成長。","descMax":"+1 顆光球與 +35% 傷害。","type":"orbit","maxLevel":6,"tags":["orbit","magic","holy"]},"decrease_agi":{"id":"decrease_agi","name":"緩速術","desc":"使周圍敵人緩速並造成少量神聖傷害的波動。神聖之光與光獵對緩速中的敵人傷害 +30%。","descMax":"使周圍敵人緩速並造成少量神聖傷害的波動。神聖之光與光獵對緩速中的敵人傷害 +30%。","type":"control","maxLevel":6,"tags":["aura","area","magic","holy","cast"]},"signum_crucis":{"id":"signum_crucis","name":"Signum Crucis","desc":"以神聖之環淨化周圍地面 6 秒：每秒傷害圈內敵人並加以標記。被標記的敵人受到你所有神聖技能的傷害提高（對不死族 x3）。","descMax":"+15% 傷害並延長持續時間。","type":"zone","maxLevel":8,"tags":["ground","area","persistent","magic","holy","cast"]},"aqua_benedicta":{"id":"aqua_benedicta","name":"Aqua Benedicta","desc":"將聖水灑向最近的敵群：水窪持續 6 秒，每秒傷害站在其中的敵人，你站在裡面時會回復 HP。","descMax":"+15% 傷害並延長持續時間。","type":"zone","maxLevel":8,"tags":["ground","area","persistent","magic","holy","cast"]},"blessing":{"id":"blessing","name":"天使之賜福","desc":"為自己賜福 12 秒：傷害提高、詠唱加快。","descMax":"為自己賜福 12 秒：傷害提高、詠唱加快。","type":"buff","maxLevel":6,"tags":["buff"]},"holy_smite":{"id":"holy_smite","name":"神聖重擊","desc":"對最近的敵人施以受祝福的錘擊：兇猛的物理打擊並使其短暫暈眩。每命中一個敵人就祝福你的武器一次：接下來的普通攻擊傷害 +50%，並釋放擊中周圍的神聖波動。需要鈍器、拳套或書本。","descMax":"對最近的敵人施以受祝福的錘擊：兇猛的物理打擊並使其短暫暈眩。每命中一個敵人就祝福你的武器一次：接下來的普通攻擊傷害 +50%，並釋放擊中周圍的神聖波動。需要鈍器、拳套或書本。","type":"single","maxLevel":8,"tags":["melee","single","physical","holy"]},"sanctuary":{"id":"sanctuary","name":"光耀之堂","desc":"淨化腳下地面 8 秒：在其中時每秒回復 1.5% HP，踏入的敵人會燃燒（對不死族 x2）。","descMax":"+15% 傷害與 +8% 範圍。","type":"zone","maxLevel":8,"tags":["ground","area","persistent","magic","holy"]},"safety_wall":{"id":"safety_wall","name":"暗之障壁","desc":"光之屏障環繞你，吸收接下來受到的 3 次攻擊。","descMax":"光之屏障環繞你，吸收接下來受到的 3 次攻擊。","type":"buff","maxLevel":8,"tags":["buff"]},"benedictio":{"id":"benedictio","name":"聖母之祈福","desc":"祝福周圍地面：傷害附近敵人（對不死族 x2），並使其在 5 秒內受到傷害提高 15%。","descMax":"+20% 傷害與 +8% 範圍。","type":"aoe","maxLevel":8,"tags":["aura","area","magic","holy","cast"]},"magnus_exorcismus":{"id":"magnus_exorcismus","name":"十字驅魔攻擊","desc":"神聖十字對一片區域打擊六次：對其中一切造成沉重傷害（對不死族 x2）。","descMax":"+1 道十字與 +15% 傷害。","type":"aoe","maxLevel":8,"tags":["ground","area","magic","holy","cast"]},"impositio":{"id":"impositio","name":"神威祈福","desc":"15 秒內傷害提高 10%。","descMax":"15 秒內傷害提高 10%。","type":"buff","maxLevel":8,"tags":["buff"]},"magnificat":{"id":"magnificat","name":"聖母之頌歌","desc":"12 秒內：+30 冷卻縮減。","descMax":"12 秒內：+58 冷卻縮減。","type":"buff","maxLevel":8,"tags":["buff"]}}};
+(() => {
+  "use strict";
+
+  const ICONS = {
+    crest: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 19.5 5.5v6.2c0 5-3.2 8.7-7.5 10.3-4.3-1.6-7.5-5.3-7.5-10.3V5.5L12 2.5Z"/><path d="m12 7 1.4 3 3.1.4-2.3 2.1.6 3.1-2.8-1.5-2.8 1.5.6-3.1-2.3-2.1 3.1-.4L12 7Z"/></svg>',
+    scroll: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6"/><path d="M6 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.8-5.1"/></svg>',
+    gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3h.1a1.6 1.6 0 0 0 .9-1.5V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8v.1a1.6 1.6 0 0 0 1.5.9H21a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.4 1Z"/></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9.5v4.5"/><circle cx="12" cy="17.2" r="0.8" fill="currentColor"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>',
+    spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2.5 2.2 6.8 6.8 2.2-6.8 2.2-2.2 6.8-2.2-6.8-6.8-2.2 6.8-2.2L12 2.5Z"/></svg>',
+    speed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 15.5a8.5 8.5 0 1 1 15 0"/><path d="m12 13 4.2-4.2"/><circle cx="12" cy="13.5" r="1.5" fill="currentColor"/><path d="M7.5 18.5h9"/></svg>',
+    lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V7.5a4 4 0 1 1 8 0V11"/></svg>',
+    wizard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="15.5" cy="7.5" r="3.5"/><path d="M13 10 4.5 20.5"/><path d="m11 6-2-2"/><path d="m19 3 1.5-1"/><path d="m20.5 9.5 1.5.5"/></svg>',
+    hunter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4c6.5 1 11 5.5 12 12"/><path d="M5 4 17 16"/><path d="M4.5 19.5 19.5 4.5"/><path d="M15.5 4.5h4v4"/></svg>',
+    priest: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v17"/><path d="M6.5 9h11"/><circle cx="12" cy="9" r="3.5"/></svg>',
+    sword: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5 19.5 4.5 19.5 9.5 9 20 4 15 14.5 4.5Z"/><path d="m5.5 16.5-2 2"/><path d="m8 11 5 5"/></svg>',
+    calc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.5 12h2"/><path d="M13.5 12h2"/><path d="M8.5 16h2"/><path d="M13.5 16h2"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    tree: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M12 7.2V12"/><path d="M6 15.8V12h12v3.8"/></svg>',
+    skill: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 8.5 9L12 21 3.5 12 12 3Z"/><circle cx="12" cy="12" r="2.5"/></svg>',
+    stat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5h15"/><rect x="6" y="11" width="3" height="6" rx="0.8"/><rect x="10.5" y="6" width="3" height="11" rx="0.8"/><rect x="15" y="8.5" width="3" height="8.5" rx="0.8"/></svg>'
+  };
+
+  function iconHtml(name) {
+    return ICONS[name] || ICONS.spark;
+  }
+
+  function hydrateIcons(root = document) {
+    root.querySelectorAll("[data-icon]").forEach(el => {
+      const key = el.getAttribute("data-icon");
+      el.innerHTML = iconHtml(key);
+    });
+  }
+
+  // Verified Game Formulas (Beta 0.6.6 / v2026.11.13)
+  const QH_CDR_PER_AGI = (1 / 0.6 - 1) / 99;
+
+  function maxBaseStats(lv) {
+    let total = 48;
+    for (let a = 1; a < lv; a++) {
+      total += Math.floor(a / 5) + 3;
+    }
+    return total;
+  }
+
+  function stepCost(val) {
+    return Math.floor((val - 1) / 10) + 2;
+  }
+
+  function totalStatCost(targetVal) {
+    let cost = 0;
+    for (let t = 1; t < targetVal; t++) {
+      cost += stepCost(t);
+    }
+    return cost;
+  }
+
+  function calcPowerScale(statVal, rank) {
+    const a = Math.max(0, statVal) / 15.46;
+    const r1 = 1 + Math.pow(a, 2) * 0.045;
+    if (rank <= 1) return r1;
+    return Math.max(1 + Math.pow(a, 3) * 0.0075, 1.5 * r1);
+  }
+
+  function calcCooldownMult(agi) {
+    const haste = Math.max(0, agi) * QH_CDR_PER_AGI;
+    return 1 / (1 + haste);
+  }
+
+  function calcCastSec(baseSec, ratioDiv, dex, castHaste) {
+    return baseSec * Math.max(0, 1 - dex / ratioDiv) / (1 + Math.max(0, castHaste));
+  }
+
+  function calcFleePct(agi, luk) {
+    return Math.min(50, agi * 0.2 + luk * 0.1);
+  }
+
+  // Verified Top 3 Builds (50 pts 1st job + 50 pts 2nd job single branch)
+  const BUILDS = {
+    wizard: {
+      key: "wizard",
+      rank: "TOP 1",
+      title: "魔法師 → 巫師",
+      subtitle: "全圖控場與範圍清屏主力・MATK = 3×INT",
+      icon: "wizard",
+      firstJob: "mage",
+      secondJob: "wizard",
+      statVariants: [
+        {
+          id: "main",
+          label: "主推均衡｜INT 99 / AGI 80 / DEX 53",
+          stats: { str: 1, agi: 80, vit: 1, int: 99, dex: 53, luk: 1 },
+          primaryKey: "int",
+          notes: {
+            int: "核心魔法倍率＋MATK (297)",
+            agi: "冷卻剩餘 65.0% (-35% CD)",
+            dex: "單體詠唱 -53% / 範圍 -35.3%"
+          },
+          reason: "99 INT 吃滿二轉三次方成長曲線；AGI 80 提供穩定的全技能高頻施放；餘點 53 DEX 搭配奧術分支「迅速詠唱」已足夠流暢打出暴風雪與霜凍之術，總計 1,273 點零浪費。",
+          order: [
+            { lv: "Lv 1–30", text: "INT 先衝至 50（吃滿前中期法傷倍率，成本 194 點）" },
+            { lv: "Lv 31–55", text: "補 AGI 至 45、DEX 至 15–20（解決冷卻過長與詠唱卡手）" },
+            { lv: "Lv 56–75", text: "全力補滿 INT 至 99（衝破二轉指數門檻，鎖定核心輸出）" },
+            { lv: "Lv 76–99", text: "補 AGI 至 80 → 剩餘 214 點補 DEX 至 53" }
+          ]
+        },
+        {
+          id: "cast",
+          label: "高詠特化｜INT 99 / AGI 70 / DEX 65",
+          stats: { str: 1, agi: 70, vit: 1, int: 99, dex: 65, luk: 1 },
+          primaryKey: "int",
+          notes: {
+            int: "核心魔法倍率＋MATK (297)",
+            agi: "冷卻剩餘 68.0% (-32% CD)",
+            dex: "單體詠唱 -65% / 範圍 -43.3%"
+          },
+          reason: "適合頻繁讀條「暴風雪」或想貼近瞬發手感的高難場次。犧牲 3% 冷卻減免換取更高的範圍詠唱縮減（僅剩 1 點預算餘裕）。",
+          order: [
+            { lv: "Lv 1–30", text: "INT 先衝至 50（前期火箭／冰箭秒怪清波次）" },
+            { lv: "Lv 31–55", text: "AGI 至 40、DEX 至 25（預先建立快詠體感）" },
+            { lv: "Lv 56–75", text: "INT 拉滿 99（最大化法術基底與力量係數）" },
+            { lv: "Lv 76–99", text: "AGI 停在 70（成本 342）→ 其餘全力投資 DEX 至 65" }
+          ]
+        }
+      ],
+      firstPlans: {
+        ice: {
+          branchIndex: 1,
+          branchFocus: "冰 40 ＋ 奧術 10（合計 50/50 點・冰霜導管＋殘留冰霜全轉冰箭）",
+          alloc: {
+            "mage.1.coldbolt_dmg": 5,
+            "mage.1.frost_dmg": 5,
+            "mage.1.coldbolt_bolts": 2,
+            "mage.1.water_infusion": 1,
+            "mage.1.energy_coat": 5,
+            "mage.1.freeze": 5,
+            "mage.1.frost_armor": 2,
+            "mage.1.shatter": 2,
+            "mage.1.water_conduit": 1,
+            "mage.1.winter_skin": 5,
+            "mage.1.ice_rain": 5,
+            "mage.1.slow": 1,
+            "mage.1.eternal_winter": 1,
+            "mage.2.lightning_dmg": 5,
+            "mage.2.quick_cast": 5
+          },
+          order: [
+            "mage.1.coldbolt_dmg",
+            "mage.1.frost_dmg",
+            "mage.1.coldbolt_bolts",
+            "mage.1.water_infusion",
+            "mage.1.energy_coat",
+            "mage.1.freeze",
+            "mage.1.frost_armor",
+            "mage.1.shatter",
+            "mage.1.water_conduit",
+            "mage.1.winter_skin",
+            "mage.1.ice_rain",
+            "mage.1.slow",
+            "mage.1.eternal_winter",
+            "mage.2.lightning_dmg",
+            "mage.2.quick_cast"
+          ]
+        },
+        storm: {
+          branchIndex: 2,
+          branchFocus: "奧術 32 ＋ 冰 13 ＋ 火 5（合計 50/50 點・電壓導管＋雙重屬性附加）",
+          alloc: {
+            "mage.2.lightning_dmg": 5,
+            "mage.2.lightning_bolts": 2,
+            "mage.2.quick_cast": 5,
+            "mage.2.wind_infusion": 1,
+            "mage.2.storm_dmg": 3,
+            "mage.2.storm_area": 2,
+            "mage.2.stone_curse": 3,
+            "mage.2.wind_conduit": 1,
+            "mage.2.storm_cd": 3,
+            "mage.2.double_cast": 3,
+            "mage.2.arcane_power": 3,
+            "mage.2.lord_of_storms": 1,
+            "mage.1.frost_dmg": 5,
+            "mage.1.coldbolt_dmg": 5,
+            "mage.1.water_infusion": 1,
+            "mage.1.energy_coat": 2,
+            "mage.0.inner_heat": 5
+          },
+          order: [
+            "mage.2.lightning_dmg",
+            "mage.2.lightning_bolts",
+            "mage.2.quick_cast",
+            "mage.2.wind_infusion",
+            "mage.2.storm_dmg",
+            "mage.2.storm_area",
+            "mage.2.stone_curse",
+            "mage.2.wind_conduit",
+            "mage.2.storm_cd",
+            "mage.2.double_cast",
+            "mage.2.arcane_power",
+            "mage.2.lord_of_storms",
+            "mage.1.frost_dmg",
+            "mage.1.coldbolt_dmg",
+            "mage.1.water_infusion",
+            "mage.1.energy_coat",
+            "mage.0.inner_heat"
+          ]
+        }
+      },
+      secondVariants: [
+        {
+          id: "ice",
+          label: "主推【冰】分支｜全圖冰控流",
+          branchIndex: 1,
+          note: "單分支鎖定 50 點：圍繞「霜凍之術」與「暴風雪」無限控場與碎冰增傷，適配高壓波次。",
+          alloc: {
+            "wizard.1.s1": 1,
+            "wizard.1.p0": 5,
+            "wizard.1.s1b1": 3,
+            "wizard.1.p1": 5,
+            "wizard.1.p2": 5,
+            "wizard.1.s1b2": 3,
+            "wizard.1.s2": 1,
+            "wizard.1.p3": 5,
+            "wizard.1.s2a1": 2,
+            "wizard.1.p4": 5,
+            "wizard.1.s1b3": 2,
+            "wizard.1.s2a2": 3,
+            "wizard.1.s2a3": 3,
+            "wizard.1.p5": 5,
+            "wizard.1.s1bf": 1,
+            "wizard.1.s2af": 1
+          },
+          order: [
+            "wizard.1.s1",
+            "wizard.1.p0",
+            "wizard.1.s1b1",
+            "wizard.1.p1",
+            "wizard.1.p2",
+            "wizard.1.s1b2",
+            "wizard.1.s2",
+            "wizard.1.p3",
+            "wizard.1.s2a1",
+            "wizard.1.p4",
+            "wizard.1.s1b3",
+            "wizard.1.s2a2",
+            "wizard.1.s2a3",
+            "wizard.1.p5",
+            "wizard.1.s1bf",
+            "wizard.1.s2af"
+          ],
+          runSkills: [
+            { id: "coldbolt", role: "冰霜導管開局送", tip: "點出「冰霜導管」後 Lv 1 開局直接持有，吃滿冰系 40 點與碎冰 +10% 易傷。" },
+            { id: "storm_gust", role: "二轉主 AoE", tip: "冰分支核心大招，重複冰擊＋擊退＋絕對零度全體冰凍，控場清屏核心。" },
+            { id: "frost_nova", role: "貼身保命控", tip: "近身爆發 2 秒以上冰凍；走「毀滅新星」線兼顧清雜與防突臉。" },
+            { id: "firebolt", role: "首次升級必出", tip: "第 1 次升級三選一必出招牌技；點出「殘留冰霜」後自動轉化為第 2 套獨立冰箭連射，吃滿冰箭強化。" },
+            { id: "lightning", role: "雙重轉化補傷", tip: "配合「殘留冰霜」同樣轉為第 3 套獨立冰箭齊射；前中期奧術 5 點高壓電僅作 Row 0 門檻來解鎖迅速詠唱 (+25)。" }
+          ]
+        },
+        {
+          id: "storm",
+          label: "備選【暴風雨】分支｜高頻雷電流",
+          branchIndex: 2,
+          note: "單分支鎖定 50 點：點滿風屬連鎖雷電、對單擊退「雷鳴術」與全圖「怒雷強擊」。",
+          alloc: {
+            "wizard.2.p0": 5,
+            "wizard.2.s1": 1,
+            "wizard.2.p1": 5,
+            "wizard.2.s1a1": 2,
+            "wizard.2.p2": 5,
+            "wizard.2.s1a2": 3,
+            "wizard.2.s2": 1,
+            "wizard.2.p3": 5,
+            "wizard.2.s2a1": 3,
+            "wizard.2.p4": 5,
+            "wizard.2.s1a3": 3,
+            "wizard.2.s2a2": 3,
+            "wizard.2.p5": 5,
+            "wizard.2.s2a3": 2,
+            "wizard.2.s1af": 1,
+            "wizard.2.s2af": 1
+          },
+          order: [
+            "wizard.2.p0",
+            "wizard.2.s1",
+            "wizard.2.p1",
+            "wizard.2.s1a1",
+            "wizard.2.p2",
+            "wizard.2.s1a2",
+            "wizard.2.s2",
+            "wizard.2.p3",
+            "wizard.2.s2a1",
+            "wizard.2.p4",
+            "wizard.2.s1a3",
+            "wizard.2.s2a2",
+            "wizard.2.p5",
+            "wizard.2.s2a3",
+            "wizard.2.s1af",
+            "wizard.2.s2af"
+          ],
+          runSkills: [
+            { id: "lightning", role: "電壓導管開局送", tip: "點出「電壓導管」後 Lv 1 開局直接持有，並吸收火／冰箭局內強化。" },
+            { id: "lord_of_vermilion", role: "二轉主 AoE", tip: "超大範圍雷電齊落並致盲敵人，走「天空之怒／電場」清屏極快。" },
+            { id: "jupitel_thunder", role: "擊退推王", tip: "貫穿與強力擊飛，點出「連鎖閃電」後兼顧小群清雜與菁英壓制。" },
+            { id: "thunderstorm", role: "奧術聚怪重砲", tip: "吃滿一轉奧術 8 點暴風前線／快速風暴＋終極「電力混沌」範圍 +40% 並將敵群拉向中心。" },
+            { id: "firebolt", role: "首次升級必出", tip: "第 1 次升級必出招牌技，其局內強化可透過「電壓導管」回饋給雷擊術（若偏愛緩速亦可改選冰箭術）。" }
+          ]
+        }
+      ]
+    },
+
+    hunter: {
+      key: "hunter",
+      rank: "TOP 2",
+      title: "弓箭手 → 獵人",
+      subtitle: "頂尖風箏移速 165・ATK = STR + 3×DEX",
+      icon: "hunter",
+      firstJob: "archer",
+      secondJob: "hunter",
+      statVariants: [
+        {
+          id: "main",
+          label: "主推均衡｜DEX 99 / AGI 80 / LUK 53",
+          stats: { str: 1, agi: 80, vit: 1, int: 1, dex: 99, luk: 53 },
+          primaryKey: "dex",
+          notes: {
+            dex: "遠程 ATK (298) ＋ 核心倍率",
+            agi: "冷卻剩餘 65.0% ＋ 閃避 16.0%",
+            luk: "爆擊成長 ＋ 額外閃避 5.3%"
+          },
+          reason: "弓箭系所有主動物理技均無詠唱讀條，DEX 同時提供遠程 ATK 與最高權重的職業倍率；AGI 80 縮短二連矢／獵鷹冷卻並疊加閃避，LUK 53 則與「弱點」等爆擊天賦形成乘算放大（合計 1,273 點）。",
+          order: [
+            { lv: "Lv 1–30", text: "DEX 直接衝 50（前期貫穿與二連矢即有極強清怪速度）" },
+            { lv: "Lv 31–55", text: "補 AGI 至 45、LUK 至 20（提升射擊頻率與初期爆擊率）" },
+            { lv: "Lv 56–75", text: "全力補滿 DEX 至 99（鎖定遠程 ATK 與高階倍率門檻）" },
+            { lv: "Lv 76–99", text: "補 AGI 至 80 → 剩餘點數全部投入 LUK 至 53" }
+          ]
+        },
+        {
+          id: "crit",
+          label: "高爆特化｜DEX 99 / AGI 70 / LUK 65",
+          stats: { str: 1, agi: 70, vit: 1, int: 1, dex: 99, luk: 65 },
+          primaryKey: "dex",
+          notes: {
+            dex: "遠程 ATK (298) ＋ 核心倍率",
+            agi: "冷卻剩餘 68.0% ＋ 閃避 14.0%",
+            luk: "高爆擊與閃避 6.5%"
+          },
+          reason: "若選「獵鷹尋敵」易傷標記或搭配暴擊飾品，可稍微放低 10 點 AGI，將 LUK 推至 65 放大終結期暴擊傷害跳字（餘 1 點）。",
+          order: [
+            { lv: "Lv 1–30", text: "DEX 先衝至 50（維持推線穿透壓制力）" },
+            { lv: "Lv 31–55", text: "AGI 至 40、LUK 至 25（成型快攻速與高爆率基底）" },
+            { lv: "Lv 56–75", text: "DEX 補滿至 99（拉滿主輸出權重）" },
+            { lv: "Lv 76–99", text: "AGI 至 70 → 其餘全部點進 LUK 至 65" }
+          ]
+        }
+      ],
+      firstBranchFocus: "神射手 40 ＋ 奧術 10（合計 50/50 點）",
+      firstAlloc: {
+        "archer.0.owls_eye": 5,
+        "archer.0.ds_dmg": 5,
+        "archer.0.bow_mastery": 3,
+        "archer.0.kiting": 5,
+        "archer.0.ds_cd": 3,
+        "archer.0.ds_count": 1,
+        "archer.0.piercing": 1,
+        "archer.0.hunter": 3,
+        "archer.0.serrated": 3,
+        "archer.0.ds_ramp": 2,
+        "archer.0.twin_arrows": 1,
+        "archer.0.vultures_eye": 2,
+        "archer.0.weak_point": 5,
+        "archer.0.strafe_storm": 1,
+        "archer.1.haste": 5,
+        "archer.1.arcane_dmg": 5
+      },
+      firstOrder: [
+        "archer.0.owls_eye",
+        "archer.0.ds_dmg",
+        "archer.0.bow_mastery",
+        "archer.0.kiting",
+        "archer.0.ds_cd",
+        "archer.0.ds_count",
+        "archer.0.piercing",
+        "archer.0.hunter",
+        "archer.0.serrated",
+        "archer.0.ds_ramp",
+        "archer.0.twin_arrows",
+        "archer.0.vultures_eye",
+        "archer.0.weak_point",
+        "archer.0.strafe_storm",
+        "archer.1.haste",
+        "archer.1.arcane_dmg"
+      ],
+      secondVariants: [
+        {
+          id: "hawk",
+          label: "主推【獵鷹】分支｜全自動標記清場",
+          branchIndex: 0,
+          note: "單分支鎖定 50 點：點滿「閃電衝擊」＋「獵鷹尋敵」與雙終極「自由之鷹／狩獵號令」，兼顧自動鎖敵與全場 +20% 易傷。",
+          alloc: {
+            "hunter.0.blitz": 1,
+            "hunter.0.hawk_eye": 5,
+            "hunter.0.blitz_cd": 3,
+            "hunter.0.plumage": 3,
+            "hunter.0.keen_eye": 5,
+            "hunter.0.blitz_count": 2,
+            "hunter.0.detecting": 1,
+            "hunter.0.raptor": 5,
+            "hunter.0.hunt_focus": 3,
+            "hunter.0.patient": 5,
+            "hunter.0.steel_crow": 3,
+            "hunter.0.hunt_crit": 2,
+            "hunter.0.wind_sign": 5,
+            "hunter.0.wingbeat": 5,
+            "hunter.0.auto_blitz": 1,
+            "hunter.0.kill_order": 1
+          },
+          order: [
+            "hunter.0.blitz",
+            "hunter.0.hawk_eye",
+            "hunter.0.blitz_cd",
+            "hunter.0.plumage",
+            "hunter.0.keen_eye",
+            "hunter.0.blitz_count",
+            "hunter.0.detecting",
+            "hunter.0.raptor",
+            "hunter.0.hunt_focus",
+            "hunter.0.patient",
+            "hunter.0.steel_crow",
+            "hunter.0.hunt_crit",
+            "hunter.0.wind_sign",
+            "hunter.0.wingbeat",
+            "hunter.0.auto_blitz",
+            "hunter.0.kill_order"
+          ],
+          runSkills: [
+            { id: "double_strafe", role: "導管開局／招牌", tip: "首次升級必出招牌技；點出一轉最終「齊射風暴」後 Lv 1 開局直接持有，吃滿多發與穿透。" },
+            { id: "blitz_beat", role: "二轉自動鷹擊", tip: "獵鷹隨機俯衝濺射，點出「自由之鷹」後高頻自動補傷。" },
+            { id: "detecting", role: "團隊核心易傷", tip: "自動標記視野內最強 3 名敵人，6 秒內承傷 +20%，並可觸發狩獵號令。" },
+            { id: "arcane_shot", role: "聚怪觸發源", tip: "吃一轉奧術「奧術射擊精通」5 點 (+30% 傷) 並將普通怪拉向中心，為鷹擊聚怪（偏愛大範圍清線可改選箭矢暴雨）。" },
+            { id: "concentration", role: "純數值 Buff", tip: "10 秒內 AGI 與 DEX +12%，全面抬升攻頻與遠程倍率。" }
+          ]
+        },
+        {
+          id: "biggame",
+          label: "備選【大型獵物】分支｜菁英與王戰特化",
+          branchIndex: 2,
+          note: "單分支鎖定 50 點：點滿「動物猛擊」＋「幻影箭」穿刺擊退，專精高血量菁英與 Boss 秒殺。",
+          alloc: {
+            "hunter.2.beast_strafing": 1,
+            "hunter.2.beast_bane": 5,
+            "hunter.2.strafe_dmg": 3,
+            "hunter.2.bite": 5,
+            "hunter.2.longbow": 5,
+            "hunter.2.phantasmic": 1,
+            "hunter.2.strafe_pierce": 2,
+            "hunter.2.phantasm_dmg": 3,
+            "hunter.2.tension": 5,
+            "hunter.2.steel_tip": 3,
+            "hunter.2.execute": 3,
+            "hunter.2.instinct": 5,
+            "hunter.2.mortal_aim": 2,
+            "hunter.2.beast_hunter": 5,
+            "hunter.2.heavy_shot": 1,
+            "hunter.2.coup_de_grace": 1
+          },
+          order: [
+            "hunter.2.beast_strafing",
+            "hunter.2.beast_bane",
+            "hunter.2.strafe_dmg",
+            "hunter.2.bite",
+            "hunter.2.longbow",
+            "hunter.2.phantasmic",
+            "hunter.2.strafe_pierce",
+            "hunter.2.phantasm_dmg",
+            "hunter.2.tension",
+            "hunter.2.steel_tip",
+            "hunter.2.execute",
+            "hunter.2.instinct",
+            "hunter.2.mortal_aim",
+            "hunter.2.beast_hunter",
+            "hunter.2.heavy_shot",
+            "hunter.2.coup_de_grace"
+          ],
+          runSkills: [
+            { id: "double_strafe", role: "導管開局／招牌", tip: "首次升級必出招牌技；點出「齊射風暴」後開局直接持有，兼顧清雜與穿透觸發。" },
+            { id: "beast_strafing", role: "二轉對王雙矢", tip: "對射程內最強敵人射出雙重箭，天生對 Boss／菁英 +50% 傷害。" },
+            { id: "phantasmic_arrow", role: "無限貫穿擊退", tip: "巨大幽靈箭矢貫穿全列並大距離擊退，防線壓力極低。" },
+            { id: "arcane_shot", role: "聚怪觸發源", tip: "將普通怪拉向怪群中心，吃奧術分支 5 點加成，大幅放大穿透效益。" },
+            { id: "concentration", role: "全能增幅 Buff", tip: "直接放大 DEX 與 AGI 12%，將對王爆發推到極限。" }
+          ]
+        }
+      ]
+    },
+
+    priest: {
+      key: "priest",
+      rank: "TOP 3",
+      title: "服事 → 祭司",
+      subtitle: "對不死 ×2 傷害・高容錯半自動坦攻",
+      icon: "priest",
+      firstJob: "acolyte",
+      secondJob: "priest",
+      statVariants: [
+        {
+          id: "tank",
+          label: "主推坦攻｜INT 99 / AGI 80 / VIT 53",
+          stats: { str: 1, agi: 80, vit: 53, int: 99, dex: 1, luk: 1 },
+          primaryKey: "int",
+          notes: {
+            int: "核心倍率 ＋ MATK (297) ＋ 治療量",
+            agi: "冷卻剩餘 65.0%（加速治癒／驅魔）",
+            vit: "厚實血量與生命恢復防暴斃"
+          },
+          reason: "祭司核心在於「滿血治癒溢出轉傷害」與「站在光耀之堂／祝福脈衝內硬吃怪群」；99 INT 同時撐高攻擊與回復量，AGI 80 讓技能循環不斷檔，53 VIT 確保貼臉不暴斃（1,273 點零浪費）。",
+          order: [
+            { lv: "Lv 1–30", text: "INT 先點至 45，同步補 VIT 至 15（建立不死脈衝＋防秒殺血線）" },
+            { lv: "Lv 31–55", text: "AGI 補至 45、VIT 補至 25（治癒術與賜福能接近無縫輪轉）" },
+            { lv: "Lv 56–75", text: "全力衝滿 INT 至 99（最大化聖屬性傷害與超額治療儲存）" },
+            { lv: "Lv 76–99", text: "補滿 AGI 至 80 → 其餘全補 VIT 至 53" }
+          ]
+        },
+        {
+          id: "dps",
+          label: "高詠驅魔｜INT 99 / AGI 80 / DEX 53",
+          stats: { str: 1, agi: 80, vit: 1, int: 99, dex: 53, luk: 1 },
+          primaryKey: "int",
+          notes: {
+            int: "核心倍率 ＋ MATK (297)",
+            agi: "冷卻剩餘 65.0%",
+            dex: "縮減十字驅魔／聖母祈福讀條"
+          },
+          reason: "適合已經熟悉走位、想讓「十字驅魔攻擊」與「聖母之祈福」快速落地的純輸出配置，詠唱手感明顯輕快（1,273 點零浪費）。",
+          order: [
+            { lv: "Lv 1–30", text: "INT 衝至 50（前期靠神聖之光與治癒脈衝搶節奏）" },
+            { lv: "Lv 31–55", text: "AGI 至 45、DEX 至 20（提前減免十字驅魔等長吟唱技能讀條時間）" },
+            { lv: "Lv 56–75", text: "INT 補滿 99（全力放大對不死雙倍倍率）" },
+            { lv: "Lv 76–99", text: "AGI 至 80 → 剩餘點數補 DEX 至 53" }
+          ]
+        },
+        {
+          id: "bal",
+          label: "均衡雙修｜INT 99 / AGI 80 / VIT 45 / DEX 21",
+          stats: { str: 1, agi: 80, vit: 45, int: 99, dex: 21, luk: 1 },
+          primaryKey: "int",
+          notes: {
+            int: "核心倍率 ＋ MATK (297)",
+            agi: "冷卻剩餘 65.0%",
+            vit: "坦度主力 + DEX 21 補低費詠唱"
+          },
+          reason: "利用素質階梯成本在低等級（1–21 僅需 48 點）性價比極高的特性，從 VIT 讓出少許點數換取 21 DEX 縮短祈福與十字驅魔詠唱，兼顧讀條手感與坦度（合計 1,273 點零浪費）。",
+          order: [
+            { lv: "Lv 1–30", text: "INT 至 45、VIT 至 15（確保開局生存）" },
+            { lv: "Lv 31–55", text: "AGI 至 45、DEX 先補至 21（低費詠唱即刻生效）" },
+            { lv: "Lv 56–75", text: "INT 補滿 99（鎖定治療轉傷害與主倍率）" },
+            { lv: "Lv 76–99", text: "AGI 補滿至 80 → 最後補 VIT 至 45" }
+          ]
+        }
+      ],
+      firstBranchFocus: "神聖 40 ＋ 驅魔 10（合計 50/50 點）",
+      firstAlloc: {
+        "acolyte.0.heal_dmg": 5,
+        "acolyte.0.aqua_dmg": 5,
+        "acolyte.0.angelus": 5,
+        "acolyte.0.heal_area": 3,
+        "acolyte.0.bless_dur": 3,
+        "acolyte.0.heal_cd": 3,
+        "acolyte.0.aqua_area": 3,
+        "acolyte.0.bless_haste": 1,
+        "acolyte.0.aqua_heal": 3,
+        "acolyte.0.grace_dmg": 2,
+        "acolyte.0.mana_recharge": 5,
+        "acolyte.0.aqua_slow": 1,
+        "acolyte.0.fountain": 1,
+        "acolyte.1.demon_bane": 5,
+        "acolyte.1.holy_dmg": 5
+      },
+      firstOrder: [
+        "acolyte.0.heal_dmg",
+        "acolyte.0.aqua_dmg",
+        "acolyte.0.angelus",
+        "acolyte.0.heal_area",
+        "acolyte.0.bless_dur",
+        "acolyte.0.heal_cd",
+        "acolyte.0.aqua_area",
+        "acolyte.0.bless_haste",
+        "acolyte.0.aqua_heal",
+        "acolyte.0.grace_dmg",
+        "acolyte.0.mana_recharge",
+        "acolyte.0.aqua_slow",
+        "acolyte.0.fountain",
+        "acolyte.1.demon_bane",
+        "acolyte.1.holy_dmg"
+      ],
+      secondVariants: [
+        {
+          id: "exorcism",
+          label: "主推【驅魔】分支｜十字大陣高傷流",
+          branchIndex: 1,
+          note: "單分支鎖定 50 點：點滿「聖母之祈福」易傷圈＋「十字驅魔攻擊」，結合雙終極「反射祝福／Judex」打出高額全畫面神聖爆破。",
+          alloc: {
+            "priest.1.s1": 1,
+            "priest.1.p0": 5,
+            "priest.1.s1a1": 3,
+            "priest.1.p1": 5,
+            "priest.1.p2": 2,
+            "priest.1.s1a2": 3,
+            "priest.1.s2": 1,
+            "priest.1.p3": 5,
+            "priest.1.s2a1": 2,
+            "priest.1.p4": 5,
+            "priest.1.s1a3": 2,
+            "priest.1.s2a2": 3,
+            "priest.1.p5": 5,
+            "priest.1.s2a3": 1,
+            "priest.1.p6": 5,
+            "priest.1.s1af": 1,
+            "priest.1.s2af": 1
+          },
+          order: [
+            "priest.1.s1",
+            "priest.1.p0",
+            "priest.1.s1a1",
+            "priest.1.p1",
+            "priest.1.p2",
+            "priest.1.s1a2",
+            "priest.1.s2",
+            "priest.1.p3",
+            "priest.1.s2a1",
+            "priest.1.p4",
+            "priest.1.s1a3",
+            "priest.1.s2a2",
+            "priest.1.p5",
+            "priest.1.s2a3",
+            "priest.1.p6",
+            "priest.1.s1af",
+            "priest.1.s2af"
+          ],
+          runSkills: [
+            { id: "heal", role: "生命之泉開局送／招牌", tip: "首次升級必出招牌技；點出一轉「生命之泉」後開局直接持有，滿血溢出治療轉為「恩典」雙倍傷，並自動落下吃滿 12 點聖水天賦的 Aqua Benedicta 水窪。" },
+            { id: "blessing", role: "全域增傷速詠", tip: "搭配「共享賜福」＋「持久賜福」帶來高額增傷、詠唱加快與 CDR。" },
+            { id: "benedictio", role: "二轉易傷光環", tip: "祝福腳下範圍傷害並附加 5 秒 +15% 易傷，點「反射祝福」可反制敵群。" },
+            { id: "magnus_exorcismus", role: "二轉核彈 AoE", tip: "六段神聖大十字重創敵陣（不死 ×2），搭「Judex」強化至極。" },
+            { id: "holy_light", role: "精準點王光柱", tip: "優先鎖定視野 Boss 落光柱，搭驅魔 10 點與「天使之擊」對王極痛。" }
+          ]
+        },
+        {
+          id: "sanctuary",
+          label: "備選【聖域】分支｜不動站樁純坦流",
+          branchIndex: 0,
+          note: "單分支鎖定 50 點：點滿「光耀之堂」持續燒怪回血＋「暗之障壁」免傷次數護盾，極限高容錯。",
+          alloc: {
+            "priest.0.s1": 1,
+            "priest.0.p0": 5,
+            "priest.0.s1a1": 3,
+            "priest.0.p1": 5,
+            "priest.0.p2": 5,
+            "priest.0.s1a2": 3,
+            "priest.0.s2": 1,
+            "priest.0.p3": 5,
+            "priest.0.s2a1": 3,
+            "priest.0.p4": 5,
+            "priest.0.s1a3": 2,
+            "priest.0.s2a2": 3,
+            "priest.0.s2a3": 2,
+            "priest.0.p5": 5,
+            "priest.0.s1af": 1,
+            "priest.0.s2af": 1
+          },
+          order: [
+            "priest.0.s1",
+            "priest.0.p0",
+            "priest.0.s1a1",
+            "priest.0.p1",
+            "priest.0.p2",
+            "priest.0.s1a2",
+            "priest.0.s2",
+            "priest.0.p3",
+            "priest.0.s2a1",
+            "priest.0.p4",
+            "priest.0.s1a3",
+            "priest.0.s2a2",
+            "priest.0.s2a3",
+            "priest.0.p5",
+            "priest.0.s1af",
+            "priest.0.s2af"
+          ],
+          runSkills: [
+            { id: "heal", role: "生命之泉開局送／招牌", tip: "首次升級必出招牌技；點出「生命之泉」後開局直接持有並自動生水窪（吃滿 12 點聖水天賦），搭光耀之堂維持滿血疊加恩典。" },
+            { id: "blessing", role: "續航核心 Buff", tip: "拉高詠唱與攻勢，縮短光耀之堂與障壁空窗。" },
+            { id: "sanctuary", role: "二轉神聖結界", tip: "淨化腳下地面 8 秒持續回血並灼燒怪物，點「聖地」全面拓寬陣地。" },
+            { id: "safety_wall", role: "二轉絕對防禦", tip: "吸收接下來受到的攻擊次數，走「永恆之牆」大幅提高生還率。" },
+            { id: "holy_light", role: "單王清場補償", tip: "負責狙殺菁英與 Boss，補足聖域分支偏防禦的對王傷害。" }
+          ]
+        }
+      ]
+    }
+  };
+
+  const PRESETS = {
+    wizard_main: { job: "wizard", lv: 99, stats: { str: 1, agi: 80, vit: 1, int: 99, dex: 53, luk: 1 } },
+    wizard_cast: { job: "wizard", lv: 99, stats: { str: 1, agi: 70, vit: 1, int: 99, dex: 65, luk: 1 } },
+    hunter_main: { job: "hunter", lv: 99, stats: { str: 1, agi: 80, vit: 1, int: 1, dex: 99, luk: 53 } },
+    hunter_luk:  { job: "hunter", lv: 99, stats: { str: 1, agi: 70, vit: 1, int: 1, dex: 99, luk: 65 } },
+    priest_tank: { job: "priest", lv: 99, stats: { str: 1, agi: 80, vit: 53, int: 99, dex: 1, luk: 1 } },
+    priest_bal:  { job: "priest", lv: 99, stats: { str: 1, agi: 80, vit: 45, int: 99, dex: 21, luk: 1 } },
+    lv50_start:  { job: "wizard", lv: 50, stats: { str: 1, agi: 45, vit: 1, int: 50, dex: 24, luk: 1 } }
+  };
+
+  const state = {
+    activeJob: "wizard",
+    statVarIdx: { wizard: 0, hunter: 0, priest: 0 },
+    secVarIdx: { wizard: 0, hunter: 0, priest: 0 },
+    firstBranchTab: { wizard: 1, hunter: 0, priest: 0 },
+    secondBranchTab: { wizard: 1, hunter: 0, priest: 1 },
+    selectedFirstNode: { wizard: "mage.1.frost_dmg", hunter: "archer.0.piercing", priest: "acolyte.0.heal_dmg" },
+    selectedSecondNode: { wizard: "wizard.1.s2af", hunter: "hunter.0.kill_order", priest: "priest.1.s2af" },
+    calc: {
+      job: "wizard",
+      lv: 99,
+      stats: { str: 1, agi: 80, vit: 1, int: 99, dex: 53, luk: 1 },
+      activePreset: "wizard_main"
+    }
+  };
+
+  let toastTimer = null;
+  function showToast(msg) {
+    const el = document.getElementById("toast");
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function getFirstPlan(build, secVar) {
+    if (build.firstPlans && secVar && build.firstPlans[secVar.id]) {
+      return build.firstPlans[secVar.id];
+    }
+    return {
+      branchIndex: build.firstBranchIndex ?? 0,
+      branchFocus: build.firstBranchFocus,
+      alloc: build.firstAlloc,
+      order: build.firstOrder
+    };
+  }
+
+  function getWeaponSlotInfo(jobKey, firstPlan) {
+    const alloc = (firstPlan && firstPlan.alloc) || {};
+    if (jobKey === "wizard") {
+      const hasWaterInf = !!alloc["mage.1.water_infusion"];
+      const hasWindInf = !!alloc["mage.2.wind_infusion"];
+      if (hasWaterInf && hasWindInf) {
+        return {
+          shortPill: "法杖 → 雙屬性附加（電＋冰）",
+          title: "攻擊：法杖 → 屬性附加（雷電＋冰霜）",
+          tag: "開局最左獨立武器格",
+          desc: "魔法師 Lv 1 進場時，底部技能列最左格（1 武器＋4 技能＝開局 5 格；二轉擴為 6 格）自帶「攻擊：法杖」。點出「雷電附加」與「冰霜附加」後升級並組合為雙重「攻擊：屬性附加」（+150% 傷害、+2 投射物、20% 貫穿並吃兩系天賦）；點「電壓導管」後開局第 1 技能格預載雷擊術。"
+        };
+      }
+      if (hasWaterInf) {
+        return {
+          shortPill: "法杖 → 屬性附加（冰霜）",
+          title: "攻擊：法杖 → 屬性附加（冰霜）",
+          tag: "開局最左獨立武器格",
+          desc: "魔法師 Lv 1 進場時，底部技能列最左格（1 武器＋4 技能＝開局 5 格；二轉擴為 6 格）自帶「攻擊：法杖」。點出「冰霜附加」後升級為「攻擊：屬性附加」（隨 MATK 成長、傷害 +75%、20% 貫穿並吃全冰系天賦與冰凍／碎冰）；點「冰霜導管」後開局第 1 技能格預載冰箭術。"
+        };
+      }
+      return {
+        shortPill: "法杖（atk_rod）",
+        title: "攻擊：法杖",
+        tag: "開局最左獨立武器格",
+        desc: "魔法師 Lv 1 進場時，最左獨立武器格自帶法杖魔法單體攻擊，右側 4 格為技能欄（二轉擴為 5 格）。"
+      };
+    }
+    if (jobKey === "hunter") {
+      return {
+        shortPill: "弓（atk_bow）",
+        title: "攻擊：弓",
+        tag: "開局最左獨立武器格",
+        desc: "弓箭手 Lv 1 進場時，底部技能列最左格（1 武器＋4 技能＝開局 5 格；二轉擴為 6 格）自帶「攻擊：弓」遠程普攻；點出一轉神射手最終「齊射風暴」後開局同步預載「二連矢」。"
+      };
+    }
+    return {
+      shortPill: "鈍器（atk_mace）",
+      title: "攻擊：鈍器",
+      tag: "開局最左獨立武器格",
+      desc: "服事 Lv 1 進場時，底部技能列最左格（1 武器＋4 技能＝開局 5 格；二轉擴為 6 格）自帶「攻擊：鈍器」近戰揮擊；點出一轉神聖最終「生命之泉」後開局直接預載「治癒術」，並自動生出吃滿 12 點聖水天賦的水窪。"
+    };
+  }
+
+  function copyBuildText(build, statVar, secVar) {
+    const firstTree = GAME_DATA.trees[build.firstJob];
+    const secTree = GAME_DATA.trees[build.secondJob];
+    const firstPlan = getFirstPlan(build, secVar);
+    const weaponInfo = getWeaponSlotInfo(build.key, firstPlan);
+    const findNode = (treeData, id) => {
+      for (const br of treeData.branches) {
+        const hit = br.nodes.find(n => n.id === id);
+        if (hit) return { node: hit, branch: br.name };
+      }
+      return null;
+    };
+
+    const s = statVar.stats;
+    const lines = [
+      `=== RO Survivors ${build.rank}：${build.title} ===`,
+      `屬性配點方案（${statVar.label}）：`,
+      `STR ${s.str} / AGI ${s.agi} / VIT ${s.vit} / INT ${s.int} / DEX ${s.dex} / LUK ${s.luk}`,
+      `加點順序：`,
+      ...statVar.order.map(step => `- ${step.lv}: ${step.text}`),
+      ``,
+      `一轉天賦配點（${firstPlan.branchFocus}）：`,
+      ...firstPlan.order.map((id, idx) => {
+        const res = findNode(firstTree, id);
+        const pts = firstPlan.alloc[id] || 0;
+        return `${idx + 1}. [${res ? res.branch : "?"}] ${res ? res.node.name : id} (${pts}/${res ? res.node.m : pts})`;
+      }),
+      ``,
+      `二轉天賦配點（${secVar.label}・單分支 50/50）：`,
+      ...secVar.order.map((id, idx) => {
+        const res = findNode(secTree, id);
+        const pts = secVar.alloc[id] || 0;
+        return `${idx + 1}. ${res ? res.node.name : id} (${pts}/${res ? res.node.m : pts})`;
+      }),
+      ``,
+      `技能列配置（左格武器＋5 格主動）：`,
+      `武器格. ${weaponInfo.title}`,
+      ...secVar.runSkills.map((sk, idx) => {
+        const skData = GAME_DATA.skills[sk.id];
+        return `${idx + 1}. ${skData ? skData.name : sk.id} (${sk.role})`;
+      })
+    ];
+    const text = lines.join("\n");
+
+    const fallbackCopy = () => {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        showToast("已複製當前職業配點清單到剪貼簿");
+      } catch (_e) {
+        showToast("無法自動寫入剪貼簿，請手動複製畫面文字");
+      }
+      ta.remove();
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        () => showToast("已複製當前職業配點清單到剪貼簿"),
+        fallbackCopy
+      );
+    } else {
+      fallbackCopy();
+    }
+  }
+
+  function renderTalentCard({
+    tierTitle,
+    tierKey,
+    treeData,
+    cols,
+    activeBranchIdx,
+    allocMap,
+    orderList,
+    selectedNodeId,
+    lockedBranchIdx
+  }) {
+    const branch = treeData.branches[activeBranchIdx] || treeData.branches[0];
+    const nodes = branch.nodes;
+    const maxRow = nodes.length ? Math.max(...nodes.map(n => n.r)) : 0;
+
+    // Order index lookup for priority numbering
+    const orderRank = {};
+    orderList.forEach((id, idx) => { orderRank[id] = idx + 1; });
+
+    // Branch point sums
+    const branchSums = treeData.branches.map(br =>
+      br.nodes.reduce((sum, n) => sum + (allocMap[n.id] || 0), 0)
+    );
+    const totalPts = branchSums.reduce((a, b) => a + b, 0);
+
+    // Find selected node info across current branch (or fallback)
+    let selNode = nodes.find(n => n.id === selectedNodeId);
+    if (!selNode) selNode = nodes.find(n => (allocMap[n.id] || 0) > 0) || nodes[0];
+
+    const selPts = selNode ? (allocMap[selNode.id] || 0) : 0;
+    const isCapstone = n => n.m === 1 && n.r >= 5;
+
+    const tabsHtml = treeData.branches.map((br, bi) => {
+      const sum = branchSums[bi];
+      const active = bi === activeBranchIdx ? "active" : "";
+      return `<button type="button" class="branch-tab ${active}" data-tree-tier="${tierKey}" data-branch-idx="${bi}">${escapeHtml(br.name)}（${sum} 點）</button>`;
+    }).join("");
+
+    let gridRowsHtml = "";
+    for (let r = 0; r <= maxRow; r++) {
+      const rowNodes = nodes.filter(n => n.r === r);
+      if (rowNodes.length === 0) continue;
+      let cellsHtml = `<div class="row-gate"><span>L${r}</span><small>${r * 5}p</small></div>`;
+      for (let c = 0; c < cols; c++) {
+        const n = rowNodes.find(x => x.c === c);
+        if (!n) {
+          cellsHtml += `<div class="t-empty" aria-hidden="true"></div>`;
+          continue;
+        }
+        const pts = allocMap[n.id] || 0;
+        const cls = [
+          "t-node",
+          pts > 0 ? "allocated" : "",
+          pts > 0 && isCapstone(n) ? "capstone" : "",
+          selNode && selNode.id === n.id ? "selected" : ""
+        ].filter(Boolean).join(" ");
+        const ord = orderRank[n.id];
+        cellsHtml += `
+          <button type="button" class="${cls}" data-node-tier="${tierKey}" data-node-id="${escapeHtml(n.id)}">
+            <span class="t-node-name">${escapeHtml(n.name)}</span>
+            <span class="t-node-foot">
+              <span class="t-pts">${pts}/${n.m}</span>
+              <span class="t-tag">${ord ? `#${ord}` : ""}</span>
+            </span>
+          </button>`;
+      }
+      gridRowsHtml += `<div class="talent-row cols-${cols}">${cellsHtml}</div>`;
+    }
+
+    const reqNames = selNode ? [selNode.req, selNode.req2].filter(Boolean).map(rid => {
+      for (const b of treeData.branches) {
+        const rn = b.nodes.find(x => x.id === rid);
+        if (rn) return rn.name;
+      }
+      return rid;
+    }) : [];
+
+    const selDesc = selNode
+      ? (selPts === 0
+          ? `1 級：${selNode.d1}${selNode.m > 1 ? ` ｜ 滿級 (${selNode.m}/${selNode.m})：${selNode.dm}` : ""}`
+          : selPts === 1
+            ? selNode.d1
+            : `${selNode.m === selPts ? "滿級配置" : `建議 ${selPts}/${selNode.m} 級`}（滿級參考：${selNode.dm}；1 級：${selNode.d1}）`)
+      : "";
+
+    const allocItemsHtml = orderList.map((id, idx) => {
+      let foundNode = null;
+      let foundBrName = "";
+      for (const br of treeData.branches) {
+        const match = br.nodes.find(n => n.id === id);
+        if (match) {
+          foundNode = match;
+          foundBrName = br.name;
+          break;
+        }
+      }
+      if (!foundNode) return "";
+      const pts = allocMap[id] || 0;
+      return `
+        <div class="alloc-item" style="cursor:pointer" data-jump-tier="${tierKey}" data-jump-branch="${foundNode ? treeData.branches.findIndex(b => b.name === foundBrName) : 0}" data-jump-id="${escapeHtml(id)}">
+          <div>
+            <strong>#${idx + 1} ${escapeHtml(foundNode.name)}</strong>
+            <span>（${escapeHtml(foundBrName)} L${foundNode.r}）</span>
+          </div>
+          <span class="pts-pill">${pts}/${foundNode.m}</span>
+        </div>`;
+    }).join("");
+
+    const lockNotice = lockedBranchIdx !== undefined && activeBranchIdx !== lockedBranchIdx
+      ? `<span class="pill">檢視其他二轉分支（當前選擇方案投資於「${escapeHtml(treeData.branches[lockedBranchIdx].name)}」，若想切換請點上方分岐按鈕）</span>`
+      : `<span class="pill gold">已分配 ${totalPts} / 50 點・點擊節點檢視效果</span>`;
+
+    return `
+      <article class="tree-card">
+        <div class="tree-card-head">
+          <h3><span class="icon" data-icon="tree"></span>${escapeHtml(tierTitle)}</h3>
+          ${lockNotice}
+        </div>
+        <div class="tree-split">
+          <div>
+            <div class="branch-tabs">${tabsHtml}</div>
+            <div class="talent-grid">${gridRowsHtml}</div>
+          </div>
+          <div>
+            <div class="inspector-box">
+              <h4>${selNode ? escapeHtml(selNode.name) : "未選取節點"}</h4>
+              <div class="inspector-meta">
+                ${selNode ? `分支：${escapeHtml(branch.name)} ・ 第 L${selNode.r} 層（需同分支前置 ≥ ${selNode.r * 5} 點）` : ""}
+                ${reqNames.length ? `・前置技能需滿級：${escapeHtml(reqNames.join("、"))}` : ""}
+                ${selNode ? `・配點：${selPts}/${selNode.m}` : ""}
+              </div>
+              <p class="inspector-desc">${escapeHtml(selDesc)}</p>
+            </div>
+            <div class="alloc-list">
+              <div class="alloc-list-title">建議加點順序（點擊項目可跳至對應節點）</div>
+              ${allocItemsHtml}
+            </div>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderDetail() {
+    const shell = document.getElementById("detail-shell");
+    if (!shell) return;
+
+    const jobKey = state.activeJob;
+    const build = BUILDS[jobKey];
+    const statVar = build.statVariants[state.statVarIdx[jobKey]] || build.statVariants[0];
+    const secVar = build.secondVariants[state.secVarIdx[jobKey]] || build.secondVariants[0];
+
+    const firstPlan = getFirstPlan(build, secVar);
+    const weaponInfo = getWeaponSlotInfo(jobKey, firstPlan);
+    const firstTree = GAME_DATA.trees[build.firstJob];
+    const secTree = GAME_DATA.trees[build.secondJob];
+    const j1 = firstTree.job;
+    const j2 = secTree.job;
+
+    const statTabsHtml = build.statVariants.map((sv, idx) =>
+      `<button type="button" class="${idx === state.statVarIdx[jobKey] ? "active" : ""}" data-stat-var="${idx}">${escapeHtml(sv.label)}</button>`
+    ).join("");
+
+    const secTabsHtml = build.secondVariants.map((sv, idx) =>
+      `<button type="button" class="${idx === state.secVarIdx[jobKey] ? "active" : ""}" data-sec-var="${idx}">${escapeHtml(sv.label)}</button>`
+    ).join("");
+
+    const statKeys = ["int", "dex", "agi", "vit", "luk", "str"].filter(k => statVar.stats[k] > 1 || k === statVar.primaryKey);
+    const statBarsHtml = statKeys.map(k => {
+      const val = statVar.stats[k];
+      const isPrim = k === statVar.primaryKey;
+      const cost = totalStatCost(val);
+      return `
+        <div class="stat-chip ${isPrim ? "primary" : ""}">
+          <div class="stat-chip-top">
+            <span>${k.toUpperCase()}</span>
+            <span class="num">${cost}p</span>
+          </div>
+          <div class="stat-chip-val">${val}</div>
+          <div class="stat-chip-note">${escapeHtml(statVar.notes[k] || "功能補強")}</div>
+        </div>`;
+    }).join("");
+
+    const stepsHtml = statVar.order.map(st => `
+      <div class="step-row">
+        <span class="step-badge">${escapeHtml(st.lv)}</span>
+        <div>${escapeHtml(st.text)}</div>
+      </div>`).join("");
+
+    const weaponCardHtml = `
+      <div class="skill-slot-card">
+        <div class="slot-num" style="width:auto;min-width:34px;padding:0 6px;font-size:11px;">武器</div>
+        <div>
+          <div class="skill-slot-title">
+            <span>${escapeHtml(weaponInfo.title)}</span>
+            <span class="skill-tag">${escapeHtml(weaponInfo.tag)}</span>
+          </div>
+          <div class="skill-slot-desc">${escapeHtml(weaponInfo.desc)}</div>
+        </div>
+      </div>`;
+
+    const skillsHtml = weaponCardHtml + secVar.runSkills.map((sk, idx) => {
+      const skObj = GAME_DATA.skills[sk.id] || { name: sk.id, desc: "" };
+      return `
+        <div class="skill-slot-card">
+          <div class="slot-num">${idx + 1}</div>
+          <div>
+            <div class="skill-slot-title">
+              <span>${escapeHtml(skObj.name)}</span>
+              <span class="skill-tag">${escapeHtml(sk.role)}</span>
+            </div>
+            <div class="skill-slot-desc">${escapeHtml(skObj.desc)}<br /><strong>實戰配合：</strong>${escapeHtml(sk.tip)}</div>
+          </div>
+        </div>`;
+    }).join("");
+
+    const firstTreeHtml = renderTalentCard({
+      tierTitle: `一轉天賦樹（${j1.name}）— ${firstPlan.branchFocus}`,
+      tierKey: "first",
+      treeData: firstTree,
+      cols: 4,
+      activeBranchIdx: state.firstBranchTab[jobKey],
+      allocMap: firstPlan.alloc,
+      orderList: firstPlan.order,
+      selectedNodeId: state.selectedFirstNode[jobKey]
+    });
+
+    const secTreeHtml = renderTalentCard({
+      tierTitle: `二轉天賦樹（${j2.name}）— ${secVar.label}`,
+      tierKey: "second",
+      treeData: secTree,
+      cols: 5,
+      activeBranchIdx: state.secondBranchTab[jobKey],
+      allocMap: secVar.alloc,
+      orderList: secVar.order,
+      selectedNodeId: state.selectedSecondNode[jobKey],
+      lockedBranchIdx: secVar.branchIndex
+    });
+
+    shell.innerHTML = `
+      <div class="detail-header">
+        <div class="detail-title-group">
+          <div class="detail-icon-box" data-icon="${build.icon}"></div>
+          <div>
+            <h2>${escapeHtml(build.rank)}｜${escapeHtml(build.title)}</h2>
+            <div class="detail-base-stats">
+              <span class="pill gold">HP ${j1.hp} → ${j2.hp}</span>
+              <span class="pill">移動速度 ${j2.speed}</span>
+              <span class="pill">基礎防禦 ${j2.armor}</span>
+              <span class="pill">左格武器：${escapeHtml(weaponInfo.shortPill)}</span>
+              <span class="pill">招牌技（首升必出）：${escapeHtml((GAME_DATA.skills[j1.start] || {}).name || j1.start)}</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="btn secondary" id="apply-calc-btn"><span class="icon" data-icon="calc"></span>帶入素質模擬機</button>
+          <button type="button" class="btn" id="copy-build-btn"><span class="icon" data-icon="copy"></span>複製配點總表</button>
+        </div>
+      </div>
+
+      <div class="controls-strip">
+        <div class="toggle-group">
+          <span class="toggle-label">二轉天賦分岐：</span>
+          <div class="segmented">${secTabsHtml}</div>
+        </div>
+        <div class="toggle-group">
+          <span class="toggle-label">屬性配點路線：</span>
+          <div class="segmented">${statTabsHtml}</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <article class="panel">
+          <h3><span class="icon" data-icon="stat"></span>屬性配點與升級加點順序</h3>
+          <div class="stat-bars">${statBarsHtml}</div>
+          <p class="stat-reason">${escapeHtml(statVar.reason)}</p>
+          <div class="timeline">${stepsHtml}</div>
+        </article>
+
+        <article class="panel">
+          <h3><span class="icon" data-icon="skill"></span>實戰技能列配置（1 武器＋5 主動）</h3>
+          <p class="stat-reason">${escapeHtml(secVar.note)}（遊戲開局為 <strong>左 1 格武器普攻＋右 4 格技能＝共 5 格</strong>，轉職二轉後右側開第 5 格＝共 6 格；招牌技未點導管／風暴／生命之泉時於第 1 次升級必進三選一。）</p>
+          <div class="skills-list">${skillsHtml}</div>
+        </article>
+      </div>
+
+      <div class="trees-wrap">
+        ${firstTreeHtml}
+        ${secTreeHtml}
+      </div>
+    `;
+
+    hydrateIcons(shell);
+  }
+
+  function renderCalculator() {
+    const slidersEl = document.getElementById("calc-sliders");
+    const resultsEl = document.getElementById("calc-results");
+    if (!slidersEl || !resultsEl) return;
+
+    const { job, lv, stats } = state.calc;
+    const defs = [
+      { key: "lv", label: "Base Lv", min: 1, max: 99, val: lv, costText: `${maxBaseStats(lv)} 總點` },
+      { key: "str", label: "STR", min: 1, max: 99, val: stats.str, costText: `${totalStatCost(stats.str)}p (+${stepCost(stats.str)})` },
+      { key: "agi", label: "AGI", min: 1, max: 99, val: stats.agi, costText: `${totalStatCost(stats.agi)}p (+${stepCost(stats.agi)})` },
+      { key: "vit", label: "VIT", min: 1, max: 99, val: stats.vit, costText: `${totalStatCost(stats.vit)}p (+${stepCost(stats.vit)})` },
+      { key: "int", label: "INT", min: 1, max: 99, val: stats.int, costText: `${totalStatCost(stats.int)}p (+${stepCost(stats.int)})` },
+      { key: "dex", label: "DEX", min: 1, max: 99, val: stats.dex, costText: `${totalStatCost(stats.dex)}p (+${stepCost(stats.dex)})` },
+      { key: "luk", label: "LUK", min: 1, max: 99, val: stats.luk, costText: `${totalStatCost(stats.luk)}p (+${stepCost(stats.luk)})` }
+    ];
+
+    slidersEl.innerHTML = defs.map(d => `
+      <label class="slider-row">
+        <span><strong>${d.label}</strong></span>
+        <input type="range" min="${d.min}" max="${d.max}" value="${d.val}" data-calc-slider="${d.key}" aria-label="${d.label}" />
+        <span class="slider-val">${d.val}</span>
+        <span class="slider-cost">${d.costText}</span>
+      </label>`).join("");
+
+    const budget = maxBaseStats(lv);
+    const spent = Object.values(stats).reduce((sum, v) => sum + totalStatCost(v), 0);
+    const rem = budget - spent;
+
+    const primaryStat = job === "hunter" ? stats.dex : stats.int;
+    const primaryLabel = job === "hunter" ? "DEX" : "INT";
+    const offenseLabel = job === "hunter" ? "遠程 ATK (STR + 3×DEX)" : "魔法 MATK (3×INT)";
+    const offenseVal = job === "hunter" ? stats.str + 3 * stats.dex : 3 * stats.int;
+
+    const ji1 = calcPowerScale(primaryStat, 1);
+    const ji2 = calcPowerScale(primaryStat, 2);
+    const cdMult = calcCooldownMult(stats.agi);
+    const fleePct = calcFleePct(stats.agi, stats.luk);
+
+    const singleBaseCast = calcCastSec(2, 100, stats.dex, 0);
+    const areaBaseCast = calcCastSec(5, 150, stats.dex, 0);
+    const mageAreaWithQuickCast = calcCastSec(5, 150, stats.dex, 0.25);
+
+    resultsEl.innerHTML = `
+      <div class="res-box wide">
+        <div class="res-label">Base Lv ${lv} 素質預算消耗狀態（含天賦 1→99 階梯費用）</div>
+        <div class="res-val ${rem >= 0 ? "ok" : "warn"}">
+          已用 ${spent} / ${budget} 點（剩餘 ${rem} 點）${rem < 0 ? "— 超出點數上限！" : ""}
+        </div>
+      </div>
+
+      <div class="res-box">
+        <div class="res-label">${offenseLabel}</div>
+        <div class="res-val gold">${offenseVal}</div>
+      </div>
+
+      <div class="res-box">
+        <div class="res-label">主力倍率 ji(${primaryLabel}=${primaryStat})</div>
+        <div class="res-val">${ji2.toFixed(2)}× <small style="font-size:12px;color:var(--text-muted)">(一轉 ${ji1.toFixed(2)}×)</small></div>
+      </div>
+
+      <div class="res-box">
+        <div class="res-label">AGI ${stats.agi} 冷卻剩餘與閃避率</div>
+        <div class="res-val">${(cdMult * 100).toFixed(1)}% CD <small style="font-size:12px;color:var(--text-muted)">(閃避 ${fleePct.toFixed(1)}% / 上限 50%)</small></div>
+      </div>
+
+      <div class="res-box">
+        <div class="res-label">DEX ${stats.dex} 基礎詠唱時間</div>
+        <div class="res-val">${singleBaseCast.toFixed(2)}s / ${areaBaseCast.toFixed(2)}s</div>
+        <div class="stat-chip-note">單體 2s(÷100) / 範圍 5s(÷150)${job === "wizard" ? `・含迅速詠唱 +25% 後範圍約 ${mageAreaWithQuickCast.toFixed(2)}s` : ""}</div>
+      </div>
+    `;
+  }
+
+  function setActiveJob(jobKey) {
+    if (!BUILDS[jobKey]) return;
+    state.activeJob = jobKey;
+    document.body.setAttribute("data-job", jobKey);
+    document.querySelectorAll(".podium-card").forEach(btn => {
+      const match = btn.getAttribute("data-job") === jobKey;
+      btn.classList.toggle("active", match);
+      btn.setAttribute("aria-pressed", match ? "true" : "false");
+    });
+    renderDetail();
+  }
+
+  function applyPreset(presetKey) {
+    const p = PRESETS[presetKey];
+    if (!p) return;
+    state.calc.job = p.job;
+    state.calc.lv = p.lv;
+    state.calc.stats = { ...p.stats };
+    state.calc.activePreset = presetKey;
+    document.querySelectorAll("#calc-presets button").forEach(b => b.classList.toggle("active", b.getAttribute("data-preset") === presetKey));
+    document.querySelectorAll("#calc-job-mode button").forEach(b => b.classList.toggle("active", b.getAttribute("data-calc-job") === p.job));
+    renderCalculator();
+  }
+
+  function initEvents() {
+    document.getElementById("podium-grid")?.addEventListener("click", e => {
+      const btn = e.target.closest(".podium-card[data-job]");
+      if (!btn) return;
+      setActiveJob(btn.getAttribute("data-job"));
+    });
+
+    document.getElementById("detail-shell")?.addEventListener("click", e => {
+      const jobKey = state.activeJob;
+      const build = BUILDS[jobKey];
+
+      const secBtn = e.target.closest("[data-sec-var]");
+      if (secBtn) {
+        const idx = Number(secBtn.getAttribute("data-sec-var"));
+        state.secVarIdx[jobKey] = idx;
+        const nextSec = build.secondVariants[idx];
+        state.secondBranchTab[jobKey] = nextSec.branchIndex;
+        state.selectedSecondNode[jobKey] = nextSec.order[0];
+        if (build.firstPlans && build.firstPlans[nextSec.id]) {
+          const fp = build.firstPlans[nextSec.id];
+          state.firstBranchTab[jobKey] = fp.branchIndex;
+          state.selectedFirstNode[jobKey] = fp.order[0];
+        }
+        renderDetail();
+        return;
+      }
+
+      const statBtn = e.target.closest("[data-stat-var]");
+      if (statBtn) {
+        state.statVarIdx[jobKey] = Number(statBtn.getAttribute("data-stat-var"));
+        renderDetail();
+        return;
+      }
+
+      const tabBtn = e.target.closest("[data-tree-tier]");
+      if (tabBtn) {
+        const tier = tabBtn.getAttribute("data-tree-tier");
+        const bi = Number(tabBtn.getAttribute("data-branch-idx"));
+        if (tier === "first") state.firstBranchTab[jobKey] = bi;
+        else state.secondBranchTab[jobKey] = bi;
+        renderDetail();
+        return;
+      }
+
+      const nodeBtn = e.target.closest("[data-node-id]");
+      if (nodeBtn) {
+        const tier = nodeBtn.getAttribute("data-node-tier");
+        const nid = nodeBtn.getAttribute("data-node-id");
+        if (tier === "first") state.selectedFirstNode[jobKey] = nid;
+        else state.selectedSecondNode[jobKey] = nid;
+        renderDetail();
+        return;
+      }
+
+      const jumpItem = e.target.closest("[data-jump-id]");
+      if (jumpItem) {
+        const tier = jumpItem.getAttribute("data-jump-tier");
+        const bi = Number(jumpItem.getAttribute("data-jump-branch"));
+        const nid = jumpItem.getAttribute("data-jump-id");
+        if (tier === "first") {
+          state.firstBranchTab[jobKey] = bi;
+          state.selectedFirstNode[jobKey] = nid;
+        } else {
+          state.secondBranchTab[jobKey] = bi;
+          state.selectedSecondNode[jobKey] = nid;
+        }
+        renderDetail();
+        return;
+      }
+
+      if (e.target.closest("#copy-build-btn")) {
+        const statVar = build.statVariants[state.statVarIdx[jobKey]];
+        const secVar = build.secondVariants[state.secVarIdx[jobKey]];
+        copyBuildText(build, statVar, secVar);
+        return;
+      }
+
+      if (e.target.closest("#apply-calc-btn")) {
+        const statVar = build.statVariants[state.statVarIdx[jobKey]];
+        state.calc.job = jobKey;
+        state.calc.lv = 99;
+        state.calc.stats = { ...statVar.stats };
+        state.calc.activePreset = null;
+        document.querySelectorAll("#calc-presets button").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll("#calc-job-mode button").forEach(b => b.classList.toggle("active", b.getAttribute("data-calc-job") === jobKey));
+        renderCalculator();
+        document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth" });
+        showToast(`已將「${build.title}｜${statVar.label}」帶入計算機`);
+      }
+    });
+
+    document.getElementById("calc-presets")?.addEventListener("click", e => {
+      const btn = e.target.closest("[data-preset]");
+      if (btn) applyPreset(btn.getAttribute("data-preset"));
+    });
+
+    document.getElementById("calc-job-mode")?.addEventListener("click", e => {
+      const btn = e.target.closest("[data-calc-job]");
+      if (!btn) return;
+      state.calc.job = btn.getAttribute("data-calc-job");
+      document.querySelectorAll("#calc-job-mode button").forEach(b => b.classList.toggle("active", b === btn));
+      renderCalculator();
+    });
+
+    document.getElementById("calc-sliders")?.addEventListener("input", e => {
+      const inp = e.target.closest("[data-calc-slider]");
+      if (!inp) return;
+      const key = inp.getAttribute("data-calc-slider");
+      const val = Number(inp.value);
+      if (key === "lv") state.calc.lv = val;
+      else state.calc.stats[key] = val;
+      state.calc.activePreset = null;
+      document.querySelectorAll("#calc-presets button").forEach(b => b.classList.remove("active"));
+      renderCalculator();
+    });
+  }
+
+  function boot() {
+    hydrateIcons(document);
+    setActiveJob("wizard");
+    renderCalculator();
+    initEvents();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+
+  </script>
+</body>
+</html>
