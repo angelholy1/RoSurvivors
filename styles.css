@@ -2610,9 +2610,187 @@ tr:last-child td {
   line-height: 1.5;
 }
 
+/* Per-Job Actual Equipment & Compendium */
+.loadout-subblock.gear-subblock {
+  margin-bottom: 16px;
+  border-left: 3px solid var(--ok);
+  background: linear-gradient(180deg, rgba(74, 222, 128, 0.06), rgba(9, 14, 26, 0.56) 115px);
+  scroll-margin-top: 86px;
+}
+
+.loadout-badge.gear {
+  background: rgba(74, 222, 128, 0.14);
+  border: 1px solid rgba(74, 222, 128, 0.44);
+  color: #86efac;
+}
+
+.gear-group-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  margin: 12px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gear-weapon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.gear-rec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.gear-rec-card,
+.gear-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gear-rec-card.is-rare,
+.gear-card.is-rare {
+  border-color: rgba(245, 196, 81, 0.55);
+  background: linear-gradient(165deg, rgba(245, 196, 81, 0.09), var(--bg-elevated) 68%);
+}
+
+.gear-rec-card.is-story,
+.gear-card.is-story {
+  border-color: rgba(74, 222, 128, 0.42);
+}
+
+.gear-rec-top,
+.gear-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gear-rec-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ok);
+  margin-bottom: 2px;
+  display: block;
+}
+
+.gear-rec-name,
+.gear-card h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.gear-en {
+  display: block;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.gear-badges {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.gear-tier-pill {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: rgba(15, 23, 42, 0.72);
+  white-space: nowrap;
+}
+
+.gear-tier-pill.t2 {
+  border-color: rgba(56, 189, 248, 0.42);
+  color: #7dd3fc;
+}
+
+.gear-tier-pill.t3 {
+  border-color: var(--border-gold);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.gear-tier-pill.rare {
+  border-color: rgba(245, 158, 11, 0.6);
+  background: rgba(245, 158, 11, 0.16);
+  color: #fcd34d;
+}
+
+.gear-affix-line {
+  font-size: 12px;
+  font-weight: 700;
+  color: #86efac;
+  line-height: 1.45;
+}
+
+.gear-stats-meta {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
+.gear-drop-line {
+  font-size: 12px;
+  color: #fde68a;
+  background: rgba(8, 13, 25, 0.65);
+  border: 1px solid rgba(140, 173, 255, 0.16);
+  border-radius: 7px;
+  padding: 5px 8px;
+  line-height: 1.45;
+}
+
+.gear-reason {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.gear-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gear-card {
+  background: var(--bg-card);
+  padding: 14px 15px;
+}
+
+.gear-jobs-line {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
 @media (max-width: 1080px) {
   .section,
-  .detail-priority-box {
+  .detail-priority-box,
+  .loadout-subblock.gear-subblock {
     scroll-margin-top: 124px;
   }
   .chest-prio-grid {
@@ -2628,6 +2806,9 @@ tr:last-child td {
   .pet-mech-grid,
   .pet-grid,
   .cards-grid,
+  .gear-weapon-grid,
+  .gear-rec-grid,
+  .gear-grid,
   .priority-rules-grid,
   .chest-rules-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2708,7 +2889,8 @@ tr:last-child td {
   }
 
   .section,
-  .detail-priority-box {
+  .detail-priority-box,
+  .loadout-subblock.gear-subblock {
     scroll-margin-top: 118px;
   }
 
@@ -2751,6 +2933,9 @@ tr:last-child td {
   .pet-mech-grid,
   .pet-grid,
   .cards-grid,
+  .gear-weapon-grid,
+  .gear-rec-grid,
+  .gear-grid,
   .card-slot-grid,
   .glossary-grid,
   .priority-rules-grid,

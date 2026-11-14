@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RO Survivors Beta 0.6.6 全職業攻略｜配點、天賦樹、寵物與卡片圖鑑</title>
+  <title>RO Survivors Beta 0.6.6 全職業攻略｜配點、實戰裝備與刷取來源、天賦、寵物與卡片圖鑑</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
 </head>
@@ -14,12 +14,13 @@
         <span class="brand-crest" data-icon="crest"></span>
         <div>
           RO Survivors 全職業攻略圖鑑
-          <span class="brand-sub">BETA 0.6.6 全職系・天賦・寵物與卡片實碼資料站</span>
+          <span class="brand-sub">BETA 0.6.6 全職系・裝備掉落・天賦・寵物與卡片實碼資料站</span>
         </div>
       </div>
       <nav class="nav-links" role="tablist" aria-label="頁面分頁切換">
         <a href="#jobs" class="nav-tab active" role="tab" aria-selected="true" data-tab="jobs">職業攻略 <span class="nav-tab-count">16</span></a>
         <a href="#pets" class="nav-tab" role="tab" aria-selected="false" data-tab="pets">寵物與難度 <span class="nav-tab-count">24</span></a>
+        <a href="#gear" class="nav-tab" role="tab" aria-selected="false" data-tab="gear">裝備圖鑑 <span class="nav-tab-count">132</span></a>
         <a href="#cards" class="nav-tab" role="tab" aria-selected="false" data-tab="cards">卡片圖鑑 <span class="nav-tab-count">87</span></a>
         <a href="#guide" class="nav-tab" role="tab" aria-selected="false" data-tab="guide">詞彙與選卡</a>
         <a href="#calculator" class="nav-tab" role="tab" aria-selected="false" data-tab="calculator">素質模擬機</a>
@@ -105,31 +106,9 @@
       </div>
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="target"></span>目前選中職業詳細攻略：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
-        <span class="section-sub">包含該職業屬性加點順序、實戰技能格、局內升級挑卡權重與寶箱 5 格順位、推薦寵物與各部位裝備插卡、雙層 50 點天賦樹</span>
+        <span class="section-sub">僅顯示當前所選職業之屬性順序、技能格、專屬局內挑卡＆寶箱順位、實際裝備配裝與刷取地圖、隨行寵物與插卡、雙層 50 點天賦樹</span>
       </div>
       <div class="detail-shell" id="detail-shell"></div>
-    </section>
-
-    <section class="section" id="guide-jobs">
-      <details class="rules-drawer prio-drawer" id="job-priority-drawer">
-        <summary class="rules-drawer-summary">
-          <span class="rules-drawer-summary-left"><span class="icon" data-icon="book"></span><span>全 16 職業挑卡權重與寶箱 5 格順位橫向總覽（依系別／關鍵字快篩）</span></span>
-          <span class="rules-drawer-toggle"></span>
-        </summary>
-        <div class="job-priority-drawer-body">
-          <p class="job-priority-drawer-note">想一次橫向對照多職業可展開此區；單看一個職業時，上方目前選中職業卡片區已直接內嵌「升級三選一權重」與「寶箱神祇／道具第 1→3 順位」，<a href="#guide" style="color:var(--gold)">通用詞彙與寶箱等貨規則請見「詞彙與選卡」→</a></p>
-          <div class="roster-controls">
-            <div class="roster-filters" id="job-priority-filters" role="group" aria-label="職業系別篩選">
-              <button type="button" class="filter-pill active" data-prio-cat="all">全職業 (16)</button>
-              <button type="button" class="filter-pill" data-prio-cat="melee">近戰系 (8)</button>
-              <button type="button" class="filter-pill" data-prio-cat="ranged">遠程系 (4)</button>
-              <button type="button" class="filter-pill" data-prio-cat="magic">法術／輔助系 (4)</button>
-            </div>
-            <input id="job-priority-search" class="roster-search" type="search" placeholder="搜尋職業或詞條：巫師 / 阿修羅 / 雙重詠唱 / 貫穿..." aria-label="搜尋職業選卡優先順" />
-          </div>
-          <div class="job-priority-grid" id="job-priority-grid"></div>
-        </div>
-      </details>
     </section>
     </div>
 
@@ -214,6 +193,51 @@
       </div>
 
       <div class="pet-grid" id="pets-grid"></div>
+    </section>
+    </div>
+
+    <div class="tab-panel" id="tab-gear" data-tab-panel="gear" role="tabpanel" hidden>
+    <section class="section" id="gear">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="shield"></span>全 132 件可入手裝備圖鑑與刷取來源</h2>
+        <span class="section-sub">實碼完整收錄 Beta 0.6.6 怪物掉落（56 武器＋76 防具飾品）、沉沒之船劇情武器池與普隆德拉城堡固定徽章</span>
+      </div>
+
+      <div class="socket-rule-bar">
+        <span class="pill gold">裝備只從怪物掉落＆劇情關取得（商店僅賣精煉礦石，MVP／Mini 掉率 5%~15%、一般怪 0.015%~0.03%）</span>
+        <span class="pill accent">Rare 物品在 Tier 2 地圖（海底／斐揚）掉落時實碼直接升階至 Tier 3（波利、鬼火、土人等 6 件必農）</span>
+        <span class="pill">雙手武器（雙手劍/槍/斧、弓、拳刃、火槍）會鎖定盾牌欄位；單手武器皆可加掛鏡盾</span>
+        <a href="#detail-gear" class="loadout-sublink">看目前職業專屬配裝推薦 →</a>
+      </div>
+
+      <div class="roster-controls" style="flex-direction:column;align-items:stretch;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="roster-filters" id="gear-slot-filters" role="group" aria-label="依裝備部位篩選">
+            <button type="button" class="filter-pill active" data-gear-slot="all">全部裝備 (132)</button>
+            <button type="button" class="filter-pill" data-gear-slot="weapon">武器 (56)</button>
+            <button type="button" class="filter-pill" data-gear-slot="shield">盾牌 (5)</button>
+            <button type="button" class="filter-pill" data-gear-slot="head">頭飾上中下 (38)</button>
+            <button type="button" class="filter-pill" data-gear-slot="armor">鎧甲 (13)</button>
+            <button type="button" class="filter-pill" data-gear-slot="garment">披肩 (4)</button>
+            <button type="button" class="filter-pill" data-gear-slot="shoes">鞋子 (5)</button>
+            <button type="button" class="filter-pill" data-gear-slot="acc">飾品 (11)</button>
+          </div>
+          <span class="pill" id="gear-count-label">顯示 132 / 132 件裝備</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="segmented" id="gear-source-filters" role="group" aria-label="依入手來源與階級篩選">
+            <button type="button" class="active" data-gear-source="all">全部來源 (132)</button>
+            <button type="button" data-gear-source="rare">Rare 升三階 (6)</button>
+            <button type="button" data-gear-source="boss">MVP／Mini 王掉</button>
+            <button type="button" data-gear-source="mob">一般怪掉落</button>
+            <button type="button" data-gear-source="t2">Tier 2+ 高階</button>
+            <button type="button" data-gear-source="story">劇情關取得</button>
+          </div>
+          <input type="search" id="gear-search" class="roster-search" placeholder="搜尋裝備中英名、詞條或掉落怪（例：波爾多 / 鏡盾 / 天使羽翼 / 月夜花 / 鬼火）..." aria-label="搜尋裝備" />
+        </div>
+      </div>
+
+      <div class="gear-grid" id="gear-grid"></div>
     </section>
     </div>
 
@@ -316,12 +340,12 @@
 
       <div class="guide-crosslink-box">
         <div>
-          <h3>各職業專屬「挑卡權重」與「寶箱 5 格順位」已整合進「職業攻略」</h3>
-          <p>挑選任何職業即可在同一頁直接對照升級三選一權重、寶箱神祇與道具 1→3 排序，或展開全 16 職業橫向總覽一次比對。</p>
+          <h3>各職業專屬「挑卡權重＆寶箱 5 格順位」請於該職業面板檢視</h3>
+          <p>每個職業卡片僅顯示該職業自身要挑什麼升級卡、開寶箱該等哪些神祇／道具，以及該職業實戰該去哪張地圖農哪些裝備；查全部 132 件裝備掉落則可切換至「裝備圖鑑」。</p>
         </div>
         <div class="guide-crosslink-actions">
           <a href="#detail-priority" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="target"></span>查看目前職業挑卡＆寶箱</a>
-          <a href="#guide-jobs" class="btn" style="text-decoration:none;"><span class="icon" data-icon="book"></span>展開全 16 職業總覽</a>
+          <a href="#gear" class="btn" style="text-decoration:none;"><span class="icon" data-icon="shield"></span>瀏覽全 132 件裝備圖鑑</a>
         </div>
       </div>
     </section>
