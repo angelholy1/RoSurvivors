@@ -17,19 +17,18 @@
           <span class="brand-sub">BETA 0.6.6 全職系・天賦・寵物與卡片實碼資料站</span>
         </div>
       </div>
-      <nav class="nav-links" aria-label="頁面導覽">
-        <a href="#rules">核心機制</a>
-        <a href="#roster">全職業總覽</a>
-        <a href="#detail">天賦與配裝</a>
-        <a href="#pets">寵物與難度</a>
-        <a href="#cards">全卡片圖鑑</a>
-        <a href="#calculator">素質模擬機</a>
-        <a href="#compare">速查表</a>
+      <nav class="nav-links" role="tablist" aria-label="頁面分頁切換">
+        <a href="#jobs" class="nav-tab active" role="tab" aria-selected="true" data-tab="jobs">職業攻略 <span class="nav-tab-count">16</span></a>
+        <a href="#pets" class="nav-tab" role="tab" aria-selected="false" data-tab="pets">寵物與難度 <span class="nav-tab-count">24</span></a>
+        <a href="#cards" class="nav-tab" role="tab" aria-selected="false" data-tab="cards">卡片圖鑑 <span class="nav-tab-count">87</span></a>
+        <a href="#calculator" class="nav-tab" role="tab" aria-selected="false" data-tab="calculator">素質模擬機</a>
+        <a href="#compare" class="nav-tab" role="tab" aria-selected="false" data-tab="compare">全職速查表</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
+    <div class="tab-panel active" id="tab-jobs" data-tab-panel="jobs" role="tabpanel">
     <section class="hero">
       <div class="hero-badge-row">
         <span class="pill gold">Beta 0.6.6 全職系資料核對</span>
@@ -48,29 +47,34 @@
       </div>
     </section>
 
-    <section class="section" id="rules">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="scroll"></span>實碼核心數值與天賦系統規則</h2>
-        <span class="section-sub">理解傷害倍率與天賦鎖定邏輯，避免配點踩坑</span>
-      </div>
-      <div class="rules-grid">
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="spark"></span>V9 攻防倍率與階梯成本</div>
-          <p>Lv 1→99 總素質點數上限為 <strong>1,273 點</strong>（滿單屬 99 消耗 530 點）。實碼公式先將屬性換算為面板 <code>ATK = 3×STR</code>、<code>遠程 = STR+3×DEX</code> 或 <code>MATK = 3×INT</code> 後再送入 <code>ji(val, rank)</code>（其中 <code>a = val / 15.46</code>）；滿 99（297 面板）時一轉倍率 <strong>17.61×</strong>、二轉躍升至 <strong>54.17×</strong>。</p>
-        </article>
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="lock"></span>雙層天賦樹與二轉單分支鎖</div>
-          <p>一轉／二轉各獨立配置 <strong>50 點天賦</strong>。任意節點的前置技能（<code>req / req2</code>）必須<strong>點到滿級</strong>、第 <code>L</code> 層需同分支下方已累積 <code>≥ L×5</code> 點、互斥路線（<code>.a/.b</code>）只能擇一；且<strong>二轉只能投入單一分支</strong>，投入後其餘二轉分支即時鎖定。</p>
-        </article>
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="target"></span>獨立武器格與雙手武器加成</div>
-          <p>最左側武器普攻不佔用右側主動技能欄，且劍士／商人持<strong>雙手武器享 +1.25× 倍率（單手 +0.75×）</strong>；神槍手／忍者為單階職業上限維持 <code>1+4</code>；十字軍部分盾系技能強制檢驗是否配戴盾牌（<code>needsShield</code>）。</p>
-        </article>
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="speed"></span>一二轉轉型與實碼隱藏設定</div>
-          <p><strong>服事（INT）→ 武僧（STR）</strong>與<strong>跆拳（STR）→ 靈媒師（INT）</strong>在二轉後主屬性完全對調，轉職前記得保留素質或留意點法；<strong>忍者</strong>投擲飛鏢吃 <code>DEX</code>、忍術花/雷吃 <code>INT</code>；<strong>詩人／舞孃</strong>享弓手基底 <code>0.85×</code> 冷卻加成。</p>
-        </article>
-      </div>
+    <section class="section rules-section" id="rules">
+      <details class="rules-drawer" id="rules-drawer">
+        <summary class="rules-drawer-summary">
+          <span class="rules-drawer-summary-left">
+            <span class="icon" data-icon="scroll"></span>
+            <span>實碼核心數值與天賦系統規則（V9 倍率 / 50 點鎖 / 雙手武器 / 主屬對調）</span>
+          </span>
+          <span class="rules-drawer-toggle"></span>
+        </summary>
+        <div class="rules-grid">
+          <article class="rule-card">
+            <div class="rule-head"><span class="icon" data-icon="spark"></span>V9 攻防倍率與階梯成本</div>
+            <p>Lv 1→99 總素質點數上限為 <strong>1,273 點</strong>（滿單屬 99 消耗 530 點）。實碼公式先將屬性換算為面板 <code>ATK = 3×STR</code>、<code>遠程 = STR+3×DEX</code> 或 <code>MATK = 3×INT</code> 後再送入 <code>ji(val, rank)</code>（其中 <code>a = val / 15.46</code>）；滿 99（297 面板）時一轉倍率 <strong>17.61×</strong>、二轉躍升至 <strong>54.17×</strong>。</p>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="icon" data-icon="lock"></span>雙層天賦樹與二轉單分支鎖</div>
+            <p>一轉／二轉各獨立配置 <strong>50 點天賦</strong>。任意節點的前置技能（<code>req / req2</code>）必須<strong>點到滿級</strong>、第 <code>L</code> 層需同分支下方已累積 <code>≥ L×5</code> 點、互斥路線（<code>.a/.b</code>）只能擇一；且<strong>二轉只能投入單一分支</strong>，投入後其餘二轉分支即時鎖定。</p>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="icon" data-icon="target"></span>獨立武器格與雙手武器加成</div>
+            <p>最左側武器普攻不佔用右側主動技能欄，且劍士／商人持<strong>雙手武器享 +1.25× 倍率（單手 +0.75×）</strong>；神槍手／忍者為單階職業上限維持 <code>1+4</code>；十字軍部分盾系技能強制檢驗是否配戴盾牌（<code>needsShield</code>）。</p>
+          </article>
+          <article class="rule-card">
+            <div class="rule-head"><span class="icon" data-icon="speed"></span>一二轉轉型與實碼隱藏設定</div>
+            <p><strong>服事（INT）→ 武僧（STR）</strong>與<strong>跆拳（STR）→ 靈媒師（INT）</strong>在二轉後主屬性完全對調，轉職前記得保留素質或留意點法；<strong>忍者</strong>投擲飛鏢吃 <code>DEX</code>、忍術花/雷吃 <code>INT</code>；<strong>詩人／舞孃</strong>享弓手基底 <code>0.85×</code> 冷卻加成。</p>
+          </article>
+        </div>
+      </details>
     </section>
 
     <section class="section" id="roster">
@@ -104,7 +108,9 @@
       </div>
       <div class="detail-shell" id="detail-shell"></div>
     </section>
+    </div>
 
+    <div class="tab-panel" id="tab-pets" data-tab-panel="pets" role="tabpanel" hidden>
     <section class="section" id="pets">
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="pet"></span>寵物系統、24 隻全圖鑑與刷蛋／難度調整攻略</h2>
@@ -186,7 +192,9 @@
 
       <div class="pet-grid" id="pets-grid"></div>
     </section>
+    </div>
 
+    <div class="tab-panel" id="tab-cards" data-tab-panel="cards" role="tabpanel" hidden>
     <section class="section" id="cards">
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="card"></span>全 87 張卡片圖鑑與插槽品質規則</h2>
@@ -226,7 +234,9 @@
 
       <div class="cards-grid" id="cards-grid"></div>
     </section>
+    </div>
 
+    <div class="tab-panel" id="tab-calculator" data-tab-panel="calculator" role="tabpanel" hidden>
     <section class="section" id="calculator">
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="calc"></span>實碼 V9 素質分配預算與倍率模擬機</h2>
@@ -251,11 +261,13 @@
         </div>
       </div>
     </section>
+    </div>
 
+    <div class="tab-panel" id="tab-compare" data-tab-panel="compare" role="tabpanel" hidden>
     <section class="section" id="compare">
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="table"></span>全 16 職業路線核心參數速查表</h2>
-        <span class="section-sub">點擊任一列可直接跳轉至上方詳細面板檢視天賦與配點順序</span>
+        <span class="section-sub">點擊任一列可切換至「職業攻略」分頁檢視該職業天賦與配點順序</span>
       </div>
       <div class="table-wrap">
         <table id="compare-table">
@@ -273,6 +285,7 @@
         </table>
       </div>
     </section>
+    </div>
 
     <footer class="footer">
       <span>RO Survivors Beta 0.6.6 全職業資料整理（純離線靜態網站，可於本地瀏覽器與 GitHub Pages 直接開啟）</span>

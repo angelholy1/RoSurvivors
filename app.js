@@ -77,6 +77,7 @@
   };
 
   const state = {
+    activeTab: "jobs",
     activeJob: "wizard",
     rosterFilter: "all",
     rosterQuery: "",
@@ -1039,16 +1040,84 @@
     hydrateIcons(grid);
   }
 
-  function scrollToTarget(el) {
+  const VALID_TABS = ["jobs", "pets", "cards", "calculator", "compare"];
+  const HASH_TO_TAB = {
+    jobs: "jobs",
+    hero: "jobs",
+    rules: "jobs",
+    roster: "jobs",
+    detail: "jobs",
+    pets: "pets",
+    cards: "cards",
+    calculator: "calculator",
+    compare: "compare"
+  };
+
+  function resolveTabFromTarget(idOrTab) {
+    const clean = String(idOrTab || "").replace(/^#/, "").trim();
+    return HASH_TO_TAB[clean] || null;
+  }
+
+  function scrollToTarget(el, instant) {
     if (!el) return;
     if (typeof window !== "undefined" && typeof window.scrollTo === "function" && typeof el.getBoundingClientRect === "function") {
       const topbar = document.querySelector ? document.querySelector(".topbar") : null;
       const offset = (topbar && typeof topbar.getBoundingClientRect === "function" ? topbar.getBoundingClientRect().height : 80) + 16;
       const top = Math.max(0, el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) - offset);
-      window.scrollTo({ top, behavior: "smooth" });
+      window.scrollTo({ top, behavior: instant ? "auto" : "smooth" });
     } else if (typeof el.scrollIntoView === "function") {
-      el.scrollIntoView({ behavior: "smooth" });
+      el.scrollIntoView({ behavior: instant ? "auto" : "smooth" });
     }
+  }
+
+  function setActiveTab(tabKey, opts) {
+    const options = opts || {};
+    const targetTab = VALID_TABS.includes(tabKey) ? tabKey : "jobs";
+    const changed = state.activeTab !== targetTab;
+    state.activeTab = targetTab;
+
+    if (typeof document !== "undefined") {
+      document.body.setAttribute("data-tab", targetTab);
+      if (typeof document.querySelectorAll === "function") {
+        document.querySelectorAll("[data-tab]").forEach(el => {
+          const isAct = el.getAttribute("data-tab") === targetTab;
+          el.classList.toggle("active", isAct);
+          el.setAttribute("aria-selected", isAct ? "true" : "false");
+        });
+        document.querySelectorAll("[data-tab-panel]").forEach(panel => {
+          const isAct = panel.getAttribute("data-tab-panel") === targetTab;
+          panel.classList.toggle("active", isAct);
+          panel.hidden = !isAct;
+          if (isAct && typeof panel.removeAttribute === "function") panel.removeAttribute("hidden");
+          else if (!isAct && typeof panel.setAttribute === "function") panel.setAttribute("hidden", "");
+        });
+      }
+    }
+
+    if (options.hash && typeof window !== "undefined" && window.history && typeof window.history.replaceState === "function") {
+      try {
+        window.history.replaceState(null, "", options.hash);
+      } catch (_) {}
+    }
+
+    const scrollTargetId = options.scrollTargetId;
+    if (scrollTargetId === "rules") {
+      const rd = document.getElementById("rules-drawer");
+      if (rd) rd.open = true;
+    }
+
+    if (scrollTargetId && ["rules", "roster", "detail"].includes(scrollTargetId)) {
+      const targetEl = document.getElementById(scrollTargetId);
+      if (targetEl) {
+        scrollToTarget(targetEl, Boolean(options.instant));
+        return changed;
+      }
+    }
+
+    if (options.scrollToTop !== false && typeof window !== "undefined" && typeof window.scrollTo === "function") {
+      window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
+    }
+    return changed;
   }
 
   function setActiveJob(jobKey, shouldScroll) {
@@ -1059,7 +1128,11 @@
     renderRoster();
     renderDetail();
     if (shouldScroll) {
-      scrollToTarget(document.getElementById("detail"));
+      if (state.activeTab !== "jobs") {
+        setActiveTab("jobs", { scrollTargetId: "detail", hash: "#detail" });
+      } else {
+        scrollToTarget(document.getElementById("detail"));
+      }
     }
   }
 
@@ -1178,7 +1251,7 @@
         state.calc.mode = getCalcModeForBuild(build, statVar.stats);
         state.calc.activePreset = null;
         renderCalculator();
-        scrollToTarget(document.getElementById("calculator"));
+        setActiveTab("calculator", { hash: "#calculator" });
         showToast("已將「" + build.title + "｜" + statVar.label + "」帶入模擬機");
       }
     });
@@ -1254,13 +1327,46 @@
         if (!link) return;
         const hash = link.getAttribute("href");
         if (!hash || hash === "#") return;
-        const target = document.getElementById(hash.slice(1));
+        const targetId = hash.slice(1);
+        const tabFromAttr = link.getAttribute("data-tab");
+        const targetTab = tabFromAttr || resolveTabFromTarget(targetId);
+        if (targetTab) {
+          if (typeof e.preventDefault === "function") e.preventDefault();
+          if (targetTab !== state.activeTab || targetId === targetTab) {
+            setActiveTab(targetTab, { scrollTargetId: targetId, hash });
+          } else {
+            if (targetId === "rules") {
+              const rd = document.getElementById("rules-drawer");
+              if (rd) rd.open = true;
+            }
+            const target = document.getElementById(targetId);
+            if (target) scrollToTarget(target);
+            if (typeof window !== "undefined" && window.history && typeof window.history.replaceState === "function") {
+              try {
+                window.history.replaceState(null, "", hash);
+              } catch (_) {}
+            }
+          }
+          return;
+        }
+        const target = document.getElementById(targetId);
         if (!target) return;
         if (typeof e.preventDefault === "function") e.preventDefault();
         scrollToTarget(target);
         if (typeof window !== "undefined" && window.history && typeof window.history.replaceState === "function") {
-          window.history.replaceState(null, "", hash);
+          try {
+            window.history.replaceState(null, "", hash);
+          } catch (_) {}
         }
+      });
+    }
+
+    if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+      window.addEventListener("hashchange", () => {
+        const h = window.location ? window.location.hash : "";
+        const targetId = h ? h.slice(1) : "jobs";
+        const tab = resolveTabFromTarget(targetId) || "jobs";
+        setActiveTab(tab, { scrollTargetId: targetId });
       });
     }
   }
@@ -1272,6 +1378,13 @@
     renderCardsSection();
     setActiveJob("wizard", false);
     renderCalculator();
+    const initHash = typeof window !== "undefined" && window.location && window.location.hash ? window.location.hash.slice(1) : "";
+    const initTab = resolveTabFromTarget(initHash) || "jobs";
+    setActiveTab(initTab, {
+      scrollTargetId: ["rules", "roster", "detail"].includes(initHash) ? initHash : null,
+      scrollToTop: false,
+      instant: true
+    });
     initEvents();
   }
 
@@ -1289,6 +1402,8 @@
     calcFleePct,
     copyBuildText,
     scrollToTarget,
+    resolveTabFromTarget,
+    setActiveTab,
     setActiveJob,
     applyPreset,
     renderCalculator,
