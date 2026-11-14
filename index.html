@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RO Survivors Beta 0.6.6 全職業攻略｜配點、裝備、寶箱甜蜜點、天賦、寵物與卡片圖鑑</title>
+  <title>RO Survivors Beta 0.6.9 全職業攻略｜配點、裝備、寶箱甜蜜點、天賦、寵物與卡片圖鑑</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
 </head>
@@ -14,11 +14,12 @@
         <span class="brand-crest" data-icon="crest"></span>
         <div>
           RO Survivors 全職業攻略圖鑑
-          <span class="brand-sub">BETA 0.6.6 全職系・裝備掉落・天賦・寵物與卡片實碼資料站</span>
+          <span class="brand-sub">BETA 0.6.9 實碼現況・裝備掉落・天賦・寵物與卡片核對資料站</span>
         </div>
       </div>
       <nav class="nav-links" role="tablist" aria-label="頁面分頁切換">
         <a href="#jobs" class="nav-tab active" role="tab" aria-selected="true" data-tab="jobs">職業攻略 <span class="nav-tab-count">16</span></a>
+        <a href="#stages" class="nav-tab" role="tab" aria-selected="false" data-tab="stages">關卡怪物與掉落 <span class="nav-tab-count">9</span></a>
         <a href="#pets" class="nav-tab" role="tab" aria-selected="false" data-tab="pets">寵物與難度 <span class="nav-tab-count">24</span></a>
         <a href="#gear" class="nav-tab" role="tab" aria-selected="false" data-tab="gear">裝備圖鑑 <span class="nav-tab-count">132</span></a>
         <a href="#cards" class="nav-tab" role="tab" aria-selected="false" data-tab="cards">卡片圖鑑 <span class="nav-tab-count">87</span></a>
@@ -33,18 +34,18 @@
     <div class="tab-panel active" id="tab-jobs" data-tab-panel="jobs" role="tabpanel">
     <section class="hero">
       <div class="hero-badge-row">
-        <span class="pill gold">Beta 0.6.6 全職系資料核對</span>
-        <span class="pill accent">16 條完整可玩路線（含擴展秘密職業）</span>
-        <span class="pill">雙層 50+50 實碼校驗天賦樹</span>
+        <span class="pill gold">Beta 0.6.9 實碼現況校對</span>
+        <span class="pill accent">16 條路線（現況 1+4 實戰配置＋二轉前瞻）</span>
+        <span class="pill">Lv1→99 階梯・wL() 裝備與尋寶公式核對</span>
       </div>
-      <h1>RO Survivors 全職業深度攻略指南：屬性配點、雙層天賦樹與素質模擬</h1>
+      <h1>RO Survivors 全職業深度攻略指南：現況 1+4 配點、實碼掉落與二轉前瞻</h1>
       <p class="hero-lead">
-        完整收錄目前遊戲實碼共 6 大常駐一轉職系（12 個二轉職業）與 4 條擴展／秘密解鎖路線（拳聖、靈媒師、忍者、神槍手）。每一條配點路線均通過 Lv 1→99 階梯總點數（<strong>1,273 點</strong>）、天賦前置滿級門檻（<code>req / req2</code>）、同分支前置層數（<code>≥ L × 5</code>）以及實戰武器格＋技能欄格數核對。
+        完整收錄 Beta 0.6.9 實碼共 6 大常駐一轉職系（含 12 個二轉外觀／未來前瞻路線）與 4 條擴展職業（拳聖、靈媒師、忍者、神槍手）。所有配點均經 Lv 1→99 階梯上限（<strong>1,273 點</strong>）、天賦前置門檻（<code>req / req2</code>、<code>≥ L × 5</code>）以及實碼裝備公式（<code>wL()</code>）逐條校驗。
       </p>
       <div class="notice-box">
         <span class="icon" data-icon="target"></span>
         <div>
-          <strong>實碼開局欄位與版本重要機制提醒：</strong>遊戲內一轉開局為<strong>最左側獨立武器普攻格＋右側 4 格主動技能（共 5 格）</strong>，二轉後解鎖第 5 格主動（<strong>共 6 格</strong>）；擴展單階職業如忍者與神槍手目前維持 <code>1+4</code>。此外，<strong>十字軍／鍊金術士</strong>在實碼皆判定吃 <code>melee STR</code>、<strong>服事轉武僧 / 跆拳轉靈媒</strong>會切換主屬性、而 Beta 0.6.6 的<strong>騎士／十字軍 B0 騎兵分支</strong>因 Row 0 上限僅 2 點尚無法點入深層（請改走各職業面板中已驗證的替代分支）。
+          <strong>Beta 0.6.9 現況與未來二轉核心差異提醒：</strong>目前遊戲內已可觸發二轉並<strong>變更角色外觀、提升基礎 HP／移速與 <code>rank = 2</code> 傷害倍率（+15% EXP）</strong>，同時會關閉王城徽章任務（<strong>#22847 需在未轉職時首通領取</strong>）。但「<strong>二轉 50 點天賦樹、第 5 格主動技能欄、全部二轉主動技、刺客雙持／拳刃、騎兵坐騎</strong>」目前尚未啟用！進局後角色依然綁定一轉技能池（<strong>全職業實戰均為 1 武器＋4 主動＝共 5 格</strong>），特別是轉職成<strong>靈媒師</strong>時現況進局仍放跆拳踢擊技（建議先照 STR 現況配置遊玩）；網站內的二轉天賦樹與二轉技能均已標註「未來前瞻鎖定」，實戰請直接套用各職已重編的 <code>1+4</code> 配置與「一轉 50 點天賦」。
         </div>
       </div>
     </section>
@@ -54,26 +55,26 @@
         <summary class="rules-drawer-summary">
           <span class="rules-drawer-summary-left">
             <span class="icon" data-icon="scroll"></span>
-            <span>實碼核心數值與天賦系統規則（V9 倍率 / 50 點鎖 / 雙手武器 / 主屬對調）</span>
+            <span>實碼核心數值與 Beta 0.6.9 實際生效機制（Ni 倍率 / 1+4 限制 / 雙手武器 / 一二轉差異）</span>
           </span>
           <span class="rules-drawer-toggle"></span>
         </summary>
         <div class="rules-grid">
           <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="spark"></span>V9 攻防倍率與階梯成本</div>
-            <p>Lv 1→99 總素質點數上限為 <strong>1,273 點</strong>（滿單屬 99 消耗 530 點）。實碼公式先將屬性換算為面板 <code>ATK = 3×STR</code>、<code>遠程 = STR+3×DEX</code> 或 <code>MATK = 3×INT</code> 後再送入 <code>ji(val, rank)</code>（其中 <code>a = val / 15.46</code>）；滿 99（297 面板）時一轉倍率 <strong>17.61×</strong>、二轉躍升至 <strong>54.17×</strong>。</p>
+            <div class="rule-head"><span class="icon" data-icon="spark"></span>實碼攻防倍率與階梯成本</div>
+            <p>Lv 1→99 總素質點數上限為 <strong>1,273 點</strong>（滿單屬 99 消耗 530 點）。實碼公式先將屬性換算為面板 <code>ATK = 3×STR</code>、<code>遠程 = STR+3×DEX</code> 或 <code>MATK = 3×INT</code> 後再送入 <code>Ni(val, rank)</code>（其中 <code>a = val / 15.46</code>）；滿 99（297 面板）時一轉倍率 <strong>17.61×</strong>、轉職 <code>rank = 2</code> 躍升至 <strong>54.17×</strong>（轉職後外觀、HP／移速與此倍率現已實裝生效）。</p>
           </article>
           <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="lock"></span>雙層天賦樹與二轉單分支鎖</div>
-            <p>一轉／二轉各獨立配置 <strong>50 點天賦</strong>。任意節點的前置技能（<code>req / req2</code>）必須<strong>點到滿級</strong>、第 <code>L</code> 層需同分支下方已累積 <code>≥ L×5</code> 點、互斥路線（<code>.a/.b</code>）只能擇一；且<strong>二轉只能投入單一分支</strong>，投入後其餘二轉分支即時鎖定。</p>
+            <div class="rule-head"><span class="icon" data-icon="lock"></span>雙層天賦樹與 Beta 0.6.9 啟用狀態</div>
+            <p>實戰中目前僅「<strong>一轉 50 點天賦</strong>」實際生效；二轉 50 點單分支天賦樹在 Beta 0.6.9 尚未開放，網站保留其作為<strong>未來前瞻預覽</strong>。任意節點前置（<code>req / req2</code>）均須點滿、第 <code>L</code> 層需同分支累積 <code>≥ L×5</code> 點、互斥路線（<code>.a/.b</code>）只能擇一。</p>
           </article>
           <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="target"></span>獨立武器格與雙手武器加成</div>
-            <p>最左側武器普攻不佔用右側主動技能欄，且劍士／商人持<strong>雙手武器享 +1.25× 倍率（單手 +0.75×）</strong>；神槍手／忍者為單階職業上限維持 <code>1+4</code>；十字軍部分盾系技能強制檢驗是否配戴盾牌（<code>needsShield</code>）。</p>
+            <div class="rule-head"><span class="icon" data-icon="target"></span>1+4 武器格與雙手武器加成</div>
+            <p>Beta 0.6.9 全職業實戰欄位均為<strong>最左 1 格武器普攻＋右側 4 格一轉主動技能</strong>。目前唯有劍士／商人系依武器種類套用雙手 <strong>1.25×</strong>／單手 <strong>0.75×</strong> 補正，神槍手／弓手／十字軍無盾槽則受限於雙手武器鎖盾規則；刺客雙持副手武器與拳刃目前尚未啟用。</p>
           </article>
           <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="speed"></span>一二轉轉型與實碼隱藏設定</div>
-            <p><strong>服事（INT）→ 武僧（STR）</strong>與<strong>跆拳（STR）→ 靈媒師（INT）</strong>在二轉後主屬性完全對調，轉職前記得保留素質或留意點法；<strong>忍者</strong>投擲飛鏢吃 <code>DEX</code>、忍術花/雷吃 <code>INT</code>；<strong>詩人／舞孃</strong>享弓手基底 <code>0.85×</code> 冷卻加成。</p>
+            <div class="rule-head"><span class="icon" data-icon="speed"></span>現況 1+4 技能池 vs 未來二轉主屬</div>
+            <p>因進局仍檢查一轉 <code>job</code>，<strong>跆拳→靈媒師</strong>現況仍只出 STR 近戰踢擊技、<strong>服事→武僧</strong>也使用服事系現有技能（含近戰 <code>holy_smite</code> 與聖光魔法）；待日後二轉正式開啟才會切換靈媒師 INT 法系主場。另<strong>忍者</strong>投飛鏢吃 <code>DEX</code>、忍術吃 <code>INT</code>；<strong>詩人／舞孃</strong>享弓手基底 <code>0.85×</code> 冷卻。</p>
           </article>
         </div>
       </details>
@@ -89,7 +90,7 @@
         <div class="roster-filters" id="roster-filters" role="group" aria-label="職業分類篩選">
           <button type="button" class="filter-pill active" data-filter="all">全部職業 (16)</button>
           <button type="button" class="filter-pill" data-filter="main">常駐主線 (12)</button>
-          <button type="button" class="filter-pill" data-filter="melee">近戰 STR (8)</button>
+          <button type="button" class="filter-pill" data-filter="melee">近戰 STR (9含靈媒現況)</button>
           <button type="button" class="filter-pill" data-filter="ranged">遠程 DEX (4)</button>
           <button type="button" class="filter-pill" data-filter="magic">魔法 INT (5含忍)</button>
           <button type="button" class="filter-pill" data-filter="extended">擴展／秘密解鎖 (4)</button>
@@ -106,9 +107,46 @@
       </div>
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="target"></span>目前選中職業詳細攻略：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
-        <span class="section-sub">僅顯示當前所選職業之屬性順序、技能格、專屬局內挑卡＆寶箱順位、實際裝備配裝與刷取地圖、隨行寵物與插卡、雙層 50 點天賦樹</span>
+        <span class="section-sub">僅顯示當前所選職業之屬性順序、1+4 實戰技能格、專屬局內挑卡＆寶箱順位、實碼裝備配裝與刷取地圖、隨行寵物與插卡、一轉 50 點實戰＋二轉前瞻天賦樹</span>
       </div>
       <div class="detail-shell" id="detail-shell"></div>
+    </section>
+    </div>
+
+    <div class="tab-panel" id="tab-stages" data-tab-panel="stages" role="tabpanel" hidden>
+    <section class="section" id="stages">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="map"></span>關卡怪物陣容、波次與精確掉落機率</h2>
+        <span class="section-sub">實碼解析 Beta 0.6.9 全 9 張地圖（7 張可遊玩＋2 張預覽），切換難度滑桿即時試算每隻怪的裝備、卡片與寵物蛋機率</span>
+      </div>
+
+      <div class="socket-rule-bar">
+        <span class="pill gold">裝備基礎掉率 <code>F9()</code>：一般怪 <strong>0.015% ～ 0.030%</strong>；Boss 武器固定 <strong>5.00%</strong>、防具／飾品 <strong>10.00% ～ 15.00%</strong></span>
+        <span class="pill accent">Boss 連序機制：擊殺 Boss 會依掉落表順序擲骰，<strong>首件掉落即中斷後續道具</strong>（因此多掉落王越靠後面的裝看「實戰連序%」）</span>
+        <span class="pill">卡片與野生蛋（非進化）：一般怪 <strong>0.01%</strong>、Boss <strong>0.10%</strong>（皆隨難度等比例放大，<strong>不受尋寶率加成</strong>）；單場一般怪裝備上限 <code>⌊4 × 難度⌋</code> 件</span>
+      </div>
+
+      <div class="stage-controls-wrap">
+        <div class="roster-filters" id="stage-selector" role="group" aria-label="選擇關卡地圖"></div>
+        <div class="roster-controls" style="margin-top:12px;">
+          <div class="roster-filters" id="stage-diff-filters" role="group" aria-label="試算難度倍率">
+            <button type="button" class="filter-pill active" data-stage-diff="1">難度 1.0× (上限 4 件)</button>
+            <button type="button" class="filter-pill" data-stage-diff="1.5">難度 1.5× (上限 6 件)</button>
+            <button type="button" class="filter-pill" data-stage-diff="2">難度 2.0× (上限 8 件)</button>
+            <button type="button" class="filter-pill" data-stage-diff="2.5">難度 2.5× (上限 10 件)</button>
+          </div>
+          <div class="roster-filters" id="stage-mob-filters" role="group" aria-label="怪物分類篩選">
+            <button type="button" class="filter-pill active" data-stage-mob-filter="all">全部怪物</button>
+            <button type="button" class="filter-pill" data-stage-mob-filter="boss">僅顯示 Mini / MVP</button>
+            <button type="button" class="filter-pill" data-stage-mob-filter="loot">僅顯示有實裝掉落</button>
+          </div>
+          <input type="search" id="stage-search" class="roster-search" placeholder="跨關卡搜尋：怪物（虎王 / 波利）、裝備（髮夾 / 鏡盾）、卡片或寵物..." aria-label="跨關卡搜尋怪物與掉落" />
+        </div>
+      </div>
+
+      <div class="cards-status-bar" id="stages-count-label" style="margin:10px 0 12px;"></div>
+      <div id="stage-overview"></div>
+      <div class="stage-mob-grid" id="stage-monsters-grid"></div>
     </section>
     </div>
 
@@ -122,11 +160,11 @@
       <div class="pet-mech-grid">
         <article class="rule-card">
           <div class="rule-head"><span class="icon" data-icon="spark"></span>寵物蛋掉落與帳號共享規則</div>
-          <p>對應怪物死亡時掉落寵物蛋，全帳號共享：一般怪基礎機率 <strong>0.01%</strong>（<code>1e-4</code>）、Mini/MVP 為 <strong>0.1%</strong>（<code>0.001</code>），皆會乘上難度總倍率（單人最高 <strong>×2.5</strong> → <code>0.025% / 0.25%</code>）。<strong>注意：</strong>劇情關（Story）不會掉落寵物蛋或卡片；同局每種寵限掉 1 顆，需撐到該局結束才會孵化。</p>
+          <p>對應怪物死亡時掉落寵物蛋，全帳號共享：一般怪基礎機率 <strong>0.01%</strong>（<code>1e-4</code>）、Mini/MVP 為 <strong>0.1%</strong>（<code>0.001</code>），皆會乘上難度總倍率（單人最高 <strong>×2.5</strong> → <code>0.025% / 0.25%</code>），組隊則另有 <strong>2 人 ×2／3 人 ×2.75</strong> 怪物生成倍率（不吃尋寶率 Discovery）。<strong>注意：</strong>劇情關（Story）不會掉落寵物蛋或卡片；同局每種寵限掉 1 顆，需撐到該局結束才會孵化。</p>
         </article>
         <article class="rule-card">
           <div class="rule-head"><span class="icon" data-icon="pet"></span>親密度成長、專屬飾品與 4 隻進化寵</div>
-          <p>剛孵化親密度為 <strong>250</strong>（上限 1,000），帶上場作戰每 <strong>5 秒 +1 點</strong>（約 41.7 分鐘達親密、55 分鐘達忠誠）。加成倍率：普通 (0+) <strong>×0.5</strong>、親密 (≥750) <strong>×0.75</strong>、忠誠 (≥910) <strong>×1.0</strong>；達「親密」可花 <strong>200 卡普拉點數</strong>買專屬飾品將加成翻成 <strong>×1.5 倍</strong>（配忠誠最高 ×1.5×）。其中 4 隻頭目寵需用前階<strong>忠誠 ≥910 ＋ 累計擊殺該頭目 5 次</strong>，找廣場「寵物管理員」進化（原寵保留）：<code>波利 → 波利之王 → 天使波利</code>、<code>妖道 → 妖仙女</code>、<code>九尾狐 → 狂暴月夜貓</code>；僅「月夜花」由斐揚洞穴 MVP 直接掉蛋。</p>
+          <p>剛孵化親密度為 <strong>250</strong>（上限 1,000），帶上場作戰每 <strong>5 秒 +1 點</strong>（約 41.7 分鐘達親密、55 分鐘達忠誠；Beta 0.6.8 起新增單人遊玩寵物對話）。加成倍率：普通 (0+) <strong>×0.5</strong>、親密 (≥750) <strong>×0.75</strong>、忠誠 (≥910) <strong>×1.0</strong>；16 隻基本款達「親密」可花 <strong>200 卡普拉點數</strong>買專屬飾品將加成翻成 <strong>×1.5 倍</strong>（配忠誠最高 ×1.5×）。其中 4 隻頭目寵需用前階<strong>忠誠 ≥910 ＋ 累計擊殺該頭目 5 次</strong>，找廣場「寵物管理員」進化（原寵保留）：<code>波利 → 波利之王 → 天使波利</code>、<code>妖道 → 妖仙女</code>、<code>九尾狐 → 狂暴月夜貓</code>；僅「月夜花」由斐揚洞穴 MVP 直接掉蛋。</p>
         </article>
         <article class="rule-card">
           <div class="rule-head"><span class="icon" data-icon="target"></span>難度滑桿實戰拆解（含「事件數量」）</div>
@@ -200,13 +238,13 @@
     <section class="section" id="gear">
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="shield"></span>全 132 件可入手裝備圖鑑與刷取來源</h2>
-        <span class="section-sub">實碼完整收錄 Beta 0.6.6 怪物掉落（56 武器＋76 防具飾品）、沉沒之船劇情武器池與普隆德拉城堡固定徽章</span>
+        <span class="section-sub">實碼完整收錄 Beta 0.6.9 怪物掉落（56 武器＋76 防具飾品）、沉沒之船一次性劇情武器與普隆德拉王城徽章</span>
       </div>
 
       <div class="socket-rule-bar">
-        <span class="pill gold">裝備只從怪物掉落＆劇情關取得（商店僅賣精煉礦石，MVP／Mini 掉率 5%~15%、一般怪 0.015%~0.03%）</span>
-        <span class="pill accent">Rare 物品在 Tier 2 地圖（海底／斐揚）掉落時實碼直接升階至 Tier 3（波利、鬼火、土人等 6 件必農）</span>
-        <span class="pill">雙手武器（雙手劍/槍/斧、弓、拳刃、火槍）會鎖定盾牌欄位；單手武器皆可加掛鏡盾</span>
+        <span class="pill gold">目前僅開放 Tier 1（普隆／水溝／沉沒之船）與 Tier 2（海底／斐揚／王城）；Tier 3 獸人村＆金字塔尚未實裝</span>
+        <span class="pill accent">Rare (.rare) 的實碼效果是「卡普拉商店賣價 ×3」，並不會讓裝備跨階升為 Tier 3！另含 9 件依掉落圖階決定數值的「跨階掉落」裝</span>
+        <span class="pill">所有裝備 ATK／MATK／DEF 皆由實碼統一公式 <code>wL()</code> 依 Tier 與品質產生；11 把沉沒劇情專屬武器單角限領 1 次，王城徽章 #22847 需未二轉首通</span>
         <a href="#detail-gear" class="loadout-sublink">看目前職業專屬配裝推薦 →</a>
       </div>
 
@@ -227,10 +265,10 @@
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
           <div class="segmented" id="gear-source-filters" role="group" aria-label="依入手來源與階級篩選">
             <button type="button" class="active" data-gear-source="all">全部來源 (132)</button>
-            <button type="button" data-gear-source="rare">Rare 升三階 (6)</button>
+            <button type="button" data-gear-source="rare">稀有賣價×3 (6)</button>
             <button type="button" data-gear-source="boss">MVP／Mini 王掉</button>
             <button type="button" data-gear-source="mob">一般怪掉落</button>
-            <button type="button" data-gear-source="t2">Tier 2+ 高階</button>
+            <button type="button" data-gear-source="t2">Tier 2 現況頂階</button>
             <button type="button" data-gear-source="story">劇情關取得</button>
           </div>
           <input type="search" id="gear-search" class="roster-search" placeholder="搜尋裝備中英名、詞條或掉落怪（例：波爾多 / 鏡盾 / 天使羽翼 / 月夜花 / 鬼火）..." aria-label="搜尋裝備" />
@@ -252,7 +290,7 @@
         <span class="pill gold">卡片基礎掉率與寵蛋相同：一般怪 0.01%／Boss 0.1% × 難度倍率（劇情關無掉落）</span>
         <span class="pill accent">武器卡槽隨品質增加：普通0 / 優良1 / 稀有2 / 史詩3 / 傳說4 洞</span>
         <span class="pill">防具／盾／披肩／鞋／頭上中下／雙飾品卡槽：普通0 / 優良0 / 稀有1 / 史詩1 / 傳說2 洞</span>
-        <span class="pill">刺客雙持短劍／單手劍時，副手欄位插「武器卡」（雙手武器無盾牌槽）</span>
+        <span class="pill">Beta 0.6.9 刺客雙持 (VL) 尚未啟用，全單手武器副手皆配盾牌並插盾卡（雙手武器無盾牌槽；雙持武器卡為未來二轉前瞻）</span>
         <a href="#guide" class="loadout-sublink">搞不懂尋寶率／雙重詠唱／寶箱遞減甜蜜點？查看【寶箱與詞彙】詳解 →</a>
       </div>
 
@@ -295,7 +333,7 @@
         <div class="guide-block-head">
           <div>
             <h3>一、局內寶箱 5 大欄位機制・遞減曲線與全 50 項道具圖鑑</h3>
-            <p>搞懂每種屬性吃到第幾次開始嚴重遞減或撞牆封頂（減傷 60%、迴避 50%、吸血每秒 3% HP、範圍／跑速／距離 P0 軟頂），不再把金幣浪費在無效精煉</p>
+            <p>搞懂每種屬性吃到第幾次開始嚴重遞減或撞牆封頂（基礎減傷 60%／含暫時增益 75%、迴避 50%、吸血每秒 3% HP、範圍／跑速／距離 P0 軟頂、尋寶傳說機率歸一後極限 10.27%），不再把金幣浪費在無效精煉</p>
           </div>
           <span class="pill gold">來源實測：main.mjs &amp; soul_linker.mjs 原碼公式</span>
         </div>
@@ -420,8 +458,8 @@
     </div>
 
     <footer class="footer">
-      <span>RO Survivors Beta 0.6.6 全職業資料整理（純離線靜態網站，可於本地瀏覽器與 GitHub Pages 直接開啟）</span>
-      <span>所有素質費用、倍率與天賦依賴均直接核對自遊戲前端模組實碼</span>
+      <span>RO Survivors Beta 0.6.9 全職業資料整理（純離線靜態網站，可於本地瀏覽器與 GitHub Pages 直接開啟）</span>
+      <span>所有素質費用、倍率、掉落與天賦依賴均直接核對自 Beta 0.6.9 遊戲前端實碼</span>
     </footer>
   </main>
 

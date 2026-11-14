@@ -179,20 +179,21 @@ code {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
 }
 
 .nav-links a {
   color: var(--text-muted);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 9px;
   border: 1px solid transparent;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  white-space: nowrap;
   transition: background 0.18s, color 0.18s, border-color 0.18s;
 }
 
@@ -2740,6 +2741,55 @@ tr:last-child td {
   color: #fcd34d;
 }
 
+.gear-tier-pill.multi {
+  border-color: rgba(168, 85, 247, 0.55);
+  background: rgba(168, 85, 247, 0.14);
+  color: #d8b4fe;
+}
+
+.gear-tier-pill.story {
+  border-color: rgba(52, 211, 153, 0.55);
+  background: rgba(16, 185, 129, 0.14);
+  color: #6ee7b7;
+}
+
+.tree-preview-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  border: 1px dashed rgba(251, 191, 36, 0.42);
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.tree-preview-banner .icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: #fbbf24;
+  margin-top: 2px;
+}
+
+.tree-card.is-preview-locked {
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+.future-skills-note {
+  margin-top: 10px;
+  padding: 8px 11px;
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px dashed rgba(167, 139, 250, 0.35);
+  color: #ddd6fe;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .gear-affix-line {
   font-size: 12px;
   font-weight: 700;
@@ -2946,6 +2996,432 @@ tr:last-child td {
   margin-top: auto;
 }
 
+/* Stages Tab */
+.stage-controls-wrap {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.stage-pick-btn small {
+  font-size: 11px;
+  opacity: 0.78;
+  margin-left: 3px;
+}
+
+.stage-overview-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+.stage-overview-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.stage-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stage-title-row h2,
+.stage-overview-top h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.stage-overview-sub {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.stage-status-pill,
+.stage-cap-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.stage-status-pill.live {
+  background: rgba(74, 222, 128, 0.14);
+  color: var(--ok);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+}
+
+.stage-status-pill.story {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+.stage-status-pill.upcoming {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.stage-cap-pill {
+  background: var(--gold-soft);
+  color: var(--gold);
+  border: 1px solid var(--border-gold);
+}
+
+.stage-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.stage-meta-cell {
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  font-size: 12.5px;
+}
+
+.stage-meta-cell span {
+  display: block;
+  color: var(--text-dim);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.stage-story-box {
+  margin-top: 12px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--gold-soft);
+  border: 1px solid var(--border-gold);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.stage-story-items {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.stage-story-item {
+  font-size: 11.5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+}
+
+.stage-schedule-block {
+  margin-top: 14px;
+}
+
+.stage-schedule-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.stage-boss-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.stage-boss-chip {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card-soft);
+}
+
+.stage-boss-chip.mvp {
+  border-color: var(--border-gold);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.stage-boss-chip.mini {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.stage-waves-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.stage-wave-chip {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.stage-wave-time {
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.stage-wave-time span {
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.stage-wave-mobs {
+  color: var(--text);
+  margin-top: 3px;
+}
+
+.stage-mob-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stage-mob-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 15px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.stage-mob-card.is-mvp {
+  border-color: var(--border-gold);
+  box-shadow: 0 0 0 1px rgba(229, 185, 99, 0.14);
+}
+
+.stage-mob-card.is-mini {
+  border-color: var(--accent-border);
+}
+
+.stage-mob-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.stage-mob-head h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.stage-mob-lv {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.stage-mob-en {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.stage-mob-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.stage-role-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.stage-role-pill.mvp {
+  background: var(--gold-soft);
+  border-color: var(--border-gold);
+  color: var(--gold);
+}
+
+.stage-role-pill.mini {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.stage-role-pill.stage-tag {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.stage-mob-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.stage-mob-stats span {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.stage-mob-window {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.stage-mob-special {
+  font-size: 12px;
+  color: var(--gold);
+  background: var(--gold-soft);
+  border: 1px solid var(--border-gold);
+  padding: 5px 9px;
+  border-radius: var(--radius-sm);
+}
+
+.stage-drop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.stage-drop-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border);
+}
+
+.stage-drop-row.is-card {
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.stage-drop-row.is-pet {
+  border-color: rgba(74, 222, 128, 0.38);
+}
+
+.stage-drop-row.is-evo {
+  border-color: var(--border-gold);
+}
+
+.stage-drop-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.stage-drop-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+}
+
+.stage-id-tag {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.stage-drop-meta {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.stage-rate-col {
+  text-align: right;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.stage-rate-pill {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 7px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.stage-rate-pill.boss {
+  background: var(--gold-soft);
+  border-color: var(--border-gold);
+  color: var(--gold);
+}
+
+.stage-rate-pill.card {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.stage-rate-pill.pet {
+  background: rgba(74, 222, 128, 0.14);
+  border-color: rgba(74, 222, 128, 0.4);
+  color: var(--ok);
+}
+
+.stage-rate-pill.evo {
+  background: var(--gold-soft);
+  border-color: var(--border-gold);
+  color: var(--gold);
+}
+
+.stage-rate-sub {
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+.stage-drop-empty {
+  padding: 9px 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+}
+
 @media (max-width: 1080px) {
   .section,
   .detail-priority-box,
@@ -2958,6 +3434,9 @@ tr:last-child td {
   .chest-slot-card.deity-card {
     grid-column: 1 / -1;
   }
+  .stage-meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 980px) {
@@ -2968,6 +3447,7 @@ tr:last-child td {
   .gear-weapon-grid,
   .gear-rec-grid,
   .gear-grid,
+  .stage-mob-grid,
   .chest-models-grid,
   .priority-rules-grid,
   .chest-rules-list {
@@ -3096,6 +3576,8 @@ tr:last-child td {
   .gear-weapon-grid,
   .gear-rec-grid,
   .gear-grid,
+  .stage-mob-grid,
+  .stage-meta-grid,
   .chest-models-grid,
   .card-slot-grid,
   .glossary-grid,
