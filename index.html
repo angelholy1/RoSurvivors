@@ -21,6 +21,7 @@
         <a href="#jobs" class="nav-tab active" role="tab" aria-selected="true" data-tab="jobs">職業攻略 <span class="nav-tab-count">16</span></a>
         <a href="#pets" class="nav-tab" role="tab" aria-selected="false" data-tab="pets">寵物與難度 <span class="nav-tab-count">24</span></a>
         <a href="#cards" class="nav-tab" role="tab" aria-selected="false" data-tab="cards">卡片圖鑑 <span class="nav-tab-count">87</span></a>
+        <a href="#guide" class="nav-tab" role="tab" aria-selected="false" data-tab="guide">詞彙與選卡</a>
         <a href="#calculator" class="nav-tab" role="tab" aria-selected="false" data-tab="calculator">素質模擬機</a>
         <a href="#compare" class="nav-tab" role="tab" aria-selected="false" data-tab="compare">全職速查表</a>
       </nav>
@@ -104,9 +105,31 @@
       </div>
       <div class="section-header">
         <h2 class="section-title"><span class="icon" data-icon="target"></span>目前選中職業詳細攻略：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
-        <span class="section-sub">包含該職業屬性加點順序、實戰技能格、推薦寵物與各部位裝備插卡、雙層 50 點天賦樹</span>
+        <span class="section-sub">包含該職業屬性加點順序、實戰技能格、局內升級挑卡權重與寶箱 5 格順位、推薦寵物與各部位裝備插卡、雙層 50 點天賦樹</span>
       </div>
       <div class="detail-shell" id="detail-shell"></div>
+    </section>
+
+    <section class="section" id="guide-jobs">
+      <details class="rules-drawer prio-drawer" id="job-priority-drawer">
+        <summary class="rules-drawer-summary">
+          <span class="rules-drawer-summary-left"><span class="icon" data-icon="book"></span><span>全 16 職業挑卡權重與寶箱 5 格順位橫向總覽（依系別／關鍵字快篩）</span></span>
+          <span class="rules-drawer-toggle"></span>
+        </summary>
+        <div class="job-priority-drawer-body">
+          <p class="job-priority-drawer-note">想一次橫向對照多職業可展開此區；單看一個職業時，上方目前選中職業卡片區已直接內嵌「升級三選一權重」與「寶箱神祇／道具第 1→3 順位」，<a href="#guide" style="color:var(--gold)">通用詞彙與寶箱等貨規則請見「詞彙與選卡」→</a></p>
+          <div class="roster-controls">
+            <div class="roster-filters" id="job-priority-filters" role="group" aria-label="職業系別篩選">
+              <button type="button" class="filter-pill active" data-prio-cat="all">全職業 (16)</button>
+              <button type="button" class="filter-pill" data-prio-cat="melee">近戰系 (8)</button>
+              <button type="button" class="filter-pill" data-prio-cat="ranged">遠程系 (4)</button>
+              <button type="button" class="filter-pill" data-prio-cat="magic">法術／輔助系 (4)</button>
+            </div>
+            <input id="job-priority-search" class="roster-search" type="search" placeholder="搜尋職業或詞條：巫師 / 阿修羅 / 雙重詠唱 / 貫穿..." aria-label="搜尋職業選卡優先順" />
+          </div>
+          <div class="job-priority-grid" id="job-priority-grid"></div>
+        </div>
+      </details>
     </section>
     </div>
 
@@ -206,6 +229,7 @@
         <span class="pill accent">武器卡槽隨品質增加：普通0 / 優良1 / 稀有2 / 史詩3 / 傳說4 洞</span>
         <span class="pill">防具／盾／披肩／鞋／頭上中下／雙飾品卡槽：普通0 / 優良0 / 稀有1 / 史詩1 / 傳說2 洞</span>
         <span class="pill">刺客雙持短劍／單手劍時，副手欄位插「武器卡」（雙手武器無盾牌槽）</span>
+        <a href="#guide" class="loadout-sublink">搞不懂尋寶率／雙重詠唱／升級卡怎麼挑？查看【詞彙與選卡】詳解 →</a>
       </div>
 
       <div class="roster-controls" style="flex-direction:column;align-items:stretch;">
@@ -233,6 +257,73 @@
       </div>
 
       <div class="cards-grid" id="cards-grid"></div>
+    </section>
+    </div>
+
+    <div class="tab-panel" id="tab-guide" data-tab-panel="guide" role="tabpanel" hidden>
+    <section class="section" id="guide">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon" data-icon="book"></span>詞彙詳解與通用選卡・寶箱機制</h2>
+        <span class="section-sub">把「尋寶率、雙重詠唱、冷卻 vs 詠唱、數量 vs 目標、貫穿、四層減傷、寶箱與神祇」一次講清楚（各職業專屬挑卡權重已整合至「職業攻略」分頁）</span>
+      </div>
+
+      <div class="guide-block" id="guide-glossary">
+        <div class="guide-block-head">
+          <div>
+            <h3>一、名詞與局內機制詳解（點選下方分類篩選）</h3>
+            <p>釐清容易搞混的詞條效果、實際公式與避坑盲點（含尋寶率與雙重詠唱說明）</p>
+          </div>
+          <span class="pill gold">來源實測：main.mjs &amp; soul_linker.mjs 原碼公式</span>
+        </div>
+        <div class="roster-controls">
+          <div class="roster-filters" id="glossary-filters" role="group" aria-label="名詞分類篩選">
+            <button type="button" class="filter-pill active" data-glossary-cat="all">全部名詞 (9)</button>
+            <button type="button" class="filter-pill" data-glossary-cat="loot">尋寶與寶箱 (2)</button>
+            <button type="button" class="filter-pill" data-glossary-cat="combat">雙重詠唱與冷卻 (2)</button>
+            <button type="button" class="filter-pill" data-glossary-cat="cards">選卡屬性對照 (4)</button>
+            <button type="button" class="filter-pill" data-glossary-cat="defense">防禦與減傷 (1)</button>
+          </div>
+          <input id="glossary-search" class="roster-search" type="search" placeholder="搜尋名詞：尋寶率 / 雙重詠唱 / 貫穿 / 減傷..." aria-label="搜尋名詞與機制" />
+        </div>
+        <div class="glossary-grid" id="glossary-grid"></div>
+      </div>
+
+      <div class="guide-block" id="guide-aspects">
+        <div class="guide-block-head">
+          <div>
+            <h3>二、升級三選一品質權重・各強化屬性對照・黃金選卡 4 原則</h3>
+            <p>遇到「+傷害%、降冷卻 CD、+數量、+目標、貫穿、範圍」同時出現時，依品質倍率、累積上限與乘區決定最優解</p>
+          </div>
+        </div>
+        <div class="rarity-strip" id="rarity-weights-row"></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>強化類別</th>
+                <th>卡池給值（白 → 金）</th>
+                <th>單局累積上限</th>
+                <th>可觸發技能範圍</th>
+                <th>實戰選卡判斷</th>
+              </tr>
+            </thead>
+            <tbody id="upgrade-aspects-tbody"></tbody>
+          </table>
+        </div>
+        <div class="priority-rules-grid" id="priority-rules-grid"></div>
+        <div class="chest-rules-box" id="chest-slot-rules"></div>
+      </div>
+
+      <div class="guide-crosslink-box">
+        <div>
+          <h3>各職業專屬「挑卡權重」與「寶箱 5 格順位」已整合進「職業攻略」</h3>
+          <p>挑選任何職業即可在同一頁直接對照升級三選一權重、寶箱神祇與道具 1→3 排序，或展開全 16 職業橫向總覽一次比對。</p>
+        </div>
+        <div class="guide-crosslink-actions">
+          <a href="#detail-priority" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="target"></span>查看目前職業挑卡＆寶箱</a>
+          <a href="#guide-jobs" class="btn" style="text-decoration:none;"><span class="icon" data-icon="book"></span>展開全 16 職業總覽</a>
+        </div>
+      </div>
     </section>
     </div>
 
