@@ -2375,7 +2375,7 @@
 
     const weaponCardHtml = `
       <div class="skill-slot-card">
-        <div class="slot-num" style="width:auto;min-width:34px;padding:0 6px;font-size:11px;">武器</div>
+        <div class="slot-num" style="width:auto;min-width:34px;padding:0 6px;font-size:var(--text-xs);">武器</div>
         <div>
           <div class="skill-slot-title">
             <span>${escapeHtml(weaponInfo.title)}</span>
@@ -2666,19 +2666,19 @@
 
       <div class="res-box">
         <div class="res-label">技能傷害倍率 Ni(atk/matk=${offenseVal}, rank=${rank})</div>
-        <div class="res-val">${activeMult.toFixed(2)}× <small style="font-size:12px;color:var(--text-muted)">(${rank >= 2 ? "一轉 " + ji1.toFixed(2) + "×｜Beta 0.7.2 轉職後已吃 rank 2" : "單階職業無二轉加成"})</small></div>
+        <div class="res-val">${activeMult.toFixed(2)}× <small style="font-size:var(--text-sm);color:var(--text-muted)">(${rank >= 2 ? "一轉 " + ji1.toFixed(2) + "×｜Beta 0.7.2 轉職後已吃 rank 2" : "單階職業無二轉加成"})</small></div>
         <div class="stat-chip-note">係數 a = ${(offenseVal / 15.46).toFixed(2)}</div>
       </div>
 
       <div class="res-box">
         <div class="res-label">AGI ${stats.agi} 冷卻剩餘與閃避率</div>
-        <div class="res-val">${(cdMult * 100).toFixed(1)}% CD <small style="font-size:12px;color:var(--text-muted)">(閃避 ${fleePct.toFixed(1)}%)</small></div>
+        <div class="res-val">${(cdMult * 100).toFixed(1)}% CD <small style="font-size:var(--text-sm);color:var(--text-muted)">(閃避 ${fleePct.toFixed(1)}%)</small></div>
         <div class="stat-chip-note">基礎閃避上限 50%｜連擊 ${doubleCastPct.toFixed(1)}%｜爆擊 ${critPct.toFixed(1)}%</div>
       </div>
 
       <div class="res-box">
         <div class="res-label">最大 HP（VIT ${stats.vit}）／ 基礎詠唱時間</div>
-        <div class="res-val">${maxHp} HP <small style="font-size:12px;color:var(--text-muted)">・ ${singleBaseCast.toFixed(2)}s / ${areaBaseCast.toFixed(2)}s</small></div>
+        <div class="res-val">${maxHp} HP <small style="font-size:var(--text-sm);color:var(--text-muted)">・ ${singleBaseCast.toFixed(2)}s / ${areaBaseCast.toFixed(2)}s</small></div>
         <div class="stat-chip-note">回血 +${(0.1 * stats.vit).toFixed(1)}/s｜單體 2s(÷100) / 範圍 5s(÷150)</div>
       </div>`;
   }
