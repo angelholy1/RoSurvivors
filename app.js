@@ -1878,54 +1878,59 @@
     const activeBuild = BUILDS[state.activeJob] || BUILDS.wizard;
     const activeFirst = activeBuild.firstJob || "mage";
     const groupObj = FIRST_JOB_GROUPS.find(g => g.firstJob === activeFirst) || FIRST_JOB_GROUPS[1];
+    const activeTree = GAME_DATA.trees[activeFirst];
+    const firstJobName = activeTree && activeTree.job ? activeTree.job.name : activeFirst;
     const secondOptions = groupObj.jobs.filter(jk => BUILDS[jk]);
-    const playstyles = getPlaystylesForJob(activeBuild.key);
 
-    const firstOptsHtml = FIRST_JOB_GROUPS.map(g => {
-      const sel = g.firstJob === activeFirst ? " selected" : "";
-      return `<option value="${escapeHtml(g.firstJob)}"${sel}>${escapeHtml(g.label)}</option>`;
-    }).join("");
-
-    const secOptsHtml = secondOptions.map(jk => {
-      const b = BUILDS[jk];
-      const sel = jk === activeBuild.key ? " selected" : "";
-      const tag = b.secondJob ? b.title : (b.title + "（單階無二轉）");
-      return `<option value="${escapeHtml(jk)}"${sel}>${escapeHtml(tag)}｜${escapeHtml(b.rank)}</option>`;
-    }).join("");
-
-    const quickPillsHtml = FIRST_JOB_GROUPS.map(g => {
+    const firstBtnsHtml = FIRST_JOB_GROUPS.map(g => {
       const tObj = GAME_DATA.trees[g.firstJob];
       const shortName = tObj && tObj.job ? tObj.job.name : g.firstJob;
       const isAct = g.firstJob === activeFirst;
-      return `<button type="button" class="job-quick-pill ${isAct ? "active" : ""}" data-first-pill="${escapeHtml(g.firstJob)}">${escapeHtml(shortName)}</button>`;
+      const scHint = g.firstJob === "archer" ? "DEX" : (g.firstJob === "mage" || g.firstJob === "acolyte" ? "INT" : (g.firstJob === "ninja" ? "DEX/INT" : (g.firstJob === "gunslinger" ? "DEX" : "STR")));
+      return `
+        <button type="button" class="step-btn ${isAct ? "active" : ""}" data-first-job="${escapeHtml(g.firstJob)}" aria-pressed="${isAct ? "true" : "false"}">
+          <span class="choice-dot" aria-hidden="true"></span>
+          <span>${escapeHtml(shortName)}</span>
+          <span class="step-sub">${scHint}</span>
+        </button>`;
     }).join("");
 
+    const secBtnsHtml = secondOptions.map(jk => {
+      const b = BUILDS[jk];
+      const isAct = jk === activeBuild.key;
+      const playCount = getPlaystylesForJob(jk).length;
+      const labelTxt = b.secondJob ? (GAME_DATA.trees[b.secondJob]?.job?.name || b.title) : (b.title.replace(/（.*）/, "") + "（單階完整職）");
+      return `
+        <button type="button" class="step-btn tier2-btn ${isAct ? "active" : ""}" data-second-job="${escapeHtml(jk)}" aria-pressed="${isAct ? "true" : "false"}">
+          <span class="choice-dot" aria-hidden="true"></span>
+          <span>${escapeHtml(labelTxt)}</span>
+          <span class="step-sub">${playCount} 套流派</span>
+        </button>`;
+    }).join("");
+
+    const tier2Hint = secondOptions.length > 1
+      ? ("已依「" + firstJobName + "」解鎖以下 " + secondOptions.length + " 條二轉路線，點擊選擇想看的職業")
+      : ("「" + firstJobName + "」在 Beta 0.7.2 為單階擴展職業（無額外二轉，下方直接挑選流派）");
+
     container.innerHTML = `
-      <div class="cascade-selector-card">
-        <div class="cascade-select-grid">
-          <div class="cascade-field">
-            <label class="cascade-label" for="first-job-select">
-              <span>1. 選擇一轉主職業</span>
-              <span class="hint">9 大主職／擴展</span>
-            </label>
-            <select id="first-job-select" class="cascade-select" aria-label="選擇一轉職業">
-              ${firstOptsHtml}
-            </select>
+      <div class="job-picker-deck">
+        <div class="picker-tier-block">
+          <div class="picker-tier-head">
+            <span class="picker-tier-title">1️⃣ 點選一轉主職業（可按按鈕）</span>
+            <span class="picker-tier-hint">點選後，下方才會展開該職系對應的二轉職業按鈕</span>
           </div>
-          <div class="cascade-arrow" aria-hidden="true">→</div>
-          <div class="cascade-field">
-            <label class="cascade-label" for="second-job-select">
-              <span>2. 選擇進階／二轉職業</span>
-              <span class="hint">目前收錄 ${playstyles.length} 套可玩流派</span>
-            </label>
-            <select id="second-job-select" class="cascade-select" aria-label="選擇進階或二轉職業">
-              ${secOptsHtml}
-            </select>
+          <div class="step-btn-group" role="group" aria-label="選擇一轉職業">
+            ${firstBtnsHtml}
           </div>
         </div>
-        <div class="first-job-pills-wrap">
-          <span class="first-job-pills-label">快速點選一轉：</span>
-          ${quickPillsHtml}
+        <div class="picker-tier-block tier2-block">
+          <div class="picker-tier-head">
+            <span class="picker-tier-title">2️⃣ 選擇【${escapeHtml(firstJobName)}】對應的二轉／進階職業</span>
+            <span class="picker-tier-hint">${escapeHtml(tier2Hint)}</span>
+          </div>
+          <div class="step-btn-group" role="group" aria-label="選擇二轉或進階職業">
+            ${secBtnsHtml}
+          </div>
         </div>
       </div>`;
   }
@@ -2325,10 +2330,13 @@
     const playstylesHtml = styles.map((ps, idx) => {
       const isAct = idx === activeIdx;
       return `
-        <button type="button" class="playstyle-card ${isAct ? "active" : ""}" data-playstyle-idx="${idx}" aria-pressed="${isAct ? "true" : "false"}">
+        <button type="button" class="playstyle-btn ${isAct ? "active" : ""}" data-playstyle-idx="${idx}" aria-pressed="${isAct ? "true" : "false"}">
           <div class="playstyle-card-top">
-            <span class="playstyle-badge ${ps.badgeType === "core" ? "core" : "meta"}">${escapeHtml(ps.badgeText)}</span>
-            <span class="playstyle-state">${isAct ? "目前檢視中" : "點擊切換"}</span>
+            <span class="playstyle-top-left">
+              <span class="choice-dot" aria-hidden="true"></span>
+              <span class="playstyle-badge ${ps.badgeType === "core" ? "core" : "meta"}">${escapeHtml(ps.badgeText)}</span>
+            </span>
+            <span class="playstyle-state">${isAct ? "✓ 目前顯示" : "點選套用 ▸"}</span>
           </div>
           <div class="playstyle-title">${escapeHtml(ps.name)}</div>
           <div class="playstyle-tagline">${escapeHtml(ps.tagline)}</div>
@@ -2469,21 +2477,21 @@
           <div class="detail-icon-box" data-icon="${build.icon}"></div>
           <div>
             <h2>${escapeHtml(build.title)}｜${escapeHtml(build.rank)}</h2>
-            <div class="detail-base-stats">
-              <span class="pill gold">${hpPill}</span>
-              <span class="pill">移動速度 ${j2.speed}</span>
-              <span class="pill">基礎防禦 ${j2.armor}</span>
-              <span class="pill">當前流派主軸：${escapeHtml(SCALING_LABEL[scaling] || scaling)}</span>
-              <span class="pill">武器格：${escapeHtml(weaponInfo.shortPill)}</span>
-              <span class="pill">招牌技：${escapeHtml((GAME_DATA.skills[j1.start] && GAME_DATA.skills[j1.start].name) || j1.start)}</span>
+            <div class="detail-inline-specs">
+              <span>基礎血量 <strong>${escapeHtml(hpPill)}</strong></span>
+              <span>移速 <strong>${j2.speed}</strong></span>
+              <span>防禦 <strong>${j2.armor}</strong></span>
+              <span>主屬性 <strong>${escapeHtml(SCALING_LABEL[scaling] || scaling)}</strong></span>
+              <span>武器格 <strong>${escapeHtml(weaponInfo.shortPill)}</strong></span>
+              <span>招牌技 <strong>${escapeHtml((GAME_DATA.skills[j1.start] && GAME_DATA.skills[j1.start].name) || j1.start)}</strong></span>
             </div>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="#roster" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="arrowUp"></span>重選職業</a>
-          <a href="#detail-trees" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="tree"></span>一轉天賦</a>
-          <a href="#detail-gear" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="shield"></span>配裝推薦</a>
-          <a href="#detail-cards" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="card"></span>插卡推薦</a>
+          <a href="#roster" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="arrowUp"></span>回上方選職業</a>
+          <a href="#detail-trees" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="tree"></span>跳到天賦樹</a>
+          <a href="#detail-gear" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="shield"></span>跳到配裝</a>
+          <a href="#detail-cards" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="card"></span>跳到插卡</a>
           <button type="button" class="btn secondary" id="apply-calc-btn"><span class="icon" data-icon="calc"></span>帶入素質模擬機</button>
           <button type="button" class="btn" id="copy-build-btn"><span class="icon" data-icon="copy"></span>複製本流派攻略</button>
         </div>
@@ -2491,68 +2499,74 @@
 
       <section class="playstyle-section">
         <div class="playstyle-section-head">
-          <h3><span class="icon" data-icon="spark"></span>步驟 2・挑選目前可玩流派（基礎正統 vs Beta 0.7.2 特化成長）</h3>
-          <span class="pill accent">目前選擇：${escapeHtml(playstyle.name)}</span>
+          <h3><span class="icon" data-icon="spark"></span>3️⃣ 點選你想玩的流派方向（可按按鈕切換）</h3>
+          <span class="picker-tier-hint">👆 有圓點 ○ 的才是可點選項；點擊下方按鈕立即切換整套攻略</span>
         </div>
         <p class="playstyle-version-note">
-          <strong>Beta 0.7.2 一轉實戰提醒：</strong>以下流派皆已對齊當前開放的「<strong>一轉 50 點天賦 ＋ 1 武器 4 主動</strong>」機制（含跨系三導管、混傷、壓血、無限塔等強勢路線）；<strong>未來正式開放二轉天賦樹後，部分流派會依二轉連動需求再行調整</strong>。
+          <strong>Beta 0.7.2 現況說明：</strong>以下流派皆已對齊目前實際生效的「<strong>一轉 50 點天賦 ＋ 1 武器 4 主動</strong>」機制（未來正式開放二轉天賦樹後，部分流派會依二轉再行調整）。
         </p>
         <div class="playstyle-picker">${playstylesHtml}</div>
       </section>
 
-      <section class="archetype-logic-panel">
-        <div class="archetype-logic-head">
-          <h3><span class="icon" data-icon="target"></span>步驟 3・【${escapeHtml(playstyle.name)}】成長方向與配裝・配卡邏輯</h3>
-          <span class="pill gold">${escapeHtml(playstyle.badgeText)}</span>
-        </div>
-        <div class="archetype-logic-grid">
-          <div class="archetype-logic-box">
-            <h4>① 流派定位與成長邏輯</h4>
-            <p>${escapeHtml(playstyle.growthLogic)}</p>
-          </div>
-          <div class="archetype-logic-box">
-            <h4>② 武器與防具配裝邏輯</h4>
-            <p>${escapeHtml(playstyle.gearLogic)}</p>
-          </div>
-          <div class="archetype-logic-box">
-            <h4>③ 插卡與局內成形重點</h4>
-            <p>${escapeHtml(playstyle.cardLogic)}</p>
-          </div>
-        </div>
-      </section>
-
-      ${cautionHtml}
-
-      <div class="controls-strip">
-        <div class="toggle-group">
-          <span class="toggle-label">本流派對應屬性配點（可微調）：</span>
-          <div class="segmented">${statTabsHtml}</div>
-        </div>
+      <div class="guide-content-divider" aria-hidden="true">
+        <span>📖 以下為【${escapeHtml(build.title)}・${escapeHtml(playstyle.name)}】純閱讀攻略內容（非點選框）</span>
       </div>
 
-      <div class="two-col">
-        <article class="panel">
-          <h3><span class="icon" data-icon="stat"></span>屬性配點與升級加點順序</h3>
-          <div class="stat-bars">${statBarsHtml}</div>
-          <p class="stat-reason">${escapeHtml(statVar.reason)}</p>
-          <div class="timeline">${stepsHtml}</div>
-        </article>
+      <div class="guide-readonly-canvas">
+        <section class="archetype-brief-sheet">
+          <div class="archetype-brief-head">
+            <h3><span class="icon" data-icon="target"></span>【${escapeHtml(playstyle.name)}】成長方向與配裝・配卡重點說明</h3>
+            <span class="picker-tier-hint">${escapeHtml(playstyle.badgeText)}</span>
+          </div>
+          <div class="archetype-brief-cols">
+            <div class="archetype-brief-col">
+              <h4>① 流派定位與成長方向</h4>
+              <p>${escapeHtml(playstyle.growthLogic)}</p>
+            </div>
+            <div class="archetype-brief-col">
+              <h4>② 武器與防具配裝邏輯</h4>
+              <p>${escapeHtml(playstyle.gearLogic)}</p>
+            </div>
+            <div class="archetype-brief-col">
+              <h4>③ 插卡與局內成形重點</h4>
+              <p>${escapeHtml(playstyle.cardLogic)}</p>
+            </div>
+          </div>
+        </section>
 
-        <article class="panel">
-          <h3><span class="icon" data-icon="skill"></span>${slotCountTitle}</h3>
-          <p class="stat-reason">${escapeHtml(playstyle.tagline)}（${slotRuleDesc}）</p>
-          <div class="skills-list">${skillsHtml}</div>
-        </article>
-      </div>
+        ${cautionHtml}
 
-      <div class="trees-wrap" id="detail-trees" style="margin-bottom:20px;">
-        ${firstTreeHtml}
-      </div>
+        <div class="controls-strip">
+          <div class="toggle-group">
+            <span class="toggle-label">微調屬性配點按鈕（點擊切換不同點法變體）：</span>
+            <div class="segmented">${statTabsHtml}</div>
+          </div>
+        </div>
 
-      ${loadoutHtml}
+        <div class="two-col">
+          <article class="panel">
+            <h3><span class="icon" data-icon="stat"></span>屬性配點與升級加點順序</h3>
+            <div class="stat-bars">${statBarsHtml}</div>
+            <p class="stat-reason">${escapeHtml(statVar.reason)}</p>
+            <div class="timeline">${stepsHtml}</div>
+          </article>
 
-      <div style="margin-top:20px;">
-        ${secPreviewSectionHtml}
+          <article class="panel">
+            <h3><span class="icon" data-icon="skill"></span>${slotCountTitle}</h3>
+            <p class="stat-reason">${escapeHtml(playstyle.tagline)}（${slotRuleDesc}）</p>
+            <div class="skills-list">${skillsHtml}</div>
+          </article>
+        </div>
+
+        <div class="trees-wrap" id="detail-trees">
+          ${firstTreeHtml}
+        </div>
+
+        ${loadoutHtml}
+
+        <div>
+          ${secPreviewSectionHtml}
+        </div>
       </div>`;
 
     hydrateIcons(shell);
@@ -3726,30 +3740,21 @@
   }
 
   function initEvents() {
-    document.getElementById("roster-container")?.addEventListener("change", e => {
-      if (e.target && e.target.id === "first-job-select") {
-        const fj = e.target.value;
-        const g = FIRST_JOB_GROUPS.find(x => x.firstJob === fj);
-        if (g && g.jobs.length && BUILDS[g.jobs[0]]) {
-          setActiveJob(g.jobs[0], false);
-        }
-        return;
-      }
-      if (e.target && e.target.id === "second-job-select") {
-        const sj = e.target.value;
-        if (BUILDS[sj]) setActiveJob(sj, false);
-      }
-    });
-
     document.getElementById("roster-container")?.addEventListener("click", e => {
-      const firstPill = e.target.closest("[data-first-pill]");
-      if (firstPill) {
-        const fj = firstPill.getAttribute("data-first-pill");
+      const firstBtn = e.target.closest("[data-first-job]");
+      if (firstBtn) {
+        const fj = firstBtn.getAttribute("data-first-job");
         const g = FIRST_JOB_GROUPS.find(x => x.firstJob === fj);
         if (g && g.jobs.length && BUILDS[g.jobs[0]]) {
           const targetJob = g.jobs.includes(state.activeJob) ? state.activeJob : g.jobs[0];
           setActiveJob(targetJob, false);
         }
+        return;
+      }
+      const secondBtn = e.target.closest("[data-second-job]");
+      if (secondBtn) {
+        const sj = secondBtn.getAttribute("data-second-job");
+        if (BUILDS[sj]) setActiveJob(sj, false);
         return;
       }
       const btn = e.target.closest(".roster-card[data-job]");
