@@ -2753,6 +2753,12 @@ tr:last-child td {
   color: #6ee7b7;
 }
 
+.gear-tier-pill.festival {
+  border-color: rgba(244, 114, 182, 0.55);
+  background: rgba(236, 72, 153, 0.14);
+  color: #f9a8d4;
+}
+
 .tree-preview-banner {
   display: flex;
   align-items: flex-start;
@@ -3071,6 +3077,18 @@ tr:last-child td {
   background: rgba(248, 113, 113, 0.12);
   color: var(--danger);
   border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.stage-status-pill.season {
+  background: rgba(236, 72, 153, 0.14);
+  color: #f9a8d4;
+  border: 1px solid rgba(244, 114, 182, 0.45);
+}
+
+.stage-status-pill.endless {
+  background: rgba(168, 85, 247, 0.16);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.48);
 }
 
 .stage-cap-pill {
