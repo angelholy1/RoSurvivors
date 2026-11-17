@@ -88,6 +88,104 @@
     mid50: { label: "Lv50 轉職點參考", job: "wizard", mode: "magic", lv: 50, stats: { str: 1, agi: 35, vit: 1, int: 60, dex: 20, luk: 1 } }
   };
 
+  const FIRST_JOB_GROUPS = [
+    { firstJob: "swordsman", label: "劍士（近戰 STR）", jobs: ["knight", "crusader"] },
+    { firstJob: "mage", label: "魔法師（魔法 INT）", jobs: ["wizard", "sage"] },
+    { firstJob: "archer", label: "弓箭手（遠程 DEX）", jobs: ["hunter", "bard"] },
+    { firstJob: "acolyte", label: "服事（魔法／懲戒）", jobs: ["priest", "monk"] },
+    { firstJob: "thief", label: "盜賊（近戰／技弓）", jobs: ["assassin", "rogue"] },
+    { firstJob: "merchant", label: "商人（推車／金幣）", jobs: ["blacksmith", "alchemist"] },
+    { firstJob: "taekwon", label: "跆拳（擴展・踢技）", jobs: ["star_gladiator", "soul_linker"] },
+    { firstJob: "ninja", label: "忍者（擴展單階・投擲／忍術）", jobs: ["ninja"] },
+    { firstJob: "gunslinger", label: "神槍手（擴展單階・槍砲）", jobs: ["gunslinger"] }
+  ];
+
+  const EXTRA_STAT_VARIANTS = {
+    hunter: [
+      {
+        id: "arcane_mix",
+        label: "奧火混傷｜DEX 99 / INT 53 / AGI 80",
+        stats: { str: 1, agi: 80, vit: 1, int: 53, dex: 99, luk: 1 },
+        primaryKey: "dex",
+        notes: { dex: "遠程 ATK＋減詠", int: "強化元素匯聚 3m 炸傷", agi: "CD 縮減拼奧火連發" },
+        reason: "走「奧火雙連發 × 元素匯聚」流時，主推先靠 DEX 99 維持遠程曲線並縮短詠唱，副點投資 53 INT 強化《元素匯聚》3 公尺火焰爆發係數＋ AGI 80 壓縮雙技冷卻循環（合計 1,273 點）。",
+        order: [
+          { lv: "Lv 1–30", text: "DEX 先衝至 50（開局二連矢與奧術射擊穩刷）" },
+          { lv: "Lv 31–55", text: "補 AGI 至 40、INT 至 25（累積減 CD 與火焰匯聚基傷）" },
+          { lv: "Lv 56–75", text: "DEX 補滿至 95（確保主火力曲線不掉隊）" },
+          { lv: "Lv 76–99", text: "DEX 補滿 99 → AGI 補到 80 → 餘點全投 INT 至 53（1,273 點）" }
+        ]
+      },
+      {
+        id: "arcane_int80",
+        label: "元素暴轟｜DEX 80 / INT 80 / AGI 77",
+        stats: { str: 1, agi: 77, vit: 1, int: 80, dex: 80, luk: 1 },
+        primaryKey: "dex",
+        notes: { dex: "基礎遠程 ATK 80", int: "元素匯聚＋生命之焰重加成", agi: "高頻循環 CD (-34%)" },
+        reason: "若身上已拿 #2708 中華手工藝品與 #4330 邪惡蛇王卡、主靠《元素匯聚》範圍火焰轟炸推群怪，可把 DEX 與 INT 平均拉到 80/80 並維持 AGI 77 高冷卻流（合計 1,266 點，剩 7 點彈性）。",
+        order: [
+          { lv: "Lv 1–35", text: "DEX 50、INT 30 雙屬性平穩起步" },
+          { lv: "Lv 36–65", text: "AGI 補至 55，同時將 DEX 與 INT 推進至 70/65" },
+          { lv: "Lv 66–99", text: "DEX 80 → INT 80 → AGI 77 完成雙修爆發" }
+        ]
+      }
+    ],
+    bard: [
+      {
+        id: "arcane_mix",
+        label: "奧火混傷｜DEX 99 / INT 53 / AGI 80",
+        stats: { str: 1, agi: 80, vit: 1, int: 53, dex: 99, luk: 1 },
+        primaryKey: "dex",
+        notes: { dex: "遠程主力倍率＋減詠", int: "強化元素匯聚 3m 火焰爆", agi: "冷卻剩餘 65%（-35% CD）" },
+        reason: "吟遊詩人／舞孃於 Beta 0.7.2 一轉走奧術火弓混傷時，用 DEX 99 保持弓系遠程火力，將副屬從 STR 轉為 INT 53（搭配天賦洞察再 +10 INT）最大化《元素匯聚》清怪爆炸（合計 1,273 點）。",
+        order: [
+          { lv: "Lv 1–30", text: "DEX 衝至 50 確保前期推怪速度" },
+          { lv: "Lv 31–55", text: "AGI 40、INT 25 建立減 CD 與燃燒基傷" },
+          { lv: "Lv 56–75", text: "DEX 推至 95" },
+          { lv: "Lv 76–99", text: "DEX 99 → AGI 80 → INT 53 收尾" }
+        ]
+      }
+    ],
+    priest: [
+      {
+        id: "smite_str",
+        label: "戰牧懲戒｜STR 99 / AGI 80 / VIT 53",
+        stats: { str: 99, agi: 80, vit: 53, int: 1, dex: 1, luk: 1 },
+        primaryKey: "str",
+        notes: { str: "近戰 ATK (297)＋光之打擊物傷", agi: "普攻與神聖重擊高頻連敲", vit: "貼臉近戰存活＋HP 回覆" },
+        reason: "走一轉「懲戒橫掃＋光之打擊爆球」戰牧路線時，《神聖重擊》與錐形普攻吃近戰 STR，而《光獵 Ruwach》實碼自動取 max(ATK, MATK)，因此全點 STR 一樣吃滿光球爆炸傷害（合計 1,273 點）。",
+        order: [
+          { lv: "Lv 1–30", text: "STR 先衝至 50，搭配權杖鈍器打出錐形普攻威力" },
+          { lv: "Lv 31–55", text: "AGI 補到 45、VIT 補到 20，確保貼怪揮錘攻速與續航" },
+          { lv: "Lv 56–75", text: "STR 全力衝到 95" },
+          { lv: "Lv 76–99", text: "STR 99 → AGI 80 → VIT 53 完成戰牧近戰成形" }
+        ]
+      }
+    ],
+    monk: [
+      {
+        id: "exorcism_int",
+        label: "現況驅魔過渡｜INT 99 / DEX 80 / AGI 53",
+        stats: { str: 1, agi: 53, vit: 1, int: 99, dex: 80, luk: 1 },
+        primaryKey: "int",
+        notes: { int: "神聖之光 MATK (297) 驅魔倍率", dex: "壓縮神聖之光與治癒詠唱", agi: "縮短天使之光與聖光冷卻" },
+        reason: "Beta 0.7.2 尚未實裝二轉阿修羅/連擊技能，如果想用武僧帳號輕鬆推圖或進無限塔，一轉時期可先以高詠驅魔十字點法配拿法杖，等二轉開放後再洗回物理系（合計 1,273 點）。",
+        order: [
+          { lv: "Lv 1–30", text: "INT 先衝至 50，建立遠距神聖之光秒怪門檻" },
+          { lv: "Lv 31–55", text: "補 DEX 至 45、AGI 至 20 壓縮讀條時間" },
+          { lv: "Lv 56–75", text: "INT 補至 95" },
+          { lv: "Lv 76–99", text: "INT 99 → DEX 80 → AGI 53" }
+        ]
+      }
+    ]
+  };
+
+  for (const [jobK, extras] of Object.entries(EXTRA_STAT_VARIANTS)) {
+    if (BUILDS[jobK] && Array.isArray(BUILDS[jobK].statVariants)) {
+      BUILDS[jobK].statVariants.push(...extras);
+    }
+  }
+
   const state = {
     activeTab: "jobs",
     activeJob: "wizard",
@@ -110,6 +208,7 @@
     chestQuery: "",
     glossaryFilter: "all",
     glossaryQuery: "",
+    playstyleIdx: {},
     statVarIdx: {},
     secVarIdx: {},
     firstBranchTab: {},
@@ -130,6 +229,7 @@
     if (!b) continue;
     const sv0 = b.secondVariants[0];
     const fp0 = b.firstPlans ? b.firstPlans[sv0.id] : null;
+    state.playstyleIdx[key] = 0;
     state.statVarIdx[key] = 0;
     state.secVarIdx[key] = 0;
     state.firstBranchTab[key] = fp0 ? fp0.branchIndex : 0;
@@ -202,6 +302,1279 @@
     showToast._timer = setTimeout(() => t.classList.remove("show"), 2600);
   }
 
+  const T1_SPECIAL_PLANS = {
+    mage_conduit3: {
+      branchIndex: 0,
+      branchFocus: "火 18 ＋ 冰 16 ＋ 奧術 16（合計 50/50 點・Beta 0.7.2 三導管三附加＋多重火焰＋石化易傷）",
+      alloc: {
+        "mage.0.firebolt_dmg": 5, "mage.0.inner_heat": 5, "mage.0.firebolt_bolts": 2, "mage.0.fire_infusion": 1, "mage.0.combustion": 3, "mage.0.firebolt_count": 1, "mage.0.fire_conduit": 1,
+        "mage.1.coldbolt_dmg": 5, "mage.1.frost_dmg": 5, "mage.1.coldbolt_bolts": 2, "mage.1.water_infusion": 1, "mage.1.freeze": 2, "mage.1.water_conduit": 1,
+        "mage.2.lightning_dmg": 5, "mage.2.lightning_bolts": 2, "mage.2.wind_infusion": 1, "mage.2.quick_cast": 5, "mage.2.stone_curse": 2, "mage.2.wind_conduit": 1
+      },
+      order: [
+        "mage.0.firebolt_dmg", "mage.0.inner_heat", "mage.0.firebolt_bolts", "mage.0.fire_infusion", "mage.0.combustion", "mage.0.firebolt_count", "mage.0.fire_conduit",
+        "mage.1.coldbolt_dmg", "mage.1.frost_dmg", "mage.1.coldbolt_bolts", "mage.1.water_infusion", "mage.1.freeze", "mage.1.water_conduit",
+        "mage.2.lightning_dmg", "mage.2.lightning_bolts", "mage.2.wind_infusion", "mage.2.quick_cast", "mage.2.stone_curse", "mage.2.wind_conduit"
+      ]
+    },
+    sw_berserk: {
+      branchIndex: 1,
+      branchFocus: "狂怒 32 ＋ 守護 18（合計 50/50 點・壓血永駐狂暴＋雙手劍大範圍＋守護補減傷）",
+      alloc: {
+        "swordsman.1.brutality": 5, "swordsman.1.relentless": 5, "swordsman.1.double_slash": 5, "swordsman.1.charge": 2, "swordsman.1.frenzy": 5, "swordsman.1.auto_berserk": 3, "swordsman.1.quicken": 3, "swordsman.1.bloodthirst": 2, "swordsman.1.cleave": 1, "swordsman.1.berserk": 1,
+        "swordsman.2.hard_skin": 5, "swordsman.2.stance": 5, "swordsman.2.shield_mastery": 3, "swordsman.2.recovery": 3, "swordsman.2.guard_up": 2
+      },
+      order: [
+        "swordsman.1.brutality", "swordsman.1.relentless", "swordsman.1.double_slash", "swordsman.1.charge", "swordsman.1.frenzy", "swordsman.1.auto_berserk", "swordsman.1.quicken", "swordsman.1.bloodthirst", "swordsman.1.cleave", "swordsman.1.berserk",
+        "swordsman.2.hard_skin", "swordsman.2.stance", "swordsman.2.shield_mastery", "swordsman.2.recovery", "swordsman.2.guard_up"
+      ]
+    },
+    sw_inferno: {
+      branchIndex: 0,
+      branchFocus: "武器 37 ＋ 狂怒 13（合計 50/50 點・地獄怒爆 275% 燃燒＋怒爆之焰全體增傷）",
+      alloc: {
+        "swordsman.0.sword_mastery": 5, "swordsman.0.bash_dmg": 5, "swordsman.0.shout_weaken": 3, "swordsman.0.tempered": 3, "swordsman.0.two_hand": 5, "swordsman.0.magnum_dmg": 5, "swordsman.0.magnum_cd": 3, "swordsman.0.giant_slayer": 3, "swordsman.0.warrior_reach": 2, "swordsman.0.magnum_mark": 2, "swordsman.0.magnum_inferno": 1,
+        "swordsman.1.brutality": 5, "swordsman.1.relentless": 5, "swordsman.1.double_slash": 3
+      },
+      order: [
+        "swordsman.0.sword_mastery", "swordsman.0.bash_dmg", "swordsman.0.shout_weaken", "swordsman.0.tempered", "swordsman.0.two_hand", "swordsman.0.magnum_dmg", "swordsman.0.magnum_cd", "swordsman.0.giant_slayer", "swordsman.0.warrior_reach", "swordsman.0.magnum_mark", "swordsman.0.magnum_inferno",
+        "swordsman.1.brutality", "swordsman.1.relentless", "swordsman.1.double_slash"
+      ]
+    },
+    ar_arcane: {
+      branchIndex: 1,
+      branchFocus: "奧術 40 ＋ 神射手 10（合計 50/50 點・奧火雙連發減 CD＋元素匯聚 ATK+INT 引爆）",
+      alloc: {
+        "archer.1.haste": 5, "archer.1.arcane_dmg": 5, "archer.1.pulse_area": 3, "archer.1.live_flame": 5, "archer.1.arcane_surge": 3, "archer.1.insight": 5, "archer.1.embers": 3, "archer.1.arcane_twin": 1, "archer.1.elemental_focus": 2, "archer.1.fire_targets": 2, "archer.1.flow": 5, "archer.1.convergence": 1,
+        "archer.0.owls_eye": 5, "archer.0.ds_dmg": 5
+      },
+      order: [
+        "archer.1.haste", "archer.1.arcane_dmg", "archer.1.pulse_area", "archer.1.live_flame", "archer.1.arcane_surge", "archer.1.insight", "archer.1.embers", "archer.1.arcane_twin", "archer.1.elemental_focus", "archer.1.fire_targets", "archer.1.flow", "archer.1.convergence",
+        "archer.0.owls_eye", "archer.0.ds_dmg"
+      ]
+    },
+    ar_siege: {
+      branchIndex: 2,
+      branchFocus: "圍攻 40 ＋ 神射手 10（合計 50/50 點・全面圍攻免費連發＋箭雨標記 +15% 易傷）",
+      alloc: {
+        "archer.2.shower_dmg": 5, "archer.2.rain_dmg": 5, "archer.2.improve_concentration": 3, "archer.2.weighted": 2, "archer.2.repel_dmg": 5, "archer.2.siege_stance": 5, "archer.2.mark_prey": 3, "archer.2.more_arrows": 2, "archer.2.camouflage": 3, "archer.2.shower_volley": 1, "archer.2.field": 5, "archer.2.siege_rain": 1,
+        "archer.0.owls_eye": 5, "archer.0.ds_dmg": 5
+      },
+      order: [
+        "archer.2.shower_dmg", "archer.2.rain_dmg", "archer.2.improve_concentration", "archer.2.weighted", "archer.2.repel_dmg", "archer.2.siege_stance", "archer.2.mark_prey", "archer.2.more_arrows", "archer.2.camouflage", "archer.2.shower_volley", "archer.2.field", "archer.2.siege_rain",
+        "archer.0.owls_eye", "archer.0.ds_dmg"
+      ]
+    },
+    ac_smite: {
+      branchIndex: 2,
+      branchFocus: "懲戒 38 ＋ 驅魔 12（合計 50/50 點・神聖橫掃＋光之打擊爆球＋天使之擊對王增傷）",
+      alloc: {
+        "acolyte.2.mace_mastery": 5, "acolyte.2.smite_dmg": 5, "acolyte.2.ruwach_dmg": 5, "acolyte.2.bless_proc": 3, "acolyte.2.ruwach_count": 1, "acolyte.2.increase_agi": 5, "acolyte.2.fervor": 2, "acolyte.2.holy_sweep": 1, "acolyte.2.iron_hand": 5, "acolyte.2.ruwach_cd": 1, "acolyte.2.blessed_hand": 1, "acolyte.2.investigate": 3, "acolyte.2.light_strike": 1,
+        "acolyte.1.demon_bane": 5, "acolyte.1.crucis_dmg": 5, "acolyte.1.crucis_area": 2
+      },
+      order: [
+        "acolyte.2.mace_mastery", "acolyte.2.smite_dmg", "acolyte.2.ruwach_dmg", "acolyte.2.bless_proc", "acolyte.2.ruwach_count", "acolyte.2.increase_agi", "acolyte.2.fervor", "acolyte.2.holy_sweep", "acolyte.2.iron_hand", "acolyte.2.ruwach_cd", "acolyte.2.blessed_hand", "acolyte.2.investigate", "acolyte.2.light_strike",
+        "acolyte.1.demon_bane", "acolyte.1.crucis_dmg", "acolyte.1.crucis_area"
+      ]
+    },
+    th_strip_shadow: {
+      branchIndex: 2,
+      branchFocus: "暗影 32 ＋ 戰鬥 18（合計 50/50 點・遊蕩暗影 2000% 三連跳＋刀刃精通＋卸除鎧甲 +30% 易傷）",
+      alloc: {
+        "thief.2.improve_dodge": 5, "thief.2.stealth": 5, "thief.2.hiding_cd": 3, "thief.2.hiding_dur": 3, "thief.2.opportunist": 3, "thief.2.tough": 1, "thief.2.step_dur": 5, "thief.2.shadow_fan": 1, "thief.2.step_cd": 2, "thief.2.dimension_door": 3, "thief.2.cloaking": 1,
+        "thief.1.dagger": 5, "thief.1.double_attack": 5, "thief.1.quick_hands": 5, "thief.1.strip": 3
+      },
+      order: [
+        "thief.2.improve_dodge", "thief.2.stealth", "thief.2.hiding_cd", "thief.2.hiding_dur", "thief.2.opportunist", "thief.2.tough", "thief.2.step_dur", "thief.2.shadow_fan", "thief.2.step_cd", "thief.2.dimension_door", "thief.2.cloaking",
+        "thief.1.dagger", "thief.1.double_attack", "thief.1.quick_hands", "thief.1.strip"
+      ]
+    },
+    th_bow_strip: {
+      branchIndex: 2,
+      branchFocus: "暗影 32 ＋ 戰鬥 18（合計 50/50 點・無短劍廢點全弓遠程＋卸除鎧甲 +30% 易傷＋影步三連跳）",
+      alloc: {
+        "thief.2.improve_dodge": 5, "thief.2.stealth": 5, "thief.2.hiding_cd": 3, "thief.2.hiding_dur": 3, "thief.2.opportunist": 3, "thief.2.tough": 1, "thief.2.step_dur": 5, "thief.2.shadow_fan": 1, "thief.2.step_cd": 2, "thief.2.dimension_door": 3, "thief.2.cloaking": 1,
+        "thief.1.double_attack": 5, "thief.1.thief_eye": 5, "thief.1.quick_hands": 5, "thief.1.strip": 3
+      },
+      order: [
+        "thief.2.improve_dodge", "thief.2.stealth", "thief.2.hiding_cd", "thief.2.hiding_dur", "thief.2.opportunist", "thief.2.tough", "thief.2.step_dur", "thief.2.shadow_fan", "thief.2.step_cd", "thief.2.dimension_door", "thief.2.cloaking",
+        "thief.1.double_attack", "thief.1.thief_eye", "thief.1.quick_hands", "thief.1.strip"
+      ]
+    },
+    me_tri_mark: {
+      branchIndex: 0,
+      branchFocus: "鍛造 34 ＋ 交易 16（合計 50/50 點・撿便宜讓手推車共吃金幣雨標記＋武器值最大化無限塔白嫖）",
+      alloc: {
+        "merchant.2.strength": 5, "merchant.2.mammo_dmg": 5, "merchant.2.weapon_research": 3, "merchant.2.mammo_cd": 3, "merchant.2.mammo_area": 2, "merchant.2.aim": 5, "merchant.2.hilt": 2, "merchant.2.hammerfall": 5, "merchant.2.armor_break": 3, "merchant.2.maximize": 1,
+        "merchant.0.overcharge": 5, "merchant.0.zeny_count": 2, "merchant.0.haggle": 5, "merchant.0.zeny_mark": 3, "merchant.0.zeny_pierce": 1
+      },
+      order: [
+        "merchant.2.strength", "merchant.2.mammo_dmg", "merchant.2.weapon_research", "merchant.2.mammo_cd", "merchant.2.mammo_area", "merchant.2.aim", "merchant.2.hilt", "merchant.2.hammerfall", "merchant.2.armor_break", "merchant.2.maximize",
+        "merchant.0.overcharge", "merchant.0.zeny_count", "merchant.0.haggle", "merchant.0.zeny_mark", "merchant.0.zeny_pierce"
+      ]
+    },
+    gs_sniper: {
+      branchIndex: 2,
+      branchFocus: "狙擊手 38 ＋ 槍手 12（合計 50/50 點・神之鎚百步穿楊＋Bull's Eye 獵王＋雙重詠唱）",
+      alloc: {
+        "gunslinger.2.single_action": 5, "gunslinger.2.tracking_dmg": 5, "gunslinger.2.snake_eye": 5, "gunslinger.2.tracking_cd": 3, "gunslinger.2.drift_dmg": 3, "gunslinger.2.sight": 3, "gunslinger.2.headshot": 2, "gunslinger.2.calm": 3, "gunslinger.2.tracking_count": 1, "gunslinger.2.bullseye": 3, "gunslinger.2.magical_bullet": 2, "gunslinger.2.fallen_angel": 2, "gunslinger.2.hammer_of_god": 1,
+        "gunslinger.0.chain_action": 5, "gunslinger.0.triple_dmg": 5, "gunslinger.0.gun_mastery": 2
+      },
+      order: [
+        "gunslinger.2.single_action", "gunslinger.2.tracking_dmg", "gunslinger.2.snake_eye", "gunslinger.2.tracking_cd", "gunslinger.2.drift_dmg", "gunslinger.2.sight", "gunslinger.2.headshot", "gunslinger.2.calm", "gunslinger.2.tracking_count", "gunslinger.2.bullseye", "gunslinger.2.magical_bullet", "gunslinger.2.fallen_angel", "gunslinger.2.hammer_of_god",
+        "gunslinger.0.chain_action", "gunslinger.0.triple_dmg", "gunslinger.0.gun_mastery"
+      ]
+    },
+    nj_kunai_crit: {
+      branchIndex: 2,
+      branchFocus: "潛行 38 ＋ 投擲 12（合計 50/50 點・苦無風暴＋一閃擊高爆劇毒苦無＋致盲保命）",
+      alloc: {
+        "ninja.2.cicada": 5, "ninja.2.kunai_dmg": 5, "ninja.2.wind_feet": 3, "ninja.2.kunai_cd": 3, "ninja.2.vital_point": 3, "ninja.2.kunai_count": 2, "ninja.2.lethal": 2, "ninja.2.illusion": 3, "ninja.2.shadow": 2, "ninja.2.mist": 2, "ninja.2.kunai_poison": 3, "ninja.2.issen": 2, "ninja.2.yamikumo": 2, "ninja.2.kunai_storm": 1,
+        "ninja.0.dagger_throwing": 5, "ninja.0.shuriken_dmg": 5, "ninja.0.wrist": 2
+      },
+      order: [
+        "ninja.2.cicada", "ninja.2.kunai_dmg", "ninja.2.wind_feet", "ninja.2.kunai_cd", "ninja.2.vital_point", "ninja.2.kunai_count", "ninja.2.lethal", "ninja.2.illusion", "ninja.2.shadow", "ninja.2.mist", "ninja.2.kunai_poison", "ninja.2.issen", "ninja.2.yamikumo", "ninja.2.kunai_storm",
+        "ninja.0.dagger_throwing", "ninja.0.shuriken_dmg", "ninja.0.wrist"
+      ]
+    }
+  };
+
+  const SHARED_PATCHES = {
+    mageConduit3: {
+      gearPatch: {
+        weaponNote: "三導管流主靠「火箭＋冰箭＋雷擊」三箭聯動與三元素複合普攻，拿單手魔杖配 #2107 鏡盾維持生存；武器首選雙詞條 #1648 波爾多之杖（INT+DEX），次選燈籠節 #1663（詠唱 +2%）或 #1612（Haste +2%）。",
+        weapons: [
+          { id: 1648, roleTag: "【三導管詞條畢業】月夜花", reason: "唯一自帶 INT +2 與 DEX +2 的 Tier 2 法杖，兼顧法傷與直接壓縮三箭／雷爆詠唱。" },
+          { id: 1663, roleTag: "【燈籠節詠唱版】波爾多之杖", reason: "燈籠節扭蛋產出（詠唱速度 +2%），未滿 100 DEX 前能替三系法術加速。" },
+          { id: 1612, roleTag: "【燈籠節冷卻版】大巫師之杖", reason: "自帶 Haste +2%，已達 DEX 瞬發後接棒壓縮三導管連發冷卻。" },
+          { id: 1610, roleTag: "【平價農裝】樹精大巫師之杖", reason: "普隆德拉高產（INT +2），開荒最容易衝出高洞數（3～4 洞）插卡。" }
+        ],
+        replaceGears: {
+          2607: { id: 28560, slotTag: "飾品2〔燈籠節〕減 CD 首選", reason: "陰陽護符（Haste +2%）：三箭共用冷卻升級，每點 Haste 同時讓三招連發。" },
+          2212: { id: 2212, slotTag: "頭中（暴擊撐內在熱能）", reason: "獨眼龍眼罩（暴擊率 +2%），配合火線《內在熱能》撐高爆率。" }
+        }
+      },
+      loadoutPatch: {
+        cardsBySlot: {
+          weapon: [
+            { id: 4023, note: "沙漠幼狼 +3% 冷卻縮減：注意實碼規則「法師附魔複合普攻不吃 +投射物卡」，冷卻同時加快三箭收益最大。" },
+            { id: 4137, note: "德雷克 +15% Boss/菁英傷 +5% 總傷：三箭集火打王最快。" },
+            { id: 4029, note: "野狼 +6% 傷害 +2% 暴擊：補火線爆擊率並穩撐全身基礎傷。" }
+          ],
+          headgear: [
+            { id: 4330, note: "邪惡蛇王卡〔燈籠節〕+3 INT · +6% 冷卻縮減！三導管版本最完美頭飾卡。" },
+            { id: 4010, note: "樹精 +5% 冷卻縮減（常駐平價版）。" },
+            { id: 4052, note: "長老樹精 +2 INT，配合三附加 +225% 普攻極穩。" }
+          ],
+          accessory: [
+            { id: 4172, note: "書頁怪〔燈籠節〕+20% 暴擊傷害！火線《內在熱能》給 +5% 爆擊正好放大暴傷上限。" },
+            { id: 4077, note: "小花枝 +4% 冷卻縮減（常駐核心，雙飾品最高插滿 Haste）。" }
+          ]
+        }
+      },
+      priorityPatch: {
+        tier1: ["+數量 (Bolts/Count｜三導管互吃×3倍)", "+目標 (Targets｜三箭同時擴散)", "任意火箭／冰箭／雷擊單系強化 (點 1 張等於升 3 招)"],
+        tier2: ["冷卻縮減 (Haste)", "雙重詠唱", "+傷害% / 暴擊暴傷"],
+        tier3: ["技能範圍 (搭配火牆／雷爆／石化區域)", "生存盾或移速（缺保命再補）"],
+        avoid: "三導管最核心規則是「拿任一箭的升級都會複製給另兩箭」，千萬不要在局內放掉火/冰/雷箭選 card；另複合普攻不吃投射物數量卡，別插邪骸弓箭手。",
+        summary: "只要看到火箭、冰箭、雷擊的數量／目標／冷卻／傷害卡全部無腦拿，每一次升級都透過三個導管同時強化三招！"
+      }
+    },
+    lowHpBerserk: {
+      gearPatch: {
+        weaponNote: "核心天賦《狂暴狀態》註明「使用雙手劍時，另 +24% 傷害與 +50% 近戰攻擊範圍」；且《狂暴》會將最大 HP 永久鎖在 40%（永遠視為低 HP）。雖然失去盾牌，但全套殘血增傷裝會變成永久常駐！",
+        weapons: [
+          { id: 1189, roleTag: "【雙手劍入門】克拉茲納雅", reason: "純近戰雙手劍（STR +1），完整吃下《狂暴狀態》+24% 傷害與 +50% 近戰距離加成。" },
+          { id: 1479, roleTag: "【燈籠節殘血雙手槍】幽魂長矛", reason: "實裝「殘血增傷 +6%」，開局即鎖在 40% HP 視為殘血可永久白吃滿詞條；但吃不到雙手劍專屬條時可視手感替換雙手劍。" },
+          { id: 1152, roleTag: "【劇情開荒雙手劍】殺手巨劍", reason: "初期快速觸發雙手 +125% 倍率與錐形橫掃。" },
+          { id: 1133, roleTag: "【單手劍＋盾折衷】火靈之劍", reason: "若無雙手劍且高難怕暴斃，也可改單手配 #2107 鏡盾並改點其他武器線，但傷害少一截。" }
+        ],
+        replaceGears: {
+          2255: { id: 5167, slotTag: "頭上〔燈籠節殘血裝〕", reason: "殭屍帽〔燈籠節〕「殘血增傷 +6%」，搭配《狂暴》永遠視為低 HP 常駐觸發！" },
+          2607: { id: 2609, slotTag: "飾品2（常駐殘血神戒）", reason: "骷髏戒指「殘血增傷 +6%」：狂暴流專屬核心，不虧一絲冷卻輸出。" },
+          22847: { id: 2700, slotTag: "飾品1〔燈籠節殘血印〕", reason: "紅絲封印「殘血增傷 +6%」（若王城衝高生存需保底也可用 #22847 巡邏徽章互換）。" }
+        }
+      },
+      loadoutPatch: {
+        weaponMode: "雙手巨劍（無盾槽・靠《狂暴》低 HP 永久增傷＋守護 18 點減傷補坦度）",
+        pets: [
+          { id: "cat_o_nine_tail", tag: "高爆回復首選", reason: "+4% 暴擊與 +0.6/s 再生，補 40% 血上限下的續戰。" },
+          { id: "hyegun", tag: "減傷防暴斃", reason: "+4 VIT 與 -4% 受傷，確保壓血期間不吃一刀秒殺。" },
+          { id: "drops", tag: "純傷推圖", reason: "+6% 總傷害，配合狂暴倍率疊乘極快。" }
+        ]
+      }
+    },
+    infernoBurn: {
+      gearPatch: {
+        weaponNote: "《地獄怒爆》將直傷降低 85% 改為「10 秒內造成 275% 正常傷害的超高燃燒，且範圍 +50%」，搭配《怒爆之焰》全傷 +10%，全裝備優先塞滿「毒／火／流血持續傷」與「技能範圍」。",
+        weapons: [
+          { id: 1133, roleTag: "【持續傷畢業單手劍】火靈之劍", reason: "毒／火／流血持續傷 +9%，直接放大地獄怒爆 275% 燃燒總傷，同時能單手拿 #2107 鏡盾！" },
+          { id: 13435, roleTag: "【燈籠節範圍版】火靈之劍", reason: "技能範圍 +2%，把原本已 +50% 的地獄怒爆燃燒圈撐得更大，亦可單手帶鏡盾。" },
+          { id: 1189, roleTag: "【雙手純高倍率】克拉茲納雅巨劍", reason: "若不戴盾想靠雙手 +125% 面板撐高燃燒基數可選雙手劍。" },
+          { id: 1351, roleTag: "【範圍副選】雙手戰斧", reason: "技能範圍 +2%，擴大怒爆與劍舞清海半徑。" }
+        ],
+        replaceGears: {
+          2607: { id: 2708, slotTag: "飾品2〔燈籠節持續傷〕", reason: "中華手工藝品（毒／火／流血持續傷 +6%），與 #1133 火靈之劍堆疊灼燒傷害。" }
+        }
+      },
+      loadoutPatch: {
+        weaponMode: "單手 #1133 火靈之劍＋#2107 鏡盾（極限持續傷＋坦度兼備，不需雙手綁死）",
+        shieldNote: "",
+        cardsBySlot: {
+          shield: [
+            { id: 4128, note: "黃金盜蟲 -15% 受傷，讓拉怪點燃圈內近戰安全無憂。" },
+            { id: 4074, note: "大腳熊 -5% 受傷（平價過渡）。" }
+          ],
+          garment: [
+            { id: 4183, note: "流浪之狼 +4% 傷害 +1 STR，放大地獄怒爆灼燒基數（高危圖改帶惡魔波利）。" },
+            { id: 4174, note: "惡魔波利 -12% 受傷（無限塔或高難安全優先）。" }
+          ],
+          accessory: [
+            { id: 4103, note: "鬼火 +4% 技能範圍，配合地獄怒爆 +50% 圈掃全場。" },
+            { id: 4084, note: "氣泡蟲 +5% 技能範圍（高產極佳）。" }
+          ]
+        }
+      }
+    },
+    arcaneBow: {
+      gearPatch: {
+        weaponNote: "奧火混傷流仍拿弓箭吃 DEX 遠程基傷，但《元素匯聚》3 公尺火焰爆炸是同時吃 ATK 與 INT 並點燃全場，因此防具飾品大幅改抓 INT、冷卻縮減（配合奧術連發 -1.2s）與持續燃燒傷！",
+        weapons: [
+          { id: 1711, roleTag: "【高 DEX 雙減詠】十字弓", reason: "斐揚九尾狐可刷（DEX +2），同時衝高遠程傷害並壓低奧術射擊詠唱延遲。" },
+          { id: 1724, roleTag: "【燈籠節頂配】Dragon Wing", reason: "暴擊傷害 +6%，元素匯聚與暴擊一併收益。" },
+          { id: 1704, roleTag: "【開荒壓 CD】複合弓", reason: "Haste +1%，加快火焰箭與奧術射擊互相減冷卻循環。" },
+          { id: 1708, roleTag: "【大弓常駐】", reason: "常駐 Tier 2 暴傷 +6%。" }
+        ],
+        replaceGears: {
+          2248: { id: 2235, slotTag: "頭上（補 INT 炸傷）", reason: "國王王冠（INT +2）：直接拉高《元素匯聚》的 INT 系倍率基數。" },
+          2607: { id: 2708, slotTag: "飾品2〔燈籠節火傷〕", reason: "中華手工藝品（毒／火／流血持續傷 +6%），配合《生命之焰》+150% 燃燒痛到爆！" }
+        }
+      },
+      loadoutPatch: {
+        pets: [
+          { id: "dokebi", tag: "INT＋減詠雙吃", reason: "+3 INT 與 +4.5% 詠唱速度（含飾品），同時拉高元素匯聚炸傷與流暢度。" },
+          { id: "baby_desert_wolf", tag: "INT＋CD 加速", reason: "+3 INT 與 +3% Haste，加快奧火雙連發節奏。" },
+          { id: "cat_o_nine_tail", tag: "暴傷輸出向", reason: "+4% 暴擊與微再生。" }
+        ],
+        cardsBySlot: {
+          headgear: [
+            { id: 4330, note: "邪惡蛇王卡〔燈籠節〕+3 INT · +6% Haste！奧火混傷唯一真神頭飾卡。" },
+            { id: 4052, note: "長老樹精 +2 INT，補強混傷 INT 係數。" }
+          ],
+          accessory: [
+            { id: 4084, note: "氣泡蟲 +5% 技能範圍！放大奧術射擊吸附半徑與《元素匯聚》3 公尺火爆範圍。" },
+            { id: 4077, note: "小花枝 +4% 冷卻縮減，縮短火焰箭與奧術射擊互減頻率。" }
+          ]
+        }
+      },
+      priorityPatch: {
+        tier1: ["範圍 (Area｜拉怪聚集＋元素匯聚爆炸圈)", "冷卻縮減 (Haste｜觸發奧術連發 -1.2s 永動)", "+目標 / 脈衝 (火焰箭／奧術射擊)"],
+        tier2: ["雙重詠唱 (連續炸出兩次匯聚)", "+傷害%", "投射物 +1（補強二連矢或普攻）"],
+        tier3: ["移速", "少量貫穿"],
+        avoid: "注意《元素匯聚》一定要同時拿「奧術射擊」與「火焰箭」才會觸發聚怪引爆；漏抓火焰箭會使這套奧術點法失去關鍵爆炸。",
+        summary: "局內先集齊《奧術射擊》＋《火焰箭》，利用奧術連發互減 1.2 秒冷卻把燃燒怪吸進中心連續轟炸！"
+      }
+    }
+  };
+
+  const PLAYSTYLES_BY_JOB = {
+    knight: [
+      {
+        id: "spear",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "狂怒橫掃安全雙手流",
+        tagline: "狂怒 40 ＋ 武器 10｜雙手長矛／巨劍錐形普攻＋劍舞＋怒爆・無負面副作用",
+        statVarId: "main",
+        secVarId: "spear",
+        growthLogic: "最標準穩健的近戰開荒與推圖點法：直達狂怒 L6《死亡之舞》但不點自砍血量的《狂暴》，吃滿雙手武器 +125% 倍率與《連鎖斬擊》錐形普攻。",
+        gearLogic: "以雙手武器（#1477 幽魂長矛／#1189 克拉茲納雅／#1351 戰斧）撐高單發基礎面板，飾品拿 #22847 巡邏徽章配 #2607 髮夾縮減劍舞 CD。",
+        cardLogic: "武器與頭中優先補暴擊與對王傷（#4137 德雷克、#4086 邪骸士兵），鞋披補減傷（#4174 惡魔波利）與冷卻（#4100 鬼女）。",
+        runSkills: null
+      },
+      {
+        id: "berserk",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化・高爆發",
+        name: "壓血永駐狂暴雙手吸血流",
+        tagline: "狂怒 32 ＋ 守護 18｜《狂暴》常駐低血＋雙手 +50% 範圍・殘血裝永久白吃",
+        statVarId: "tank",
+        secVarId: "twohand",
+        t1Key: "sw_berserk",
+        growthLogic: "利用《狂暴》把最大 HP 壓成 40% 且「永遠視為低 HP」，直接白嫖《狂暴狀態》雙手劍 +24% 傷/+50% 範圍＋《狂暴》+40% 傷、+10 普攻冷卻與 1% 流血吸血；再用剩餘 18 點守護線《堅韌皮膚/穩固架勢/舉盾防禦》補回防禦免暴斃。",
+        gearLogic: "整套換穿「殘血增傷」神器：#5167 殭屍帽〔燈籠節〕、#2609 骷髏戒指、#2700 紅絲封印〔燈籠節〕與 #1479 幽魂長矛〔燈籠節〕，因永久判定低 HP 等同無代價常駐 +18%~24% 額外增傷！",
+        cardLogic: "頭飾與盾缺口改靠護甲／減傷卡補強（#4054 天使波利、#4174 惡魔波利、#4259 木高崙）；寵物建議帶「狂暴月夜貓」或「妖仙女」穩住壓血安全線。",
+        runSkills: [
+          { id: "bash", role: "高倍點殺", tip: "在壓血倍率與雙手距離下穩定暈眩擊殺菁英與 Boss。" },
+          { id: "sword_dance", role: "核心大圈", tip: "配合雙手與低血增傷打出三段近身掃場，流血持續吸血。" },
+          { id: "magnum", role: "火圈補傷／推怪", tip: "怪群逼近貼臉時彈開敵人避免 40% 血線瞬間見底。" },
+          { id: "endure", role: "霸體保命必抓", tip: "減傷 -24% 對 40% 最大 HP 的壓血狂暴流價值極高！" }
+        ],
+        ...SHARED_PATCHES.lowHpBerserk
+      },
+      {
+        id: "inferno",
+        badgeType: "meta",
+        badgeText: "特化燃燒流",
+        name: "地獄怒爆 275% 聚怪燃燒流",
+        tagline: "武器 37 ＋ 狂怒 13｜《地獄怒爆》10 秒大圈灼燒＋《怒爆之焰》+10% 易傷",
+        statVarId: "main",
+        secVarId: "twohand",
+        t1Key: "sw_inferno",
+        growthLogic: "放棄瞬間直傷，改走武器線 L5《地獄怒爆》（範圍 +50%、10 秒內造成正常傷害 275% 燃燒），配 L4《怒爆之焰》掛全傷害 +10% 易傷，拉成火海風箏清高難波次或磨 Boss。",
+        gearLogic: "不必硬背無盾雙手！可直接拿單手 #1133 火靈之劍（毒/火/流血持續傷 +9%）或 #13435〔燈籠節〕配 #2107 鏡盾，飾品帶 #2708 中華手工藝品（持續傷 +6%）。",
+        cardLogic: "披肩用 #4183 流浪之狼或 #4174 惡魔波利撐生存、飾品帶滿 #4103 鬼火 (+4% 範圍) / #4084 氣泡蟲 (+5% 範圍) 把 50% 大火圈蓋滿半個畫面；局內抓「持續傷害％」寶箱詞條！",
+        weaponInfo: {
+          shortPill: "單手火靈劍＋鏡盾（推薦）",
+          title: "攻擊：#1133 火靈之劍（單手）＋ #2107 鏡盾",
+          tag: "堆高持續燃燒傷害與坦度",
+          desc: "火靈之劍直接提供毒／火／流血持續傷 +9%，還能同時裝備鏡盾減傷 -3%，配合地獄怒爆 275% 燃燒比硬拿普通雙手更穩。"
+        },
+        runSkills: [
+          { id: "magnum", role: "核心引擎（地獄怒爆）", tip: "開局優先點高等級與減 CD，每 10 秒燒光整坨大群敵人並掛 +10% 易傷。" },
+          { id: "bash", role: "單體暈眩點名", tip: "補地獄怒爆初期單發傷害空白，對 Boss 穩定上暈。" },
+          { id: "sword_dance", role: "近身清雜", tip: "補足火圈冷卻空窗期的貼身輸出。" },
+          { id: "demoralizing_shout", role: "聚怪降傷光環", tip: "降低周邊怪物 20%+ 攻擊力，安心站圈邊拉扯等燒死。" }
+        ],
+        ...SHARED_PATCHES.infernoBurn
+      }
+    ],
+    crusader: [
+      {
+        id: "faith",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "雙手狂怒橫掃無盾輸出流",
+        tagline: "狂怒 40 ＋ 武器 10｜對應無盾高輸出配置，為未來聖十字做準備",
+        statVarId: "main",
+        secVarId: "faith",
+        growthLogic: "十字軍在 Beta 0.7.2 與騎士同用一轉 1+4 劍士技能，若走純輸出路線推薦同款狂怒 40+10 雙手安全點法，享受 360 HP 基底高血量兼顧傷害。",
+        gearLogic: "拿雙手武器吃 +125% 倍率，不要裝備盾牌也不抓盾類技能。",
+        cardLogic: "同狂怒近戰，武器配德雷克／野狼、鞋子帶鬼女減 CD。",
+        runSkills: null
+      },
+      {
+        id: "shield",
+        badgeType: "core",
+        badgeText: "基礎坦克配點",
+        name: "守護壓路機盾牌＋不死壁壘流",
+        tagline: "守護 38 ＋ 狂怒 12｜單手劍＋#2107 鏡盾・推怪碾壓＋擋死復活",
+        statVarId: "tank",
+        secVarId: "shield",
+        growthLogic: "點出守護系 L5《壓路機》（盾牌衝擊拖怪到終點碾壓，每多 1 隻再 +15% 傷）與 L6《最後一息》（抵銷致死打擊並回滿 HP＋30 秒傷害 +35%），硬扛高倍數難度與無限塔的鋼板路線。",
+        gearLogic: "必須拿單手武器（#1135 亞歷山大劍／#13420 紅蓮劍〔燈籠節〕／#1408 單手長戟）＋ #2107 鏡盾，才能啟用《盾牌衝擊》與盾牌插槽！",
+        cardLogic: "盾牌插 #4128 黃金盜蟲 (-15% 受傷)，飾品與頭飾補 Haste（#4077 小花枝、#4010 樹精）讓盾牌衝擊與霸體常駐不斷鏈。",
+        runSkills: null
+      },
+      {
+        id: "berserk",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化流",
+        name: "壓血狂暴雙手戰車流",
+        tagline: "狂怒 32 ＋ 守護 18｜十字軍高基底 HP＋《狂暴》雙手 +50% 距離",
+        statVarId: "tank",
+        secVarId: "faith",
+        t1Key: "sw_berserk",
+        growthLogic: "用十字軍的高血防體質轉玩《狂暴》，雖最大 HP 壓成 40% 但 360 基底＋守護 18 點護甲減傷讓實際容錯比騎士更高，雙手橫掃爽度破表。",
+        gearLogic: "雙手劍／長矛＋全套殘血增傷（#5167 殭屍帽、#2609 骷髏戒、#2700 紅絲封印、#1479 幽魂長矛）。",
+        cardLogic: "缺盾情況下改在鎧甲／披肩塞滿減傷卡（#4066 獸人戰士、#4174 惡魔波利），寵物選妖仙女或狂暴月夜貓。",
+        runSkills: [
+          { id: "bash", role: "單點突破", tip: "高倍率秒菁英。" },
+          { id: "sword_dance", role: "核心掃場", tip: "配合雙手距離大圈橫掃並觸發嗜血流血。" },
+          { id: "endure", role: "必帶霸體", tip: "減傷 -24% 保證壓血不猝死。" },
+          { id: "hp_recovery", role: "穩定續航", tip: "補 40% HP 線上的額外回血容錯。" }
+        ],
+        ...SHARED_PATCHES.lowHpBerserk
+      }
+    ],
+    wizard: [
+      {
+        id: "ice",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "冰霜導管＋深度冰凍暴雪流",
+        tagline: "冰 40 ＋ 奧術 10｜《殘留冰霜》三箭全轉冰箭＋對冰凍怪 400% 傷害",
+        statVarId: "main",
+        secVarId: "ice",
+        growthLogic: "經典正統單深冰系點法：點出 L5《殘留冰霜》將火/雷箭全部轉為冰箭並共享發數與神祇，配 L6《深度冰凍》對凍結敵人打出 400% 傷害，推極高難度穩如泰山。",
+        gearLogic: "法杖＋鏡盾標準配置；可配合 #4084 氣泡蟲（+5% 範圍）與 #4103 鬼火（+4% 範圍）擴大冰凍術新星與連鎖冰凍覆蓋圈。",
+        cardLogic: "極缺冷卻縮減讓冰凍銜接不斷層：鞋 #4100 鬼女、頭 #4010 樹精／#4330 邪惡蛇王、飾品 #4077 小花枝。",
+        runSkills: null
+      },
+      {
+        id: "conduit3",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化・玩家實戰推薦",
+        name: "三導管＋三附加三系共鳴流",
+        tagline: "火 18・冰 16・奧術 16｜開局齊備火冰雷箭・升級互吃×3・複合普攻 +225%",
+        statVarId: "main",
+        secVarId: "storm",
+        t1Key: "mage_conduit3",
+        growthLogic: "善用火／冰／奧術三條分支 L3 導管皆僅需「15 點前置＋1 點導管＝16 點」的特性，48 點齊拿三導管＋剩餘 2 點補火線《多重火焰》／《燃燒 3/3》！三附加組合出 +225% 傷害複合普攻，三箭且互通升級、天賦與神祇。",
+        gearLogic: "首選單手 #1648 波爾多之杖（INT+DEX）＋ #2107 鏡盾；節慶優先補 #1663 波爾多之杖〔燈籠節〕／#28560 陰陽護符（+2% Haste）。目標靠 DEX 80 壓低詠唱，其餘詞條塞暴傷與冷卻。",
+        cardLogic: "因火線《內在熱能》自帶 +5% 爆擊，飾品插節慶 #4172 書頁怪（+20% 暴傷）或 #4077 小花枝（+4% Haste）；頭飾必求 #4330 邪惡蛇王卡（+3 INT +6% 冷卻）！武器不要插投射物卡（複合普攻不吃）。",
+        runSkills: [
+          { id: "firebolt", role: "導管 1｜開局自帶＋多重連發", tip: "吸滿冰箭／雷擊的局內升級、燃燒 3/3 與多重火焰 +2 目標，全圖點燃連炸！" },
+          { id: "coldbolt", role: "導管 2｜開局自帶＋全凍控制", tip: "共享火與雷的數量及目標升級，配合天賦《冰凍》把整屏怪物凍在原地。" },
+          { id: "lightning", role: "導管 3｜開局自帶＋瞬間雷劈", tip: "吃滿火冰強化與奧術《石化術 (+100% 受傷)》隨機炸碎全場；100 DEX 即瞬發。" },
+          { id: "fire_wall", role: "第 4 格自由位（防禦推圖）", tip: "三個導管已佔滿開局 3 招，最後 1 格彈性抓火焰之壁防貼臉、雷爆術或火狩即可！" }
+        ],
+        ...SHARED_PATCHES.mageConduit3
+      },
+      {
+        id: "storm",
+        badgeType: "core",
+        badgeText: "高頻奧術流",
+        name: "奧術雙重施法＋電力混沌雷暴流",
+        tagline: "奧術 32 ＋ 冰 13 ＋ 火 5｜L6 聚怪雷爆控場＋6% 雙重施法",
+        statVarId: "agi",
+        secVarId: "storm",
+        growthLogic: "以奧術 L6《電力混沌》（雷爆術範圍 +40% 並將怪物拉向中心緩速）為群戰軸心，同時搭配火/冰 L0+L1 拿雙元素附加強化普攻清線。",
+        gearLogic: "若有減詠唱裝備或預計在局內補足 100 DEX，這套推薦走 AGI 80 衝冷卻縮減讓聚怪雷爆連開不間斷。",
+        cardLogic: "強烈依賴飾品 #4084 氣泡蟲／#4103 鬼火撐高雷爆吸怪範圍，並用 #4077 小花枝／#4100 鬼女刷滿 CD（披肩補 #4174 惡魔波利減傷）。",
+        runSkills: null
+      }
+    ],
+    sage: [
+      {
+        id: "scholar",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "三元素附加 +225% 普攻機槍流",
+        tagline: "火 20 ＋ 奧術 17 ＋ 冰 13｜強化左格普攻與單電壓導管（銜接書系念咒）",
+        statVarId: "agi",
+        secVarId: "scholar",
+        growthLogic: "針對喜歡「普攻彈幕配聖靈／三箭」手感且預先幫賢者書系自動念咒卡位的均衡點法，投資高 AGI 與冷卻加速左格複合魔法彈射速。",
+        gearLogic: "法杖＋鏡盾；重視武器與披肩上的基礎傷害、暴擊與 Haste 詞條（普攻同時看 AGI 攻速/冷卻）。",
+        cardLogic: "多插減 CD 與總傷卡（#4023 沙漠幼狼、#4125 異變魚、#4077 小花枝）。",
+        runSkills: null
+      },
+      {
+        id: "conduit3",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化・高強度推薦",
+        name: "三導管＋三附加三系共鳴流",
+        tagline: "火 18・冰 16・奧術 16｜比單導管更強的現階段 T1 橫向完全體",
+        statVarId: "main",
+        secVarId: "scholar",
+        t1Key: "mage_conduit3",
+        growthLogic: "賢者二轉《大魔導書》尚未實裝進局的 Beta 0.7.2 期間，改點完整三導管比原本「單電壓導管」點法多出兩倍升級倍率互通，兼有 +225% 三附加複合普攻！",
+        gearLogic: "拿單手 #1648 波爾多之杖＋#2107 鏡盾，節慶換 #1663／#28560；未來二轉實裝書本後再調整點法。",
+        cardLogic: "頭 #4330 邪惡蛇王卡（+3 INT +6% 冷卻）、飾品 #4172 書頁怪＋#4077 小花枝、鞋 #4100 鬼女；嚴禁武器插投射物卡。",
+        runSkills: [
+          { id: "firebolt", role: "導管 1｜主清群怪點燃", tip: "吃滿冰雷升級與多重火焰，每輪必抓連彈 bolts 數。" },
+          { id: "coldbolt", role: "導管 2｜群體冰緩防線", tip: "全屏彈幕順便觸發凍結牽制貼臉小怪。" },
+          { id: "lightning", role: "導管 3｜瞬發石化增傷", tip: "隨機落雷打散菁英，帶動石化 +100% 易傷。" },
+          { id: "napalm", role: "第 4 格清圍輔助", tip: "或改選火焰之壁／雷爆術補範圍防護（開局已自帶三箭）。" }
+        ],
+        ...SHARED_PATCHES.mageConduit3
+      },
+      {
+        id: "earth",
+        badgeType: "core",
+        badgeText: "火海陣地流",
+        name: "雙生之火＋火焰風暴焚城流",
+        tagline: "火 40 ＋ 奧術 10｜雷爆轉火龍捲＋火牆火狩防身",
+        statVarId: "cast",
+        secVarId: "earth",
+        growthLogic: "專走火系 L6《雙生之火》（所有火系法術對另群目標多放一次 20% 完整發數）與 L4《火焰風暴》，靠雙重火牆、環繞火狩與火焰龍捲清盡近身敵人。",
+        gearLogic: "可混搭 #2708 中華手工藝品（毒火持續傷 +6%）或飾品塞 #4084 氣泡蟲 / #4103 鬼火撐大火焰風暴與火牆面積。",
+        cardLogic: "範圍與 Haste 為主（#4084 氣泡蟲、#4103 鬼火、#4077 小花枝）。",
+        runSkills: null
+      }
+    ],
+    hunter: [
+      {
+        id: "hawk",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "神射手二連矢＋齊射風暴流",
+        tagline: "神射手 40 ＋ 圍攻 10｜DEX 99 / STR 53 / AGI 80・普攻暴擊免費觸發二連矢",
+        statVarId: "main",
+        secVarId: "hawk",
+        growthLogic: "獵人最正統高傷物理遠程配置：L4《雙生之箭》+《標記獵物 (+16%)》搭配 L6《齊射風暴》（普攻每次暴擊有 40% 機率免費射出一輪二連矢），副系補圍攻 10 點撐心神凝聚持續時間。",
+        gearLogic: "武器畢業必衝燈籠節 #1724 Dragon Wing（暴傷 +6%）或九尾狐 #1711 十字弓（DEX+2）；飾品搭 #2986 蛇戒〔燈籠節〕（DEX+2）與 #22847 巡邏徽章。",
+        cardLogic: "武器必帶 #4094 邪骸弓箭手（投射速度+傷）、#4086 邪骸士兵（+5% 暴擊）、#4172 書頁怪〔燈籠節〕（+20% 暴擊傷害）；注意弓屬雙手武器無盾槽。",
+        runSkills: null
+      },
+      {
+        id: "arcane_hybrid",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化混傷流",
+        name: "奧火雙連發 × 元素匯聚爆炸流",
+        tagline: "奧術 40 ＋ 神射手 10｜DEX+INT 雙修・奧術吸怪引爆 3m 火焰＋互減 1.2s CD",
+        statVarId: "arcane_mix",
+        secVarId: "biggame",
+        t1Key: "ar_arcane",
+        growthLogic: "常被忽略的超強弓手隱藏套路！依靠奧術 L2《奧術連發》（每次施放奧術射擊或火焰箭，另一招冷卻直接 -1.2 秒），加上 L1《生命之焰》+150% 燃燒與 L6《元素匯聚》（奧術吸到燃燒怪觸發 3 公尺吃 ATK＋INT 雙係數火焰大爆）！",
+        gearLogic: "武器維持 #1711 十字弓 / #1724 龍翼之弓撐遠程基數，但飾品與頭上大轉向：**#2708 中華手工藝品（持續傷 +6%）**放大火箭燃燒、**#2235 國王王冠（INT+2）**撐爆炸倍率！",
+        cardLogic: "頭飾改插 #4330 邪惡蛇王卡（+3 INT +6% 冷卻），飾品塞 #4084 氣泡蟲（+5% 範圍，同時撐大奧術吸附與 3 公尺火爆圈）＋ #4077 小花枝；寵物可換「土人 dokebi」吃 INT 與減詠！",
+        runSkills: [
+          { id: "arcane_shot", role: "核心引爆點", tip: "把燃燒中的怪物聚攏後觸發 3 公尺《元素匯聚》雙係數大爆炸，同時減火焰箭 CD。" },
+          { id: "fire_arrow", role: "點燃發動機", tip: "吃滿生命之焰 +150% 燃燒與+2目標天賦，負責替全場掛火種並幫奧術減冷卻。" },
+          { id: "double_strafe", role: "單王補傷", tip: "技能空窗與打不吃拉扯的大 Boss 時補刀。" },
+          { id: "concentration", role: "雙屬增益開關", tip: "拉高 DEX 與 AGI，兼顧射速與冷卻減免。" }
+        ],
+        ...SHARED_PATCHES.arcaneBow
+      },
+      {
+        id: "siege_rain",
+        badgeType: "meta",
+        badgeText: "站樁推線流",
+        name: "全面圍攻＋箭雨易傷掃場流",
+        tagline: "圍攻 40 ＋ 神射手 10｜站定 +15% 傷＋全技能隨機免費加送 1 輪箭雨",
+        statVarId: "str_max",
+        secVarId: "hawk",
+        t1Key: "ar_siege",
+        growthLogic: "主打清大量密集怪海（如洛陽燈籠節或後期波數）：點滿《圍攻架勢》站樁 +15%、箭雨《標記獵物》全傷 +15%，並在 L6《全面圍攻》每次出招時免費額外附送一輪三選一圍攻技能。",
+        gearLogic: "用範圍與冷卻撐滿覆蓋面積，武器與頭中依舊拿龍翼之弓／十字弓，配合範圍與 Haste 詞條（#28560 陰陽護符 / #2607 髮夾）。",
+        cardLogic: "飾品優先 #4084 氣泡蟲（+5% 範圍）與 #4103 鬼火把箭雨與暴雨覆蓋全圖，披肩選 #4525 克拉肯（+8% Flee +3% 暴擊）或 #4174 惡魔波利提高站樁容錯。",
+        runSkills: [
+          { id: "arrow_shower", role: "主掛易傷", tip: "射出扇形多輪直接為前方怪群上《標記獵物》+15% 全傷。" },
+          { id: "arrow_rain", role: "追蹤暴雨", tip: "點滿更多箭矢 +4 次脈衝，清怪節奏極佳並觸發《全面圍攻》。" },
+          { id: "arrow_repel", role: "解圍貫穿＋擊退", tip: "防止站樁被貼身，同時也是《全面圍攻》觸發對象。" },
+          { id: "concentration", role: "常駐增幅", tip: "利用持久專注把 AGI/DEX +12% 拉到接近不斷檔。" }
+        ],
+        loadoutPatch: {
+          cardsBySlot: {
+            garment: [
+              { id: 4525, note: "海怪克拉肯 +8% Flee +3% 暴擊率，補站樁閃避同時拉高箭雨爆傷。" },
+              { id: 4174, note: "惡魔波利 -12% 受傷（站樁頂怪防猝死備選）。" }
+            ],
+            accessory: [
+              { id: 4084, note: "氣泡蟲 +5% 技能範圍（圍攻流範圍收益遠大於投射速度）。" },
+              { id: 4077, note: "小花枝 +4% 冷卻縮減，加快箭雨／暴雨連環觸發全面圍攻。" }
+            ]
+          }
+        }
+      }
+    ],
+    bard: [
+      {
+        id: "performance",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "神射手二連矢＋火焰箭混推流",
+        tagline: "神射手 35 ＋ 奧術 10 ＋ 圍攻 5｜保留二連矢爆發同時補足火焰箭清海",
+        statVarId: "main",
+        secVarId: "performance",
+        growthLogic: "詩舞於 Beta 0.7.2 未開放樂器與演奏技，實戰直接共用一轉弓手高傷模組；在神射手核心上補《生命之焰》+150% 火焰箭燃燒與《致命扇射》，點群兼備。",
+        gearLogic: "與獵人共用物理暴傷弓（#1724 龍翼之弓／#1711 十字弓＋#2986 蛇戒）。",
+        cardLogic: "武器 #4094 邪骸弓箭手／#4137 德雷克，飾品 #4172 書頁怪或 #4077 小花枝。",
+        runSkills: null
+      },
+      {
+        id: "arcane_hybrid",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化混傷流",
+        name: "奧火雙連發 × 元素匯聚爆炸流",
+        tagline: "奧術 40 ＋ 神射手 10｜DEX+INT 雙修・奧術吸怪引爆＋互減 1.2s CD",
+        statVarId: "arcane_mix",
+        secVarId: "performance",
+        t1Key: "ar_arcane",
+        growthLogic: "相較硬等未來 INT 演奏技，現階段直接點出奧術 40 的《元素匯聚》＋《洞察 +10 INT》就已經是一套能真正享受 INT＋元素炸傷的現成高強度玩法！",
+        gearLogic: "十字弓／龍翼之弓配 #2708 中華手工藝品（持續傷 +6%）、#2235 國王王冠（INT+2）。",
+        cardLogic: "頭飾 #4330 邪惡蛇王（+3 INT +6% 冷卻）、飾品 #4084 氣泡蟲擴圈；寵物用土人或沙漠幼狼。",
+        runSkills: [
+          { id: "arcane_shot", role: "聚怪引爆核心", tip: "吸入燃燒怪爆發 3 公尺 ATK+INT 雙吃火傷。" },
+          { id: "fire_arrow", role: "火種掛傷點燃", tip: "配合 +150% 燃燒與互減 CD，雙技對倒加速施放。" },
+          { id: "double_strafe", role: "單體打王主力", tip: "靠神射手補 10 點打大王或散怪。" },
+          { id: "concentration", role: "加速開關", tip: "撐高攻速/詠唱與冷卻。" }
+        ],
+        ...SHARED_PATCHES.arcaneBow
+      },
+      {
+        id: "anthem",
+        badgeType: "core",
+        badgeText: "高閃風箏流",
+        name: "高爆高閃二連矢＋暴雨緩速流",
+        tagline: "神射手 40 ＋ 圍攻 10｜DEX 99 / AGI 80 / LUK 53・無限塔高閃風箏向",
+        statVarId: "crit_flee",
+        secVarId: "anthem",
+        growthLogic: "捨棄 STR 副屬改補 LUK 53 換極限迴避與暴率，配合神射手 40 點《齊射風暴》與圍攻暴雨緩速，專剋高傷突襲怪。",
+        gearLogic: "頭上 #2254 天使羽翼（AGI+3, LUK+3），護身閃躲裝 #2308 長外袍。",
+        cardLogic: "披肩可選 #4525 克拉肯（+8% Flee +3% 暴擊）或 #4210 流浪武士（+6% Flee +4% 移速）。",
+        runSkills: null
+      }
+    ],
+    priest: [
+      {
+        id: "exorcism",
+        badgeType: "core",
+        badgeText: "基礎正統・實戰主流",
+        name: "高詠驅魔十字＋神聖審判流",
+        tagline: "驅魔 42 ＋ 神聖 8｜《神聖審判》每 2 秒自動聖光轟炸・當前路人主流",
+        statVarId: "dps",
+        secVarId: "exorcism",
+        growthLogic: "目前實戰路人最主流的高輸出祭司點法：走完驅魔線全套倍增（十字大圈 +24% 寬度、+12% 全傷《定罪》、+24% 專屬《Lex Aeterna》）配 L6《神聖審判》，對 Boss 與不死族碾壓極快。",
+        gearLogic: "法杖 #1648 波爾多之杖／#1612 大巫師之杖〔燈籠節〕配 #2107 鏡盾；頭胸飾以減詠（#2323／#2333）、減冷卻（#28560／#2607）為主。",
+        cardLogic: "頭 #4330 邪惡蛇王（+3 INT +6% 冷卻）、飾品 #4077 小花枝（Haste）＋#4172 書頁怪（吃《信仰 +5% 爆擊 / 審判 +20% 爆傷》！）、鞋 #4100 鬼女。",
+        runSkills: null
+      },
+      {
+        id: "sanctuary",
+        badgeType: "core",
+        badgeText: "純奶輔助坦流",
+        name: "生命之泉滿血炸怪＋聖域減傷流",
+        tagline: "神聖 43 ＋ 驅魔 7｜《生命之泉》滿血自動往怪群丟治癒＋聖水窪",
+        statVarId: "tank",
+        secVarId: "sanctuary",
+        growthLogic: "團隊輔助或單掛高壓力掛機向：靠《Assumptio》減傷、《Meditatio》高回血與 L6《生命之泉》（滿血時治癒術飛去砸最大怪群並留下一灘《Aqua Benedicta》雙重燒傷＋回血）。",
+        gearLogic: "保命生存向：#2108 鏡盾〔燈籠節〕（回血+0.2/s）＋ #2324 修道服（回血+0.2/s）＋ #2282 天使光環（減傷+3%）。",
+        cardLogic: "鎧甲／頭／飾品補強最大血量與每秒再生：#4372 白素貞（+8% HP +1 回血/s）、#4217 人面桃樹（+1.2 回血/s）、#4128 黃金盜蟲（-15% 受傷）；寵物帶「天使波利」或「妖仙女」。",
+        loadoutPatch: {
+          pets: [
+            { id: "angeling", tag: "坦補專屬畢業", reason: "+5% 最大 HP ＋ +15% 肉塊治療量（配飾品倍率更穩）。" },
+            { id: "hyegun", tag: "常駐雙防減傷", reason: "+4 VIT 與 -4% 受到傷害，站聖水圈內極難死亡。" },
+            { id: "dokebi", tag: "壓縮治癒詠唱", reason: "高詠與 INT 兼顧治癒輸出與轉圈速率。" }
+          ],
+          cardsBySlot: {
+            armor: [
+              { id: 4372, note: "白素貞〔燈籠節〕+8% 最大 HP +1 HP/s 再生：與生命之泉護血完美契合！" },
+              { id: 4054, note: "天使波利 +60 HP +2 護甲。" }
+            ],
+            headgear: [
+              { id: 4217, note: "人面桃樹〔燈籠節〕+1.2 HP/s 再生，站著回血超越一般補師。" },
+              { id: 4010, note: "樹精 +5% Haste（讓治癒術與生命之泉落地更快）。" }
+            ]
+          }
+        },
+        runSkills: null
+      },
+      {
+        id: "smite_hybrid",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 戰牧特化流",
+        name: "懲戒橫掃＋光之打擊爆球流",
+        tagline: "懲戒 38 ＋ 驅魔 12｜近戰錐形重擊＋受祝福普攻免費爆光獵光球",
+        statVarId: "smite_str",
+        secVarId: "exorcism",
+        t1Key: "ac_smite",
+        scaling: "melee",
+        growthLogic: "別忘了服事一轉共有三條分支！直接點懲戒線 L2《神聖橫掃》（普攻改為扇形全傷）＋ L6《光之打擊》（受祝福的普攻自動觸發光獵光球爆裂）配驅魔《天使之擊 (+15% 王傷)》，而《Ruwach》自動吃高的那邊（物攻 ATK），全點 STR 一樣痛炸全場！",
+        gearLogic: "⚠️ 核心鐵則：必須拿**鈍器／拳套／書本**才發動《神聖重擊》！絕對別拿法杖；武器改拿 #1517 劍鎚（STR+2）／#1525 長柄權杖（近戰範圍 +4%）＋ #2107 鏡盾！",
+        cardLogic: "武器與頭飾全改物理近戰卡（#4137 德雷克、#4029 野狼、#4172 書頁怪），鞋子帶 #4100 鬼女刷普攻節奏；寵物帶「小雞 picky」或「狂暴月夜貓」。",
+        weaponInfo: {
+          shortPill: "單手鈍器＋鏡盾（嚴禁法杖）",
+          title: "攻擊：#1517 劍鎚／#1525 長柄權杖 ＋ #2107 鏡盾",
+          tag: "懲戒技能嚴格限制武器類型",
+          desc: "《神聖重擊》與《光之打擊》僅在裝備鈍器、拳套或書本時才能啟用！切忌錯拿法杖；單手權杖同時保留 #2107 鏡盾槽位。"
+        },
+        runSkills: [
+          { id: "holy_smite", role: "開局核心（光之打擊）", tip: "L6 天賦開局自帶！每擊中 1 隻怪就強化普攻並引爆光獵光球橫掃。" },
+          { id: "ruwach", role: "光球爆發引擎", tip: "自動吃 max(ATK, MATK)，受光之打擊免費觸發並沿用範圍與傷害升級！" },
+          { id: "signum_crucis", role: "神聖減防增傷陣", tip: "配合驅魔 12 點增傷與對王加成，放大貼臉爆發。" },
+          { id: "heal", role: "近戰回血保底", tip: "貼臉揮錘必帶補血容錯。" }
+        ],
+        gearPatch: {
+          weaponNote: "戰牧懲戒流嚴格要求使用「單手鈍器／權杖（如 #1517 劍鎚、#1525 長柄權杖）」配合 #2107 鏡盾；拿法杖會導致《神聖重擊》無法作用！",
+          weapons: [
+            { id: 1517, roleTag: "【戰牧畢業鈍器】劍鎚", reason: "斐洞／常駐 Tier 2 單手鈍器（STR +2），吃近戰倍率與戰牧 STR 雙增幅。" },
+            { id: 1525, roleTag: "【近戰範圍手長】長柄權杖", reason: "近戰攻擊距離 +4%，把錐形《神聖橫掃》打擊扇面拉得更深更廣。" },
+            { id: 1505, roleTag: "【暴傷單手鈍器】權杖鈍器", reason: "暴傷 +6%，配合懲戒《鐵沙掌 +5% 爆擊》與書頁怪卡輸出高。" },
+            { id: 1511, roleTag: "【劇情開荒鈍器】連枷", reason: "前期未農出劍鎚前先用來觸發《神聖橫掃》。" }
+          ],
+          replaceGears: {
+            2282: { id: 2255, slotTag: "頭上〔近戰 STR 畢業〕", reason: "惡魔羽翼（STR +3），直接拉高物理普攻與神聖重擊基數。" },
+            2324: { id: 2329, slotTag: "鎧甲（換高甲貼戰）", reason: "木質鎧甲（DEF 8 + 護甲 +0.8），近戰肉搏比純法袍更扛揍。" }
+          }
+        },
+        loadoutPatch: {
+          weaponMode: "單手鈍器（#1517 / #1525）＋ #2107 鏡盾（禁用魔杖，才可觸發《神聖重擊》）",
+          pets: [
+            { id: "cat_o_nine_tail", tag: "暴擊近戰首選", reason: "+4% 暴擊＋回血再生，配合懲戒必爆懲戒天賦傷害飆升。" },
+            { id: "picky", tag: "純 STR 近戰", reason: "+3 STR ＋ +3% 總傷害，平民物理極佳。" },
+            { id: "hyegun", tag: "近戰抗打", reason: "+4 VIT ＋ -4% 受傷，扛貼身浪潮用。" }
+          ],
+          cardsBySlot: {
+            weapon: [
+              { id: 4137, note: "德雷克 +15% Boss/菁英傷 +5% 總傷（搭配天使之擊極快切王）。" },
+              { id: 4029, note: "野狼 +6% 傷 +2% 暴擊。" },
+              { id: 4023, note: "沙漠幼狼 +3% Haste（壓縮普攻揮錘間隔）。" }
+            ],
+            headgear: [
+              { id: 4010, note: "樹精 +5% 冷卻縮減（加速揮錘與光球冷卻）。" },
+              { id: 4048, note: "毒魔菇 +2 STR（純物理拉高劍鎚與光球 max(ATK) 傷害）。" }
+            ],
+            accessory: [
+              { id: 4172, note: "書頁怪 +20% 暴擊傷害！配懲戒 L4《必然懲戒》+30% 普攻／重擊暴傷超兇。" },
+              { id: 4077, note: "小花枝 +4% Haste。" }
+            ]
+          }
+        },
+        priorityPatch: {
+          tier1: ["近戰範圍 (Area｜同時放大錐形普攻與光獵爆圈)", "+傷害% / 暴擊率・暴傷", "冷卻縮減 (Haste｜加快光球重擊頻率)"],
+          tier2: ["雙重詠唱 (對普攻／技能生效)", "光獵光球數量／再生速度", "頭目增傷"],
+          tier3: ["護甲 / HP (近戰容錯)", "移速"],
+          avoid: "不要再選法系詠唱加速（DEX Cast Speed）！戰牧主攻手是普攻光球與瞬發重擊，抓範圍、Haste 與暴擊才是正途。",
+          summary: "進場先抓《神聖重擊》祝福普攻次數與光獵光球範圍，每一次揮錘橫掃都能讓整群敵人在連環光爆中融化！"
+        }
+      }
+    ],
+    monk: [
+      {
+        id: "combo",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "懲戒橫掃＋光之打擊爆球流",
+        tagline: "懲戒 40 ＋ 驅魔 5 ＋ 神聖 5｜單手鈍器＋鏡盾正統近戰武僧開荒線",
+        statVarId: "main",
+        secVarId: "combo",
+        growthLogic: "依實碼為未來連環／猛龍武僧鋪路的標準近戰一轉點法：《神聖橫掃》讓鈍器普攻變扇形全打，搭配 L6《光之打擊》觸發受祝福普攻炸光獵光球。",
+        gearLogic: "務必拿鈍器／拳套（#1517 劍鎚／#1525 長柄權杖／#1505 權杖）＋ #2107 鏡盾。",
+        cardLogic: "武器配德雷克／野狼、飾品塞書頁怪暴傷與小花枝 Haste。",
+        runSkills: null
+      },
+      {
+        id: "exorcism_monk",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 現況最穩過渡",
+        name: "高詠驅魔十字過渡推塔流",
+        tagline: "驅魔 42 ＋ 神聖 8｜在二轉阿修羅/連擊未開前先用驅魔秒刷無限塔！",
+        statVarId: "exorcism_int",
+        secVarId: "asura",
+        scaling: "magic",
+        fromJobSec: ["priest", "exorcism"],
+        growthLogic: "由於 Beta 0.7.2 還沒實裝武僧二轉技能（阿修羅／連環／猛龍），一轉時期若用純近戰權杖覺得貼臉累，完全能先借祭司同組驅魔 42+8 魔法點法安穩推圖與進無限塔，等日後開放二轉再洗回物理拳套。",
+        gearLogic: "過渡期暫時換穿祭司系法杖（#1648 波爾多之杖／#1610 大巫師之杖）配 #2107 鏡盾。",
+        cardLogic: "暫借頭飾 INT／CD 卡（#4330 邪惡蛇王 / #4052 長老樹精）與飾品 #4077 小花枝，未來再換回近戰裝。",
+        weaponInfo: {
+          shortPill: "單手法杖＋鏡盾（一轉過渡用）",
+          title: "攻擊：#1648 波爾多之杖 ＋ #2107 鏡盾（一轉驅魔過渡）",
+          tag: "二轉未開前最輕鬆的遠距刷圖",
+          desc: "因為二轉武僧技尚未實裝，此過渡流派暫時配拿法杖改點驅魔，用遠距神聖審判農滿資源。"
+        },
+        runSkills: [
+          { id: "holy_light", role: "遠程高傷轟炸", tip: "全屏精準點殺精英與 Boss。" },
+          { id: "signum_crucis", role: "L6 自動神聖審判陣", tip: "每 2 秒在圈內自動劈下聖光。" },
+          { id: "heal", role: "保命回血", tip: "維持血線不斷層。" },
+          { id: "blessing", role: "魔攻／詠唱常駐 Buff", tip: "拉滿 12 秒驅魔爆發。" }
+        ],
+        gearPatch: {
+          weaponNote: "過渡期暫借「單手法杖＋#2107 鏡盾」打驅魔魔法；未來若轉點純懲戒或開二轉再換回鈍器／拳套。",
+          weapons: [
+            { id: 1648, roleTag: "【驅魔過渡首選】波爾多之杖", reason: "INT+2 / DEX+2 雙詞條，讓過渡期推無限塔毫無壓力。" },
+            { id: 1610, roleTag: "【平價農裝】大巫師之杖", reason: "INT+2 容易農滿高洞數。" },
+            { id: 1517, roleTag: "【隨時切回物理】劍鎚", reason: "保留一把近戰鎚，想換回近戰懲戒時直接切換。" }
+          ]
+        },
+        loadoutPatch: {
+          weaponMode: "過渡法杖（#1648）＋ #2107 鏡盾（法系刷圖）；二轉後切回物理鈍器",
+          pets: [
+            { id: "dokebi", tag: "減詠輸出", reason: "+3 INT +4.5% 詠唱速度，壓縮神聖之光讀條。" },
+            { id: "baby_desert_wolf", tag: "INT＋CD", reason: "+3 INT +3% Haste。" }
+          ],
+          cardsBySlot: {
+            headgear: [
+              { id: 4330, note: "邪惡蛇王卡〔燈籠節〕+3 INT +6% 冷卻縮減。" },
+              { id: 4052, note: "長老樹精 +2 INT。" }
+            ]
+          }
+        }
+      },
+      {
+        id: "smite_crit",
+        badgeType: "core",
+        badgeText: "高爆重擊流",
+        name: "高爆權杖＋光之打擊重錘流",
+        tagline: "懲戒 38 ＋ 驅魔 12｜STR 99 / AGI 70 / LUK 65・暴傷最大化敲王",
+        statVarId: "crit",
+        secVarId: "asura",
+        t1Key: "ac_smite",
+        growthLogic: "改以懲戒 38 + 驅魔 12 拉高對頭目與不死傷 (+15%) 及十字範圍，配 LUK 65 與 #1505 暴傷鈍器打出高單下暴擊光爆。",
+        gearLogic: "推薦 #1505 權杖鈍器（暴傷 +6%）配 #2212 獨眼龍眼罩（暴擊 +2%）。",
+        cardLogic: "飾品塞 #4172 書頁怪（+20% 暴傷），武器補 #4086 邪骸士兵 / #4137 德雷克。",
+        runSkills: null
+      }
+    ],
+    assassin: [
+      {
+        id: "katar",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "戰鬥錐形橫掃＋速度激發飛刀流",
+        tagline: "戰鬥 40 ＋ 暗影 10｜《奸詐橫掃》前排全員吃滿傷＋《卸除鎧甲 +30%》",
+        statVarId: "main",
+        secVarId: "katar",
+        growthLogic: "正統物理刺客路線（注意 Beta 0.7.2 未開放雙持與拳刃武器，先以單手短劍＋鏡盾觸發《刀刃精通 +50% ATK 成長》與《奸詐橫掃》錐形攻擊）。",
+        gearLogic: "單手短劍（#1234 月靈短劍 / #1219 格拉迪烏斯）配 #2107 鏡盾。",
+        cardLogic: "武器配邪骸士兵／野狼／德雷克，飾品插 #4172 書頁怪 (+20% 暴傷) 配合高爆。",
+        runSkills: null
+      },
+      {
+        id: "poison",
+        badgeType: "meta",
+        badgeText: "DOT 傳染流",
+        name: "混合劇毒疊加＋毒性感染跳毒流",
+        tagline: "暗殺 40 ＋ 戰鬥 10｜打破單毒上限＋物理命中將毒完整跳傳鄰怪",
+        statVarId: "main",
+        secVarId: "poison",
+        growthLogic: "走暗殺 L4《混合劇毒》（讓多種毒同時在同怪身上疊加傷害）配 L6《毒性感染》（物理打中毒怪直接把完整持續時間的毒跳到 2m 內另一隻怪），用持續跳毒清大片怪海。",
+        gearLogic: "換穿持續傷害專門裝：武器 #13046 克里格短劍（毒/火/流血持續傷 +6%）＋飾品 #2708 中華手工藝品（持續傷 +6%）＋ #2715 骷髏戒指〔燈籠節〕（持續傷 +6%），全部加算進劇毒 DOT！",
+        cardLogic: "高攻速與冷卻是維持無限跳毒核心（小花枝 / 鬼女），飾品或披肩可補範圍卡擴大病毒傳播密度。",
+        gearPatch: {
+          weapons: [
+            { id: 13046, roleTag: "【毒刺專屬持續傷】克里格短劍", reason: "自帶「毒／火／流血持續傷 +6%」的 Tier 2 單手短劍，並可帶 #2107 鏡盾保命！" },
+            { id: 1234, roleTag: "【高頻冷卻】月靈短劍", reason: "Haste +2%，加快毒藥瓶與施毒施放頻率。" },
+            { id: 1258, roleTag: "【持續傷副備】炎爆拳刃", reason: "帶毒火持續傷 +6%，唯雙手無法帶盾且待二轉實裝較適宜。" }
+          ],
+          replaceGears: {
+            2607: { id: 2708, slotTag: "飾品2〔燈籠節〕持續傷 +6%", reason: "中華手工藝品放大混合劇毒與毒藥瓶每秒毒素傷害。" },
+            22847: { id: 2715, slotTag: "飾品1〔燈籠節〕持續傷戒", reason: "骷髏戒指〔燈籠節〕（毒火持續傷 +6%），極限疊毒向推薦（缺坦度可換回 #22847 徽章）。" }
+          }
+        },
+        runSkills: null
+      },
+      {
+        id: "strip_shadow",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化爆發流",
+        name: "暗影 2000% 三連跳＋卸除鎧甲破甲流",
+        tagline: "暗影 32 ＋ 戰鬥 18｜普攻先掛 +30% 易傷・影步發動 1000/1500/2000% 普攻爆發",
+        statVarId: "crit",
+        secVarId: "katar",
+        t1Key: "th_strip_shadow",
+        growthLogic: "把過剩的回血 filler 省下來改進戰鬥 18 點《卸除鎧甲 +30% 受傷》，讓 L6《遊蕩暗影》三連跳的 1000%/1500%/2000% 含全加成普攻直接吃滿 +30% 易傷倍率！兼有《刀刃精通 +50% 普攻》與無敵幀！",
+        gearLogic: "高爆傷短劍 #1219 格拉迪烏斯（+6% 暴傷）或 #1234 月靈短劍（+2% Haste）＋ #2107 鏡盾，頭中帶 #2212 獨眼龍。",
+        cardLogic: "極力衝高暴擊與暴傷：#4172 書頁怪（+20% 暴傷）＋ #4086 邪骸士兵（+5% 暴擊），配合 L5《伏擊》暴擊濺射 2 公尺周圍 30%！",
+        runSkills: [
+          { id: "shadowstep", role: "核心大招（2000% 三連跳）", tip: "主動抓第一順並降 CD，跳躍瞬間自帶無敵幀且後 3 秒普攻維持 2000%。" },
+          { id: "envenom", role: "掛毒＆補刀", tip: "基礎單點快刺。" },
+          { id: "hiding", role: "無敵隱身＋300% 飛刀", tip: "結束現身自帶《自暗影而出》免費發動 300% 飛刀扇。" },
+          { id: "fan_of_knives", role: "貼臉扇形清場", tip: "圍攻脫身兼清周邊雜魚。" }
+        ],
+        ...{}
+      }
+    ],
+    rogue: [
+      {
+        id: "strip_shadow",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化・近戰推薦",
+        name: "影步 2000% 三連跳＋卸除鎧甲短劍流",
+        tagline: "暗影 32 ＋ 戰鬥 18｜優化過原有 40/10・多賺《卸除鎧甲 +30% 易傷》與《快手》",
+        statVarId: "main",
+        secVarId: "ambush",
+        t1Key: "th_strip_shadow",
+        growthLogic: "比傳統只點戰鬥 10 的版本更精準：只留 32 點穩踩暗影 L6《遊蕩暗影》（跳 2 隻怪各放 1000%/1500%/2000% 普攻且後續 3 秒維持 2000%），騰出 18 點進戰鬥拿《刀刃精通》+《快手》+《卸除鎧甲 (+30% 易傷)》，實戰爆發暴增一截！",
+        gearLogic: "拿單手短劍 #1234 月靈短劍（Haste+2%）＋ #2107 鏡盾；拿短劍可穩定吃滿 30% 易傷與《刀刃精通 +50%》成長。",
+        cardLogic: "武器配 #4029 野狼／#4137 德雷克，飾品 #4172 書頁怪（+20% 暴傷）配 L5《伏擊》暴擊濺射。",
+        runSkills: null
+      },
+      {
+        id: "bow_hybrid",
+        badgeType: "meta",
+        badgeText: "Beta 0.6.10 全弓解禁主流",
+        name: "技弓流氓｜全弓遠程＋卸除鎧甲三連跳",
+        tagline: "暗影 32 ＋ 戰鬥 18（無短劍廢點）｜拿 #1724 龍翼弓・吃 STR+3×DEX 與 2000% 影步",
+        statVarId: "bow_hybrid",
+        secVarId: "ambush",
+        scaling: "ranged",
+        t1Key: "th_bow_strip",
+        growthLogic: "Beta 0.6.10 解禁全弓弩給盜賊／流氓使用！我們把武器綁定的《刀刃精通》換成《盜賊之眼 (+5% 暴擊)》，一樣保留《雙重詠唱 +10%》、《快手》與無武器限制的《卸除鎧甲 (+30% 受傷)》跟《遊蕩暗影 2000%》三連跳，完全沒有任何廢點！",
+        gearLogic: "武器改拿雙手弓：#1724 Dragon Wing〔燈籠節〕（暴傷+6%）或 #1711 十字弓（DEX+2）；注意裝備弓時**無盾牌欄位**！飾品可用 #2986 蛇戒〔燈籠節〕或 #28560 陰陽護符。",
+        cardLogic: "⚠️ 無盾槽請靠披肩減傷補回（#4174 惡魔波利）！武器卡插 #4094 邪骸弓箭手（投射物速度＋傷）與 #4086 邪骸士兵（暴擊）；飾品 #4172 書頁怪將弓爆拉高。",
+        weaponInfo: {
+          shortPill: "弓弩遠程＋無盾（STR 99 / DEX 53）",
+          title: "攻擊：#1724 Dragon Wing ／ #1711 十字弓（無盾牌）",
+          tag: "Beta 0.6.10 全面解禁弓弩",
+          desc: "不吃《奸詐橫掃》與《刀刃精通》，改靠影步、雙重詠唱與遠程《STR+3×DEX》雙加成曲線安全拉打清海。"
+        },
+        runSkills: [
+          { id: "shadowstep", role: "核心位移＋2000% 箭擊", tip: "遠程拿弓一樣可觸發三連跳重箭爆發並帶 0.5 秒無敵！" },
+          { id: "envenom", role: "補毒增幅", tip: "快速上毒與疊傷。" },
+          { id: "hiding", role: "脫離險境＋免費飛刀", tip: "無盾保命開關，隱身加速拉開距離。" },
+          { id: "fan_of_knives", role: "防貼身清圈", tip: "敵群近身時直接雙輪扇掃。" }
+        ],
+        gearPatch: {
+          weaponNote: "全弓流氓主打 #1724 Dragon Wing〔燈籠節〕或 #1711 十字弓，徹底吃滿遠程曲線與無敵影步跳躍；裝備弓弩時系統會鎖住盾牌格（無法帶鏡盾），須靠披肩／鎧甲維持坦度。",
+          weapons: [
+            { id: 1724, roleTag: "【全弓畢業龍弓】Dragon Wing〔燈籠節〕", reason: "ATK 40（金 48）+ 暴傷 +6%，正式解禁給 thief/rogue 使用！" },
+            { id: 1711, roleTag: "【常駐雙詞條】九尾狐十字弓", reason: "DEX +2 穩定可刷取 4 洞遠程主武器。" },
+            { id: 1708, roleTag: "【大弓備選】", reason: "常駐暴傷 +6% 弓。" },
+            { id: 1704, roleTag: "【開荒複合弓】", reason: "初期過渡拿取 Haste +1%。" }
+          ],
+          replaceGears: {
+            2107: { id: 2527, slotTag: "披肩補坦〔無盾必換〕", reason: "拿弓無盾槽！改帶 Dragon Breath〔燈籠節〕（減傷 +2%）或常駐 #2505 斗篷補回生存。" },
+            2607: { id: 2986, slotTag: "飾品2〔燈籠節〕DEX 戒指", reason: "Snake Ring（DEX +2）：遠程 3×DEX 高斜率增傷收益極佳。" }
+          }
+        },
+        loadoutPatch: {
+          weaponMode: "弓弩遠程（#1724 / #1711｜無盾牌欄位・注意避開僅限短劍拳刃的天賦）",
+          shieldNote: "拿弓弩時無盾牌槽；務必保留《影步》《隱匿》無敵幀與披肩減傷卡防猝死！",
+          cardsBySlot: {
+            weapon: [
+              { id: 4094, note: "邪骸弓箭手 +8% 投射物速度 +2% 傷（遠程箭矢專用加速）。" },
+              { id: 4086, note: "邪骸士兵 +5% 暴擊率，放大弓爆與伏擊濺射。" },
+              { id: 4137, note: "德雷克 +15% 王傷 +5% 總傷。" }
+            ],
+            shield: [],
+            accessory: [
+              { id: 4172, note: "書頁怪 +20% 暴傷，將高爆箭矢傷害極致化。" },
+              { id: 4077, note: "小花枝 +4% 冷卻縮減。" }
+            ]
+          }
+        }
+      },
+      {
+        id: "trickery",
+        badgeType: "core",
+        badgeText: "控場飛石流",
+        name: "石雨碎片連擊＋速度激發控場流",
+        tagline: "戰鬥 40 ＋ 暗殺 10｜《投擲石頭》+150% 碎片群傷＋速度激發 +40 冷卻",
+        statVarId: "main",
+        secVarId: "trickery",
+        growthLogic: "主打戰鬥線 L4~L6 的投石碎片濺射（+150% 傷、附近受到 60% 碎片傷並加投 2 顆）與《速度激發》（放飛刀/投石/噴砂使三招獲得 +40 CD 與 +35% 傷），全場致盲控暈。",
+        gearLogic: "以短劍 + 鏡盾貼臉控場即可（#1234 月靈短劍）。",
+        cardLogic: "搭配 #4077 小花枝／#4100 鬼女把速度激發幾乎覆蓋全程。",
+        runSkills: null
+      }
+    ],
+    blacksmith: [
+      {
+        id: "fury",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "鍛造錐形橫掃＋武器值最大化流",
+        tagline: "鍛造 39 ＋ 手推車 11｜《武器保有》錐形普攻＋《武器值最大化》無限塔無消耗爆發",
+        statVarId: "main",
+        secVarId: "fury",
+        growthLogic: "商人一轉最穩健輸出的點法：利用雙手斧 #1351/#1352 吃 +125% 近戰倍率，點出《武器保有》錐形橫掃與《武器值最大化》打 3 公尺濺射（在無金幣的無限塔更是無條件白嫖 +35%！）。",
+        gearLogic: "雙手戰斧（#1352〔燈籠節〕 STR+2 / #1351 戰斧 範圍+2%）為主，若想扛壓力可換單手斧/紅蓮劍配鏡盾。",
+        cardLogic: "武器配 #4137 德雷克／#4029 野狼，披肩用 #4183 流浪之狼 (+4% 傷) 與飾品 #4084 氣泡蟲擴大 3m 濺射半徑。",
+        runSkills: null
+      },
+      {
+        id: "tri_mark",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化・三系聯動",
+        name: "金幣雨雙標記（撿便宜）× 手推車・無限塔流",
+        tagline: "鍛造 34 ＋ 交易 16｜《撿便宜》讓手推車共吃 +50% 標記＋《武器值最大化》",
+        statVarId: "main",
+        secVarId: "forging",
+        t1Key: "me_tri_mark",
+        growthLogic: "許多人沒發現的商人神連動！交易線 L3《撿便宜》讓被金幣雨標記的敵人同時受到「手推車攻擊 +50%（對王 +30%）」增傷，原本點到 34 點鍛造仍能同時開出 L6《武器值最大化》（3m 濺射＋無限塔免費發動），金錢與手推車雙招一起爆！",
+        gearLogic: "兼顧金錢／手推車範圍與雙手斧高倍率：#1352 戰斧〔燈籠節〕／#1351 戰斧，或單手 #13420 紅蓮劍 + 鏡盾；無限塔進場一樣零金幣觸發全部加成。",
+        cardLogic: "強烈推薦範圍飾品卡（#4084 氣泡蟲 +5% 範圍、#4103 鬼火 +4% 範圍）讓金幣雨標記圈、手推車神祇彈跳圈與武器值 3 公尺爆炸同步擴張；披肩配 #4183 流浪之狼＋惡魔波利！",
+        runSkills: [
+          { id: "mammonite", role: "核心單體爆破", tip: "吃《武器值最大化》3 公尺濺射與《衝擊》對金幣雨目標 +20% 傷。" },
+          { id: "cart_revolution", role: "主清怪擊飛核心", tip: "透過交易《撿便宜》直接共吃金幣雨標記增傷，搭配神祇彈跳掃場！" },
+          { id: "zeny_rain", role: "雙重標記發動機", tip: "為全場上標記並暈眩 1.2s／對王全傷 +30%，同時餵給金錢與手推車。" },
+          { id: "crazy_uproar", role: "額外目標擴散", tip: "讓金錢與推車每次多敲更多怪。" }
+        ],
+        loadoutPatch: {
+          cardsBySlot: {
+            garment: [
+              { id: 4183, note: "流浪之狼 +1 STR +4% 總傷：直接墊高金錢攻擊與推車基底面板。" },
+              { id: 4174, note: "惡魔波利 -12% 受傷（高壓保護）。" }
+            ],
+            accessory: [
+              { id: 4084, note: "氣泡蟲 +5% 技能範圍，放大金幣雨與手推車橫掃觸及範圍。" },
+              { id: 4077, note: "小花枝 +4% 冷卻縮減。" }
+            ]
+          }
+        }
+      },
+      {
+        id: "cart_endure",
+        badgeType: "core",
+        badgeText: "厚盾推車保命流",
+        name: "手推車終結技＋負重 -80% 硬扛流",
+        tagline: "手推車 37 ＋ 鍛造 13｜手推車 +35% 傷 +20% 範圍＋殘血自動 -80% 減傷彈開",
+        statVarId: "crit",
+        secVarId: "forging",
+        fromJobSec: ["alchemist", "bioethics"],
+        growthLogic: "改把點數重壓在手推車線衝出 L6《手推車終結技》（推車 +35% 傷 +20% 範圍＋雙重迴旋），並吃《負重量上升》在殘血 20% 時瞬間彈飛周圍怪物且 -80% 受傷，適合打高壓突臉關卡。",
+        gearLogic: "單手斧/紅蓮劍 + #2107 鏡盾或高範圍 #1351 戰斧。",
+        cardLogic: "盾牌補 #4128 黃金盜蟲，頭與飾品塞冷卻加速推車撞擊頻率。",
+        runSkills: [
+          { id: "cart_revolution", role: "核心大推車", tip: "吃雙重迴旋 +1 目標與終結技 +35% 傷 / +20% 範圍。" },
+          { id: "mammonite", role: "補刀單點", tip: "對菁英高單發倍率打擊。" },
+          { id: "cart_rush", role: "清路推進", tip: "推開擋路密集怪群殺出空間。" },
+          { id: "enlarge_weight", role: "殘血絕境保命", tip: "HP 低於 20% 彈飛怪群並減傷 -80%。" }
+        ]
+      }
+    ],
+    alchemist: [
+      {
+        id: "chemistry",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "武器值最大化＋手推車連攜流",
+        tagline: "鍛造 37 ＋ 手推車 13｜二轉生命體未開前・用近戰最高爆炸傷害推圖",
+        statVarId: "main",
+        secVarId: "chemistry",
+        growthLogic: "鍊金術師二轉生物調撥／強酸／生命體於 Beta 0.7.2 尚未開啟進局，一轉現況先靠鍛造 37 + 手推車 13 的近戰高倍率最有效率。",
+        gearLogic: "戰斧／單手斧配鏡盾皆可（主線未鎖定特定單手）。",
+        cardLogic: "德雷克＋小花枝＋鬼女縮短金錢與推車循環。",
+        runSkills: null
+      },
+      {
+        id: "tri_mark",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化・三系聯動",
+        name: "金幣雨雙標記（撿便宜）× 無限塔零花費流",
+        tagline: "鍛造 34 ＋ 交易 16｜交易《撿便宜》使手推車吃金幣雨標記＋無限塔白嫖",
+        statVarId: "main",
+        secVarId: "chemistry",
+        t1Key: "me_tri_mark",
+        growthLogic: "把副系從純推車改走交易 16 拿到《撿便宜》，在一般地圖配金幣雨幫全隊加 30% 受傷且讓手推車／金錢雙雙爆發；打無限塔又免消耗金幣白嫖《武器值最大化》！",
+        gearLogic: "建議搭範圍與 Haste 裝（#1351 戰斧、#2607 髮夾、#28560 陰陽護符）。",
+        cardLogic: "飾品 #4084 氣泡蟲與 #4077 小花枝；披肩選 #4183 流浪之狼或 #4174 惡魔波利。",
+        runSkills: [
+          { id: "mammonite", role: "核心點炸", tip: "武器值最大化 3m 濺射＋金幣雨標記傷害雙吃。" },
+          { id: "cart_revolution", role: "全場清群", tip: "撿便宜打通金幣雨與推車連結，大幅放大推車爆發。" },
+          { id: "zeny_rain", role: "全域標記", tip: "群暈與對王增傷發動機。" },
+          { id: "crazy_uproar", role: "增目標BUFF", tip: "擴大手推車與金錢命中數量。" }
+        ]
+      },
+      {
+        id: "bioethics",
+        badgeType: "core",
+        badgeText: "推車高減傷流",
+        name: "手推車終結技＋負重坦傷流",
+        tagline: "手推車 37 ＋ 鍛造 13｜強化推車體質與殘血減傷容錯",
+        statVarId: "tank",
+        secVarId: "bioethics",
+        growthLogic: "適合追求站樁容錯或怕後期怪多翻車的玩家，高 VIT 搭負重量上升減傷保命穩刷。",
+        gearLogic: "單手斧/紅蓮劍＋#2107 鏡盾穩抓防禦。",
+        cardLogic: "盾 #4128 黃金盜蟲、鎧甲 #4054 天使波利、披 #4174 惡魔波利。",
+        runSkills: null
+      }
+    ],
+    star_gladiator: [
+      {
+        id: "stars",
+        badgeType: "core",
+        badgeText: "基礎正常配點",
+        name: "颱風迴旋踢＋砸踢暈眩控制流",
+        tagline: "暴風雨 35 ＋ 戰鬥 15｜L6《颱風》+30% 傷 +20% 範圍掃場踢",
+        statVarId: "main",
+        secVarId: "stars",
+        growthLogic: "拳聖主力物理踢技路線：直上暴風雨 L6《颱風》擴大迴旋踢清圖半徑，副系點戰鬥 15 拿取普攻、砸踢基礎倍率與暴率。",
+        gearLogic: "武器為拳聖固定職業拳爪類，全身以 #2255 惡魔羽翼、#2212 獨眼龍眼罩、#2607 髮夾與鏡盾（單手格可帶）為主。",
+        cardLogic: "武器配 #4029 野狼／#4137 德雷克、飾品 #4084 氣泡蟲／#4103 鬼火放大迴旋踢範圍。",
+        runSkills: null
+      },
+      {
+        id: "sun",
+        badgeType: "core",
+        badgeText: "反擊高爆流",
+        name: "還擊踢高頻反彈＋高爆踢擊流",
+        tagline: "暴風雨 35 ＋ 戰鬥 15｜STR 99 / AGI 70 / LUK 65・怪貼身自動還擊掃場",
+        statVarId: "crit",
+        secVarId: "sun",
+        growthLogic: "將戰鬥 15 點轉分配給《還擊踢》增傷與冷卻縮減，並用 LUK 65 拉高暴擊率，適合怪密貼身時高頻自動彈開。",
+        gearLogic: "高爆與減 CD 飾品搭配 #4172 書頁怪卡 (+20% 暴傷)。",
+        cardLogic: "武器補 #4086 邪骸士兵 (+5% 暴擊)，頭飾用 #4010 樹精搶冷卻。",
+        runSkills: null
+      },
+      {
+        id: "revive",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 無限塔保命流",
+        name: "修行《靈魂連結》滿血復活高坦流",
+        tagline: "修行 38 ＋ 暴風雨 6 ＋ 戰鬥 6｜L6 每局免費滿血復活 1 次＋高減傷續航",
+        statVarId: "main",
+        secVarId: "stars",
+        fromJobSec: ["soul_linker", "ka"],
+        growthLogic: "少有人注意跆拳系 L6 修行線藏了一招全遊戲獨有的「每局免費滿血復活 1 次（《靈魂連結》）」與大量減傷/迴血點數！推高難度或衝無限塔 50+ 層防暴斃容錯極強。",
+        gearLogic: "搭配 #2107 鏡盾／#2108 鏡盾〔燈籠節〕與 #2308 長外袍／#4372 白素貞卡，將高減傷＋復活價值拉到最大。",
+        cardLogic: "鎧甲插 #4372 白素貞（+8% HP +1 回血/s）＋ 盾 #4128 黃金盜蟲 (-15% 受傷)。",
+        runSkills: [
+          { id: "tornado_kick", role: "基礎擊退踢", tip: "維持周邊推怪距離，不被貼身圍死。" },
+          { id: "roundhouse", role: "環形拋飛", tip: "二次解圍與觸發擊退。" },
+          { id: "heel_drop", role: "單點高暈", tip: "強暈菁英與打斷攻勢。" },
+          { id: "sprint", role: "走位拉距離", tip: "配合跑步天賦 +30% 持續時間拉開波數。" }
+        ]
+      }
+    ],
+    soul_linker: [
+      {
+        id: "esma",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 必選過渡流",
+        name: "暴力 STR 踢技推圖過渡流",
+        tagline: "暴風雨 35 ＋ 戰鬥 15｜⚠️ 靈媒現版強制用一轉跆拳 STR 踢・切忌錯點 INT！",
+        statVarId: "live_str",
+        secVarId: "esma",
+        scaling: "melee",
+        growthLogic: "實碼核對極重要陷阱：雖然悟靈士未來（T2）技能吃 INT，但 Beta 0.7.2 靈媒師進局依舊強制使用一轉跆拳 STR 物理踢技且禁裝法杖！現階段務必點 STR 99 配暴風雨踢技流。",
+        gearLogic: "⚠️ 現版不要穿魔法裝／法杖！改帶物理 #2255 惡魔羽翼（STR+3）、#2107 鏡盾與近戰物理配件，等二轉開放埃斯瑪魔法技再切換。",
+        cardLogic: "現階段照近戰 STR 配卡：#4137 德雷克、#4029 野狼、#4183 流浪之狼、#4172 書頁怪與飾品 #4084 氣泡蟲。",
+        runSkills: null
+      },
+      {
+        id: "ka",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 高難生存過渡流",
+        name: "《靈魂連結》滿血復活＋高減傷續航流",
+        tagline: "修行 38 ＋ 暴風雨 6 ＋ 戰鬥 6｜開荒雙重安全線・每局免費滿血復活 1 次",
+        statVarId: "live_str",
+        secVarId: "ka",
+        scaling: "melee",
+        growthLogic: "同樣走 STR 過渡，但點滿修行線拿滿減傷、站定回血 +5/s 與 L6《靈魂連結》（每局滿血復活一次），專用來硬衝難度上限與無限塔拿解鎖外觀。",
+        gearLogic: "高坦裝 #2107 鏡盾、#2282 天使光環（減傷+3%）、#2505 斗篷（減傷+2%）配物理基礎裝。",
+        cardLogic: "盾 #4128 黃金盜蟲、鎧甲 #4372 白素貞、披肩 #4174 惡魔波利。",
+        runSkills: null
+      }
+    ],
+    ninja: [
+      {
+        id: "throw",
+        badgeType: "core",
+        badgeText: "基礎遠程物理流",
+        name: "烈焰手裡劍＋苦無之雨穿透投擲流",
+        tagline: "投擲 38 ＋ 潛行 12｜DEX 99 / STR 53 / AGI 80・貫穿手裡劍與巨型風魔來回削海",
+        statVarId: "main",
+        secVarId: "throw",
+        scaling: "ranged",
+        growthLogic: "目前忍者實戰最全面的遠程投擲主線（單階完全體）：點出 L5《苦無之雨 (+1 普攻投射物)》配 L6《烈焰手裡劍 (+30% 傷 +1 投射物)》，全屏貫穿收割極快。",
+        gearLogic: "短劍單手握持（#1234 月靈短劍 Haste+2% / #1219 格拉迪烏斯暴傷+6%）並可安全佩戴 #2107 鏡盾保命。",
+        cardLogic: "武器插 #4094 邪骸弓箭手（投射物加速）＋ #4137 德雷克；頭飾與飾品優先補足冷卻（#4010 樹精、#4077 小花枝）與暴傷（#4172 書頁怪）。",
+        runSkills: null
+      },
+      {
+        id: "ninjutsu",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 法系清屏流",
+        name: "火炎花＋雷擊碎忍術範圍轟炸流",
+        tagline: "忍術 40 ＋ 潛行 10｜INT 99 / DEX 80 / AGI 53・全周火焰花瓣與大範圍雷擊",
+        statVarId: "ninjutsu",
+        secVarId: "ninjutsu",
+        scaling: "magic",
+        growthLogic: "改走全法系忍術：利用《查克拉》減 CD、《結印》+15 詠唱速度與 L6《雷擊》把雷擊碎傷害 +30%、範圍 +25%，搭配高 INT 拉高火炎花＆雷擊碎清屏能力。",
+        gearLogic: "⚠️ 忍術核心必刷沙漠幼狼掉落的 **#13011 阿修羅雙修短劍（INT +1）** 配 #2107 鏡盾！頭上換 **#2235 國王王冠（INT +2）**，衣服選詠唱類 #2322 Silk Robe〔燈籠節〕／#2323 修道服〔燈籠節〕。",
+        cardLogic: "頭飾改用法系神卡 **#4330 邪惡蛇王（+3 INT +6% 冷卻）**／#4052 長老樹精（+2 INT），飾品換 **#4084 氣泡蟲（+5% 範圍）** 放大雷擊碎與火炎花覆蓋圓！寵物改帶「土人 dokebi」。",
+        weaponInfo: {
+          shortPill: "#13011 INT短劍＋鏡盾（INT 99）",
+          title: "攻擊：#13011 阿修羅雙修短劍（INT +1）＋ #2107 鏡盾",
+          tag: "魔法忍術流核心配裝",
+          desc: "棄投擲改吃 MATK (3×INT) 與 DEX 減詠：#13011 自帶 INT +1 且同樣能帶鏡盾，全套換法系 INT／範圍卡片。"
+        },
+        gearPatch: {
+          weaponNote: "忍術魔法流以 MATK 與範圍為核心：主武器改用 #13011 阿修羅雙修短劍（INT +1）配 #2107 鏡盾（或 #1234 月靈短劍減 CD），搭配法系減詠裝。",
+          weapons: [
+            { id: 13011, roleTag: "【忍術專屬法傷刀】阿修羅雙修短劍", reason: "唯一自帶 INT +1 的忍者可用單手短劍，同時保住 #2107 鏡盾。" },
+            { id: 1234, roleTag: "【高冷卻雙修】月靈短劍", reason: "Haste +2%，沒有 #13011 或缺 CD 時的最佳平替。" },
+            { id: 13007, roleTag: "【開荒劇情】沉沒十手", reason: "前期農裝過渡用。" }
+          ],
+          replaceGears: {
+            2254: { id: 2235, slotTag: "頭上〔法系 INT 首選〕", reason: "國王王冠（INT +2），拉高火炎花與雷擊碎魔法基礎。" },
+            2337: { id: 2322, slotTag: "鎧甲〔燈籠節減詠袍〕", reason: "Silk Robe〔燈籠節〕（詠唱 +2%），補足 DEX 80 前剩餘詠唱延遲。" }
+          }
+        },
+        loadoutPatch: {
+          weaponMode: "#13011 INT 短劍（或 #1234 月靈短劍）＋ #2107 鏡盾（魔法忍術路線）",
+          pets: [
+            { id: "dokebi", tag: "法忍詠唱雙修畢業", reason: "+3 INT 與 +4.5% 詠唱速度（含飾品），專配火炎花／雷擊碎。" },
+            { id: "baby_desert_wolf", tag: "前期 INT＋CD", reason: "+3 INT ＋ +3% Haste。" },
+            { id: "willow", tag: "純 INT 補傷", reason: "+4.5 INT 直接加進 MATK 乘區。" }
+          ],
+          cardsBySlot: {
+            weapon: [
+              { id: 4023, note: "沙漠幼狼 +3% 冷卻縮減（加快火炎花＆雷擊碎連炸；法傷流別插投射速度卡）。" },
+              { id: 4137, note: "德雷克 +15% 王傷 +5% 總傷（搭配忍術 L4 忍者驅魔 +12% 打王痛極了）。" },
+              { id: 4125, note: "異變魚 +6% 總傷害（平民 4 洞武器易湊齊）。" }
+            ],
+            headgear: [
+              { id: 4330, note: "邪惡蛇王卡〔燈籠節〕+3 INT · +6% 冷卻縮減！忍術流第一畢業頭卡。" },
+              { id: 4052, note: "長老樹精 +2 INT（常駐平民法傷首選）。" }
+            ],
+            accessory: [
+              { id: 4084, note: "氣泡蟲 +5% 技能範圍，把《雷擊》+25% 範圍的雷擊碎圈擴得更寬。" },
+              { id: 4077, note: "小花枝 +4% 冷卻縮減。" }
+            ]
+          }
+        }
+      },
+      {
+        id: "kunai_crit",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 特化暴毒流",
+        name: "苦無風暴＋一閃擊高爆劇毒流",
+        tagline: "潛行 38 ＋ 投擲 12｜高閃迴避＋苦無附毒＆致盲＋高爆傷害清海",
+        statVarId: "throw_luk",
+        secVarId: "throw",
+        scaling: "ranged",
+        t1Key: "nj_kunai_crit",
+        growthLogic: "把潛行線點到底開出 L6《苦無風暴》（投擲飛刀 +2 投射物 +20% 傷），同時吃到《忍者之毒》每秒毒傷、《一閃擊》+20% 暴傷與 L0/L3 金蟬脫殼高迴避，又硬又快！",
+        gearLogic: "武器選 **#13046 克里格短劍（持續傷 +6%）** 或 **#1219 格拉迪烏斯（暴傷 +6%）** 配 #2107 鏡盾；飾品搭 #2708 中華手工藝品放大苦無毒。",
+        cardLogic: "飾品 #4172 書頁怪（+20% 暴傷）＋ 武器 #4086 邪骸士兵（+5% 暴擊），披肩帶高閃卡（#4525 克拉肯）疊滿潛行閃躲。",
+        runSkills: [
+          { id: "kunai", role: "主攻核心（苦無風暴）", tip: "吃滿額外苦無數＋忍者之毒＋致盲，扇形連續壓制。" },
+          { id: "shuriken", role: "貫穿直線", tip: "靠副點 12 點投擲線補充射程外清理。" },
+          { id: "huuma", role: "迴旋壓線", tip: "巨型飛鏢來回穿刺密集路線。" },
+          { id: "flaming_petals", role: "補 AOE", tip: "補足周邊隨機清海。" }
+        ],
+        gearPatch: {
+          weapons: [
+            { id: 13046, roleTag: "【毒苦無專屬】克里格短劍", reason: "持續傷 +6% 直接增強《忍者之毒》每秒傷害，且能配鏡盾。" },
+            { id: 1219, roleTag: "【一閃擊暴傷】格拉迪烏斯短劍", reason: "暴擊傷害 +6%，完美配合《一閃擊 +20% 暴傷》與潛行高暴。" },
+            { id: 1234, roleTag: "【減 CD 苦無】月靈短劍", reason: "Haste +2% 加快苦無風暴射頻。" }
+          ],
+          replaceGears: {
+            2607: { id: 2708, slotTag: "飾品2〔燈籠節持續/毒傷〕", reason: "中華手工藝品（毒／火／流血持續傷 +6%），大幅放大毒苦無 DOT。" }
+          }
+        }
+      }
+    ],
+    gunslinger: [
+      {
+        id: "pistol",
+        badgeType: "core",
+        badgeText: "基礎全能槍手流",
+        name: "全面破壞五連擊＋雙重子彈流",
+        tagline: "槍手 38 ＋ 狙擊手 12｜DEX 99 / STR 53 / AGI 80・雙發普攻＋三/五連擊連環爆射",
+        statVarId: "main",
+        secVarId: "pistol",
+        growthLogic: "最全面的神槍手日常推圖配置：點滿槍手 L3《雙重射擊》（普攻+1子彈）、L3《投擲硬幣》（三連攻擊掛 +8% 易傷）與 L6《全面破壞》，副點狙擊 12 拿雙暴率與射程。",
+        gearLogic: "武器必刷 #13151 氣旋步槍（暴擊 +2%）或節慶 #13152（暴傷 +6%），搭配 #2986 蛇戒／#22847 巡邏徽章。",
+        cardLogic: "武器插 #4094 邪骸弓箭手／#4137 德雷克／#4086 邪骸士兵，飾品塞 #4172 書頁怪將連擊暴傷拉滿。",
+        runSkills: null
+      },
+      {
+        id: "sniper_crit",
+        badgeType: "meta",
+        badgeText: "Beta 0.7.2 狙王特化流",
+        name: "神之鎚百步穿楊＋Bull's Eye 高爆狙殺流",
+        tagline: "狙擊手 38 ＋ 槍手 12｜專打高血精英／頭目（對王 +15%＋百步穿楊多目標 +30%）",
+        statVarId: "str_max",
+        secVarId: "pistol",
+        t1Key: "gs_sniper",
+        growthLogic: "把過往被當陪襯的「狙擊手」分支點到 L6《神之鎚》（百步穿楊 +1 目標 +30% 傷）配《Bull's Eye (+15% Boss 傷)》與《爆頭／墮天使》大量暴傷，同時點出槍手 L0《連鎖衝擊 +10% 雙重詠唱》，在無限塔與高倍難度秒王極猛！",
+        gearLogic: "首選 **#13152 氣旋步槍〔燈籠節〕（暴傷 +6%）** 或 #13104 加里森左輪，防具頭中必配 #2212 獨眼龍眼罩（暴擊 +2%）配合超高暴傷乘區。",
+        cardLogic: "極致 Boss 與暴傷向：武器插 **#4137 德雷克（+15% 王傷）**＋ **#4086 邪骸士兵（+5% 暴擊）**，飾品雙插 **#4172 書頁怪（+20% 暴擊傷害）**！",
+        runSkills: [
+          { id: "tracking", role: "主核狙王（神之鎚）", tip: "專鎖視野最強目標：吃多目標、栓動減 CD 與 +30% 大傷，瞬間蒸發 Boss。" },
+          { id: "ground_drift", role: "範圍清場手榴彈", tip: "受《強力榴彈 +24%》加成，補足單點狙擊時的群怪清線。" },
+          { id: "triple_action", role: "扇形掃射＋觸發雙重", tip: "前置清小怪極好用的扇形三連發。" },
+          { id: "rapid_shower", role: "連續補射", tip: "吃雙重詠唱對近怪連開五槍。" }
+        ],
+        gearPatch: {
+          weapons: [
+            { id: 13152, roleTag: "【狙擊暴傷畢業】氣旋步槍〔燈籠節〕", reason: "自帶暴傷 +6%，與狙擊手《爆頭 +20%》《墮天使 +10%》完美相加！" },
+            { id: 13151, roleTag: "【常駐雙洞起手】氣旋步槍", reason: "常駐 Tier 2 步槍（暴擊 +2%），補足致命狙擊爆率。" },
+            { id: 13104, roleTag: "【前期開荒】加里森左輪手槍", reason: "帶 +3% 暴擊傷害，過渡手極佳。" }
+          ]
+        }
+      },
+      {
+        id: "shotgun",
+        badgeType: "core",
+        badgeText: "近戰清圖彈幕流",
+        name: "霰彈槍無盡亡命彈幕＋全周致盲流",
+        tagline: "霰彈槍 40 ＋ 槍手 5 ＋ 狙擊手 5｜貼身全周開火＋亡命致盲保命",
+        statVarId: "crit_flee",
+        secVarId: "shotgun",
+        growthLogic: "面對四面八方包圍的高密度浪潮（如燈籠節）表現優秀：透過《亡命之徒致盲 1 秒》＋火力全開緩速與減傷，在怪堆裡邊晃邊全周清場。",
+        gearLogic: "高範圍與高閃防暴裝（#2254 天使羽翼、#2308 長外袍、#2505 斗篷）。",
+        cardLogic: "飾品塞 #4084 氣泡蟲（+5% 範圍）擴張散彈扇面，披肩 #4525 克拉肯補 Flee 貼怪閃躲。",
+        runSkills: null
+      }
+    ]
+  };
+
   function getFirstPlan(build, secVar) {
     if (build.firstPlans && secVar && build.firstPlans[secVar.id]) {
       return build.firstPlans[secVar.id];
@@ -211,9 +1584,134 @@
       if (firstKey) return build.firstPlans[firstKey];
     }
     return {
+      branchIndex: build.firstBranchFocus && build.firstBranchFocus.includes("鍛造") ? 2 : (build.firstBranchFocus && build.firstBranchFocus.includes("懲戒") ? 2 : (build.firstBranchFocus && build.firstBranchFocus.includes("狂怒") ? 1 : 0)),
       branchFocus: build.firstBranchFocus || "一轉天賦配置（50 點）",
       alloc: build.firstAlloc || {},
       order: build.firstOrder || []
+    };
+  }
+
+  function mergeGearRecs(baseGear, patch) {
+    if (!baseGear || !patch) return baseGear;
+    const weapons = patch.weapons || baseGear.weapons || [];
+    let gears = [...(baseGear.gears || [])];
+    if (patch.replaceGears) {
+      const repl = patch.replaceGears;
+      const used = new Set();
+      gears = gears.map(item => {
+        if (repl[item.id]) {
+          used.add(item.id);
+          return repl[item.id];
+        }
+        return item;
+      });
+      for (const [oldId, newObj] of Object.entries(repl)) {
+        if (!used.has(Number(oldId)) && !gears.some(g => g.id === newObj.id)) {
+          gears.push(newObj);
+        }
+      }
+    }
+    return {
+      ...baseGear,
+      weaponNote: patch.weaponNote || baseGear.weaponNote,
+      weapons,
+      gears
+    };
+  }
+
+  function mergeLoadout(baseLoadout, patch) {
+    if (!baseLoadout || !patch) return baseLoadout;
+    const mergedCards = { ...(baseLoadout.cardsBySlot || {}) };
+    if (patch.cardsBySlot) {
+      for (const [slot, arr] of Object.entries(patch.cardsBySlot)) {
+        mergedCards[slot] = arr;
+      }
+    }
+    return {
+      ...baseLoadout,
+      weaponMode: patch.weaponMode || baseLoadout.weaponMode,
+      shieldNote: "shieldNote" in patch ? patch.shieldNote : baseLoadout.shieldNote,
+      offhandRuleNote: "offhandRuleNote" in patch ? patch.offhandRuleNote : baseLoadout.offhandRuleNote,
+      pets: patch.pets || baseLoadout.pets,
+      cardsBySlot: mergedCards
+    };
+  }
+
+  function mergePriority(basePrio, patch) {
+    if (!basePrio || !patch) return basePrio;
+    return {
+      ...basePrio,
+      ...patch,
+      chest: patch.chest ? { ...(basePrio.chest || {}), ...patch.chest } : basePrio.chest
+    };
+  }
+
+  function resolveFirstPlanForPlaystyle(build, ps) {
+    if (ps.t1Key && T1_SPECIAL_PLANS[ps.t1Key]) {
+      return T1_SPECIAL_PLANS[ps.t1Key];
+    }
+    if (ps.fromJobSec) {
+      const [otherJob, otherSecId] = ps.fromJobSec;
+      const ob = BUILDS[otherJob];
+      if (ob && ob.firstPlans && ob.firstPlans[otherSecId]) {
+        return ob.firstPlans[otherSecId];
+      }
+    }
+    if (ps.fromSecId && build.firstPlans && build.firstPlans[ps.fromSecId]) {
+      return build.firstPlans[ps.fromSecId];
+    }
+    const secVar = (build.secondVariants || []).find(v => v.id === (ps.fromSecId || ps.secVarId)) || build.secondVariants[0];
+    return getFirstPlan(build, secVar);
+  }
+
+  function getPlaystylesForJob(jobKey) {
+    const build = BUILDS[jobKey];
+    if (!build) return [];
+    const rawList = PLAYSTYLES_BY_JOB[jobKey] || [];
+    if (rawList.length) return rawList;
+    return (build.secondVariants || []).map((sv, i) => ({
+      id: sv.id,
+      badgeType: i === 0 ? "core" : "meta",
+      badgeText: i === 0 ? "基礎正常配點" : "進階路線",
+      name: sv.label,
+      tagline: sv.note || "",
+      statVarId: build.statVariants[0]?.id,
+      secVarId: sv.id,
+      fromSecId: sv.id,
+      growthLogic: sv.note || "",
+      gearLogic: "依武器、防具洞數與本職業推薦詞條循序替換。",
+      cardLogic: "依照武器／頭飾／飾品推薦格位優先配齊冷卻與傷害乘區。"
+    }));
+  }
+
+  function getResolvedPlaystyleContext(jobKey) {
+    const build = BUILDS[jobKey];
+    const styles = getPlaystylesForJob(jobKey);
+    const idx = Math.min(Math.max(0, state.playstyleIdx[jobKey] || 0), Math.max(0, styles.length - 1));
+    const ps = styles[idx] || styles[0];
+    const secVar = (build.secondVariants || []).find(v => v.id === ps.secVarId) || build.secondVariants[state.secVarIdx[jobKey]] || build.secondVariants[0];
+    const firstPlan = resolveFirstPlanForPlaystyle(build, ps);
+    const statVar = build.statVariants[state.statVarIdx[jobKey]] || build.statVariants.find(s => s.id === ps.statVarId) || build.statVariants[0];
+    const weaponInfo = ps.weaponInfo || getWeaponSlotInfo(build, secVar);
+    const runSkills = ps.runSkills || secVar.runSkills;
+    const baseGear = GEAR_DATA && GEAR_DATA.jobGearRecs ? GEAR_DATA.jobGearRecs[jobKey] : null;
+    const baseLoadout = PETS_CARDS.jobLoadouts ? PETS_CARDS.jobLoadouts[jobKey] : null;
+    const basePrio = GLOSSARY_GUIDE && GLOSSARY_GUIDE.jobPriorities ? GLOSSARY_GUIDE.jobPriorities[jobKey] : null;
+
+    return {
+      build,
+      styles,
+      activeIdx: idx,
+      playstyle: ps,
+      scaling: ps.scaling || build.scaling,
+      secVar,
+      statVar,
+      firstPlan,
+      weaponInfo,
+      runSkills,
+      gear: mergeGearRecs(baseGear, ps.gearPatch),
+      loadout: mergeLoadout(baseLoadout, ps.loadoutPatch),
+      priority: mergePriority(basePrio, ps.priorityPatch)
     };
   }
 
@@ -235,10 +1733,14 @@
     return tags;
   }
 
-  function getCalcModeForBuild(build, stats) {
+  function getCalcModeForBuild(build, stats, playstyle) {
+    if (playstyle && playstyle.scaling) return playstyle.scaling;
     if (!build) return "magic";
     if (build.key === "ninja" && stats && stats.int > stats.dex) return "magic";
     if (build.key === "soul_linker" && stats && stats.str > stats.int) return "melee";
+    if (build.key === "priest" && stats && stats.str > stats.int) return "melee";
+    if (build.key === "monk" && stats && stats.int > stats.str) return "magic";
+    if (build.key === "rogue" && stats && stats.dex > 20) return "ranged";
     return build.scaling || "magic";
   }
 
@@ -252,7 +1754,11 @@
   }
 
   function copyBuildText(build, statVar, secVar) {
-    const firstPlan = getFirstPlan(build, secVar);
+    const ctx = getResolvedPlaystyleContext(build.key);
+    const ps = ctx.playstyle;
+    const activeStat = statVar || ctx.statVar;
+    const activeSec = secVar || ctx.secVar;
+    const firstPlan = ctx.firstPlan;
     const firstTree = GAME_DATA.trees[build.firstJob];
     const secTree = build.secondJob ? GAME_DATA.trees[build.secondJob] : null;
     const findNode = (tree, id) => {
@@ -263,24 +1769,24 @@
       }
       return null;
     };
-    const statLine = Object.entries(statVar.stats)
+    const statLine = Object.entries(activeStat.stats)
       .filter(([, v]) => v > 1)
       .map(([k, v]) => k.toUpperCase() + " " + v)
       .join(" / ");
 
     const lines = [
-      "【" + build.title + "｜" + build.categoryLabel + "】",
-      "定位標籤：" + build.rank,
-      "選擇路線：" + secVar.label,
-      "屬性配點：" + statLine + "（路線：" + statVar.label + "）",
-      "加點順序：" + statVar.order.map(o => o.lv + " " + o.text).join(" -> "),
+      "【" + build.title + "｜" + ps.name + "（" + ps.badgeText + "）】",
+      "版本說明：依 Beta 0.7.2 一轉 50 點實戰編排（未來開放二轉天賦後配合二轉再調整）",
+      "成長方向：" + ps.growthLogic,
+      "配裝邏輯：" + ps.gearLogic,
+      "配卡邏輯：" + ps.cardLogic,
+      "",
+      "屬性配點：" + statLine + "（路線：" + activeStat.label + "）",
+      "加點順序：" + activeStat.order.map(o => o.lv + " " + o.text).join(" -> "),
       "",
       "實戰技能列（Beta 0.7.2 一轉 1 武器＋4 主動）：",
-      "  - 左格武器：" + getWeaponSlotInfo(build, secVar).title,
-      ...secVar.runSkills.map((sk, idx) => "  " + (idx + 1) + ". " + ((GAME_DATA.skills[sk.id] && GAME_DATA.skills[sk.id].name) || sk.id) + "（" + sk.role + "）— " + sk.tip),
-      ...(formatFutureSkillsText(secVar)
-        ? ["", "【未來二轉前瞻預覽技能（Beta 0.7.2 尚未開放）】： " + formatFutureSkillsText(secVar)]
-        : []),
+      "  - 左格武器：" + ctx.weaponInfo.title,
+      ...ctx.runSkills.map((sk, idx) => "  " + (idx + 1) + ". " + ((GAME_DATA.skills[sk.id] && GAME_DATA.skills[sk.id].name) || sk.id) + "（" + sk.role + "）— " + sk.tip),
       "",
       "一轉天賦（" + firstTree.job.name + "：" + firstPlan.branchFocus + "）：",
       ...firstPlan.order.map((id, i) => {
@@ -289,18 +1795,18 @@
       })
     ];
 
-    if (secTree && secVar.order && secVar.order.length) {
+    if (secTree && activeSec.order && activeSec.order.length) {
       lines.push(
         "",
-        "二轉天賦（【Beta 0.7.2 尚未實裝／未來前瞻】" + secTree.job.name + "：" + secTree.branches[secVar.branchIndex].name + " 單分支 50/50）：",
-        ...secVar.order.map((id, i) => {
+        "二轉天賦（【Beta 0.7.2 尚未實裝／未來前瞻】" + secTree.job.name + "：" + secTree.branches[activeSec.branchIndex].name + " 單分支 50/50）：",
+        ...activeSec.order.map((id, i) => {
           const f = findNode(secTree, id);
-          return "  " + (i + 1) + ". " + (f ? f.node.name : id) + "：" + (secVar.alloc[id] || 0) + "/" + (f ? f.node.m : 1);
+          return "  " + (i + 1) + ". " + (f ? f.node.name : id) + "：" + (activeSec.alloc[id] || 0) + "/" + (f ? f.node.m : 1);
         })
       );
     }
 
-    const loadout = PETS_CARDS.jobLoadouts && PETS_CARDS.jobLoadouts[build.key];
+    const loadout = ctx.loadout;
     if (loadout) {
       const slotNames = { weapon: "武器", shield: "盾牌／副手", armor: "鎧甲", garment: "披肩", shoes: "鞋子", headgear: "頭飾", accessory: "飾品" };
       lines.push(
@@ -326,7 +1832,7 @@
       }
     }
 
-    const jp = GLOSSARY_GUIDE && GLOSSARY_GUIDE.jobPriorities ? GLOSSARY_GUIDE.jobPriorities[build.key] : null;
+    const jp = ctx.priority;
     if (jp) {
       lines.push(
         "",
@@ -355,11 +1861,11 @@
     const text = lines.join("\n");
     if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(
-        () => showToast("已複製「" + build.title + "」完整配點攻略到剪貼簿"),
+        () => showToast("已複製「" + build.title + "・" + ps.name + "」攻略總表到剪貼簿"),
         () => showToast("複製失敗，請手動選取內容複製")
       );
     } else {
-      showToast("已整理「" + build.title + "」文字總表");
+      showToast("已整理「" + build.title + "・" + ps.name + "」文字總表");
     }
     return text;
   }
@@ -369,87 +1875,59 @@
     const container = document.getElementById("roster-container");
     if (!container) return;
 
-    const filter = state.rosterFilter;
-    const q = state.rosterQuery.trim().toLowerCase();
+    const activeBuild = BUILDS[state.activeJob] || BUILDS.wizard;
+    const activeFirst = activeBuild.firstJob || "mage";
+    const groupObj = FIRST_JOB_GROUPS.find(g => g.firstJob === activeFirst) || FIRST_JOB_GROUPS[1];
+    const secondOptions = groupObj.jobs.filter(jk => BUILDS[jk]);
+    const playstyles = getPlaystylesForJob(activeBuild.key);
 
-    const matched = JOB_ORDER.map(k => BUILDS[k]).filter(b => {
-      if (!b) return false;
-      const tags = getScalingTags(b);
-      if (filter !== "all" && !tags.includes(filter)) return false;
-      if (!q) return true;
-      const haystack = [
-        b.title,
-        b.subtitle,
-        b.rank,
-        b.familyLabel,
-        b.categoryLabel,
-        b.weaponInfo ? b.weaponInfo.title : "",
-        SCALING_LABEL[b.scaling] || ""
-      ].join(" ").toLowerCase();
-      return haystack.includes(q);
-    });
+    const firstOptsHtml = FIRST_JOB_GROUPS.map(g => {
+      const sel = g.firstJob === activeFirst ? " selected" : "";
+      return `<option value="${escapeHtml(g.firstJob)}"${sel}>${escapeHtml(g.label)}</option>`;
+    }).join("");
 
-    const mainList = matched.filter(b => b.category === "main");
-    const extList = matched.filter(b => b.category === "extended");
+    const secOptsHtml = secondOptions.map(jk => {
+      const b = BUILDS[jk];
+      const sel = jk === activeBuild.key ? " selected" : "";
+      const tag = b.secondJob ? b.title : (b.title + "（單階無二轉）");
+      return `<option value="${escapeHtml(jk)}"${sel}>${escapeHtml(tag)}｜${escapeHtml(b.rank)}</option>`;
+    }).join("");
 
-    const buildCardHtml = b => {
-      const sv0 = b.statVariants[0];
-      const primVal = sv0.stats[sv0.primaryKey];
-      const isExt = b.category === "extended";
-      const isActive = b.key === state.activeJob;
-      const jp = GLOSSARY_GUIDE && GLOSSARY_GUIDE.jobPriorities ? GLOSSARY_GUIDE.jobPriorities[b.key] : null;
-      const topCardPick = jp && Array.isArray(jp.tier1) && jp.tier1.length ? jp.tier1[0] : "";
-      return `
-        <button type="button" class="roster-card ${isExt ? "is-extended" : ""} ${isActive ? "active" : ""}" data-job="${b.key}" data-family="${b.family}" aria-pressed="${isActive ? "true" : "false"}">
-          <div class="roster-top">
-            <span class="role-badge">${escapeHtml(b.familyLabel)}・${escapeHtml(b.rank)}</span>
-            <span class="job-emblem" data-icon="${b.icon}"></span>
+    const quickPillsHtml = FIRST_JOB_GROUPS.map(g => {
+      const tObj = GAME_DATA.trees[g.firstJob];
+      const shortName = tObj && tObj.job ? tObj.job.name : g.firstJob;
+      const isAct = g.firstJob === activeFirst;
+      return `<button type="button" class="job-quick-pill ${isAct ? "active" : ""}" data-first-pill="${escapeHtml(g.firstJob)}">${escapeHtml(shortName)}</button>`;
+    }).join("");
+
+    container.innerHTML = `
+      <div class="cascade-selector-card">
+        <div class="cascade-select-grid">
+          <div class="cascade-field">
+            <label class="cascade-label" for="first-job-select">
+              <span>1. 選擇一轉主職業</span>
+              <span class="hint">9 大主職／擴展</span>
+            </label>
+            <select id="first-job-select" class="cascade-select" aria-label="選擇一轉職業">
+              ${firstOptsHtml}
+            </select>
           </div>
-          <h3>${escapeHtml(b.title)}</h3>
-          <div class="roster-sub">${escapeHtml(b.subtitle)}</div>
-          <div class="roster-meta">
-            <span class="scale-tag">${escapeHtml(SCALING_LABEL[b.scaling] || b.scaling)}</span>
-            <span class="scale-tag">主推 ${sv0.primaryKey.toUpperCase()} ${primVal}</span>
-            ${b.secondJob ? '<span class="scale-tag">現況 1+4 格 (rank 2)</span>' : '<span class="scale-tag">單階 1+4 格 (rank 1)</span>'}
-            ${topCardPick ? `<span class="scale-tag prio-tag">挑卡：${escapeHtml(topCardPick)}</span>` : ""}
+          <div class="cascade-arrow" aria-hidden="true">→</div>
+          <div class="cascade-field">
+            <label class="cascade-label" for="second-job-select">
+              <span>2. 選擇進階／二轉職業</span>
+              <span class="hint">目前收錄 ${playstyles.length} 套可玩流派</span>
+            </label>
+            <select id="second-job-select" class="cascade-select" aria-label="選擇進階或二轉職業">
+              ${secOptsHtml}
+            </select>
           </div>
-          <div class="roster-card-foot">
-            <span class="roster-state-chip">${isActive ? '<span class="icon" data-icon="check"></span>目前檢視中（詳見下方攻略區）' : "點選檢視完整配點與配裝"}</span>
-            <span class="icon" data-icon="arrowDown"></span>
-          </div>
-        </button>`;
-    };
-
-    if (!matched.length) {
-      container.innerHTML = '<div class="notice-box"><span class="icon" data-icon="warning"></span><div>找不到符合條件的職業，請清除搜尋文字或切換「全部職業」篩選。</div></div>';
-      hydrateIcons(container);
-      return;
-    }
-
-    let html = "";
-    if (mainList.length) {
-      html += `
-        <div class="roster-group">
-          <div class="roster-group-head">
-            <span>常駐主線職業（六大基礎職系 → 十二條二轉路線）</span>
-            <span class="sub">顯示 ${mainList.length} / 12 個二轉職業</span>
-          </div>
-          <div class="roster-grid">${mainList.map(buildCardHtml).join("")}</div>
-        </div>`;
-    }
-    if (extList.length) {
-      html += `
-        <div class="roster-group">
-          <div class="roster-group-head">
-            <span>擴展與秘密解鎖職系（創角「由秘密解鎖」與單階特殊職業）</span>
-            <span class="sub">顯示 ${extList.length} / 4 條擴展路線</span>
-          </div>
-          <div class="roster-grid">${extList.map(buildCardHtml).join("")}</div>
-        </div>`;
-    }
-
-    container.innerHTML = html;
-    hydrateIcons(container);
+        </div>
+        <div class="first-job-pills-wrap">
+          <span class="first-job-pills-label">快速點選一轉：</span>
+          ${quickPillsHtml}
+        </div>
+      </div>`;
   }
 
   function renderTalentCard(opts) {
@@ -655,8 +2133,36 @@
       </div>`;
   }
 
-  function renderJobGearSubblock(jobKey) {
-    const gRec = GEAR_DATA && GEAR_DATA.jobGearRecs ? GEAR_DATA.jobGearRecs[jobKey] : null;
+  function selectPlaystyle(jobKey, idx) {
+    const build = BUILDS[jobKey];
+    const styles = getPlaystylesForJob(jobKey);
+    if (!build || !styles.length) return;
+    const safeIdx = Math.min(Math.max(0, Number(idx) || 0), styles.length - 1);
+    state.playstyleIdx[jobKey] = safeIdx;
+    const ps = styles[safeIdx];
+
+    if (ps.statVarId && Array.isArray(build.statVariants)) {
+      const sIdx = build.statVariants.findIndex(sv => sv.id === ps.statVarId);
+      if (sIdx >= 0) state.statVarIdx[jobKey] = sIdx;
+    }
+    if (ps.secVarId && Array.isArray(build.secondVariants)) {
+      const secIdx = build.secondVariants.findIndex(v => v.id === ps.secVarId);
+      if (secIdx >= 0) {
+        state.secVarIdx[jobKey] = secIdx;
+        const nextSec = build.secondVariants[secIdx];
+        state.secondBranchTab[jobKey] = nextSec.branchIndex || 0;
+        state.selectedSecondNode[jobKey] = nextSec.order && nextSec.order.length ? nextSec.order[0] : null;
+      }
+    }
+    const fp = resolveFirstPlanForPlaystyle(build, ps);
+    if (fp) {
+      state.firstBranchTab[jobKey] = fp.branchIndex || 0;
+      state.selectedFirstNode[jobKey] = fp.order && fp.order.length ? fp.order[0] : null;
+    }
+  }
+
+  function renderJobGearSubblock(jobKey, resolvedGear) {
+    const gRec = resolvedGear || (GEAR_DATA && GEAR_DATA.jobGearRecs ? GEAR_DATA.jobGearRecs[jobKey] : null);
     if (!gRec) return "";
     const weaponsHtml = (gRec.weapons || []).map(w => renderGearRecCardHtml(w, w.roleTag)).join("");
     const gearsHtml = (gRec.gears || []).map(g => renderGearRecCardHtml(g, g.slotTag)).join("");
@@ -664,8 +2170,8 @@
       <div class="loadout-subblock gear-subblock" id="detail-gear">
         <div class="loadout-subhead">
           <div class="loadout-subhead-left">
-            <span class="loadout-badge gear"><span class="icon" data-icon="shield"></span>第 1 類・實戰裝備＆刷取來源</span>
-            <h4>推薦實際武器（開荒 → 畢業）＆ 防具／頭飾／盾／飾品配置</h4>
+            <span class="loadout-badge gear"><span class="icon" data-icon="shield"></span>配裝推薦・實戰武器與裝備配置</span>
+            <h4>針對此流派推薦武器（開荒 → 畢業）＆ 防具／頭飾／盾／飾品</h4>
           </div>
           <a class="loadout-sublink" href="#gear">瀏覽全 ${GEAR_DATA.summary ? GEAR_DATA.summary.totalItems : 182} 件裝備圖鑑 →</a>
         </div>
@@ -679,14 +2185,14 @@
         <div class="gear-weapon-grid">${weaponsHtml}</div>
         <div class="gear-group-label">
           <span>推薦頭飾／盾／鎧甲／披肩／鞋子／雙飾品實戰搭配</span>
-          <span style="color:var(--text-dim);font-weight:600">Beta 0.7.2 僅開放 Tier 1～2（含燈籠節）；「稀有」字樣僅為卡普拉賣價 ×3，不會跨階升三階</span>
+          <span style="color:var(--text-dim);font-weight:600">Beta 0.7.2 僅開放 Tier 1～2（含燈籠節）；「稀有」字樣僅為卡普拉賣價 ×3</span>
         </div>
         <div class="gear-rec-grid">${gearsHtml}</div>
       </div>`;
   }
 
-  function renderJobLoadoutSection(jobKey) {
-    const loadout = PETS_CARDS.jobLoadouts && PETS_CARDS.jobLoadouts[jobKey];
+  function renderJobLoadoutSection(jobKey, resolvedCtx) {
+    const loadout = (resolvedCtx && resolvedCtx.loadout) || (PETS_CARDS.jobLoadouts && PETS_CARDS.jobLoadouts[jobKey]);
     if (!loadout) return "";
 
     const petCardsHtml = loadout.pets.map((rec, idx) => {
@@ -711,7 +2217,7 @@
 
     const slotDefs = [
       { key: "weapon", label: "武器卡片", cap: "依品質 0/1/2/3/4 洞" },
-      { key: "shield", label: "盾牌／副手欄位", cap: "盾牌 0/0/1/1/2 洞（雙手武器無盾／Beta 0.7.2 雙持未開放）" },
+      { key: "shield", label: "盾牌／副手欄位", cap: "盾牌 0/0/1/1/2 洞（雙手武器／弓弩無盾槽）" },
       { key: "armor", label: "鎧甲卡片", cap: "依品質 0/0/1/1/2 洞" },
       { key: "garment", label: "披肩卡片", cap: "依品質 0/0/1/1/2 洞" },
       { key: "shoes", label: "鞋子卡片", cap: "依品質 0/0/1/1/2 洞" },
@@ -723,7 +2229,7 @@
       const recs = loadout.cardsBySlot[sd.key] || [];
       let innerHtml = "";
       if (!recs.length && sd.key === "shield" && loadout.shieldNote) {
-        innerHtml = `<div class="card-rec-item"><strong>此職業無盾牌欄位</strong><span>${escapeHtml(loadout.shieldNote)}</span></div>`;
+        innerHtml = `<div class="card-rec-item"><strong>此流派無盾牌欄位</strong><span>${escapeHtml(loadout.shieldNote)}</span></div>`;
       } else {
         innerHtml = recs.map(r => {
           const c = CARD_MAP[r.id];
@@ -752,12 +2258,12 @@
       ? `<div class="card-offhand-note">${escapeHtml(loadout.offhandRuleNote)}</div>`
       : "";
 
-    const jp = GLOSSARY_GUIDE && GLOSSARY_GUIDE.jobPriorities ? GLOSSARY_GUIDE.jobPriorities[jobKey] : null;
+    const jp = (resolvedCtx && resolvedCtx.priority) || (GLOSSARY_GUIDE && GLOSSARY_GUIDE.jobPriorities ? GLOSSARY_GUIDE.jobPriorities[jobKey] : null);
     const priorityBoxHtml = jp ? `
       <div class="detail-priority-box" id="detail-priority">
         <div class="detail-priority-head">
           <div class="detail-priority-head-left">
-            <span class="loadout-badge guide"><span class="icon" data-icon="book"></span>本職業專屬・局內挑卡權重＆寶箱順位</span>
+            <span class="loadout-badge guide"><span class="icon" data-icon="book"></span>本流派・局內挑卡權重＆寶箱順位</span>
             <h4>升級三選一（傷害 vs CD vs 數量／目標）＆ 寶箱 5 格第 1→3 順位</h4>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -768,28 +2274,17 @@
         <p class="job-priority-summary">${escapeHtml(jp.summary)}</p>
         ${renderChestPrioHtml(jp.chest, false)}
       </div>` : "";
-    const gearSubblockHtml = renderJobGearSubblock(jobKey);
+    const gearSubblockHtml = renderJobGearSubblock(jobKey, resolvedCtx ? resolvedCtx.gear : null);
 
     return `
-      ${priorityBoxHtml}
       <article class="panel loadout-panel">
-        <h3><span class="icon" data-icon="pet"></span>推薦實戰裝備、隨行寵物與各部位插卡配置（實碼可刷取＆劇情來源）</h3>
+        <h3><span class="icon" data-icon="shield"></span>本流派配裝與配卡完整配置（裝備・隨行寵物・各部位插卡）</h3>
         ${gearSubblockHtml}
-        <div class="loadout-subblock pets-block">
+        <div class="loadout-subblock cards-block" id="detail-cards">
           <div class="loadout-subhead">
             <div class="loadout-subhead-left">
-              <span class="loadout-badge pet"><span class="icon" data-icon="pet"></span>第 2 類・隨行寵物</span>
-              <h4>推薦隨行寵物優先順（每場可攜帶 1 隻）</h4>
-            </div>
-            <a class="loadout-sublink gold" href="#pets">查看 24 隻寵物圖鑑 →</a>
-          </div>
-          <div class="pet-rec-grid">${petCardsHtml}</div>
-        </div>
-        <div class="loadout-subblock cards-block">
-          <div class="loadout-subhead">
-            <div class="loadout-subhead-left">
-              <span class="loadout-badge card"><span class="icon" data-icon="card"></span>第 3 類・裝備插卡</span>
-              <h4>各部位裝備推薦卡片（依武器／雙手／雙持規則）</h4>
+              <span class="loadout-badge card"><span class="icon" data-icon="card"></span>配卡推薦・各部位裝備插卡</span>
+              <h4>針對此流派的武器／防具／頭飾／飾品插卡推薦</h4>
             </div>
             <a class="loadout-sublink" href="#cards">搜尋全 98 張卡片 →</a>
           </div>
@@ -799,7 +2294,18 @@
           <div class="card-slot-grid">${slotBoxesHtml}</div>
           ${offhandNoteHtml}
         </div>
-      </article>`;
+        <div class="loadout-subblock pets-block">
+          <div class="loadout-subhead">
+            <div class="loadout-subhead-left">
+              <span class="loadout-badge pet"><span class="icon" data-icon="pet"></span>隨行寵物搭配（每場攜帶 1 隻）</span>
+              <h4>推薦隨行寵物優先順</h4>
+            </div>
+            <a class="loadout-sublink gold" href="#pets">查看 24 隻寵物圖鑑 →</a>
+          </div>
+          <div class="pet-rec-grid">${petCardsHtml}</div>
+        </div>
+      </article>
+      ${priorityBoxHtml}`;
   }
 
   function renderDetail() {
@@ -807,25 +2313,34 @@
     if (!shell) return;
 
     const jobKey = state.activeJob;
-    const build = BUILDS[jobKey];
+    const ctx = getResolvedPlaystyleContext(jobKey);
+    const { build, styles, activeIdx, playstyle, scaling, secVar, statVar, firstPlan, weaponInfo, runSkills } = ctx;
     if (!build) return;
-
-    const statVar = build.statVariants[state.statVarIdx[jobKey]] || build.statVariants[0];
-    const secVar = build.secondVariants[state.secVarIdx[jobKey]] || build.secondVariants[0];
-    const firstPlan = getFirstPlan(build, secVar);
-    const weaponInfo = getWeaponSlotInfo(build, secVar);
 
     const firstTree = GAME_DATA.trees[build.firstJob];
     const secTree = build.secondJob ? GAME_DATA.trees[build.secondJob] : null;
     const j1 = firstTree.job;
     const j2 = secTree ? secTree.job : j1;
 
+    const playstylesHtml = styles.map((ps, idx) => {
+      const isAct = idx === activeIdx;
+      return `
+        <button type="button" class="playstyle-card ${isAct ? "active" : ""}" data-playstyle-idx="${idx}" aria-pressed="${isAct ? "true" : "false"}">
+          <div class="playstyle-card-top">
+            <span class="playstyle-badge ${ps.badgeType === "core" ? "core" : "meta"}">${escapeHtml(ps.badgeText)}</span>
+            <span class="playstyle-state">${isAct ? "目前檢視中" : "點擊切換"}</span>
+          </div>
+          <div class="playstyle-title">${escapeHtml(ps.name)}</div>
+          <div class="playstyle-tagline">${escapeHtml(ps.tagline)}</div>
+        </button>`;
+    }).join("");
+
     const statTabsHtml = build.statVariants.map((sv, idx) =>
-      '<button type="button" class="' + (idx === state.statVarIdx[jobKey] ? "active" : "") + '" data-stat-var="' + idx + '">' + escapeHtml(sv.label) + '</button>'
+      '<button type="button" class="' + (sv.id === statVar.id ? "active" : "") + '" data-stat-var="' + idx + '">' + escapeHtml(sv.label) + '</button>'
     ).join("");
 
     const secTabsHtml = build.secondVariants.map((sv, idx) =>
-      '<button type="button" class="' + (idx === state.secVarIdx[jobKey] ? "active" : "") + '" data-sec-var="' + idx + '">' + escapeHtml(sv.label) + '</button>'
+      '<button type="button" class="' + (sv.id === secVar.id ? "active" : "") + '" data-sec-var="' + idx + '">' + escapeHtml(sv.label) + '</button>'
     ).join("");
 
     const statKeys = ["str", "int", "dex", "agi", "vit", "luk"].filter(k => statVar.stats[k] > 1 || k === statVar.primaryKey);
@@ -862,7 +2377,7 @@
         </div>
       </div>`;
 
-    const skillsHtml = weaponCardHtml + secVar.runSkills.map((sk, idx) => {
+    const skillsHtml = weaponCardHtml + (runSkills || []).map((sk, idx) => {
       const skObj = GAME_DATA.skills[sk.id] || { name: sk.id, desc: "" };
       return `
         <div class="skill-slot-card">
@@ -878,7 +2393,7 @@
     }).join("");
 
     const firstTreeHtml = renderTalentCard({
-      tierTitle: "一轉天賦樹（" + j1.name + "）— " + firstPlan.branchFocus,
+      tierTitle: "一轉 50 點實戰天賦樹（" + j1.name + "）— " + firstPlan.branchFocus,
       tierKey: "first",
       treeData: firstTree,
       cols: 4,
@@ -888,9 +2403,9 @@
       selectedNodeId: state.selectedFirstNode[jobKey]
     });
 
-    const secTreeHtml = secTree
+    const secTreeCardHtml = secTree
       ? renderTalentCard({
-          tierTitle: "二轉天賦樹（" + j2.name + "・未來前瞻鎖定）— " + secVar.label,
+          tierTitle: "二轉天賦樹前瞻（" + j2.name + "・Beta 0.7.2 尚未開放）— " + secVar.label,
           tierKey: "second",
           treeData: secTree,
           cols: 5,
@@ -906,26 +2421,46 @@
             <h3><span class="icon" data-icon="lock"></span>單階職業天賦上限說明（Rank 1・無二轉進階）</h3>
             <span class="pill">僅 50 點一轉天賦・技能格 1 武器 + 4 主動</span>
           </div>
-          <p class="stat-reason" style="margin:0;">${escapeHtml(j1.name)}在 Beta 0.7.2 實碼為單階擴展秘密職業（<code>rank: 1</code>），目前無對應二轉職業與額外 50 點二轉天賦，上方一轉 50/50 配點即為該流派完整配置；所有流派切換均會同步切換一轉不同分支的 50 點方案。</p>
+          <p class="stat-reason" style="margin:0;">${escapeHtml(j1.name)}在 Beta 0.7.2 實碼為單階擴展秘密職業（<code>rank: 1</code>），目前無對應二轉職業與額外 50 點二轉天賦，上方一轉 50/50 配點即為該流派完整配置；切換流派均會同步切換對應的一轉天賦、配裝與插卡。</p>
         </article>`;
 
-    const hpPill = secTree ? ("HP " + j1.hp + " → " + j2.hp) : ("單階基礎 HP " + j1.hp);
-    const slotCountTitle = "實戰技能列配置（Beta 0.7.2 現況 1 武器＋4 主動）";
-    const slotRuleDesc = secTree
-      ? "開局左 1 格武器普攻＋右 4 格一轉主動技能＝共 5 格；Beta 0.7.2 轉職雖會改變造型與 HP/移速及 rank=2 倍率（0.7.1 已回滾測試普攻傷），但第 5 格主動與二轉技能尚未開放。"
-      : "單階擴展職業維持左 1 格武器普攻＋右 4 格主動技能＝共 5 格上限（現況完全可玩）。";
     const futureTxt = formatFutureSkillsText(secVar);
     const futureSkillsHtml = futureTxt
       ? `<div class="future-skills-note"><strong>🔮 未來二轉開放預覽技能（Beta 0.7.2 尚未實裝進局）：</strong>${escapeHtml(futureTxt)}</div>`
       : "";
 
+    const secPreviewSectionHtml = secTree
+      ? `<details class="future-preview-details">
+          <summary class="future-preview-summary">
+            <span>🔮 未來二轉天賦樹前瞻（${escapeHtml(j2.name)}・Beta 0.7.2 尚未實裝進局，點擊展開預覽／切換二轉分支）</span>
+            <span class="pill">未來開放二轉後再配合調整一轉點法</span>
+          </summary>
+          <div class="future-preview-body">
+            <div class="controls-strip" style="margin-bottom:0;">
+              <div class="toggle-group">
+                <span class="toggle-label">二轉前瞻分岐：</span>
+                <div class="segmented">${secTabsHtml}</div>
+              </div>
+            </div>
+            ${futureSkillsHtml}
+            ${secTreeCardHtml}
+          </div>
+        </details>`
+      : secTreeCardHtml;
+
+    const hpPill = secTree ? ("HP " + j1.hp + " → " + j2.hp) : ("單階基礎 HP " + j1.hp);
+    const slotCountTitle = "實戰技能列配置（1 武器＋4 主動・隨流派調整）";
+    const slotRuleDesc = secTree
+      ? "開局左 1 格武器普攻＋右 4 格一轉主動技能＝共 5 格；目前 Beta 0.7.2 二轉僅啟用外型／基礎屬性與 rank=2 倍率，二轉主動技尚未實裝。"
+      : "單階擴展職業維持左 1 格武器普攻＋右 4 格主動技能＝共 5 格上限。";
+
     const cautionHtml = build.cautionNote
       ? `<div class="caution-banner"><span class="icon" data-icon="warning"></span><div>${escapeHtml(build.cautionNote)}</div></div>`
       : "";
-    const loadoutHtml = renderJobLoadoutSection(jobKey);
+    const loadoutHtml = renderJobLoadoutSection(jobKey, ctx);
     const breadcrumb = document.getElementById("active-job-breadcrumb");
     if (breadcrumb) {
-      breadcrumb.textContent = build.title + "｜" + build.rank;
+      breadcrumb.textContent = build.title + "｜" + playstyle.name;
     }
 
     shell.innerHTML = `
@@ -938,30 +2473,59 @@
               <span class="pill gold">${hpPill}</span>
               <span class="pill">移動速度 ${j2.speed}</span>
               <span class="pill">基礎防禦 ${j2.armor}</span>
-              <span class="pill">主力屬性：${escapeHtml(SCALING_LABEL[build.scaling] || build.scaling)}</span>
-              <span class="pill">左格武器：${escapeHtml(weaponInfo.shortPill)}</span>
+              <span class="pill">當前流派主軸：${escapeHtml(SCALING_LABEL[scaling] || scaling)}</span>
+              <span class="pill">武器格：${escapeHtml(weaponInfo.shortPill)}</span>
               <span class="pill">招牌技：${escapeHtml((GAME_DATA.skills[j1.start] && GAME_DATA.skills[j1.start].name) || j1.start)}</span>
             </div>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="#roster" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="arrowUp"></span>切換其他職業</a>
-          <a href="#detail-priority" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="book"></span>挑卡權重＆寶箱</a>
-          <a href="#detail-gear" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="shield"></span>裝備配裝來源</a>
+          <a href="#roster" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="arrowUp"></span>重選職業</a>
+          <a href="#detail-trees" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="tree"></span>一轉天賦</a>
+          <a href="#detail-gear" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="shield"></span>配裝推薦</a>
+          <a href="#detail-cards" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="card"></span>插卡推薦</a>
           <button type="button" class="btn secondary" id="apply-calc-btn"><span class="icon" data-icon="calc"></span>帶入素質模擬機</button>
-          <button type="button" class="btn" id="copy-build-btn"><span class="icon" data-icon="copy"></span>複製配點總表</button>
+          <button type="button" class="btn" id="copy-build-btn"><span class="icon" data-icon="copy"></span>複製本流派攻略</button>
         </div>
       </div>
+
+      <section class="playstyle-section">
+        <div class="playstyle-section-head">
+          <h3><span class="icon" data-icon="spark"></span>步驟 2・挑選目前可玩流派（基礎正統 vs Beta 0.7.2 特化成長）</h3>
+          <span class="pill accent">目前選擇：${escapeHtml(playstyle.name)}</span>
+        </div>
+        <p class="playstyle-version-note">
+          <strong>Beta 0.7.2 一轉實戰提醒：</strong>以下流派皆已對齊當前開放的「<strong>一轉 50 點天賦 ＋ 1 武器 4 主動</strong>」機制（含跨系三導管、混傷、壓血、無限塔等強勢路線）；<strong>未來正式開放二轉天賦樹後，部分流派會依二轉連動需求再行調整</strong>。
+        </p>
+        <div class="playstyle-picker">${playstylesHtml}</div>
+      </section>
+
+      <section class="archetype-logic-panel">
+        <div class="archetype-logic-head">
+          <h3><span class="icon" data-icon="target"></span>步驟 3・【${escapeHtml(playstyle.name)}】成長方向與配裝・配卡邏輯</h3>
+          <span class="pill gold">${escapeHtml(playstyle.badgeText)}</span>
+        </div>
+        <div class="archetype-logic-grid">
+          <div class="archetype-logic-box">
+            <h4>① 流派定位與成長邏輯</h4>
+            <p>${escapeHtml(playstyle.growthLogic)}</p>
+          </div>
+          <div class="archetype-logic-box">
+            <h4>② 武器與防具配裝邏輯</h4>
+            <p>${escapeHtml(playstyle.gearLogic)}</p>
+          </div>
+          <div class="archetype-logic-box">
+            <h4>③ 插卡與局內成形重點</h4>
+            <p>${escapeHtml(playstyle.cardLogic)}</p>
+          </div>
+        </div>
+      </section>
 
       ${cautionHtml}
 
       <div class="controls-strip">
         <div class="toggle-group">
-          <span class="toggle-label">${secTree ? "流派分岐（現況 1+4 / 二轉前瞻）：" : "流派天賦分岐："}</span>
-          <div class="segmented">${secTabsHtml}</div>
-        </div>
-        <div class="toggle-group">
-          <span class="toggle-label">屬性配點路線：</span>
+          <span class="toggle-label">本流派對應屬性配點（可微調）：</span>
           <div class="segmented">${statTabsHtml}</div>
         </div>
       </div>
@@ -976,17 +2540,19 @@
 
         <article class="panel">
           <h3><span class="icon" data-icon="skill"></span>${slotCountTitle}</h3>
-          <p class="stat-reason">${escapeHtml(secVar.note)}（${slotRuleDesc}）</p>
+          <p class="stat-reason">${escapeHtml(playstyle.tagline)}（${slotRuleDesc}）</p>
           <div class="skills-list">${skillsHtml}</div>
-          ${futureSkillsHtml}
         </article>
+      </div>
+
+      <div class="trees-wrap" id="detail-trees" style="margin-bottom:20px;">
+        ${firstTreeHtml}
       </div>
 
       ${loadoutHtml}
 
-      <div class="trees-wrap">
-        ${firstTreeHtml}
-        ${secTreeHtml}
+      <div style="margin-top:20px;">
+        ${secPreviewSectionHtml}
       </div>`;
 
     hydrateIcons(shell);
@@ -2043,7 +3609,9 @@
     "rules",
     "roster",
     "detail",
+    "detail-trees",
     "detail-gear",
+    "detail-cards",
     "detail-priority",
     "guide-jobs",
     "job-priority",
@@ -2132,6 +3700,7 @@
   function setActiveJob(jobKey, shouldScroll) {
     if (!BUILDS[jobKey]) return;
     state.activeJob = jobKey;
+    selectPlaystyle(jobKey, state.playstyleIdx[jobKey] || 0);
     document.body.setAttribute("data-family", BUILDS[jobKey].family);
     document.body.setAttribute("data-job", jobKey);
     renderRoster();
@@ -2157,20 +3726,32 @@
   }
 
   function initEvents() {
-    document.getElementById("roster-filters")?.addEventListener("click", e => {
-      const btn = e.target.closest(".filter-pill[data-filter]");
-      if (!btn) return;
-      state.rosterFilter = btn.getAttribute("data-filter");
-      document.querySelectorAll("#roster-filters .filter-pill").forEach(b => b.classList.toggle("active", b === btn));
-      renderRoster();
-    });
-
-    document.getElementById("roster-search")?.addEventListener("input", e => {
-      state.rosterQuery = e.target.value || "";
-      renderRoster();
+    document.getElementById("roster-container")?.addEventListener("change", e => {
+      if (e.target && e.target.id === "first-job-select") {
+        const fj = e.target.value;
+        const g = FIRST_JOB_GROUPS.find(x => x.firstJob === fj);
+        if (g && g.jobs.length && BUILDS[g.jobs[0]]) {
+          setActiveJob(g.jobs[0], false);
+        }
+        return;
+      }
+      if (e.target && e.target.id === "second-job-select") {
+        const sj = e.target.value;
+        if (BUILDS[sj]) setActiveJob(sj, false);
+      }
     });
 
     document.getElementById("roster-container")?.addEventListener("click", e => {
+      const firstPill = e.target.closest("[data-first-pill]");
+      if (firstPill) {
+        const fj = firstPill.getAttribute("data-first-pill");
+        const g = FIRST_JOB_GROUPS.find(x => x.firstJob === fj);
+        if (g && g.jobs.length && BUILDS[g.jobs[0]]) {
+          const targetJob = g.jobs.includes(state.activeJob) ? state.activeJob : g.jobs[0];
+          setActiveJob(targetJob, false);
+        }
+        return;
+      }
       const btn = e.target.closest(".roster-card[data-job]");
       if (!btn) return;
       setActiveJob(btn.getAttribute("data-job"), true);
@@ -2186,6 +3767,14 @@
       const jobKey = state.activeJob;
       const build = BUILDS[jobKey];
 
+      const psBtn = e.target.closest("[data-playstyle-idx]");
+      if (psBtn) {
+        const idx = Number(psBtn.getAttribute("data-playstyle-idx"));
+        selectPlaystyle(jobKey, idx);
+        renderDetail();
+        return;
+      }
+
       const secBtn = e.target.closest("[data-sec-var]");
       if (secBtn) {
         const idx = Number(secBtn.getAttribute("data-sec-var"));
@@ -2193,11 +3782,6 @@
         const nextSec = build.secondVariants[idx];
         state.secondBranchTab[jobKey] = nextSec.branchIndex || 0;
         state.selectedSecondNode[jobKey] = nextSec.order && nextSec.order.length ? nextSec.order[0] : null;
-        if (build.firstPlans && build.firstPlans[nextSec.id]) {
-          const fp = build.firstPlans[nextSec.id];
-          state.firstBranchTab[jobKey] = fp.branchIndex || 0;
-          state.selectedFirstNode[jobKey] = fp.order[0];
-        }
         renderDetail();
         return;
       }
@@ -2253,15 +3837,16 @@
       }
 
       if (e.target.closest("#apply-calc-btn")) {
-        const statVar = build.statVariants[state.statVarIdx[jobKey]] || build.statVariants[0];
+        const ctx = getResolvedPlaystyleContext(jobKey);
+        const statVar = ctx.statVar || build.statVariants[0];
         state.calc.job = jobKey;
         state.calc.lv = 99;
         state.calc.stats = { ...statVar.stats };
-        state.calc.mode = getCalcModeForBuild(build, statVar.stats);
+        state.calc.mode = getCalcModeForBuild(build, statVar.stats, ctx.playstyle);
         state.calc.activePreset = null;
         renderCalculator();
         setActiveTab("calculator", { hash: "#calculator" });
-        showToast("已將「" + build.title + "｜" + statVar.label + "」帶入模擬機");
+        showToast("已將「" + build.title + "｜" + ctx.playstyle.name + "」帶入模擬機");
       }
     });
 
@@ -2462,6 +4047,7 @@
     STAGES_DATA,
     ICONS,
     JOB_ORDER,
+    FIRST_JOB_GROUPS,
     state,
     maxBaseStats,
     totalStatCost,
@@ -2473,6 +4059,9 @@
     resolveTabFromTarget,
     setActiveTab,
     setActiveJob,
+    selectPlaystyle,
+    getPlaystylesForJob,
+    getResolvedPlaystyleContext,
     applyPreset,
     renderCalculator,
     renderDetail,

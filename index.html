@@ -82,20 +82,8 @@
 
     <section class="section" id="roster">
       <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="users"></span>全職業路線總覽（點選下方卡片切換詳情）</h2>
-        <span class="section-sub">點擊任一職業卡片，下方「目前選中職業詳細攻略」區會即時切換成該職業完整內容</span>
-      </div>
-
-      <div class="roster-controls">
-        <div class="roster-filters" id="roster-filters" role="group" aria-label="職業分類篩選">
-          <button type="button" class="filter-pill active" data-filter="all">全部職業 (16)</button>
-          <button type="button" class="filter-pill" data-filter="main">常駐主線 (12)</button>
-          <button type="button" class="filter-pill" data-filter="melee">近戰 STR (9含靈媒現況)</button>
-          <button type="button" class="filter-pill" data-filter="ranged">遠程 DEX (4)</button>
-          <button type="button" class="filter-pill" data-filter="magic">魔法 INT (5含忍)</button>
-          <button type="button" class="filter-pill" data-filter="extended">擴展／秘密解鎖 (4)</button>
-        </div>
-        <input type="search" id="roster-search" class="roster-search" placeholder="搜尋職業、武器或主屬性（例：騎士 / STR / 盾 / 忍者）..." aria-label="搜尋職業" />
+        <h2 class="section-title"><span class="icon" data-icon="users"></span>步驟 1・選擇職業（一轉 × 二轉連動）</h2>
+        <span class="section-sub">先選一轉職業，再選進階／二轉路線；想一次比較全 16 職業數值也可點 <a href="#compare">全職速查表 →</a></span>
       </div>
 
       <div id="roster-container"></div>
@@ -103,11 +91,11 @@
 
     <section class="section detail-section" id="detail">
       <div class="detail-connector" aria-hidden="true">
-        <span class="detail-connector-pill"><span class="icon" data-icon="arrowDown"></span>以下為上方所選職業的專屬攻略內容（點選上方其他職業可即時切換）</span>
+        <span class="detail-connector-pill"><span class="icon" data-icon="arrowDown"></span>步驟 2 & 3・挑選本職業流派 → 查看專屬配點・配裝・配卡成長路線</span>
       </div>
       <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="target"></span>目前選中職業詳細攻略：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
-        <span class="section-sub">僅顯示當前所選職業之屬性順序、1+4 實戰技能格、專屬局內挑卡＆寶箱順位、實碼裝備配裝與刷取地圖、隨行寵物與插卡、一轉 50 點實戰＋二轉前瞻天賦樹</span>
+        <h2 class="section-title"><span class="icon" data-icon="target"></span>目前選中職業：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
+        <span class="section-sub">先挑想玩的 Beta 0.7.2 實戰流派，下方即時連動切換該流派之屬性、1+4 技能、一轉 50 點天賦、配裝邏輯、插卡與挑卡順位</span>
       </div>
       <div class="detail-shell" id="detail-shell"></div>
     </section>
