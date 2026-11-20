@@ -55,10 +55,12 @@ function extractBalanced(src, openIdx, openCh, closeCh) {
 
 async function fetchLiveBundles() {
   if (CACHE_DIR) {
+    const manPath = path.join(CACHE_DIR, "manifest.json");
     return {
       indexHtml: fs.readFileSync(path.join(CACHE_DIR, "index.html"), "utf8"),
       mainJs: fs.readFileSync(path.join(CACHE_DIR, "main.js"), "utf8"),
       slJs: fs.readFileSync(path.join(CACHE_DIR, "soul_linker.js"), "utf8"),
+      manifest: fs.existsSync(manPath) ? JSON.parse(fs.readFileSync(manPath, "utf8")) : null,
       source: `cache:${CACHE_DIR}`
     };
   }
@@ -79,25 +81,122 @@ async function fetchLiveBundles() {
   if (!resSl.ok) throw new Error(`GET ${slUrl} HTTP ${resSl.status}`);
   const slJs = await resSl.text();
 
-  return { indexHtml, mainJs, slJs, source: `${mainUrl} + ${slUrl}` };
+  const manUrl = `${LIVE_ORIGIN}/assets/manifest.json`;
+  const resMan = await fetch(manUrl);
+  if (!resMan.ok) throw new Error(`GET ${manUrl} HTTP ${resMan.status}`);
+  const manifest = await resMan.json();
+
+  return { indexHtml, mainJs, slJs, manifest, source: `${mainUrl} + ${slUrl} + ${manUrl}` };
 }
 
-function buildLiveSnapshot(mainJs, slJs, source) {
+function splitTopArgs(callStr) {
+  const inner = callStr.slice(1, -1);
+  const args = [];
+  let depth = 0, inStr = null, esc = false, start = 0;
+  for (let i = 0; i < inner.length; i++) {
+    const ch = inner[i];
+    if (inStr) {
+      if (esc) { esc = false; continue; }
+      if (ch === "\\") { esc = true; continue; }
+      if (ch === inStr) inStr = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") { inStr = ch; continue; }
+    if (ch === "(" || ch === "[" || ch === "{") depth++;
+    else if (ch === ")" || ch === "]" || ch === "}") depth--;
+    else if (ch === "," && depth === 0) {
+      args.push(inner.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+  args.push(inner.slice(start).trim());
+  return args;
+}
+
+function extractObjByVar(src, varName) {
+  if (!varName) return {};
+  const esc = varName.replace(/\$/g, "\\$");
+  const re = new RegExp(`(?:^|[,;\\s])${esc}=\\{`);
+  const dm = re.exec(src);
+  if (!dm) return {};
+  const openPos = src.indexOf("{", dm.index);
+  const objStr = extractBalanced(src, openPos, "{", "}");
+  if (!objStr) return {};
+  try {
+    return vm.runInNewContext(`(${objStr})`);
+  } catch {
+    return {};
+  }
+}
+
+function buildLiveZhTranslators(slJs) {
+  // 1. Item / Card / Affix zh-TW dict (currently F5): lang==="zh-TW"?<var>[
+  const itemVarM = slJs.match(/lang==="zh-TW"\?([A-Za-z0-9_$]+)\[/);
+  const itemDict = extractObjByVar(slJs, itemVarM ? itemVarM[1] : null);
+
+  // 2. UI / Skill / Talent / Stage / Monster dicts: qA={es:null,en:<Zi>,"zh-TW":<II>,...} & VI=Fp(<LA>)
+  const qaM = slJs.match(/qA=\{es:null,en:([A-Za-z0-9_$]+),"zh-TW":([A-Za-z0-9_$]+),/);
+  const enDict = extractObjByVar(slJs, qaM ? qaM[1] : null);
+  const uiDict = extractObjByVar(slJs, qaM ? qaM[2] : null);
+  const viM = slJs.match(/e==="zh-TW"\?([A-Za-z0-9_$]+)\(/);
+  const laM = viM ? slJs.match(new RegExp(`\\b${viM[1].replace(/\$/g, "\\$")}=Fp\\(([A-Za-z0-9_$]+)\\)`)) : null;
+  const termDict = extractObjByVar(slJs, laM ? laM[1] : null);
+
+  const termKeys = Object.keys(termDict).sort((a, b) => b.length - a.length);
+  const termRe = termKeys.length
+    ? new RegExp(`(?<![\\p{L}'])(${termKeys.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?![\\p{L}'+]| \\p{Lu})`, "gu")
+    : null;
+  const applyTerms = s => (termRe ? String(s).replace(termRe, m => termDict[m] ?? m) : String(s));
+
+  const trItem = enName => itemDict[enName] ?? enName;
+  const trUi = raw => uiDict[raw] ?? applyTerms(enDict[raw] ?? raw);
+  return { itemDict, enDict, uiDict, termDict, trItem, trUi };
+}
+
+function resolveTalentRawName(slJs, specExpr, depth = 0) {
+  if (!specExpr || depth > 4) return null;
+  const quoted = specExpr.match(/"([^"]+)"/);
+  if (quoted) return quoted[1];
+  if (/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(specExpr)) {
+    const esc = specExpr.replace(/\$/g, "\\$");
+    const re = new RegExp(`(?:^|[,;\\s])${esc}=`);
+    const m = re.exec(slJs);
+    if (!m) return null;
+    const rhs = slJs.slice(m.index + m[0].length, m.index + m[0].length + 220);
+    const nameProp = rhs.match(/^\{[^}]*name:"([^"]+)"/);
+    if (nameProp) return nameProp[1];
+    const spreadM = rhs.match(/^\{\.\.\.([A-Za-z_$][A-Za-z0-9_$]*)/);
+    if (spreadM) return resolveTalentRawName(slJs, spreadM[1], depth + 1);
+    const fnQuoted = rhs.match(/"([^"]+)"/);
+    if (fnQuoted) return fnQuoted[1];
+  }
+  return null;
+}
+
+function buildLiveSnapshot(mainJs, slJs, manifest, source) {
   const snap = {
     source,
     version: null,
     buildHash: null,
     buildTime: null,
     latestPatchNotesZh: "",
-    gear: {},       // id -> { slot, tier, wtype, jobs, rare, season }
-    cards: {},      // id -> { mob, slot }
-    pets: {},       // id -> { eggId, from, secret }
-    dropsM2: {},    // mobId -> [{ id, rate }]
-    stages: {},     // stageId -> { runLength, rareId, rareChance, charExp, jobExp }
-    vP: {},         // skillId -> tags[]
+    gear: {},          // id -> { slot, tier, wtype, jobs, rare, season }
+    itemNamesZh: {},   // id -> { nameEn, nameZh }
+    cardNamesZh: {},   // id -> { nameEn, nameZh }
+    monsterNamesZh: {},// mobId -> { raw, nameZh }
+    stageNamesZh: {},  // stageId -> { raw, nameZh, placeZh }
+    jobNamesZh: {},    // jobId -> { raw, nameZh, nameFZh }
+    skillNamesZh: {},  // skillId -> { raw, nameZh }
+    talentNamesZh: { branches: {}, nodes: {} },
+    petNamesZh: {},    // petId -> { nameZh, eggId, eggZh, accId, accZh }
+    cards: {},         // id -> { mob, slot }
+    pets: {},          // id -> { eggId, from, secret }
+    dropsM2: {},       // mobId -> [{ id, rate }]
+    stages: {},        // stageId -> { runLength, rareId, rareChance, charExp, jobExp }
+    vP: {},            // skillId -> tags[]
     vPAnomalies: [],
-    t1TreeHashes: {}, // family -> { count, hash }
-    skillHashes: {},  // skillId -> hash
+    t1TreeHashes: {},  // family -> { count, hash }
+    skillHashes: {},   // skillId -> hash
     t2Status: {
       secondJobTalentsHint: "檢查中",
       hasDualWieldUnlock: false,
@@ -119,8 +218,66 @@ function buildLiveSnapshot(mainJs, slJs, source) {
     snap.latestPatchNotesZh = mainJs.slice(start, secondNext !== -1 ? Math.min(secondNext, start + 2600) : start + 1600).trim();
   }
 
-  // 2. Cards (w2 via ye())
+  // 1b. Official zh-TW names from live runtime localization (manifest + F5 + II + Zi + LA)
+  const { trItem, trUi } = buildLiveZhTranslators(slJs);
+  if (manifest && manifest.items) {
+    for (const [id, info] of Object.entries(manifest.items)) {
+      if (!info || !info.name) continue;
+      snap.itemNamesZh[id] = {
+        nameEn: info.name,
+        nameZh: trItem(info.name)
+      };
+    }
+  }
+  if (manifest && manifest.cards) {
+    for (const [id, info] of Object.entries(manifest.cards)) {
+      if (!info || !info.name) continue;
+      snap.cardNamesZh[id] = {
+        nameEn: info.name,
+        nameZh: trItem(info.name)
+      };
+    }
+  }
+
+  // Monsters (ue({id, name, ...}))
   let m;
+  const ueRe = /\bue\(\{id:"([^"]+)",name:"([^"]+)"/g;
+  while ((m = ueRe.exec(slJs)) !== null) {
+    snap.monsterNamesZh[m[1]] = { raw: m[2], nameZh: trUi(m[2]) };
+  }
+
+  // Stages (Pe array in mainJs + Endless Tower)
+  const peIdx = mainJs.indexOf('id:"prontera",name:');
+  if (peIdx !== -1) {
+    let arrStart = peIdx;
+    while (arrStart > 0 && mainJs[arrStart] !== "[") arrStart--;
+    const peStr = extractBalanced(mainJs, arrStart, "[", "]") || "";
+    const stRe = /\{id:"([^"]+)",name:"([^"]+)",place:"([^"]+)"/g;
+    while ((m = stRe.exec(peStr)) !== null) {
+      snap.stageNamesZh[m[1]] = { raw: m[2], nameZh: trUi(m[2]), placeZh: trUi(m[3]) };
+    }
+  }
+  snap.stageNamesZh.endless = { raw: "Endless Tower", nameZh: trUi("Endless Tower"), placeZh: trUi("Endless Tower") };
+
+  // Jobs (all 1st & 2nd jobs via live trUi / LA)
+  const JOB_RAW = {
+    novice: ["Novice"], swordsman: ["Swordsman"], mage: ["Mage"], archer: ["Archer"],
+    acolyte: ["Acolyte"], thief: ["Thief"], merchant: ["Merchant"], taekwon: ["Taekwon"],
+    ninja: ["Ninja"], gunslinger: ["Gunslinger"], knight: ["Knight"], crusader: ["Crusader"],
+    wizard: ["Wizard"], sage: ["Sage"], hunter: ["Hunter"], bard: ["Bard", "Dancer"],
+    priest: ["Priest"], monk: ["Monk"], assassin: ["Assassin"], rogue: ["Rogue"],
+    blacksmith: ["Blacksmith"], alchemist: ["Alchemist"],
+    star_gladiator: ["Star Gladiator"], soul_linker: ["Soul Linker"]
+  };
+  for (const [jid, [raw, rawF]] of Object.entries(JOB_RAW)) {
+    snap.jobNamesZh[jid] = {
+      raw,
+      nameZh: trUi(raw),
+      nameFZh: rawF ? trUi(rawF) : null
+    };
+  }
+
+  // 2. Cards (w2 via ye())
   const yeRe = /ye\((\d+),"([^"]+)","([^"]+)"/g;
   while ((m = yeRe.exec(slJs)) !== null) {
     snap.cards[Number(m[1])] = { mob: m[2], slot: m[3] };
@@ -166,17 +323,30 @@ function buildLiveSnapshot(mainJs, slJs, source) {
     };
   }
 
-  // 4. Pets (kt() in main.js)
-  const poringIdx = mainJs.indexOf('kt("poring"');
-  if (poringIdx !== -1) {
-    const block = mainJs.slice(poringIdx, poringIdx + 2600);
-    const ktRe = /kt\("([^"]+)",(\d+),([^,]+),\[([^\]]+)\](?:,([^,)]+))?(?:,(\{[^}]+\}))?\)/g;
+  // 4. Pets (<fn>("poring",9001,...) in main.js) + official zh-TW pet/egg/accessory names
+  const petFnM = mainJs.match(/([A-Za-z_$][A-Za-z0-9_$]*)\("poring",9001,/);
+  if (petFnM) {
+    const petFn = petFnM[1].replace(/\$/g, "\\$");
+    const block = mainJs.slice(petFnM.index, petFnM.index + 3200);
+    const ktRe = new RegExp(`(?:^|[,;\\s])${petFn}\\("([^"]+)",(\\d+),([^,]+),\\[([^\\]]+)\\](?:,([^,)]+))?(?:,(\\{[^}]+\\}))?\\)`, "g");
     while ((m = ktRe.exec(block)) !== null) {
-      snap.pets[m[1]] = {
-        eggId: Number(m[2]),
+      const petId = m[1];
+      const eggId = Number(m[2]);
+      const accId = /^\d+$/.test(m[3].trim()) ? Number(m[3].trim()) : null;
+      snap.pets[petId] = {
+        eggId,
+        accId,
         from: m[5] && m[5] !== "void 0" ? m[5].replace(/"/g, "") : null,
         secret: Boolean(m[6] && m[6].includes("secret:!0")),
         bonusSig: m[4]
+      };
+      const mobInfo = snap.monsterNamesZh[petId];
+      snap.petNamesZh[petId] = {
+        nameZh: mobInfo ? mobInfo.nameZh : trUi(petId),
+        eggId,
+        eggZh: snap.itemNamesZh[String(eggId)] ? snap.itemNamesZh[String(eggId)].nameZh : null,
+        accId,
+        accZh: accId && snap.itemNamesZh[String(accId)] ? snap.itemNamesZh[String(accId)].nameZh : null
       };
     }
   }
@@ -224,7 +394,7 @@ function buildLiveSnapshot(mainJs, slJs, source) {
     }
   }
 
-  // 8. T1 Talent Tree Hashes (detect ANY buff/nerf/rework per family!)
+  // 8. T1 Talent Tree Hashes & Official zh-TW Branch/Node Names
   for (const fam of T1_FAMILIES) {
     const needle = `Qn("${fam}",`;
     const idx = slJs.indexOf(needle);
@@ -232,14 +402,36 @@ function buildLiveSnapshot(mainJs, slJs, source) {
       const body = extractBalanced(slJs, idx + 2, "(", ")") || "";
       const nodes = body.match(/\bE\(\d+,\d+,"[^"]+"/g) || [];
       snap.t1TreeHashes[fam] = { count: nodes.length, hash: shortHash(body) };
+
+      const brRe = /\{name:"([^"]+)",icon:"[^"]+",desc:"[^"]+",talents:\[/g;
+      const brNames = [];
+      let bm, bi = 0;
+      while ((bm = brRe.exec(body)) !== null) {
+        brNames.push(trUi(bm[1]));
+        const arrStr = extractBalanced(body, bm.index + bm[0].length - 1, "[", "]") || "";
+        const eRe = /\bE\(/g;
+        let em;
+        while ((em = eRe.exec(arrStr)) !== null) {
+          const callStr = extractBalanced(arrStr, em.index + 1, "(", ")") || "";
+          const callArgs = splitTopArgs(callStr);
+          const shortId = (callArgs[2] || "").replace(/^"|"$/g, "");
+          const rawName = resolveTalentRawName(slJs, callArgs[3] || "");
+          if (shortId && rawName) {
+            snap.talentNamesZh.nodes[`${fam}.${bi}.${shortId}`] = { raw: rawName, nameZh: trUi(rawName) };
+          }
+        }
+        bi++;
+      }
+      snap.talentNamesZh.branches[fam] = brNames;
     }
   }
 
-  // 9. Active Skill Ke(...) Hashes
-  const keRe = /\bKe\("([^"]+)",/g;
+  // 9. Active Skill Ke(...) Hashes & Official zh-TW Names
+  const keRe = /\bKe\("([^"]+)","([^"]+)"/g;
   while ((m = keRe.exec(slJs)) !== null) {
     const body = extractBalanced(slJs, m.index + 2, "(", ")") || "";
     snap.skillHashes[m[1]] = shortHash(body);
+    snap.skillNamesZh[m[1]] = { raw: m[2], nameZh: trUi(m[2]) };
   }
 
   // 10. T2 Unlock Radar (prevent premature T2 build recommendations!)
@@ -281,6 +473,36 @@ function diffSnapshots(oldSnap, newSnap) {
     for (const id of Object.keys(oldSnap.gear)) {
       if (!newSnap.gear[id]) gearRemoved.push(`#${id}`);
     }
+
+    // 1b. Official zh-TW localization diffs (items, cards, monsters, stages, jobs, skills, talents, pets)
+    const diffNameMap = (oldMap, newMap, prefix = "") => {
+      const out = [];
+      if (!oldMap || !Object.keys(oldMap).length) return out;
+      for (const [k, info] of Object.entries(newMap || {})) {
+        const prev = oldMap[k];
+        if (prev && prev.nameZh !== info.nameZh) {
+          out.push(`${prefix}${k}: 舊="${prev.nameZh}" -> 新="${info.nameZh}"`);
+        }
+      }
+      return out;
+    };
+    const itemNameDiffs = diffNameMap(oldSnap.itemNamesZh, newSnap.itemNamesZh, "#");
+    const cardNameDiffs = diffNameMap(oldSnap.cardNamesZh, newSnap.cardNamesZh, "#");
+    const monsterNameDiffs = diffNameMap(oldSnap.monsterNamesZh, newSnap.monsterNamesZh);
+    const stageNameDiffs = diffNameMap(oldSnap.stageNamesZh, newSnap.stageNamesZh);
+    const jobNameDiffs = diffNameMap(oldSnap.jobNamesZh, newSnap.jobNamesZh);
+    const skillNameDiffs = diffNameMap(oldSnap.skillNamesZh, newSnap.skillNamesZh);
+    const talentNameDiffs = diffNameMap(oldSnap.talentNamesZh && oldSnap.talentNamesZh.nodes, newSnap.talentNamesZh && newSnap.talentNamesZh.nodes);
+    const petNameDiffs = [];
+    if (oldSnap.petNamesZh && Object.keys(oldSnap.petNamesZh).length) {
+      for (const [pid, info] of Object.entries(newSnap.petNamesZh || {})) {
+        const prev = oldSnap.petNamesZh[pid];
+        if (prev && (prev.nameZh !== info.nameZh || prev.accZh !== info.accZh)) {
+          petNameDiffs.push(`${pid}: 舊=${prev.nameZh}/${prev.accZh || "-"} -> 新=${info.nameZh}/${info.accZh || "-"}`);
+        }
+      }
+    }
+    const allZhNameDiffs = [...itemNameDiffs, ...cardNameDiffs, ...monsterNameDiffs, ...stageNameDiffs, ...jobNameDiffs, ...skillNameDiffs, ...talentNameDiffs, ...petNameDiffs];
 
     // 2. Cards diff
     const cardAdded = [], cardChanged = [];
@@ -337,7 +559,7 @@ function diffSnapshots(oldSnap, newSnap) {
       else if (oldSnap.skillHashes[sid] !== h) skillDiffs.push(`主動技程式碼異動 ${sid}`);
     }
 
-    hasDataChanges = !sameBuild || gearAdded.length || gearRemoved.length || gearChanged.length || cardAdded.length || cardChanged.length || petAdded.length || petChanged.length || dropDiffs.length || stageDiffs.length || vpDiffs.length || talentDiffs.length || skillDiffs.length;
+    hasDataChanges = !sameBuild || gearAdded.length || gearRemoved.length || gearChanged.length || allZhNameDiffs.length || cardAdded.length || cardChanged.length || petAdded.length || petChanged.length || dropDiffs.length || stageDiffs.length || vpDiffs.length || talentDiffs.length || skillDiffs.length;
 
     if (!hasDataChanges) {
       lines.push("## 總結：版本與資料均無變動（無需耗費 AI 算力更新）");
@@ -359,6 +581,14 @@ function diffSnapshots(oldSnap, newSnap) {
       emitList("新增裝備 (data/catalog.js)", gearAdded);
       emitList("異動裝備 (data/catalog.js)", gearChanged);
       emitList("移除裝備 (data/catalog.js)", gearRemoved);
+      emitList("裝備官方繁中譯名異動 (data/catalog.js)", itemNameDiffs);
+      emitList("卡片官方繁中譯名異動 (data/catalog.js)", cardNameDiffs);
+      emitList("怪物官方繁中譯名異動 (data/stages.js)", monsterNameDiffs);
+      emitList("關卡官方繁中譯名異動 (data/stages.js)", stageNameDiffs);
+      emitList("職業官方繁中譯名異動 (data/builds.js / trees.js)", jobNameDiffs);
+      emitList("主動技官方繁中譯名異動 (data/trees.js)", skillNameDiffs);
+      emitList("一轉天賦官方繁中譯名異動 (data/trees.js)", talentNameDiffs);
+      emitList("寵物／寵飾官方繁中譯名異動 (data/catalog.js)", petNameDiffs);
       emitList("新增卡片 (data/catalog.js)", cardAdded);
       emitList("異動卡片 (data/catalog.js)", cardChanged);
       emitList("新增寵物 (data/catalog.js)", petAdded);
@@ -387,7 +617,7 @@ function diffSnapshots(oldSnap, newSnap) {
 
 async function main() {
   const bundles = await fetchLiveBundles();
-  const liveSnap = buildLiveSnapshot(bundles.mainJs, bundles.slJs, bundles.source);
+  const liveSnap = buildLiveSnapshot(bundles.mainJs, bundles.slJs, bundles.manifest, bundles.source);
   const oldSnap = fs.existsSync(BASELINE_PATH) ? JSON.parse(fs.readFileSync(BASELINE_PATH, "utf8")) : null;
 
   const diffMd = diffSnapshots(oldSnap, liveSnap);

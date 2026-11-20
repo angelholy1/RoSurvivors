@@ -298,16 +298,111 @@ function main() {
 
       // Prose card-slot checks
       const prose = [ps.cardLogic, ps.gearLogic, ps.growthLogic].filter(Boolean).join(" ");
-      if (/飾品[^。；;\n]{0,20}#?4172|飾品[^。；;\n]{0,12}書頁怪/.test(prose)) addError("PROSE_CARD_SLOT", scope, "文案誤寫 #4172 書頁怪為飾品卡");
-      if (/鎧甲[^。；;\n]{0,20}#?4372|鎧甲[^。；;\n]{0,12}白素貞/.test(prose)) addError("PROSE_CARD_SLOT", scope, "文案誤寫 #4372 白素貞為鎧甲卡");
-      if (/頭飾[^。；;\n]{0,20}#?4048|頭飾[^。；;\n]{0,12}毒魔菇/.test(prose)) addError("PROSE_CARD_SLOT", scope, "文案誤寫 #4048 毒魔菇為頭飾卡");
+      if (/飾品[^。；;\n]{0,20}#?4172|飾品[^。；;\n]{0,12}(?:書頁怪|紙妖)/.test(prose)) addError("PROSE_CARD_SLOT", scope, "文案誤寫 #4172 紙妖卡片為飾品卡");
+      if (/鎧甲[^。；;\n]{0,20}#?4372|鎧甲[^。；;\n]{0,12}白素貞/.test(prose)) addError("PROSE_CARD_SLOT", scope, "文案誤寫 #4372 白素貞卡片為鎧甲卡");
+      if (/頭飾[^。；;\n]{0,20}#?4048|頭飾[^。；;\n]{0,12}毒魔菇/.test(prose)) addError("PROSE_CARD_SLOT", scope, "文案誤寫 #4048 毒魔菇卡片為頭飾卡");
     }
   }
 
-  // 4. Cross-check drops & version against baseline.json if present
+  // 4. Cross-check drops, version & ALL live zh-TW official names against baseline.json if present
   if (baseline) {
+    const stripTag = s => String(s || "").replace(/\s*(?:〔[^〕]*〕|（[^）]*）|\[[^\]]*\])\s*$/g, "").trim();
+
     if (baseline.version && RO_STAGES.meta.version !== baseline.version) {
       addError("VERSION_MISMATCH", "data/stages.js", `版本 ${RO_STAGES.meta.version} != baseline ${baseline.version}`);
+    }
+    if (baseline.itemNamesZh && Object.keys(baseline.itemNamesZh).length) {
+      for (const it of RO_CATALOG.items) {
+        const live = baseline.itemNamesZh[String(it.id)];
+        if (!live) continue;
+        const baseZh = stripTag(it.nameZh);
+        if (baseZh !== live.nameZh) {
+          addError("ITEM_NAME_MISMATCH", `data/catalog.js:#${it.id}`, `裝備名稱 "${it.nameZh}" (基底 "${baseZh}") != 遊戲實碼繁中 "${live.nameZh}" (${live.nameEn})`);
+        }
+      }
+    }
+    if (baseline.cardNamesZh && Object.keys(baseline.cardNamesZh).length) {
+      for (const c of RO_CATALOG.cards) {
+        const live = baseline.cardNamesZh[String(c.id)];
+        if (live && c.nameZh !== live.nameZh) {
+          addError("CARD_NAME_MISMATCH", `data/catalog.js:#${c.id}`, `卡片名稱 "${c.nameZh}" != 遊戲實碼繁中 "${live.nameZh}" (${live.nameEn})`);
+        }
+        const liveMob = baseline.monsterNamesZh && baseline.monsterNamesZh[c.mobId];
+        if (liveMob && c.mobZh !== liveMob.nameZh) {
+          addError("CARD_MOB_NAME_MISMATCH", `data/catalog.js:#${c.id}`, `卡片怪物名 "${c.mobZh}" != 遊戲實碼繁中 "${liveMob.nameZh}"`);
+        }
+      }
+    }
+    if (baseline.petNamesZh && Object.keys(baseline.petNamesZh).length) {
+      for (const p of RO_CATALOG.pets) {
+        const live = baseline.petNamesZh[p.id];
+        if (!live) continue;
+        if (stripTag(p.nameZh) !== live.nameZh) {
+          addError("PET_NAME_MISMATCH", `data/catalog.js:pet:${p.id}`, `寵物名稱 "${p.nameZh}" != 遊戲實碼繁中 "${live.nameZh}"`);
+        }
+        if ((p.accZh || null) !== (live.accZh || null)) {
+          addError("PET_ACC_NAME_MISMATCH", `data/catalog.js:pet:${p.id}`, `寵物飾品 "${p.accZh}" != 遊戲實碼繁中 "${live.accZh}"`);
+        }
+      }
+    }
+    if (baseline.monsterNamesZh && Object.keys(baseline.monsterNamesZh).length) {
+      for (const [mid, mob] of Object.entries(RO_STAGES.monsters)) {
+        const live = baseline.monsterNamesZh[mid];
+        if (live && mob.nameZh !== live.nameZh) {
+          addError("MONSTER_NAME_MISMATCH", `data/stages.js:${mid}`, `怪物名稱 "${mob.nameZh}" != 遊戲實碼繁中 "${live.nameZh}"`);
+        }
+      }
+    }
+    if (baseline.stageNamesZh && Object.keys(baseline.stageNamesZh).length) {
+      for (const st of RO_STAGES.stages) {
+        const live = baseline.stageNamesZh[st.id];
+        if (live && stripTag(st.nameZh) !== live.nameZh) {
+          addError("STAGE_NAME_MISMATCH", `data/stages.js:${st.id}`, `關卡名稱 "${st.nameZh}" (基底 "${stripTag(st.nameZh)}") != 遊戲實碼繁中 "${live.nameZh}"`);
+        }
+      }
+    }
+    if (baseline.skillNamesZh && Object.keys(baseline.skillNamesZh).length) {
+      for (const [sid, sk] of Object.entries(RO_SKILLS)) {
+        const live = baseline.skillNamesZh[sid];
+        if (live && sk.name !== live.nameZh) {
+          addError("SKILL_NAME_MISMATCH", `data/trees.js:${sid}`, `主動技能 "${sk.name}" != 遊戲實碼繁中 "${live.nameZh}"`);
+        }
+      }
+    }
+    if (baseline.jobNamesZh && Object.keys(baseline.jobNamesZh).length) {
+      for (const [fam, tree] of Object.entries(RO_TREES)) {
+        const liveJ = baseline.jobNamesZh[fam];
+        if (liveJ && tree.job && tree.job.name !== liveJ.nameZh) {
+          addError("JOB_NAME_MISMATCH", `data/trees.js:${fam}`, `一轉職業名 "${tree.job.name}" != 遊戲實碼繁中 "${liveJ.nameZh}"`);
+        }
+      }
+      for (const jobKey of RO_BUILDS.jobOrder) {
+        const job = RO_BUILDS.jobs[jobKey];
+        const liveJ = baseline.jobNamesZh[jobKey];
+        const liveFirst = job && baseline.jobNamesZh[job.firstJob];
+        if (job && liveJ && !String(job.title || "").includes(liveJ.nameZh)) {
+          addError("JOB_NAME_MISMATCH", `data/builds.js:${jobKey}`, `職業標題 "${job.title}" 未包含遊戲實碼繁中 "${liveJ.nameZh}"`);
+        }
+        if (job && liveFirst && !String(job.title || "").includes(liveFirst.nameZh)) {
+          addError("JOB_NAME_MISMATCH", `data/builds.js:${jobKey}`, `職業標題 "${job.title}" 未包含一轉實碼繁中 "${liveFirst.nameZh}"`);
+        }
+      }
+    }
+    if (baseline.talentNamesZh) {
+      for (const [fam, tree] of Object.entries(RO_TREES)) {
+        const liveBranches = (baseline.talentNamesZh.branches && baseline.talentNamesZh.branches[fam]) || [];
+        (tree.branches || []).forEach((b, bi) => {
+          if (liveBranches[bi] && b.name !== liveBranches[bi]) {
+            addError("BRANCH_NAME_MISMATCH", `data/trees.js:${fam}.${bi}`, `天賦分支 "${b.name}" != 遊戲實碼繁中 "${liveBranches[bi]}"`);
+          }
+          for (const n of (b.nodes || [])) {
+            const liveN = baseline.talentNamesZh.nodes && baseline.talentNamesZh.nodes[n.id];
+            if (liveN && n.name !== liveN.nameZh) {
+              addError("TALENT_NAME_MISMATCH", `data/trees.js:${n.id}`, `天賦節點 "${n.name}" != 遊戲實碼繁中 "${liveN.nameZh}"`);
+            }
+          }
+        });
+      }
     }
     for (const [mobId, liveDrops] of Object.entries(baseline.dropsM2 || {})) {
       const m = RO_STAGES.monsters[mobId];

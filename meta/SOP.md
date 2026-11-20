@@ -19,6 +19,7 @@
 ### 3. 硬性禁止事項（違反即判定失敗）
 - **嚴禁憑 RO 原作印象推純奶／純坦為主推 T0**（例：服事推回血奶路線當首選、劍士推純肉坦當首選）。
 - **嚴禁推薦未實裝的二轉天賦與二轉主動技能**（除非 `sync/last-diff.md` 明確偵測到二轉實裝開關已打開）。
+- **嚴禁自行翻譯遊戲專有名詞**：撰寫流派文案（`data/builds.js` 與 `meta/T0_BUILDS.md`）提及任何**職業、技能、天賦、裝備、卡片、寵物、寵物飾品、怪物、關卡**時，一律**必須與 `sync/baseline.json` 中遊戲本體 `zh-TW` 官方譯名完全一致**（由 `sync/validate.js` 強制驗收），不可自行直譯或混用英文原名。
 - **嚴禁出現任何 Unicode Emoji**（全站由 `sync/validate.js` 強制檢查，圖示只用 `data/icons.js`）。
 - **嚴禁直接把整份線上 4.6 MB `main-*.js` 或整個 473 KB `data/builds.js` 讀進上下文**；一律透過 `meta/scan-meta.js` 與 Node 單一職系讀寫腳本操作。
 

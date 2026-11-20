@@ -293,7 +293,7 @@
         <div class="roll-guide-banner">
           <span class="roll-guide-badge">${ico("spark")}<span>隨機詞條與換裝鐵則</span></span>
           <p class="roll-guide-rule">
-            防具／頭飾／飾品除 <strong>#22847 巡邏徽章</strong> 具固有特效外，同階基礎 DEF 近乎相同，底材僅差在 <strong>1 條保底詞條</strong>；實戰強度順序為：<strong>品質洞數（金 2 洞 ＞ 藍紫 1 洞 ＞ 白綠 0 洞）≥ 傳說核心技能傷（+10~20%）與隨機主屬／進攻條 ＞ Tier 2 ＞ 底材名稱</strong>。先打到好詞條的次選金裝可直接穿！
+            防具／頭飾／飾品除 <strong>#22847 普隆德拉卷軸</strong> 具固有特效外，同階基礎 DEF 近乎相同，底材僅差在 <strong>1 條保底詞條</strong>；實戰強度順序為：<strong>品質洞數（金 2 洞 ＞ 藍紫 1 洞 ＞ 白綠 0 洞）≥ 傳說核心技能傷（+10~20%）與隨機主屬／進攻條 ＞ Tier 2 ＞ 底材名稱</strong>。先打到好詞條的次選金裝可直接穿！
           </p>
         </div>
         <div class="roll-guide-grid">
@@ -398,7 +398,7 @@
     if (!alts || !alts.length) return "";
     const rows = alts.map(g => {
       const cleanName = (g.nameZh || "").replace(/\s*\[[^\]]*舊碼\]/g, "");
-      const srcTag = g.id === 22847 ? "王城劇情" : g.sourceType === "festival" ? "燈籠節" : `T${g.effTier || 1} 常駐`;
+      const srcTag = g.id === 22847 ? "普隆德拉城" : g.sourceType === "festival" ? "燈籠節" : `T${g.effTier || 1} 常駐`;
       const srcCls = g.sourceType === "festival" ? "is-season" : "";
       return `
         <div class="alt-gear-row">
@@ -920,9 +920,9 @@
     const noLootReason = stage.status === "story_only"
       ? "劇情防衛關卡（storyOnly）：不掉落一般裝備、卡片與寵物蛋。"
       : stage.status === "upcoming"
-        ? "Beta 0.7.6 尚未開放此關卡與掉落表（僅預覽陣容）。"
+        ? `${STAGES.meta.version || "Beta 0.7.8"} 尚未開放此關卡與掉落表（僅預覽陣容）。`
         : stage.status === "endless"
-          ? "無限塔計分關卡（無裝備／卡片／寵蛋掉落）。"
+          ? "魔物終結塔計分關卡（無裝備／卡片／寵蛋掉落）。"
           : "";
 
     let lootHtml = "";

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RO Survivors 盧恩公會手冊｜Beta 0.7.6 職業流派配裝與關卡掉落攻略</title>
+  <title>RO Survivors 盧恩公會手冊｜Beta 0.7.8 職業流派配裝與關卡掉落攻略</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="data/icons.js"></script>
   <script defer src="data/trees.js"></script>
@@ -19,7 +19,7 @@
         <span class="brand-crest" data-icon="crest"></span>
         <div>
           <div class="brand-title">RO Survivors 盧恩公會手冊</div>
-          <div class="brand-sub">Beta 0.7.6（f7ad3c447）實碼對齊・職業流派配裝・局內挑卡・關卡掉落機率</div>
+          <div class="brand-sub">Beta 0.7.8（10a085544）實碼對齊・職業流派配裝・局內挑卡・關卡掉落機率</div>
         </div>
       </div>
       <nav class="top-nav" role="tablist" aria-label="主要分頁">
@@ -42,14 +42,14 @@
     <section class="tab-panel active" id="tab-builds" data-tab-panel="builds" role="tabpanel">
       <div class="guild-banner">
         <div class="guild-banner-left">
-          <span class="banner-seal"><span class="ico" data-icon="seal"></span>Beta 0.7.6 實碼現況</span>
+          <span class="banner-seal"><span class="ico" data-icon="seal"></span>Beta 0.7.8 實碼現況</span>
           <p class="banner-text">
             本手冊專注整理遊戲內未直接說明的<strong>流派核心、一轉 50 點配點、裝備嵌卡搭配與局內挑卡策略</strong>；未開放的二轉技能與二轉天賦樹一律不列示，避免誤導。
           </p>
         </div>
         <div class="banner-meta">
-          <span>版本 <code>Beta 0.7.6</code></span>
-          <span>建置 <code>f7ad3c447</code></span>
+          <span>版本 <code>Beta 0.7.8</code></span>
+          <span>建置 <code>10a085544</code></span>
         </div>
       </div>
 
@@ -72,7 +72,7 @@
         <div class="guild-banner-left">
           <span class="banner-seal"><span class="ico" data-icon="stages"></span>線上實碼掉率公式</span>
           <p class="banner-text">
-            線上帳號採 <code>mysteryDrop + dropSeeded</code> <strong>加權抽樣模型</strong>：總掉落率 <code>u = 1 - Π(1 - min(1, xm × 難度))</code>，單件率為 <code>u × (xm / Σxm)</code>，<strong>與掉落列表排序無關</strong>；組隊一般怪卡率與寵蛋除以 <code>partyScale.count</code>（2 人 ÷2 / 3 人 ÷2.75）。洛陽燈籠節蛇王自然 <strong>16%</strong>（點香 <strong>50%</strong>）、扭蛋外觀 <strong>29.5%</strong>／裝備 <strong>70%</strong>／卡片 <strong>0.5%</strong>。
+            線上帳號採 <code>mysteryDrop + dropSeeded</code> <strong>加權抽樣模型</strong>：總掉落率 <code>u = 1 - Π(1 - min(1, xm × 難度))</code>，單件率為 <code>u × (xm / Σxm)</code>，<strong>與掉落列表排序無關</strong>；組隊一般怪卡率與寵蛋除以 <code>partyScale.count</code>（2 人 ÷2 / 3 人 ÷2.75）。洛陽燈籠節蛇王自然 <strong>20%</strong>（點香 <strong>75%</strong>）；扭蛋分球機率：燈籠節 <strong>28%</strong> 外觀／<strong>71%</strong> 裝／<strong>1%</strong> 卡、白素貞 <strong>35%</strong> 外觀／<strong>63%</strong> 裝／<strong>2%</strong> 卡、蛇王 <strong>60%</strong> 外觀／<strong>38%</strong> 傳說裝／<strong>2%</strong> 卡。
           </p>
         </div>
       </div>
@@ -98,7 +98,7 @@
           </div>
           <label class="search-box">
             <span class="ico" data-icon="search"></span>
-            <input type="search" id="stage-search" placeholder="跨關卡搜尋：德雷克、波爾多、#1648、鏡盾、鬼火..." aria-label="跨關卡搜尋怪物與掉落" />
+            <input type="search" id="stage-search" placeholder="跨關卡搜尋：海盜之王、波爾多、#1648、鏡盾、鬼火..." aria-label="跨關卡搜尋怪物與掉落" />
           </label>
         </div>
         <div class="stage-status-line" id="stages-count-label"></div>
@@ -109,7 +109,7 @@
     </section>
 
     <footer class="footer">
-      <span>RO Survivors 盧恩公會手冊・Beta 0.7.6（f7ad3c447 · 2026-11-19）・純靜態離線／GitHub Pages 相容</span>
+      <span>RO Survivors 盧恩公會手冊・Beta 0.7.8（10a085544 · 2026-11-20）・純靜態離線／GitHub Pages 相容</span>
       <span>全站資料經 <code>sync/validate.js</code> 實碼驗證（零未實裝二轉配點・零錯槽・零廢點）</span>
     </footer>
   </main>

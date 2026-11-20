@@ -1,9 +1,9 @@
 {
-  "source": "https://ro-survivors.com/build/main-DYrSsWlK.js + https://ro-survivors.com/build/soul_linker-DK2o6MJV.js",
-  "version": "Beta 0.7.6",
-  "buildHash": "f7ad3c447",
-  "buildTime": "2026-11-18T19:41:03.000Z",
-  "latestPatchNotesZh": "## Beta 0.7.6 — 2026 年 11 月 19 日\n\n### 燈籠節\n- [調整] 蛇王在更多燈籠節關卡中出現：16%（之前為 12.5%）。點香時仍為 50%。\n- [調整] 扭蛋給出更多外觀：每次轉蛋 29.5%（之前為 19.5%）。裝備降為 70%（之前為 80%），卡片維持 0.5%。\n- [改善] 組隊點香：隊長提議前往燈籠節時，每位隊員可以直接在「準備好了嗎？」視窗點香，不必先去找節慶主持人。\n- [新增] 關卡開始 5 秒後（組隊時從所有人都進場起算）會顯示誰點了香。\n- [修正] 燈籠節組隊：隊員的關卡時間比隊長慢時（遊戲幀數低、停在卡片畫面，或重新連線、繼續關卡），可能拿不到隊伍已擊敗頭目的扭蛋（尤其是白素貞和蛇王）。現在以關卡開始後的實際時間為準。\n\n### 遊戲\n- [新增] 升級時的「自動」按鈕：隨機選一張卡片，之後本局的每次升級都會自動隨機選擇，遊戲不會暫停。\n\n### 隊伍\n- [修正] 組隊時，隊長離開、改由其他人主持本局後，頭目會照原本的時間出現。之前若新隊長的時間比原隊長快（分頁在背景、遊戲幀數很低），那段時間內該出現的頭目會一次全部冒出來。\n- [修正] 組隊：磁鐵現在會把寶箱吸到撿到的人身邊，而不是隊長身邊。\n\n### 交易與好友\n- [修正] 手機與平板交易：點一下裝備或卡片會打開它的資料（名稱、品質、階級、類型、屬性、詞條與卡片）以及對你職業的 GS，並可在那裡加入或移除。之前完全看不到對方提供的東西。\n- [修正] 好友：好友很多時，親密度那一行不會再蓋到下一列。\n\n### 帳號\n- [修正] iPhone、iPad 與行動網路：遊玩中連線的 IP 改變時（例如使用 iCloud 私密轉送，或在 Wi-Fi 與行動數據之間切換），不會再被當成同網路的另一個帳號。之前即使你已經在遊戲裡，也可能被擋在外面並要等 10 分鐘。\n- [調整] 暫時取消同一個網路最多 3 個帳號同時遊玩的限制，以及帳號之間需間隔 10 分鐘的等待。\n- [修正] 廣場因為你的網路已有太多帳號在玩而讓你離開時，現在會說明原因，而不是直接回到標題畫面。\n- [修正] 伺服器滿人排隊時，切換到其他分頁（例如去看天賦）不會再失去排隊位置。\n\n### 修正\n- [修正] 手把：只用手把遊玩現在也算有在操作。之前廣場過 5 分鐘就會把你判定為閒置，即使你正在玩。\n- [修正] 背包：史詩與傳說裝備的光暈不會再讓背包分頁卡頓。\n- [修正] 在 1920x1080 下選擇武器的視窗不會再超出畫面（之前無法關閉）。\n- [修正] Windows 7 與舊版瀏覽器：升級卡片恢復背景，可以正常閱讀。\n- [修正] 開始新關卡時，不會再留著上一場的狀態圖示（例如剛才另一個角色的）。\n- [修正] 傳說盾牌：弓箭手或獵人拿到時也會有技能傷害詞條。\n- [修正] 無盡之塔：繼續已儲存的挑戰時，選擇神祇的視窗不會再停在畫面上。\n- [修正] Firefox：在角色選擇畫面雙擊角色可以再次直接進入遊戲。\n- [修正] Firefox：在設定中更改選項後，按 ESC 可以再次關閉視窗，WASD 也能再次移動角色。\n- [修正] 在大螢幕上，頻道列表不會再超出畫面。\n- [修正] 造型師：如果你已經通過無盡之塔第 50 層，打開造型師時就會解鎖 Blood Savage 染色，不必先去找塔之守護者。\n\n## Beta 0.7.4 — 2026 年 11 月 18 日\n\n### 交易與好友\n- [調整] 親密度：只要一起組隊遊玩到 MVP 倒下就算數，不再需要兩人都打到 MVP。\n- [修正] 和好友組隊遊玩燈籠節時，親密度現在也會增加（之前只有其他關卡會計算）。",
+  "source": "https://ro-survivors.com/build/main-tN6lVCVA.js + https://ro-survivors.com/build/soul_linker-DxAI0eRU.js + https://ro-survivors.com/assets/manifest.json",
+  "version": "Beta 0.7.8",
+  "buildHash": "10a085544",
+  "buildTime": "2026-11-20T14:52:15.000Z",
+  "latestPatchNotesZh": "## Beta 0.7.8 — 2026 年 11 月 20 日\n\n### 角色\n- [新增] 角色選擇：「改名」按鈕，隨時可以更改名稱（舊名稱會釋出給其他人使用）。\n- [新增] 角色選擇：「移動」按鈕，可把角色換到其他欄位（若該欄位已有角色，兩者會互換位置）。用滑鼠也可以直接拖曳；用手把時，十字鍵選欄位、A 放下、B 取消。\n- [新增] 角色選擇：「排序」按鈕，依職業排列（每個一轉排在其二轉之前），同職業內由等級高到低。\n\n## Beta 0.7.7 — 2026 年 11 月 20 日\n\n### 普隆德拉\n- [新增] 廣場聊天：按住 Shift 點擊自己的裝備或卡片（背包、商店、交易⋯⋯）即可在訊息中連結，看到的人可以打開它的資訊。每則訊息最多 3 個。手機上，裝備資訊中有「分享至聊天」按鈕。\n- [新增] 電腦版廣場聊天：可放大或縮小的按鈕（四種大小，會記住你的選擇）。\n- [新增] 背包：可依評分、品質、階級或取得順序排序，並有「僅限新物品」勾選框。\n- [新增] 標題畫面：「Wiki」按鈕，不必進入廣場就能打開圖書館員的 Wiki。\n- [新增] 圖書館員：燈籠節的裝備和卡片，各自標出來自哪一種扭蛋。\n- [調整] 二轉：專精改為在每棵天賦樹上按「專精」按鈕選擇（不再以第一點決定），並可在天賦面板重置。\n\n### 遊戲\n- [新增] 選項 › 畫面 › 限制 FPS：可選在廣場和關卡中限制為 30 或 60 fps，手機更省電。關卡速度不變。\n- [改善] 寶箱也有「自動」按鈕，會自動選擇裝備，且絕不會選擇會取代同一欄位裝備的物品（若全部都會取代，寶箱會保持開啟讓你手動選擇）。\n- [改善] 寶箱中，精煉卡片會顯示裝備增加多少以及總計（例如「+5% → 25%」）。\n\n### 燈籠節\n- [調整] 蛇王出現在 20% 的關卡中（之前為 16%），點香時為 75%（之前為 50%）。\n- [調整] 每種扭蛋有各自的機率：燈籠節扭蛋 28% 外觀、71% 裝備（稀有 60% / 史詩 40%）、1% 卡片；白素貞扭蛋 35% 外觀、63% 裝備（史詩 80% / 傳說 20%）、2% 卡片；蛇王扭蛋 60% 外觀、38% 傳說裝備、2% 卡片。\n- [調整] 燈籠節收藏只計算外觀；卡片仍會在轉蛋中出現。",
   "gear": {
     "1107": {
       "slot": "weapon",
@@ -1222,6 +1222,5165 @@
       "season": null
     }
   },
+  "itemNamesZh": {
+    "501": {
+      "nameEn": "Red Potion",
+      "nameZh": "紅色藥水"
+    },
+    "502": {
+      "nameEn": "Orange Potion",
+      "nameZh": "赤色藥水"
+    },
+    "503": {
+      "nameEn": "Yellow Potion",
+      "nameZh": "黃色藥水"
+    },
+    "504": {
+      "nameEn": "White Potion",
+      "nameZh": "白色藥水"
+    },
+    "505": {
+      "nameEn": "Blue Potion",
+      "nameZh": "藍色藥水"
+    },
+    "506": {
+      "nameEn": "Green Potion",
+      "nameZh": "綠色藥水"
+    },
+    "522": {
+      "nameEn": "Mastela Fruit",
+      "nameZh": "瑪絲黛拉果實"
+    },
+    "525": {
+      "nameEn": "Panacea",
+      "nameZh": "萬能藥"
+    },
+    "526": {
+      "nameEn": "Royal Jelly",
+      "nameZh": "蜂膠"
+    },
+    "545": {
+      "nameEn": "Red Slim Potion",
+      "nameZh": "紅色纖細藥水"
+    },
+    "546": {
+      "nameEn": "Yellow Slim Potion",
+      "nameZh": "黃色纖細藥水"
+    },
+    "547": {
+      "nameEn": "White Slim Potion",
+      "nameZh": "白色纖細藥水"
+    },
+    "554": {
+      "nameEn": "Mochi",
+      "nameZh": "甜米糕"
+    },
+    "607": {
+      "nameEn": "Yggdrasil Berry",
+      "nameZh": "天地樹果實"
+    },
+    "645": {
+      "nameEn": "Concentration Potion",
+      "nameZh": "集中藥水"
+    },
+    "656": {
+      "nameEn": "Awakening Potion",
+      "nameZh": "覺醒藥水"
+    },
+    "657": {
+      "nameEn": "Berserk Potion",
+      "nameZh": "菠色克藥水"
+    },
+    "686": {
+      "nameEn": "Level 3 Earth Spike Scroll",
+      "nameZh": "地震術等級3"
+    },
+    "715": {
+      "nameEn": "Yellow Gemstone",
+      "nameZh": "黃色魔力礦石"
+    },
+    "717": {
+      "nameEn": "Blue Gemstone",
+      "nameZh": "藍色魔力礦石"
+    },
+    "944": {
+      "nameEn": "Horseshoe",
+      "nameZh": "馬蹄"
+    },
+    "984": {
+      "nameEn": "Oridecon",
+      "nameZh": "神之金屬"
+    },
+    "985": {
+      "nameEn": "Elunium",
+      "nameZh": "鋁"
+    },
+    "1010": {
+      "nameEn": "Phracon",
+      "nameZh": "強化武器金屬-級數一"
+    },
+    "1011": {
+      "nameEn": "Emveretarcon",
+      "nameZh": "強化武器金屬-級數二"
+    },
+    "1101": {
+      "nameEn": "Sword",
+      "nameZh": "長劍"
+    },
+    "1104": {
+      "nameEn": "Falchion",
+      "nameZh": "圓月刀"
+    },
+    "1105": {
+      "nameEn": "Falchion",
+      "nameZh": "圓月刀"
+    },
+    "1107": {
+      "nameEn": "Blade",
+      "nameZh": "厚刃劍"
+    },
+    "1108": {
+      "nameEn": "Blade",
+      "nameZh": "厚刃劍"
+    },
+    "1110": {
+      "nameEn": "Rapier",
+      "nameZh": "擊刺長劍"
+    },
+    "1117": {
+      "nameEn": "Katana",
+      "nameZh": "武士刀"
+    },
+    "1118": {
+      "nameEn": "Katana",
+      "nameZh": "武士刀"
+    },
+    "1124": {
+      "nameEn": "Orcish Sword",
+      "nameZh": "獸人刀"
+    },
+    "1125": {
+      "nameEn": "Ring Pommel Saber",
+      "nameZh": "圓柄馬刀"
+    },
+    "1126": {
+      "nameEn": "Saber",
+      "nameZh": "騎兵之劍"
+    },
+    "1127": {
+      "nameEn": "Saber",
+      "nameZh": "騎兵之劍"
+    },
+    "1128": {
+      "nameEn": "Haedong Gum",
+      "nameZh": "海東劍"
+    },
+    "1131": {
+      "nameEn": "Ice Falchion",
+      "nameZh": "水靈之刀"
+    },
+    "1133": {
+      "nameEn": "Fire Brand",
+      "nameZh": "火靈之劍"
+    },
+    "1135": {
+      "nameEn": "Cutlus",
+      "nameZh": "狂擊之劍"
+    },
+    "1138": {
+      "nameEn": "Mysteltainn",
+      "nameZh": "妖劍 弒光"
+    },
+    "1152": {
+      "nameEn": "Slayer",
+      "nameZh": "雙手劍"
+    },
+    "1163": {
+      "nameEn": "Claymore",
+      "nameZh": "十字巨劍"
+    },
+    "1166": {
+      "nameEn": "Dragon Slayer",
+      "nameZh": "龍牙劍"
+    },
+    "1189": {
+      "nameEn": "Krasnaya",
+      "nameZh": "克拉斯拿雅劍"
+    },
+    "1201": {
+      "nameEn": "Knife",
+      "nameZh": "短劍"
+    },
+    "1202": {
+      "nameEn": "Knife",
+      "nameZh": "短劍"
+    },
+    "1207": {
+      "nameEn": "Main Gauche",
+      "nameZh": "笨拙短劍"
+    },
+    "1208": {
+      "nameEn": "Main Gauche",
+      "nameZh": "笨拙短劍"
+    },
+    "1209": {
+      "nameEn": "Main Gauche",
+      "nameZh": "笨拙短劍"
+    },
+    "1210": {
+      "nameEn": "Dirk",
+      "nameZh": "德克短劍"
+    },
+    "1213": {
+      "nameEn": "Dagger",
+      "nameZh": "大駒短劍"
+    },
+    "1214": {
+      "nameEn": "Dagger",
+      "nameZh": "大駒短劍"
+    },
+    "1216": {
+      "nameEn": "Stiletto",
+      "nameZh": "雙刃短劍"
+    },
+    "1217": {
+      "nameEn": "Stiletto",
+      "nameZh": "雙刃短劍"
+    },
+    "1218": {
+      "nameEn": "Stiletto",
+      "nameZh": "雙刃短劍"
+    },
+    "1219": {
+      "nameEn": "Gladius",
+      "nameZh": "長柄短劍"
+    },
+    "1220": {
+      "nameEn": "Gladius",
+      "nameZh": "長柄短劍"
+    },
+    "1221": {
+      "nameEn": "Gladius",
+      "nameZh": "長柄短劍"
+    },
+    "1222": {
+      "nameEn": "Damascus",
+      "nameZh": "大馬士革短劍"
+    },
+    "1228": {
+      "nameEn": "Combat Knife",
+      "nameZh": "戰鬥短劍"
+    },
+    "1234": {
+      "nameEn": "Moonlight Sword",
+      "nameZh": "月靈短劍"
+    },
+    "1250": {
+      "nameEn": "Jur",
+      "nameZh": "拳刃"
+    },
+    "1252": {
+      "nameEn": "Katar",
+      "nameZh": "卡塔勒拳刃"
+    },
+    "1253": {
+      "nameEn": "Katar",
+      "nameZh": "卡塔勒拳刃"
+    },
+    "1254": {
+      "nameEn": "Jamadhar",
+      "nameZh": "秘刃 闇嘯"
+    },
+    "1256": {
+      "nameEn": "Katar of Cold Icicle",
+      "nameZh": "冰靈拳刃"
+    },
+    "1258": {
+      "nameEn": "Katar of Raging Blaze",
+      "nameZh": "火靈拳刃"
+    },
+    "1261": {
+      "nameEn": "Infiltrator",
+      "nameZh": "刺殺拳刃"
+    },
+    "1262": {
+      "nameEn": "Loki's Nail",
+      "nameZh": "洛奇的指甲"
+    },
+    "1265": {
+      "nameEn": "Bloody Roar",
+      "nameZh": "血拳刃"
+    },
+    "1277": {
+      "nameEn": "Katar of Raging Blaze",
+      "nameZh": "火靈拳刃"
+    },
+    "1301": {
+      "nameEn": "Axe",
+      "nameZh": "斧"
+    },
+    "1302": {
+      "nameEn": "Axe",
+      "nameZh": "斧"
+    },
+    "1304": {
+      "nameEn": "Orcish Axe",
+      "nameZh": "獸人斧"
+    },
+    "1309": {
+      "nameEn": "Orcish Axe",
+      "nameZh": "獸人斧"
+    },
+    "1351": {
+      "nameEn": "Battle Axe",
+      "nameZh": "巨斧"
+    },
+    "1352": {
+      "nameEn": "Battle Axe",
+      "nameZh": "巨斧"
+    },
+    "1355": {
+      "nameEn": "Hammer",
+      "nameZh": "鋼斧"
+    },
+    "1370": {
+      "nameEn": "Doom Slayer",
+      "nameZh": "超重雙手斧"
+    },
+    "1377": {
+      "nameEn": "Hurricane Fury",
+      "nameZh": "狂暴颶風斧"
+    },
+    "1401": {
+      "nameEn": "Javelin",
+      "nameZh": "長戟"
+    },
+    "1402": {
+      "nameEn": "Javelin",
+      "nameZh": "長戟"
+    },
+    "1405": {
+      "nameEn": "Spear",
+      "nameZh": "長矛"
+    },
+    "1407": {
+      "nameEn": "Pike",
+      "nameZh": "步兵長矛"
+    },
+    "1408": {
+      "nameEn": "Pike",
+      "nameZh": "步兵長矛"
+    },
+    "1409": {
+      "nameEn": "Pike",
+      "nameZh": "步兵長矛"
+    },
+    "1413": {
+      "nameEn": "Gungnir",
+      "nameZh": "剛尼爾長矛"
+    },
+    "1452": {
+      "nameEn": "Guisarme",
+      "nameZh": "彎刃長矛"
+    },
+    "1460": {
+      "nameEn": "Trident",
+      "nameZh": "德瑞尹長戟"
+    },
+    "1461": {
+      "nameEn": "Trident",
+      "nameZh": "德瑞尹長戟"
+    },
+    "1466": {
+      "nameEn": "Crescent Scythe",
+      "nameZh": "死神之鐮"
+    },
+    "1477": {
+      "nameEn": "Spectral Spear",
+      "nameZh": "妖怪的槍"
+    },
+    "1479": {
+      "nameEn": "Spectral Spear",
+      "nameZh": "妖怪的槍"
+    },
+    "1501": {
+      "nameEn": "Club",
+      "nameZh": "木錘"
+    },
+    "1502": {
+      "nameEn": "Club",
+      "nameZh": "木錘"
+    },
+    "1504": {
+      "nameEn": "Mace",
+      "nameZh": "鐵錘"
+    },
+    "1505": {
+      "nameEn": "Mace",
+      "nameZh": "鐵錘"
+    },
+    "1506": {
+      "nameEn": "Mace",
+      "nameZh": "鐵錘"
+    },
+    "1511": {
+      "nameEn": "Flail",
+      "nameZh": "流星錘"
+    },
+    "1513": {
+      "nameEn": "Morning Star",
+      "nameZh": "日星錘"
+    },
+    "1517": {
+      "nameEn": "Sword Mace",
+      "nameZh": "尖刃鐵錘"
+    },
+    "1518": {
+      "nameEn": "Sword Mace",
+      "nameZh": "尖刃鐵錘"
+    },
+    "1519": {
+      "nameEn": "Chain",
+      "nameZh": "鏈錘"
+    },
+    "1524": {
+      "nameEn": "Golden Mace",
+      "nameZh": "黃金之錘"
+    },
+    "1525": {
+      "nameEn": "Long Mace",
+      "nameZh": "秘銀長錘"
+    },
+    "1528": {
+      "nameEn": "Grand Cross",
+      "nameZh": "聖錘 十字星"
+    },
+    "1530": {
+      "nameEn": "Mjolnir",
+      "nameZh": "雷神之錘"
+    },
+    "1550": {
+      "nameEn": "Book",
+      "nameZh": "書"
+    },
+    "1553": {
+      "nameEn": "Book of Billows",
+      "nameZh": "水靈之書"
+    },
+    "1555": {
+      "nameEn": "Book of Blazing Sun",
+      "nameZh": "火靈之書"
+    },
+    "1557": {
+      "nameEn": "Book of Apocalypse",
+      "nameZh": "預言錄"
+    },
+    "1558": {
+      "nameEn": "Girl's Diary",
+      "nameZh": "日記本"
+    },
+    "1601": {
+      "nameEn": "Rod",
+      "nameZh": "手杖"
+    },
+    "1602": {
+      "nameEn": "Rod",
+      "nameZh": "手杖"
+    },
+    "1604": {
+      "nameEn": "Wand",
+      "nameZh": "橡木魔杖"
+    },
+    "1607": {
+      "nameEn": "Staff",
+      "nameZh": "智慧魔杖"
+    },
+    "1610": {
+      "nameEn": "Arc Wand",
+      "nameZh": "言靈魔杖"
+    },
+    "1612": {
+      "nameEn": "Arc Wand",
+      "nameZh": "言靈魔杖"
+    },
+    "1613": {
+      "nameEn": "Mighty Staff",
+      "nameZh": "巫杖 魂咬"
+    },
+    "1648": {
+      "nameEn": "Staff of Bordeaux",
+      "nameZh": "波爾多之杖"
+    },
+    "1663": {
+      "nameEn": "Staff of Bordeaux",
+      "nameZh": "波爾多之杖"
+    },
+    "1701": {
+      "nameEn": "Bow",
+      "nameZh": "弓"
+    },
+    "1702": {
+      "nameEn": "Bow",
+      "nameZh": "弓"
+    },
+    "1704": {
+      "nameEn": "Composite Bow",
+      "nameZh": "坎普茲弓"
+    },
+    "1707": {
+      "nameEn": "Great Bow",
+      "nameZh": "克羅伊特弓"
+    },
+    "1708": {
+      "nameEn": "Great Bow",
+      "nameZh": "克羅伊特弓"
+    },
+    "1710": {
+      "nameEn": "Cross Bow",
+      "nameZh": "十字弓"
+    },
+    "1711": {
+      "nameEn": "Cross Bow",
+      "nameZh": "十字弓"
+    },
+    "1718": {
+      "nameEn": "Hunter Bow",
+      "nameZh": "獵人之弓"
+    },
+    "1722": {
+      "nameEn": "Ballista",
+      "nameZh": "貝利斯塔強弩"
+    },
+    "1724": {
+      "nameEn": "Dragon Wing",
+      "nameZh": "天龍之翼"
+    },
+    "1734": {
+      "nameEn": "Orc Archer Bow",
+      "nameZh": "獸人弓箭手之弓"
+    },
+    "1801": {
+      "nameEn": "Waghnak",
+      "nameZh": "虎爪拳套"
+    },
+    "1803": {
+      "nameEn": "Knuckle Dusters",
+      "nameZh": "鋼鐵拳套"
+    },
+    "1805": {
+      "nameEn": "Studded Knuckles",
+      "nameZh": "賀勒拳套"
+    },
+    "1806": {
+      "nameEn": "Studded Knuckles",
+      "nameZh": "賀勒拳套"
+    },
+    "1809": {
+      "nameEn": "Claw",
+      "nameZh": "龍爪拳套"
+    },
+    "1812": {
+      "nameEn": "Finger",
+      "nameZh": "鷹爪拳套"
+    },
+    "1813": {
+      "nameEn": "Kaiser Knuckle",
+      "nameZh": "風靈拳套"
+    },
+    "1901": {
+      "nameEn": "Violin",
+      "nameZh": "小提琴"
+    },
+    "1905": {
+      "nameEn": "Lute",
+      "nameZh": "魯特琴"
+    },
+    "1909": {
+      "nameEn": "Harp",
+      "nameZh": "豎琴"
+    },
+    "1913": {
+      "nameEn": "Electric Guitar",
+      "nameZh": "電子吉他"
+    },
+    "1950": {
+      "nameEn": "Rope",
+      "nameZh": "鞭子"
+    },
+    "1954": {
+      "nameEn": "Wire Whip",
+      "nameZh": "鋼鐵鞭子"
+    },
+    "1958": {
+      "nameEn": "Tail Whip",
+      "nameZh": "幸運鞭子"
+    },
+    "1964": {
+      "nameEn": "Chemeti Whip",
+      "nameZh": "秘鞭 眷戀"
+    },
+    "2101": {
+      "nameEn": "Guard",
+      "nameZh": "鐵盾"
+    },
+    "2102": {
+      "nameEn": "Guard",
+      "nameZh": "鐵盾"
+    },
+    "2103": {
+      "nameEn": "Buckler",
+      "nameZh": "圓盾"
+    },
+    "2104": {
+      "nameEn": "Buckler",
+      "nameZh": "圓盾"
+    },
+    "2107": {
+      "nameEn": "Mirror Shield",
+      "nameZh": "鏡盾"
+    },
+    "2108": {
+      "nameEn": "Mirror Shield",
+      "nameZh": "鏡盾"
+    },
+    "2110": {
+      "nameEn": "Holy Guard",
+      "nameZh": "聖耀之盾"
+    },
+    "2114": {
+      "nameEn": "Stone Buckler",
+      "nameZh": "石製圓盾"
+    },
+    "2115": {
+      "nameEn": "Valkyrie Shield",
+      "nameZh": "巴基力亞鋼盾"
+    },
+    "2116": {
+      "nameEn": "Angelic Guard",
+      "nameZh": "天使之保護"
+    },
+    "2124": {
+      "nameEn": "Thorny Buckler",
+      "nameZh": "刺針盾牌"
+    },
+    "2201": {
+      "nameEn": "Sunglasses",
+      "nameZh": "太陽眼鏡"
+    },
+    "2203": {
+      "nameEn": "Glasses",
+      "nameZh": "眼鏡"
+    },
+    "2205": {
+      "nameEn": "Diver Goggles",
+      "nameZh": "泳鏡"
+    },
+    "2206": {
+      "nameEn": "Wedding Veil",
+      "nameZh": "婚禮頭紗"
+    },
+    "2207": {
+      "nameEn": "Fancy Flower",
+      "nameZh": "花朵頭飾"
+    },
+    "2208": {
+      "nameEn": "Ribbon",
+      "nameZh": "紫蝶髮帶"
+    },
+    "2209": {
+      "nameEn": "Ribbon",
+      "nameZh": "紫蝶髮帶"
+    },
+    "2210": {
+      "nameEn": "Hairband",
+      "nameZh": "髮箍"
+    },
+    "2211": {
+      "nameEn": "Bandana",
+      "nameZh": "方頭巾"
+    },
+    "2212": {
+      "nameEn": "Eye Patch",
+      "nameZh": "獨眼龍眼罩"
+    },
+    "2213": {
+      "nameEn": "Kitty Band",
+      "nameZh": "貓耳髮圈"
+    },
+    "2214": {
+      "nameEn": "Bunny Band",
+      "nameZh": "兔耳髮圈"
+    },
+    "2220": {
+      "nameEn": "Hat",
+      "nameZh": "漁夫帽"
+    },
+    "2221": {
+      "nameEn": "Hat",
+      "nameZh": "漁夫帽"
+    },
+    "2226": {
+      "nameEn": "Cap",
+      "nameZh": "無邊帽"
+    },
+    "2227": {
+      "nameEn": "Cap",
+      "nameZh": "無邊帽"
+    },
+    "2234": {
+      "nameEn": "Tiara",
+      "nameZh": "后冠"
+    },
+    "2235": {
+      "nameEn": "Crown",
+      "nameZh": "王冠"
+    },
+    "2244": {
+      "nameEn": "Big Ribbon",
+      "nameZh": "紅蝶髮帶"
+    },
+    "2245": {
+      "nameEn": "Sweet Gent",
+      "nameZh": "紳士帽"
+    },
+    "2246": {
+      "nameEn": "Golden Gear",
+      "nameZh": "黃金帽"
+    },
+    "2247": {
+      "nameEn": "Romantic Gent",
+      "nameZh": "回憶帽"
+    },
+    "2248": {
+      "nameEn": "Western Grace",
+      "nameZh": "牛仔帽"
+    },
+    "2250": {
+      "nameEn": "Cute Ribbon",
+      "nameZh": "粉紗髮圈"
+    },
+    "2251": {
+      "nameEn": "Monk Hat",
+      "nameZh": "神聖之帽"
+    },
+    "2252": {
+      "nameEn": "Wizard Hat",
+      "nameZh": "魔法帽"
+    },
+    "2254": {
+      "nameEn": "Angel Wings",
+      "nameZh": "天使髮圈"
+    },
+    "2255": {
+      "nameEn": "Evil Wings",
+      "nameZh": "惡魔髮圈"
+    },
+    "2256": {
+      "nameEn": "Majestic Goat",
+      "nameZh": "山羊頭盔"
+    },
+    "2257": {
+      "nameEn": "Unicorn Horn",
+      "nameZh": "獸角頭飾"
+    },
+    "2260": {
+      "nameEn": "Mini Glasses",
+      "nameZh": "迷你眼鏡"
+    },
+    "2262": {
+      "nameEn": "Clown Nose",
+      "nameZh": "小丑鼻子"
+    },
+    "2264": {
+      "nameEn": "Munak Hat",
+      "nameZh": "殭屍帽"
+    },
+    "2268": {
+      "nameEn": "Pipe",
+      "nameZh": "煙斗"
+    },
+    "2270": {
+      "nameEn": "Romantic Leaf",
+      "nameZh": "草葉"
+    },
+    "2272": {
+      "nameEn": "Stop Post",
+      "nameZh": "停止標誌頭飾"
+    },
+    "2274": {
+      "nameEn": "Ghost Bandana",
+      "nameZh": "亡者髮箍"
+    },
+    "2277": {
+      "nameEn": "Nurse Cap",
+      "nameZh": "護士帽"
+    },
+    "2280": {
+      "nameEn": "Sakkat",
+      "nameZh": "草帽"
+    },
+    "2282": {
+      "nameEn": "Halo",
+      "nameZh": "光環"
+    },
+    "2285": {
+      "nameEn": "Apple of Archer",
+      "nameZh": "蘋果頭飾"
+    },
+    "2286": {
+      "nameEn": "Elven Ears",
+      "nameZh": "妖精長耳朵飾"
+    },
+    "2287": {
+      "nameEn": "Pirate Bandana",
+      "nameZh": "海盜頭巾"
+    },
+    "2288": {
+      "nameEn": "Mr. Scream",
+      "nameZh": "整人面具"
+    },
+    "2289": {
+      "nameEn": "Poo Poo Hat",
+      "nameZh": "糞便帽"
+    },
+    "2291": {
+      "nameEn": "Butterfly Mask",
+      "nameZh": "蝴蝶假面"
+    },
+    "2292": {
+      "nameEn": "Welding Mask",
+      "nameZh": "鋼鐵面具"
+    },
+    "2296": {
+      "nameEn": "Binoculars",
+      "nameZh": "望遠鏡"
+    },
+    "2297": {
+      "nameEn": "Goblin Mask",
+      "nameZh": "哥布靈面具"
+    },
+    "2298": {
+      "nameEn": "Green Feeler",
+      "nameZh": "觸角頭飾"
+    },
+    "2299": {
+      "nameEn": "Orc Helm",
+      "nameZh": "獸人頭盔"
+    },
+    "2301": {
+      "nameEn": "Cotton Shirt",
+      "nameZh": "棉襯衫"
+    },
+    "2302": {
+      "nameEn": "Cotton Shirt",
+      "nameZh": "棉襯衫"
+    },
+    "2303": {
+      "nameEn": "Jacket",
+      "nameZh": "皮製外套"
+    },
+    "2304": {
+      "nameEn": "Jacket",
+      "nameZh": "皮製外套"
+    },
+    "2305": {
+      "nameEn": "Adventurer's Suit",
+      "nameZh": "冒險衣"
+    },
+    "2306": {
+      "nameEn": "Adventurer's Suit",
+      "nameZh": "冒險衣"
+    },
+    "2307": {
+      "nameEn": "Mantle",
+      "nameZh": "大衣"
+    },
+    "2308": {
+      "nameEn": "Mantle",
+      "nameZh": "大衣"
+    },
+    "2310": {
+      "nameEn": "Coat",
+      "nameZh": "長大衣"
+    },
+    "2311": {
+      "nameEn": "Mink Coat",
+      "nameZh": "毛皮大衣"
+    },
+    "2314": {
+      "nameEn": "Chain Mail",
+      "nameZh": "鋼鐵鎖子甲"
+    },
+    "2316": {
+      "nameEn": "Full Plate",
+      "nameZh": "鋼鐵鎧甲"
+    },
+    "2320": {
+      "nameEn": "Formal Suit",
+      "nameZh": "西裝外套"
+    },
+    "2321": {
+      "nameEn": "Silk Robe",
+      "nameZh": "絲質外袍"
+    },
+    "2322": {
+      "nameEn": "Silk Robe",
+      "nameZh": "絲質外袍"
+    },
+    "2323": {
+      "nameEn": "Scapulare",
+      "nameZh": "聖職之袍"
+    },
+    "2324": {
+      "nameEn": "Scapulare",
+      "nameZh": "聖職之袍"
+    },
+    "2328": {
+      "nameEn": "Wooden Mail",
+      "nameZh": "木製鎧甲"
+    },
+    "2329": {
+      "nameEn": "Wooden Mail",
+      "nameZh": "木製鎧甲"
+    },
+    "2330": {
+      "nameEn": "Tights",
+      "nameZh": "緊身便衣"
+    },
+    "2333": {
+      "nameEn": "Silver Robe",
+      "nameZh": "秘銀之衣"
+    },
+    "2335": {
+      "nameEn": "Thief Clothes",
+      "nameZh": "盜賊之衣"
+    },
+    "2336": {
+      "nameEn": "Thief Clothes",
+      "nameZh": "盜賊之衣"
+    },
+    "2337": {
+      "nameEn": "Ninja Suit",
+      "nameZh": "忍服 血櫻"
+    },
+    "2353": {
+      "nameEn": "Odin's Blessing",
+      "nameZh": "奧丁的祝福"
+    },
+    "2355": {
+      "nameEn": "Angelic Protection",
+      "nameZh": "天使之守護"
+    },
+    "2357": {
+      "nameEn": "Valkyrie Armor",
+      "nameZh": "巴基力的鎧甲"
+    },
+    "2359": {
+      "nameEn": "Ninja Suit",
+      "nameZh": "忍服 血櫻"
+    },
+    "2367": {
+      "nameEn": "Sniping Suit",
+      "nameZh": "剪裁服裝"
+    },
+    "2399": {
+      "nameEn": "Dragon Vest",
+      "nameZh": "暴躁龍內衣"
+    },
+    "2401": {
+      "nameEn": "Sandals",
+      "nameZh": "輕便鞋"
+    },
+    "2403": {
+      "nameEn": "Shoes",
+      "nameZh": "長靴"
+    },
+    "2404": {
+      "nameEn": "Shoes",
+      "nameZh": "長靴"
+    },
+    "2405": {
+      "nameEn": "Boots",
+      "nameZh": "戰士長靴"
+    },
+    "2406": {
+      "nameEn": "Boots",
+      "nameZh": "戰士長靴"
+    },
+    "2410": {
+      "nameEn": "Sleipnir",
+      "nameZh": "史雷普尼爾之靴"
+    },
+    "2411": {
+      "nameEn": "Greaves",
+      "nameZh": "重靴"
+    },
+    "2418": {
+      "nameEn": "Vidar's Boots",
+      "nameZh": "迪塔樂長靴"
+    },
+    "2419": {
+      "nameEn": "Goibne's Greaves",
+      "nameZh": "哥夫內軍靴"
+    },
+    "2420": {
+      "nameEn": "Angel's Reincarnation",
+      "nameZh": "天使之降臨"
+    },
+    "2424": {
+      "nameEn": "Tidal Shoes",
+      "nameZh": "防水長靴"
+    },
+    "2501": {
+      "nameEn": "Hood",
+      "nameZh": "連帽披肩"
+    },
+    "2503": {
+      "nameEn": "Muffler",
+      "nameZh": "披肩"
+    },
+    "2504": {
+      "nameEn": "Muffler",
+      "nameZh": "披肩"
+    },
+    "2505": {
+      "nameEn": "Manteau",
+      "nameZh": "斗篷"
+    },
+    "2506": {
+      "nameEn": "Manteau",
+      "nameZh": "斗篷"
+    },
+    "2507": {
+      "nameEn": "Cape of Ancient Lord",
+      "nameZh": "伯爵斗篷"
+    },
+    "2509": {
+      "nameEn": "Manteau of Survival",
+      "nameZh": "生存斗篷"
+    },
+    "2511": {
+      "nameEn": "Skeleton Manteau",
+      "nameZh": "邪骸戰士的斗篷"
+    },
+    "2515": {
+      "nameEn": "Eagle Wing",
+      "nameZh": "老鷹之翅膀"
+    },
+    "2526": {
+      "nameEn": "Coat of Dragon Scale",
+      "nameZh": "龍鱗外套"
+    },
+    "2527": {
+      "nameEn": "Dragon Breath",
+      "nameZh": "龍的呼吸"
+    },
+    "2553": {
+      "nameEn": "Dragon Manteau",
+      "nameZh": "暴躁龍斗篷"
+    },
+    "2601": {
+      "nameEn": "Ring",
+      "nameZh": "力量戒指"
+    },
+    "2602": {
+      "nameEn": "Earring",
+      "nameZh": "智力耳環"
+    },
+    "2603": {
+      "nameEn": "Necklace",
+      "nameZh": "體力項鏈"
+    },
+    "2604": {
+      "nameEn": "Glove",
+      "nameZh": "防禦手套"
+    },
+    "2605": {
+      "nameEn": "Brooch",
+      "nameZh": "敏捷別針"
+    },
+    "2607": {
+      "nameEn": "Clip",
+      "nameZh": "髮夾"
+    },
+    "2608": {
+      "nameEn": "Rosary",
+      "nameZh": "幸運珠鏈"
+    },
+    "2609": {
+      "nameEn": "Skull Ring",
+      "nameZh": "骷髏戒指"
+    },
+    "2610": {
+      "nameEn": "Gold Ring",
+      "nameZh": "金戒指"
+    },
+    "2611": {
+      "nameEn": "Silver Ring",
+      "nameZh": "銀戒指"
+    },
+    "2612": {
+      "nameEn": "Flower Ring",
+      "nameZh": "花戒指"
+    },
+    "2614": {
+      "nameEn": "Eye of Dullahan",
+      "nameZh": "永恆戒指"
+    },
+    "2615": {
+      "nameEn": "Safety Ring",
+      "nameZh": "防禦戒指"
+    },
+    "2616": {
+      "nameEn": "Critical Ring",
+      "nameZh": "潛能戒指"
+    },
+    "2617": {
+      "nameEn": "Celebrant's Mitten",
+      "nameZh": "智慧手套"
+    },
+    "2619": {
+      "nameEn": "Bow Thimble",
+      "nameZh": "神射手套"
+    },
+    "2620": {
+      "nameEn": "Rogue's Treasure",
+      "nameZh": "怪盜戒指"
+    },
+    "2623": {
+      "nameEn": "Necklace",
+      "nameZh": "體力項鏈"
+    },
+    "2625": {
+      "nameEn": "Brooch",
+      "nameZh": "敏捷別針"
+    },
+    "2626": {
+      "nameEn": "Rosary",
+      "nameZh": "幸運珠鏈"
+    },
+    "2627": {
+      "nameEn": "Belt",
+      "nameZh": "皮帶"
+    },
+    "2629": {
+      "nameEn": "Megingjord",
+      "nameZh": "雷神腰帶"
+    },
+    "2630": {
+      "nameEn": "Brisingamen",
+      "nameZh": "女神頸鍊"
+    },
+    "2666": {
+      "nameEn": "Lantern of Hope",
+      "nameZh": "希望之燈"
+    },
+    "2678": {
+      "nameEn": "Ring of Flame Lord",
+      "nameZh": "火焰國王戒指"
+    },
+    "2679": {
+      "nameEn": "Ring of Resonance",
+      "nameZh": "共鳴戒指"
+    },
+    "2700": {
+      "nameEn": "Red Silk Seal",
+      "nameZh": "封印的紅色綢緞"
+    },
+    "2708": {
+      "nameEn": "Chinese Handicraft",
+      "nameZh": "中華手工藝品"
+    },
+    "2715": {
+      "nameEn": "Skull Ring",
+      "nameZh": "骷髏戒指"
+    },
+    "2986": {
+      "nameEn": "Snake Ring",
+      "nameZh": "蛇戒"
+    },
+    "5008": {
+      "nameEn": "Puppy Love",
+      "nameZh": "花冠"
+    },
+    "5012": {
+      "nameEn": "Ph.D Hat",
+      "nameZh": "學士帽"
+    },
+    "5013": {
+      "nameEn": "Lord Kaho's Horn",
+      "nameZh": "卡浩之角"
+    },
+    "5017": {
+      "nameEn": "Bone Helm",
+      "nameZh": "骨製頭盔"
+    },
+    "5019": {
+      "nameEn": "Corsair",
+      "nameZh": "海盜船長帽"
+    },
+    "5035": {
+      "nameEn": "Poring Hat",
+      "nameZh": "波利帽"
+    },
+    "5038": {
+      "nameEn": "Deviruchi Hat",
+      "nameZh": "小惡魔帽"
+    },
+    "5046": {
+      "nameEn": "Bongun Hat",
+      "nameZh": "妖道帽"
+    },
+    "5062": {
+      "nameEn": "Straw Hat",
+      "nameZh": "遮陽帽"
+    },
+    "5064": {
+      "nameEn": "Smokie Leaf",
+      "nameZh": "變身樹葉"
+    },
+    "5092": {
+      "nameEn": "Coif",
+      "nameZh": "修女的帽子"
+    },
+    "5098": {
+      "nameEn": "Tiger Mask",
+      "nameZh": "老虎面具"
+    },
+    "5126": {
+      "nameEn": "Morpheus's Bandana",
+      "nameZh": "摩菲斯的頭巾"
+    },
+    "5132": {
+      "nameEn": "Angelring Hat",
+      "nameZh": "天使波利帽子"
+    },
+    "5149": {
+      "nameEn": "Silver Tiara",
+      "nameZh": "銀色提阿拉"
+    },
+    "5167": {
+      "nameEn": "Munak Hat",
+      "nameZh": "殭屍帽"
+    },
+    "5177": {
+      "nameEn": "Mythical Lion Mask",
+      "nameZh": "獅子假面"
+    },
+    "5213": {
+      "nameEn": "Black Bunny Band",
+      "nameZh": "兔女郎髮圈"
+    },
+    "5214": {
+      "nameEn": "Moonlight Flower Hat",
+      "nameZh": "月夜貓帽子"
+    },
+    "5252": {
+      "nameEn": "Drooping Ninetail",
+      "nameZh": "下垂的九尾狐"
+    },
+    "5254": {
+      "nameEn": "Devilring Hat",
+      "nameZh": "惡魔波利帽子"
+    },
+    "5255": {
+      "nameEn": "Triple Poring Hat",
+      "nameZh": "三層波利帽子"
+    },
+    "5285": {
+      "nameEn": "Vane Hairpin",
+      "nameZh": "風車頭飾"
+    },
+    "5312": {
+      "nameEn": "Ayothaya King's Hat",
+      "nameZh": "哎喲泰雅霸王帽"
+    },
+    "5360": {
+      "nameEn": "Wickebine's Black Cat Ears",
+      "nameZh": "修咖巴殷的黑貓耳朵"
+    },
+    "5364": {
+      "nameEn": "Evil Snake Lord Hat",
+      "nameZh": "墨蛇君帽子"
+    },
+    "5366": {
+      "nameEn": "King's Hat",
+      "nameZh": "國王帽子"
+    },
+    "5367": {
+      "nameEn": "Yao Jun Hat",
+      "nameZh": "妖君帽"
+    },
+    "5370": {
+      "nameEn": "Orchid Hairband",
+      "nameZh": "蘭花頭飾"
+    },
+    "5380": {
+      "nameEn": "Fish Head Hat",
+      "nameZh": "魚頭帽子"
+    },
+    "5411": {
+      "nameEn": "White Snake Hat",
+      "nameZh": "白蛇帽子"
+    },
+    "5451": {
+      "nameEn": "Gold Dragon Helm",
+      "nameZh": "黃金龍頭盔"
+    },
+    "5452": {
+      "nameEn": "Silver Dragon Helm",
+      "nameZh": "白銀龍頭盔"
+    },
+    "5453": {
+      "nameEn": "Copper Dragon Helm",
+      "nameZh": "青銅龍頭盔"
+    },
+    "5464": {
+      "nameEn": "Bacsojin Doll Hat",
+      "nameZh": "素貞娃娃頭飾"
+    },
+    "5473": {
+      "nameEn": "Crab Nipper Hat",
+      "nameZh": "螃蟹鉗髮夾"
+    },
+    "5498": {
+      "nameEn": "Wandering Wolf King Helmet",
+      "nameZh": "流浪之王頭盔"
+    },
+    "5504": {
+      "nameEn": "RO 5th Wedding Anniversary",
+      "nameZh": "RO 五週年紀念頭紗"
+    },
+    "5508": {
+      "nameEn": "Shark Hat",
+      "nameZh": "鯊魚帽子"
+    },
+    "5527": {
+      "nameEn": "Lunatic Hat",
+      "nameZh": "瘋兔帽子"
+    },
+    "5528": {
+      "nameEn": "Frog Prince Hat",
+      "nameZh": "青蛙王子頭飾"
+    },
+    "5531": {
+      "nameEn": "Baby Dragon Hat",
+      "nameZh": "寶寶龍帽子"
+    },
+    "5554": {
+      "nameEn": "Octopus Hat",
+      "nameZh": "章魚帽子"
+    },
+    "5678": {
+      "nameEn": "Musical Note Headband",
+      "nameZh": "音符頭箍"
+    },
+    "5867": {
+      "nameEn": "Sleeping Cat",
+      "nameZh": "睡貓"
+    },
+    "5870": {
+      "nameEn": "Bunny Egg Shell",
+      "nameZh": "兔耳蛋殼帽"
+    },
+    "5911": {
+      "nameEn": "Costume Imperial Feather",
+      "nameZh": "(服飾)皇家羽飾"
+    },
+    "6481": {
+      "nameEn": "Sacred Rock Shard",
+      "nameZh": "神聖岩石碎片"
+    },
+    "6599": {
+      "nameEn": "Spirit of Hugin",
+      "nameZh": "福金之魂"
+    },
+    "6600": {
+      "nameEn": "Spirit of Munin",
+      "nameZh": "霧尼之魂"
+    },
+    "7019": {
+      "nameEn": "Loki's Whispers",
+      "nameZh": "傲慢之像"
+    },
+    "7058": {
+      "nameEn": "Gleipnir",
+      "nameZh": "魔法鐵鏈"
+    },
+    "7164": {
+      "nameEn": "Solid Peach",
+      "nameZh": "石榴桃"
+    },
+    "7308": {
+      "nameEn": "Witch's Tonic",
+      "nameZh": "魔女藥水"
+    },
+    "7433": {
+      "nameEn": "Blank Scroll",
+      "nameZh": "大卷軸"
+    },
+    "7555": {
+      "nameEn": "Green Incense",
+      "nameZh": "Green Incense"
+    },
+    "7619": {
+      "nameEn": "Enriched Elunium",
+      "nameZh": "濃縮鋁"
+    },
+    "7620": {
+      "nameEn": "Enriched Oridecon",
+      "nameZh": "濃縮神之金屬"
+    },
+    "9001": {
+      "nameEn": "Poring Egg",
+      "nameZh": "波利寵物蛋"
+    },
+    "9002": {
+      "nameEn": "Drops Egg",
+      "nameZh": "土波利寵物蛋"
+    },
+    "9003": {
+      "nameEn": "Poporing Egg",
+      "nameZh": "波波利寵物蛋"
+    },
+    "9004": {
+      "nameEn": "Lunatic Egg",
+      "nameZh": "瘋兔寵物蛋"
+    },
+    "9005": {
+      "nameEn": "Picky Egg",
+      "nameZh": "小雞寵物蛋"
+    },
+    "9009": {
+      "nameEn": "Savage Bebe Egg",
+      "nameZh": "小野豬寵物蛋"
+    },
+    "9010": {
+      "nameEn": "Baby Desert Wolf Egg",
+      "nameZh": "沙漠幼狼寵物蛋"
+    },
+    "9011": {
+      "nameEn": "Rocker Egg",
+      "nameZh": "搖滾蝗蟲寵物蛋"
+    },
+    "9012": {
+      "nameEn": "Spore Egg",
+      "nameZh": "魔菇寵物蛋"
+    },
+    "9013": {
+      "nameEn": "Poison Spore Egg",
+      "nameZh": "毒魔菇寵物蛋"
+    },
+    "9015": {
+      "nameEn": "Smokie Egg",
+      "nameZh": "貍貓寵物蛋"
+    },
+    "9018": {
+      "nameEn": "Munak Egg",
+      "nameZh": "殭屍寵物蛋"
+    },
+    "9019": {
+      "nameEn": "Dokkaebi Egg",
+      "nameZh": "土人寵物蛋"
+    },
+    "9020": {
+      "nameEn": "Sohee Egg",
+      "nameZh": "鬼女寵物蛋"
+    },
+    "9025": {
+      "nameEn": "Bongun Egg",
+      "nameZh": "妖道寵物蛋"
+    },
+    "9045": {
+      "nameEn": "Whisper Egg",
+      "nameZh": "白幽靈寵物蛋"
+    },
+    "9069": {
+      "nameEn": "Mastering Egg",
+      "nameZh": "波利之王寵物蛋"
+    },
+    "9088": {
+      "nameEn": "Angelring Egg",
+      "nameZh": "天使波利寵物蛋"
+    },
+    "9093": {
+      "nameEn": "Hyegun Egg",
+      "nameZh": "妖君寵物蛋"
+    },
+    "9095": {
+      "nameEn": "Nine Tails Egg",
+      "nameZh": "九尾狐寵物蛋"
+    },
+    "9096": {
+      "nameEn": "Cat O Nine Tails Egg",
+      "nameZh": "狂暴月夜貓寵物蛋"
+    },
+    "9103": {
+      "nameEn": "Willow Egg",
+      "nameZh": "樹精寵物蛋"
+    },
+    "9112": {
+      "nameEn": "Moonlight Flower Egg",
+      "nameZh": "月夜貓寵物蛋"
+    },
+    "9138": {
+      "nameEn": "Familiar Egg",
+      "nameZh": "吸血蝙蝠寵物蛋"
+    },
+    "9148": {
+      "nameEn": "Dark Lord Egg",
+      "nameZh": "Dark Lord Egg"
+    },
+    "10003": {
+      "nameEn": "Transparent Head Protector",
+      "nameZh": "潛水頭盔"
+    },
+    "10005": {
+      "nameEn": "Wig",
+      "nameZh": "三色假髮"
+    },
+    "10007": {
+      "nameEn": "Silk Ribbon",
+      "nameZh": "寵物髮帶"
+    },
+    "10008": {
+      "nameEn": "Punisher",
+      "nameZh": "體罰棒"
+    },
+    "10012": {
+      "nameEn": "Tiny Egg Shell",
+      "nameZh": "寵物蛋殼帽"
+    },
+    "10013": {
+      "nameEn": "Backpack",
+      "nameZh": "寵物書包"
+    },
+    "10014": {
+      "nameEn": "Rocker Glasses",
+      "nameZh": "蝗蟲眼鏡"
+    },
+    "10015": {
+      "nameEn": "Green Lace",
+      "nameZh": "寵物圍兜兜"
+    },
+    "10016": {
+      "nameEn": "Golden Bell",
+      "nameZh": "寵物鈴鐺"
+    },
+    "10017": {
+      "nameEn": "Bark Shorts",
+      "nameZh": "樹皮褲"
+    },
+    "10019": {
+      "nameEn": "Red Scarf",
+      "nameZh": "紅色領巾"
+    },
+    "10020": {
+      "nameEn": "Grave Keeper's Sword",
+      "nameZh": "靈幻道士之劍"
+    },
+    "10023": {
+      "nameEn": "Green Jewel Bag",
+      "nameZh": "綠色福袋"
+    },
+    "10027": {
+      "nameEn": "Pet Soul Ring",
+      "nameZh": "寵物靈環"
+    },
+    "10031": {
+      "nameEn": "Ring of Death",
+      "nameZh": "死亡之扣環"
+    },
+    "10040": {
+      "nameEn": "Red Collar Bell",
+      "nameZh": "紅色鈴鐺項圈"
+    },
+    "11723": {
+      "nameEn": "Piece of Green Crystal",
+      "nameZh": "綠色水晶碎片"
+    },
+    "12016": {
+      "nameEn": "Speed Potion",
+      "nameZh": "移速變化藥水"
+    },
+    "12114": {
+      "nameEn": "Fire Elemental Converter",
+      "nameZh": "火 肯貝特"
+    },
+    "12202": {
+      "nameEn": "Steamed Tongue",
+      "nameZh": "力量料理"
+    },
+    "12203": {
+      "nameEn": "Steamed Desert Scorpions",
+      "nameZh": "敏捷料理"
+    },
+    "12204": {
+      "nameEn": "Dragon Breath Cocktail",
+      "nameZh": "智力料理"
+    },
+    "12205": {
+      "nameEn": "Hwergelmir's Tonic",
+      "nameZh": "靈巧料理"
+    },
+    "12206": {
+      "nameEn": "Cooked Nine Tail's Tails",
+      "nameZh": "幸運料理"
+    },
+    "12207": {
+      "nameEn": "Stew of Immortality",
+      "nameZh": "體力料理"
+    },
+    "12215": {
+      "nameEn": "Level 10 Blessing Scroll",
+      "nameZh": "天使之賜福 10等級卷軸"
+    },
+    "12216": {
+      "nameEn": "Level 10 Increase Agility Scroll",
+      "nameZh": "加速術 10等級卷軸"
+    },
+    "12219": {
+      "nameEn": "Level 10 Wind Walk Scroll",
+      "nameZh": "風之步 10等級卷軸"
+    },
+    "12220": {
+      "nameEn": "Level 5 Adrenaline Rush Scroll",
+      "nameZh": "速度激發Lv.5卷軸"
+    },
+    "12259": {
+      "nameEn": "Miracle Tonic",
+      "nameZh": "幻想的靈藥"
+    },
+    "12279": {
+      "nameEn": "Undead Elemental Scroll",
+      "nameZh": "不死屬性卷軸"
+    },
+    "12299": {
+      "nameEn": "Mega Resist Potion",
+      "nameZh": "強效抗性藥水"
+    },
+    "12303": {
+      "nameEn": "Blessing of Water",
+      "nameZh": "水之祝福"
+    },
+    "12315": {
+      "nameEn": "Goddess of Blessing",
+      "nameZh": "祝福女神"
+    },
+    "13001": {
+      "nameEn": "Dragon Killer",
+      "nameZh": "天龍短劍"
+    },
+    "13007": {
+      "nameEn": "Jitte",
+      "nameZh": "破刃劍"
+    },
+    "13011": {
+      "nameEn": "Asura",
+      "nameZh": "匕首"
+    },
+    "13030": {
+      "nameEn": "Dragon Killer",
+      "nameZh": "天龍短劍"
+    },
+    "13046": {
+      "nameEn": "Krieg",
+      "nameZh": "刺針短劍"
+    },
+    "13101": {
+      "nameEn": "Six Shooter",
+      "nameZh": "六輪發手槍"
+    },
+    "13104": {
+      "nameEn": "Garrison",
+      "nameZh": "加立遜手槍"
+    },
+    "13150": {
+      "nameEn": "Branch",
+      "nameZh": "布林其來福槍"
+    },
+    "13151": {
+      "nameEn": "Cyclone",
+      "nameZh": "風暴來福槍"
+    },
+    "13152": {
+      "nameEn": "Cyclone",
+      "nameZh": "風暴來福槍"
+    },
+    "13156": {
+      "nameEn": "Gate Keeper",
+      "nameZh": "守門霰彈槍"
+    },
+    "13160": {
+      "nameEn": "Destroyer",
+      "nameZh": "破壞者榴彈槍"
+    },
+    "13301": {
+      "nameEn": "Huuma Giant Wheel Shuriken",
+      "nameZh": "風魔輪飛鏢"
+    },
+    "13303": {
+      "nameEn": "Huuma Blaze Shuriken",
+      "nameZh": "風魔熱火飛鏢"
+    },
+    "13420": {
+      "nameEn": "Red Lotus Sword",
+      "nameZh": "紅蓮劍"
+    },
+    "13435": {
+      "nameEn": "Fire Brand",
+      "nameZh": "火靈之劍"
+    },
+    "18555": {
+      "nameEn": "Dragon General Helm",
+      "nameZh": "龍將軍頭盔"
+    },
+    "18655": {
+      "nameEn": "Dragonfly Monocle",
+      "nameZh": "蜻蜓單片眼鏡"
+    },
+    "18677": {
+      "nameEn": "Cherry Twig in Mouth",
+      "nameZh": "嘴刁櫻花樹枝"
+    },
+    "18691": {
+      "nameEn": "Ascension Black Dragon",
+      "nameZh": "昇天黑龍"
+    },
+    "18703": {
+      "nameEn": "Stem in Mouth",
+      "nameZh": "草梗"
+    },
+    "18707": {
+      "nameEn": "Maneater Flower Hat",
+      "nameZh": "食人花頭飾"
+    },
+    "18713": {
+      "nameEn": "Monkey Fur Hat",
+      "nameZh": "猴子毛帽"
+    },
+    "18718": {
+      "nameEn": "Rose Hairband",
+      "nameZh": "玫瑰花髮圈"
+    },
+    "18725": {
+      "nameEn": "Rabbit Knit Hat",
+      "nameZh": "兔耳針織帽"
+    },
+    "18753": {
+      "nameEn": "Rice Dumpling Hat",
+      "nameZh": "肉粽帽子"
+    },
+    "18893": {
+      "nameEn": "Dragon Claw Helm",
+      "nameZh": "龍之爪頭盔"
+    },
+    "19023": {
+      "nameEn": "Queen Scaraba Crown",
+      "nameZh": "女王聖甲蟲頭冠"
+    },
+    "19040": {
+      "nameEn": "Bamboo Leaf Hat",
+      "nameZh": "竹葉帽子"
+    },
+    "19103": {
+      "nameEn": "Ancient King's Crown",
+      "nameZh": "古王的王冠"
+    },
+    "19465": {
+      "nameEn": "Yellow Cherry Blossom Hat",
+      "nameZh": "黃色櫻花帽"
+    },
+    "19998": {
+      "nameEn": "Costume Dragon Turtle Hat",
+      "nameZh": "(服飾)龍龜帽"
+    },
+    "19999": {
+      "nameEn": "Mouse Hat",
+      "nameZh": "(服飾)大耳鼠帽"
+    },
+    "20033": {
+      "nameEn": "Costume Monk Crown",
+      "nameZh": "(服飾)道士冠"
+    },
+    "20081": {
+      "nameEn": "Costume Metal Dragon Helm",
+      "nameZh": "(服飾)金屬龍頭盔"
+    },
+    "20110": {
+      "nameEn": "Costume Coiledup Snake Hat",
+      "nameZh": "(服飾)盤蜷蛇帽"
+    },
+    "20450": {
+      "nameEn": "Costume Gram Peony",
+      "nameZh": "(服飾)魅力牡丹頭飾"
+    },
+    "20490": {
+      "nameEn": "Costume Full Blossom Sakura Hairpin (Blue)",
+      "nameZh": "(服飾)浮華浪漫髮簪(藍)"
+    },
+    "20813": {
+      "nameEn": "Manteau of Survival",
+      "nameZh": "生存斗篷"
+    },
+    "22682": {
+      "nameEn": "Red Crystal Fragment",
+      "nameZh": "紅色水晶碎片"
+    },
+    "22847": {
+      "nameEn": "Prontera Patrol Badge",
+      "nameZh": "普隆德拉卷軸"
+    },
+    "25759": {
+      "nameEn": "Green Dragon Orb",
+      "nameZh": "綠龍魔珠"
+    },
+    "25761": {
+      "nameEn": "Red Dragon Orb",
+      "nameZh": "赤龍魔珠"
+    },
+    "25764": {
+      "nameEn": "Silver Dragon Orb",
+      "nameZh": "銀龍魔珠"
+    },
+    "28560": {
+      "nameEn": "Yin Yang Talisman",
+      "nameZh": "太極護符"
+    },
+    "31123": {
+      "nameEn": "Ghostring Tall Hat",
+      "nameZh": "(服飾)藍幽靈長帽"
+    },
+    "31766": {
+      "nameEn": "Costume Peony Hair Ornament",
+      "nameZh": "(服飾)大牡丹花髮飾"
+    },
+    "31798": {
+      "nameEn": "Costume Baby Panda",
+      "nameZh": "(服飾)貓熊寶貝"
+    },
+    "31799": {
+      "nameEn": "Costume Pretty White Bear Ears",
+      "nameZh": "(服飾)北極熊髮箍"
+    },
+    "31865": {
+      "nameEn": "Costume Signon Princess Wave (Purple)",
+      "nameZh": "(服飾)日系公主波浪雙髮辮(紫)"
+    },
+    "49001": {
+      "nameEn": "Blood Savage Helm",
+      "nameZh": "嗜血狂戰士頭盔"
+    },
+    "49002": {
+      "nameEn": "Blood Savage Eyepatch",
+      "nameZh": "嗜血狂戰士眼罩"
+    },
+    "49003": {
+      "nameEn": "Blood Savage Scarf",
+      "nameZh": "嗜血狂戰士圍巾"
+    },
+    "400374": {
+      "nameEn": "Crown of Good and Evil(Dragon Knight)",
+      "nameZh": "善惡冠冕(盧恩龍爵)"
+    },
+    "400633": {
+      "nameEn": "Costume Chic Peony",
+      "nameZh": "(服飾)牡丹帽"
+    },
+    "400725": {
+      "nameEn": "Ghost Ship Captain's Hat",
+      "nameZh": "(服飾)幽靈船的船長帽子"
+    },
+    "400745": {
+      "nameEn": "Costume Dragon Warrior Hat",
+      "nameZh": "(服飾)神龍大俠帽"
+    },
+    "400919": {
+      "nameEn": "Costume Petal Hood",
+      "nameZh": "(服飾)花瓣兜帽"
+    },
+    "400965": {
+      "nameEn": "Costume Holy Veil",
+      "nameZh": "(服飾)神聖面紗"
+    },
+    "410212": {
+      "nameEn": "Costume Little Abyss Dragon",
+      "nameZh": "(服飾)深淵湖水龍寶寶"
+    },
+    "410229": {
+      "nameEn": "Costume Snake God's Crystal",
+      "nameZh": "(服飾)蛇神的水晶"
+    },
+    "420225": {
+      "nameEn": "Octopus Leg In Mouth",
+      "nameZh": "章魚腿"
+    }
+  },
+  "cardNamesZh": {
+    "4001": {
+      "nameEn": "Poring Card",
+      "nameZh": "波利卡片"
+    },
+    "4002": {
+      "nameEn": "Fabre Card",
+      "nameZh": "綠棉蟲卡片"
+    },
+    "4003": {
+      "nameEn": "Pupa Card",
+      "nameZh": "蟲蛹卡片"
+    },
+    "4004": {
+      "nameEn": "Drops Card",
+      "nameZh": "土波利卡片"
+    },
+    "4006": {
+      "nameEn": "Lunatic Card",
+      "nameZh": "瘋兔卡片"
+    },
+    "4007": {
+      "nameEn": "Pecopeco Egg Card",
+      "nameZh": "大嘴鳥蛋卡片"
+    },
+    "4008": {
+      "nameEn": "Picky Card",
+      "nameZh": "小雞卡片"
+    },
+    "4009": {
+      "nameEn": "Chonchon Card",
+      "nameZh": "蒼蠅卡片"
+    },
+    "4010": {
+      "nameEn": "Willow Card",
+      "nameZh": "樹精卡片"
+    },
+    "4012": {
+      "nameEn": "Thiefbug Egg Card",
+      "nameZh": "盜蟲卵卡片"
+    },
+    "4014": {
+      "nameEn": "Roda Frog Card",
+      "nameZh": "羅達蛙卡片"
+    },
+    "4015": {
+      "nameEn": "Condor Card",
+      "nameZh": "禿鷹卡片"
+    },
+    "4016": {
+      "nameEn": "Thief Bug Card",
+      "nameZh": "盜蟲卡片"
+    },
+    "4017": {
+      "nameEn": "Savage Bebe Card",
+      "nameZh": "小野豬卡片"
+    },
+    "4019": {
+      "nameEn": "Hornet Card",
+      "nameZh": "蜂兵卡片"
+    },
+    "4020": {
+      "nameEn": "Familiar Card",
+      "nameZh": "吸血蝙蝠卡片"
+    },
+    "4021": {
+      "nameEn": "Rocker Card",
+      "nameZh": "搖滾蝗蟲卡片"
+    },
+    "4022": {
+      "nameEn": "Spore Card",
+      "nameZh": "魔菇卡片"
+    },
+    "4023": {
+      "nameEn": "Baby Desert Wolf Card",
+      "nameZh": "沙漠幼狼卡片"
+    },
+    "4024": {
+      "nameEn": "Plankton Card",
+      "nameZh": "漂浮蟲卡片"
+    },
+    "4025": {
+      "nameEn": "Skeleton Card",
+      "nameZh": "邪骸戰士卡片"
+    },
+    "4026": {
+      "nameEn": "Female Thiefbug Card",
+      "nameZh": "浮勒盜蟲卡片"
+    },
+    "4027": {
+      "nameEn": "Kukre Card",
+      "nameZh": "庫克雷卡片"
+    },
+    "4028": {
+      "nameEn": "Tarou Card",
+      "nameZh": "白鼠卡片"
+    },
+    "4029": {
+      "nameEn": "Wolf Card",
+      "nameZh": "狼卡片"
+    },
+    "4030": {
+      "nameEn": "Mandragora Card",
+      "nameZh": "曼陀蘿魔花卡片"
+    },
+    "4033": {
+      "nameEn": "PoPoring Card",
+      "nameZh": "波波利卡片"
+    },
+    "4034": {
+      "nameEn": "Wormtail Card",
+      "nameZh": "森靈卡片"
+    },
+    "4035": {
+      "nameEn": "Hydra Card",
+      "nameZh": "海葵卡片"
+    },
+    "4037": {
+      "nameEn": "Snake Card",
+      "nameZh": "青蛇卡片"
+    },
+    "4038": {
+      "nameEn": "Zombie Card",
+      "nameZh": "腐屍卡片"
+    },
+    "4040": {
+      "nameEn": "Creamy Card",
+      "nameZh": "克瑞米卡片"
+    },
+    "4044": {
+      "nameEn": "Smokie Card",
+      "nameZh": "狸貓卡片"
+    },
+    "4047": {
+      "nameEn": "Ghostring Card",
+      "nameZh": "幽靈波利卡片"
+    },
+    "4048": {
+      "nameEn": "Poison Spore Card",
+      "nameZh": "毒魔菇卡片"
+    },
+    "4049": {
+      "nameEn": "Vadon Card",
+      "nameZh": "螃蟹卡片"
+    },
+    "4052": {
+      "nameEn": "Elder Willow Card",
+      "nameZh": "長老樹精卡片"
+    },
+    "4054": {
+      "nameEn": "Angelring Card",
+      "nameZh": "天使波利卡片"
+    },
+    "4055": {
+      "nameEn": "Marina Card",
+      "nameZh": "水母卡片"
+    },
+    "4060": {
+      "nameEn": "Goblin Card",
+      "nameZh": "哥布靈卡片"
+    },
+    "4061": {
+      "nameEn": "Cornutus Card",
+      "nameZh": "卡那多斯卡片"
+    },
+    "4066": {
+      "nameEn": "Orc Warrior Card",
+      "nameZh": "獸人戰士卡片"
+    },
+    "4069": {
+      "nameEn": "Drainliar Card",
+      "nameZh": "紅蝙蝠卡片"
+    },
+    "4073": {
+      "nameEn": "Pirate Skel Card",
+      "nameZh": "邪骸海盜卡片"
+    },
+    "4074": {
+      "nameEn": "Bigfoot Card",
+      "nameZh": "大腳熊卡片"
+    },
+    "4077": {
+      "nameEn": "Phen Card",
+      "nameZh": "劍魚卡片"
+    },
+    "4084": {
+      "nameEn": "Marine Sphere Card",
+      "nameZh": "氣泡蟲卡片"
+    },
+    "4085": {
+      "nameEn": "Orc Skeleton Card",
+      "nameZh": "邪骸獸人卡片"
+    },
+    "4086": {
+      "nameEn": "Soldier Skeleton Card",
+      "nameZh": "邪骸士兵卡片"
+    },
+    "4089": {
+      "nameEn": "Swordfish Card",
+      "nameZh": "異變魚卡片"
+    },
+    "4090": {
+      "nameEn": "Munak Card",
+      "nameZh": "殭屍卡片"
+    },
+    "4091": {
+      "nameEn": "Kobold Card",
+      "nameZh": "犬妖卡片"
+    },
+    "4093": {
+      "nameEn": "Obeaune Card",
+      "nameZh": "人魚卡片"
+    },
+    "4094": {
+      "nameEn": "Archer Skeleton Card",
+      "nameZh": "邪骸弓箭手卡片"
+    },
+    "4095": {
+      "nameEn": "Marse Card",
+      "nameZh": "烏賊卡片"
+    },
+    "4098": {
+      "nameEn": "Dokkaebi Card",
+      "nameZh": "土人卡片"
+    },
+    "4100": {
+      "nameEn": "Sohee Card",
+      "nameZh": "鬼女卡片"
+    },
+    "4102": {
+      "nameEn": "Whisper Card",
+      "nameZh": "白幽靈卡片"
+    },
+    "4103": {
+      "nameEn": "Horong Card",
+      "nameZh": "鬼火卡片"
+    },
+    "4111": {
+      "nameEn": "Strouf Card",
+      "nameZh": "海神卡片"
+    },
+    "4123": {
+      "nameEn": "Eddga Card",
+      "nameZh": "虎王卡片"
+    },
+    "4125": {
+      "nameEn": "Deviace Card",
+      "nameZh": "狄奧斯卡片"
+    },
+    "4128": {
+      "nameEn": "Golden Thiefbug Card",
+      "nameZh": "黃金蟲卡片"
+    },
+    "4131": {
+      "nameEn": "Moonlight Flower Card",
+      "nameZh": "月夜貓卡片"
+    },
+    "4137": {
+      "nameEn": "Drake Card",
+      "nameZh": "海盜之王卡片"
+    },
+    "4143": {
+      "nameEn": "Orc Hero Card",
+      "nameZh": "獸人英雄卡片"
+    },
+    "4144": {
+      "nameEn": "Osiris Card",
+      "nameZh": "俄塞里斯卡片"
+    },
+    "4147": {
+      "nameEn": "Baphomet Card",
+      "nameZh": "巴風特卡片"
+    },
+    "4159": {
+      "nameEn": "Nine Tail Card",
+      "nameZh": "九尾狐卡片"
+    },
+    "4172": {
+      "nameEn": "The Paper Card",
+      "nameZh": "紙妖卡片"
+    },
+    "4174": {
+      "nameEn": "Devilring Card",
+      "nameZh": "惡魔波利卡片"
+    },
+    "4178": {
+      "nameEn": "Dragon Tail Card",
+      "nameZh": "刺尾蜻蜓卡片"
+    },
+    "4179": {
+      "nameEn": "Dragonfly Card",
+      "nameZh": "龍蠅卡片"
+    },
+    "4183": {
+      "nameEn": "Wandering Wolf Card",
+      "nameZh": "流浪之狼卡片"
+    },
+    "4195": {
+      "nameEn": "Leaf Cat Card",
+      "nameZh": "群葉貓卡片"
+    },
+    "4197": {
+      "nameEn": "Mastering Card",
+      "nameZh": "波利之王卡片"
+    },
+    "4199": {
+      "nameEn": "Merman Card",
+      "nameZh": "人魚士兵卡片"
+    },
+    "4210": {
+      "nameEn": "Wanderer Card",
+      "nameZh": "邪骸浪人卡片"
+    },
+    "4211": {
+      "nameEn": "Vocal Card",
+      "nameZh": "蝗蟲之王卡片"
+    },
+    "4212": {
+      "nameEn": "Bongun Card",
+      "nameZh": "妖道卡片"
+    },
+    "4217": {
+      "nameEn": "Enchanted Peach Tree Card",
+      "nameZh": "猴桃木卡片"
+    },
+    "4221": {
+      "nameEn": "Skeleton General Card",
+      "nameZh": "邪骸戰士長卡片"
+    },
+    "4225": {
+      "nameEn": "Stone Shooter Card",
+      "nameZh": "石砲火樹卡片"
+    },
+    "4227": {
+      "nameEn": "Spring Rabbit Card",
+      "nameZh": "彈簧兔卡片"
+    },
+    "4239": {
+      "nameEn": "Iron Fist Card",
+      "nameZh": "鐵蠍卡片"
+    },
+    "4259": {
+      "nameEn": "Wooden Golem Card",
+      "nameZh": "機木人卡片"
+    },
+    "4266": {
+      "nameEn": "Eclipse Card",
+      "nameZh": "藍瘋兔卡片"
+    },
+    "4283": {
+      "nameEn": "Greatest General Card",
+      "nameZh": "將軍魔碑卡片"
+    },
+    "4287": {
+      "nameEn": "Kapha Card",
+      "nameZh": "釣魚河童卡片"
+    },
+    "4290": {
+      "nameEn": "Cat O' Nine Tails Card",
+      "nameZh": "狂暴月夜貓卡片"
+    },
+    "4296": {
+      "nameEn": "Cramp Card",
+      "nameZh": "藍鼠卡片"
+    },
+    "4306": {
+      "nameEn": "Toad Card",
+      "nameZh": "蛙王卡片"
+    },
+    "4314": {
+      "nameEn": "Penomena Card",
+      "nameZh": "梅納海葵卡片"
+    },
+    "4328": {
+      "nameEn": "Yao Jun Card",
+      "nameZh": "妖君卡片"
+    },
+    "4330": {
+      "nameEn": "Dark Snake Lord Card",
+      "nameZh": "墨蛇君卡片"
+    },
+    "4372": {
+      "nameEn": "White Lady Card",
+      "nameZh": "白素貞卡片"
+    },
+    "4524": {
+      "nameEn": "King Dramoh Card",
+      "nameZh": "大腳龍蝦卡片"
+    },
+    "4525": {
+      "nameEn": "Kraken Card",
+      "nameZh": "魔鬼大烏賊卡片"
+    }
+  },
+  "monsterNamesZh": {
+    "poring": {
+      "raw": "Poring",
+      "nameZh": "波利"
+    },
+    "lunatic": {
+      "raw": "Lunatic",
+      "nameZh": "瘋兔"
+    },
+    "fabre": {
+      "raw": "Fabre",
+      "nameZh": "綠棉蟲"
+    },
+    "pupa": {
+      "raw": "Pupa",
+      "nameZh": "蟲蛹"
+    },
+    "drops": {
+      "raw": "Drops",
+      "nameZh": "土波利"
+    },
+    "picky": {
+      "raw": "Picky",
+      "nameZh": "小雞"
+    },
+    "roda_frog": {
+      "raw": "Roda Frog",
+      "nameZh": "羅達蛙"
+    },
+    "peco_egg": {
+      "raw": "Peco Peco Egg",
+      "nameZh": "大嘴鳥蛋"
+    },
+    "condor": {
+      "raw": "Condor",
+      "nameZh": "禿鷹"
+    },
+    "savage_babe": {
+      "raw": "Savage Babe",
+      "nameZh": "小野豬"
+    },
+    "creamy": {
+      "raw": "Creamy",
+      "nameZh": "克瑞米"
+    },
+    "hornet": {
+      "raw": "Hornet",
+      "nameZh": "蜂兵"
+    },
+    "mandragora": {
+      "raw": "Mandragora",
+      "nameZh": "曼陀蘿魔花"
+    },
+    "baby_desert_wolf": {
+      "raw": "Baby Desert Wolf",
+      "nameZh": "沙漠幼狼"
+    },
+    "rocker": {
+      "raw": "Rocker",
+      "nameZh": "搖滾蝗蟲"
+    },
+    "eclipse": {
+      "raw": "Eclipse",
+      "nameZh": "日蝕"
+    },
+    "toad": {
+      "raw": "Toad",
+      "nameZh": "蛙王"
+    },
+    "dragon_fly": {
+      "raw": "Dragon Fly",
+      "nameZh": "龍蠅"
+    },
+    "vocal": {
+      "raw": "Vocal",
+      "nameZh": "蝗蟲之王"
+    },
+    "mastering": {
+      "raw": "Mastering",
+      "nameZh": "波利之王"
+    },
+    "thief_bug_egg": {
+      "raw": "Thief Bug Egg",
+      "nameZh": "盜蟲卵"
+    },
+    "familiar": {
+      "raw": "Familiar",
+      "nameZh": "吸血蝙蝠"
+    },
+    "thief_bug": {
+      "raw": "Thief Bug",
+      "nameZh": "盜蟲"
+    },
+    "tarou": {
+      "raw": "Tarou",
+      "nameZh": "白鼠"
+    },
+    "plankton": {
+      "raw": "Plankton",
+      "nameZh": "漂浮蟲"
+    },
+    "drainliar": {
+      "raw": "Drainliar",
+      "nameZh": "紅蝙蝠"
+    },
+    "thief_bug_female": {
+      "raw": "Thief Bug Female",
+      "nameZh": "母盜蟲"
+    },
+    "cramp": {
+      "raw": "Cramp",
+      "nameZh": "藍鼠"
+    },
+    "tarou_bite": {
+      "raw": "Biting Tarou",
+      "nameZh": "啃咬白鼠"
+    },
+    "tarou_plague": {
+      "raw": "Plague Tarou",
+      "nameZh": "瘟疫白鼠"
+    },
+    "tarou_burrow": {
+      "raw": "Burrowing Tarou",
+      "nameZh": "鑽地白鼠"
+    },
+    "golden_thief_bug": {
+      "raw": "Golden Thief Bug",
+      "nameZh": "黃金蟲"
+    },
+    "chonchon": {
+      "raw": "Chonchon",
+      "nameZh": "蒼蠅"
+    },
+    "goblin": {
+      "raw": "Goblin",
+      "nameZh": "刺刀哥布靈"
+    },
+    "kobold": {
+      "raw": "Kobold",
+      "nameZh": "大斧犬妖"
+    },
+    "orc_skeleton": {
+      "raw": "Orc Skeleton",
+      "nameZh": "邪骸獸人"
+    },
+    "ghostring": {
+      "raw": "Ghostring",
+      "nameZh": "幽靈波利"
+    },
+    "orc_hero": {
+      "raw": "Orc Hero",
+      "nameZh": "獸人英雄"
+    },
+    "osiris": {
+      "raw": "Osiris",
+      "nameZh": "俄塞里斯"
+    },
+    "baphomet": {
+      "raw": "Baphomet",
+      "nameZh": "巴風特"
+    },
+    "kukre": {
+      "raw": "Kukre",
+      "nameZh": "庫克雷"
+    },
+    "marina": {
+      "raw": "Marina",
+      "nameZh": "水母"
+    },
+    "hydra": {
+      "raw": "Hydra",
+      "nameZh": "海葵"
+    },
+    "whisper": {
+      "raw": "Whisper",
+      "nameZh": "白幽靈"
+    },
+    "penomena": {
+      "raw": "Penomena",
+      "nameZh": "梅納海葵"
+    },
+    "sword_fish": {
+      "raw": "Sword Fish",
+      "nameZh": "異變魚"
+    },
+    "pirate_skel": {
+      "raw": "Pirate Skeleton",
+      "nameZh": "邪骸海盜"
+    },
+    "drake": {
+      "raw": "Drake",
+      "nameZh": "海盜之王"
+    },
+    "vadon": {
+      "raw": "Vadon",
+      "nameZh": "螃蟹"
+    },
+    "cornutus": {
+      "raw": "Cornutus",
+      "nameZh": "卡那多斯"
+    },
+    "marse": {
+      "raw": "Marse",
+      "nameZh": "烏賊"
+    },
+    "phen": {
+      "raw": "Phen",
+      "nameZh": "劍魚"
+    },
+    "obeaune": {
+      "raw": "Obeaune",
+      "nameZh": "人魚"
+    },
+    "marine_sphere": {
+      "raw": "Marine Sphere",
+      "nameZh": "氣泡蟲"
+    },
+    "merman": {
+      "raw": "Merman",
+      "nameZh": "人魚士兵"
+    },
+    "kraken_leg": {
+      "raw": "Kraken Leg",
+      "nameZh": "魔鬼大烏賊腳"
+    },
+    "deviace": {
+      "raw": "Deviace",
+      "nameZh": "狄奧斯"
+    },
+    "strouf": {
+      "raw": "Strouf",
+      "nameZh": "海神"
+    },
+    "king_dramoh": {
+      "raw": "King Dramoh",
+      "nameZh": "大腳龍蝦"
+    },
+    "kraken": {
+      "raw": "Kraken",
+      "nameZh": "魔鬼大烏賊"
+    },
+    "spore": {
+      "raw": "Spore",
+      "nameZh": "魔菇"
+    },
+    "willow": {
+      "raw": "Willow",
+      "nameZh": "樹精"
+    },
+    "poporing": {
+      "raw": "Poporing",
+      "nameZh": "波波利"
+    },
+    "snake": {
+      "raw": "Boa",
+      "nameZh": "青蛇"
+    },
+    "worm_tail": {
+      "raw": "Wormtail",
+      "nameZh": "森靈"
+    },
+    "poison_spore": {
+      "raw": "Poison Spore",
+      "nameZh": "毒魔菇"
+    },
+    "smokie": {
+      "raw": "Smokie",
+      "nameZh": "狸貓"
+    },
+    "wolf": {
+      "raw": "Wolf",
+      "nameZh": "狼"
+    },
+    "elder_willow": {
+      "raw": "Elder Willow",
+      "nameZh": "長老樹精"
+    },
+    "dragon_tail": {
+      "raw": "Dragon Tail",
+      "nameZh": "刺尾蜻蜓"
+    },
+    "bigfoot": {
+      "raw": "Bigfoot",
+      "nameZh": "大腳熊"
+    },
+    "greatest_general": {
+      "raw": "Greatest General",
+      "nameZh": "將軍魔碑"
+    },
+    "dokebi": {
+      "raw": "Dokebi",
+      "nameZh": "土人"
+    },
+    "nine_tail": {
+      "raw": "Nine Tail",
+      "nameZh": "九尾狐"
+    },
+    "angeling": {
+      "raw": "Angeling",
+      "nameZh": "天使波利"
+    },
+    "deviling": {
+      "raw": "Deviling",
+      "nameZh": "惡魔波利"
+    },
+    "vagabond_wolf": {
+      "raw": "Vagabond Wolf",
+      "nameZh": "流浪之狼"
+    },
+    "eddga": {
+      "raw": "Eddga",
+      "nameZh": "虎王"
+    },
+    "zombie": {
+      "raw": "Zombie",
+      "nameZh": "腐屍"
+    },
+    "skeleton": {
+      "raw": "Skeleton",
+      "nameZh": "邪骸戰士"
+    },
+    "skel_archer": {
+      "raw": "Archer Skeleton",
+      "nameZh": "邪骸弓箭手"
+    },
+    "skel_soldier": {
+      "raw": "Soldier Skeleton",
+      "nameZh": "邪骸士兵"
+    },
+    "munak": {
+      "raw": "Munak",
+      "nameZh": "殭屍"
+    },
+    "bon_gun": {
+      "raw": "Bongun",
+      "nameZh": "妖道"
+    },
+    "sohee": {
+      "raw": "Sohee",
+      "nameZh": "鬼女"
+    },
+    "horong": {
+      "raw": "Horong",
+      "nameZh": "鬼火"
+    },
+    "skeleton_general": {
+      "raw": "Skeleton General",
+      "nameZh": "邪骸戰士長"
+    },
+    "cat_o_nine_tail": {
+      "raw": "Cat O' Nine Tails",
+      "nameZh": "狂暴月夜貓"
+    },
+    "hyegun": {
+      "raw": "Hyegun",
+      "nameZh": "妖君"
+    },
+    "moonlight": {
+      "raw": "Moonlight Flower",
+      "nameZh": "月夜貓"
+    },
+    "leaf_cat": {
+      "raw": "Leaf Cat",
+      "nameZh": "群葉貓"
+    },
+    "the_paper": {
+      "raw": "The Paper",
+      "nameZh": "紙妖"
+    },
+    "kapha": {
+      "raw": "Kapha",
+      "nameZh": "釣魚河童"
+    },
+    "chung_e": {
+      "raw": "Chung E",
+      "nameZh": "小青"
+    },
+    "stone_shooter": {
+      "raw": "Stone Shooter",
+      "nameZh": "石砲火樹"
+    },
+    "iron_fist": {
+      "raw": "Iron Fist",
+      "nameZh": "鐵蠍"
+    },
+    "dancing_dragon": {
+      "raw": "Dancing Dragon",
+      "nameZh": "舞獅"
+    },
+    "live_peach_tree": {
+      "raw": "Live Peach Tree",
+      "nameZh": "猴桃木"
+    },
+    "wanderer": {
+      "raw": "Wanderer",
+      "nameZh": "邪骸浪人"
+    },
+    "wooden_golem": {
+      "raw": "Wooden Golem",
+      "nameZh": "機木人"
+    },
+    "rice_cake_boy": {
+      "raw": "Rice Cake Boy",
+      "nameZh": "元宵童子"
+    },
+    "spring_rabbit": {
+      "raw": "Spring Rabbit",
+      "nameZh": "彈簧兔"
+    },
+    "bacsojin": {
+      "raw": "White Lady",
+      "nameZh": "白素貞"
+    },
+    "ink_snake": {
+      "raw": "Ink Serpent",
+      "nameZh": "墨蛇"
+    },
+    "ink_serpent": {
+      "raw": "Ink Serpent",
+      "nameZh": "墨蛇"
+    },
+    "dark_snake_lord": {
+      "raw": "Evil Snake Lord",
+      "nameZh": "蛇王"
+    },
+    "orc_warrior": {
+      "raw": "Orc Warrior",
+      "nameZh": "獸人戰士"
+    },
+    "orc_lady": {
+      "raw": "Orc Lady",
+      "nameZh": "獸人女戰士"
+    },
+    "high_orc": {
+      "raw": "High Orc",
+      "nameZh": "獸人戰士長"
+    }
+  },
+  "stageNamesZh": {
+    "prontera": {
+      "raw": "Campos de Prontera",
+      "nameZh": "普隆德拉原野",
+      "placeZh": "普隆德拉南方"
+    },
+    "sewer": {
+      "raw": "Alcantarillas de Prontera",
+      "nameZh": "普隆德拉地下水道",
+      "placeZh": "普隆德拉街道地底"
+    },
+    "sunken": {
+      "raw": "Barco hundido",
+      "nameZh": "失事輪",
+      "placeZh": "艾爾貝塔海岸"
+    },
+    "byalan": {
+      "raw": "Isla de Byalan",
+      "nameZh": "柏伊亞嵐島",
+      "placeZh": "依斯魯得島海盜地洞"
+    },
+    "payon": {
+      "raw": "Bosque de Payon",
+      "nameZh": "斐揚森林",
+      "placeZh": "斐揚近郊"
+    },
+    "payon_cave": {
+      "raw": "Cueva de Payon",
+      "nameZh": "斐揚洞穴",
+      "placeZh": "斐揚山脈地底"
+    },
+    "prt_castle": {
+      "raw": "Castillo de Prontera",
+      "nameZh": "普隆德拉城",
+      "placeZh": "王座廳"
+    },
+    "orcs": {
+      "raw": "Aldea orca",
+      "nameZh": "獸人村",
+      "placeZh": "吉芬原野"
+    },
+    "pyramid": {
+      "raw": "Pirámides de Morroc",
+      "nameZh": "夢羅克金字塔",
+      "placeZh": "蘇克拉特沙漠"
+    },
+    "louyang": {
+      "raw": "Festival de los Faroles",
+      "nameZh": "燈籠節",
+      "placeZh": "洛陽"
+    },
+    "endless": {
+      "raw": "Endless Tower",
+      "nameZh": "魔物終結塔",
+      "placeZh": "魔物終結塔"
+    }
+  },
+  "jobNamesZh": {
+    "novice": {
+      "raw": "Novice",
+      "nameZh": "初心者",
+      "nameFZh": null
+    },
+    "swordsman": {
+      "raw": "Swordsman",
+      "nameZh": "劍士",
+      "nameFZh": null
+    },
+    "mage": {
+      "raw": "Mage",
+      "nameZh": "魔法師",
+      "nameFZh": null
+    },
+    "archer": {
+      "raw": "Archer",
+      "nameZh": "弓箭手",
+      "nameFZh": null
+    },
+    "acolyte": {
+      "raw": "Acolyte",
+      "nameZh": "服事",
+      "nameFZh": null
+    },
+    "thief": {
+      "raw": "Thief",
+      "nameZh": "盜賊",
+      "nameFZh": null
+    },
+    "merchant": {
+      "raw": "Merchant",
+      "nameZh": "商人",
+      "nameFZh": null
+    },
+    "taekwon": {
+      "raw": "Taekwon",
+      "nameZh": "跆拳少年",
+      "nameFZh": null
+    },
+    "ninja": {
+      "raw": "Ninja",
+      "nameZh": "忍者",
+      "nameFZh": null
+    },
+    "gunslinger": {
+      "raw": "Gunslinger",
+      "nameZh": "神槍手",
+      "nameFZh": null
+    },
+    "knight": {
+      "raw": "Knight",
+      "nameZh": "騎士",
+      "nameFZh": null
+    },
+    "crusader": {
+      "raw": "Crusader",
+      "nameZh": "十字軍",
+      "nameFZh": null
+    },
+    "wizard": {
+      "raw": "Wizard",
+      "nameZh": "巫師",
+      "nameFZh": null
+    },
+    "sage": {
+      "raw": "Sage",
+      "nameZh": "賢者",
+      "nameFZh": null
+    },
+    "hunter": {
+      "raw": "Hunter",
+      "nameZh": "獵人",
+      "nameFZh": null
+    },
+    "bard": {
+      "raw": "Bard",
+      "nameZh": "吟遊詩人",
+      "nameFZh": "舞孃"
+    },
+    "priest": {
+      "raw": "Priest",
+      "nameZh": "祭司",
+      "nameFZh": null
+    },
+    "monk": {
+      "raw": "Monk",
+      "nameZh": "武僧",
+      "nameFZh": null
+    },
+    "assassin": {
+      "raw": "Assassin",
+      "nameZh": "刺客",
+      "nameFZh": null
+    },
+    "rogue": {
+      "raw": "Rogue",
+      "nameZh": "流氓",
+      "nameFZh": null
+    },
+    "blacksmith": {
+      "raw": "Blacksmith",
+      "nameZh": "鐵匠",
+      "nameFZh": null
+    },
+    "alchemist": {
+      "raw": "Alchemist",
+      "nameZh": "鍊金術師",
+      "nameFZh": null
+    },
+    "star_gladiator": {
+      "raw": "Star Gladiator",
+      "nameZh": "拳聖",
+      "nameFZh": null
+    },
+    "soul_linker": {
+      "raw": "Soul Linker",
+      "nameZh": "悟靈士",
+      "nameFZh": null
+    }
+  },
+  "skillNamesZh": {
+    "bash": {
+      "raw": "Bash",
+      "nameZh": "狂擊"
+    },
+    "magnum": {
+      "raw": "Magnum Break",
+      "nameZh": "怒爆"
+    },
+    "sword_dance": {
+      "raw": "Sword Dance",
+      "nameZh": "劍舞"
+    },
+    "provoke": {
+      "raw": "Provoke",
+      "nameZh": "挑釁"
+    },
+    "demoralizing_shout": {
+      "raw": "Demoralizing Shout",
+      "nameZh": "降低士氣的吶喊"
+    },
+    "shield_bash": {
+      "raw": "Shield Bash",
+      "nameZh": "盾牌衝擊"
+    },
+    "endure": {
+      "raw": "Endure",
+      "nameZh": "霸體"
+    },
+    "hp_recovery": {
+      "raw": "Increase HP Recovery",
+      "nameZh": "快速恢復"
+    },
+    "firebolt": {
+      "raw": "Fire Bolt",
+      "nameZh": "火箭術"
+    },
+    "coldbolt": {
+      "raw": "Cold Bolt",
+      "nameZh": "冰箭術"
+    },
+    "lightning": {
+      "raw": "Lightning Bolt",
+      "nameZh": "雷擊術"
+    },
+    "soul_strike": {
+      "raw": "Soul Strike",
+      "nameZh": "聖靈召喚"
+    },
+    "napalm": {
+      "raw": "Napalm Beat",
+      "nameZh": "心靈爆破"
+    },
+    "fire_wall": {
+      "raw": "Fire Wall",
+      "nameZh": "火焰之壁"
+    },
+    "frost_diver": {
+      "raw": "Frost Diver",
+      "nameZh": "冰凍術"
+    },
+    "sight": {
+      "raw": "Sight",
+      "nameZh": "火狩"
+    },
+    "thunderstorm": {
+      "raw": "Thunderstorm",
+      "nameZh": "雷爆術"
+    },
+    "double_strafe": {
+      "raw": "Double Strafe",
+      "nameZh": "二連矢"
+    },
+    "arrow_shower": {
+      "raw": "Arrow Shower",
+      "nameZh": "箭雨"
+    },
+    "arrow_rain": {
+      "raw": "Arrow Rain",
+      "nameZh": "箭矢暴雨"
+    },
+    "retreat": {
+      "raw": "Retirada",
+      "nameZh": "撤退"
+    },
+    "arcane_shot": {
+      "raw": "Arcane Shot",
+      "nameZh": "奧術射擊"
+    },
+    "fire_arrow": {
+      "raw": "Flecha ígnea",
+      "nameZh": "火焰箭"
+    },
+    "arrow_repel": {
+      "raw": "Arrow Repel",
+      "nameZh": "衝鋒箭"
+    },
+    "concentration": {
+      "raw": "Improve Concentration",
+      "nameZh": "心神凝聚"
+    },
+    "heal": {
+      "raw": "Heal",
+      "nameZh": "治癒術"
+    },
+    "holy_light": {
+      "raw": "Holy Light",
+      "nameZh": "神聖之光"
+    },
+    "ruwach": {
+      "raw": "Ruwach",
+      "nameZh": "光獵"
+    },
+    "decrease_agi": {
+      "raw": "Decrease AGI",
+      "nameZh": "緩速術"
+    },
+    "signum_crucis": {
+      "raw": "Signum Crucis",
+      "nameZh": "天使之光"
+    },
+    "aqua_benedicta": {
+      "raw": "Aqua Benedicta",
+      "nameZh": "天使之淚"
+    },
+    "blessing": {
+      "raw": "Blessing",
+      "nameZh": "天使之賜福"
+    },
+    "holy_smite": {
+      "raw": "Golpe sagrado",
+      "nameZh": "神聖重擊"
+    },
+    "envenom": {
+      "raw": "Envenom",
+      "nameZh": "施毒"
+    },
+    "sand_attack": {
+      "raw": "Sand Attack",
+      "nameZh": "噴砂"
+    },
+    "throw_stone": {
+      "raw": "Throw Stone",
+      "nameZh": "投擲石頭"
+    },
+    "hiding": {
+      "raw": "Hiding",
+      "nameZh": "隱匿"
+    },
+    "poison_bomb": {
+      "raw": "Poison Bomb",
+      "nameZh": "毒藥瓶"
+    },
+    "shadowstep": {
+      "raw": "Shadowstep",
+      "nameZh": "影步"
+    },
+    "fan_of_knives": {
+      "raw": "Fan of Knives",
+      "nameZh": "飛刀扇"
+    },
+    "caltrops": {
+      "raw": "Caltrops",
+      "nameZh": "撒菱"
+    },
+    "mammonite": {
+      "raw": "Mammonite",
+      "nameZh": "金錢攻擊"
+    },
+    "cart_revolution": {
+      "raw": "Cart Revolution",
+      "nameZh": "手推車攻擊"
+    },
+    "crazy_uproar": {
+      "raw": "Crazy Uproar",
+      "nameZh": "大聲吶喊"
+    },
+    "enlarge_weight": {
+      "raw": "Enlarge Weight Limit",
+      "nameZh": "負重量上升"
+    },
+    "zeny_rain": {
+      "raw": "Zeny Rain",
+      "nameZh": "金幣雨"
+    },
+    "cart_rush": {
+      "raw": "Cart Rush",
+      "nameZh": "手推車衝撞"
+    },
+    "vending": {
+      "raw": "Vending",
+      "nameZh": "露天商店"
+    },
+    "tornado_kick": {
+      "raw": "Tornado Kick",
+      "nameZh": "迴旋踢"
+    },
+    "heel_drop": {
+      "raw": "Heel Drop",
+      "nameZh": "砸踢"
+    },
+    "roundhouse": {
+      "raw": "Roundhouse",
+      "nameZh": "轉身踢"
+    },
+    "counter_kick": {
+      "raw": "Counter Kick",
+      "nameZh": "還擊踢"
+    },
+    "sprint": {
+      "raw": "Sprint",
+      "nameZh": "跑步"
+    },
+    "shuriken": {
+      "raw": "Throw Shuriken",
+      "nameZh": "投擲飛鏢"
+    },
+    "kunai": {
+      "raw": "Throw Kunai",
+      "nameZh": "投擲飛刀"
+    },
+    "huuma": {
+      "raw": "Throw Huuma Shuriken",
+      "nameZh": "投擲風魔飛鏢"
+    },
+    "flaming_petals": {
+      "raw": "Flaming Petals",
+      "nameZh": "火炎花"
+    },
+    "lightning_strike": {
+      "raw": "Lightning Strike",
+      "nameZh": "雷擊碎"
+    },
+    "triple_action": {
+      "raw": "Triple Action",
+      "nameZh": "三連攻擊"
+    },
+    "rapid_shower": {
+      "raw": "Rapid Shower",
+      "nameZh": "五連擊"
+    },
+    "spread_attack": {
+      "raw": "Spread Attack",
+      "nameZh": "火力全開"
+    },
+    "desperado": {
+      "raw": "Desperado",
+      "nameZh": "亡命之徒"
+    },
+    "ground_drift": {
+      "raw": "Ground Drift",
+      "nameZh": "四面埋伏"
+    },
+    "tracking": {
+      "raw": "Tracking",
+      "nameZh": "百步穿楊"
+    }
+  },
+  "talentNamesZh": {
+    "branches": {
+      "swordsman": [
+        "武器",
+        "狂怒",
+        "守護"
+      ],
+      "mage": [
+        "火",
+        "冰",
+        "奧術"
+      ],
+      "archer": [
+        "神射手",
+        "奧術",
+        "圍攻"
+      ],
+      "acolyte": [
+        "神聖",
+        "驅魔",
+        "懲戒"
+      ],
+      "thief": [
+        "暗殺",
+        "戰鬥",
+        "暗影"
+      ],
+      "merchant": [
+        "交易",
+        "手推車",
+        "鍛造"
+      ],
+      "taekwon": [
+        "暴風雨",
+        "戰鬥",
+        "修行"
+      ],
+      "ninja": [
+        "投擲",
+        "忍術",
+        "潛行"
+      ],
+      "gunslinger": [
+        "槍手",
+        "霰彈槍",
+        "狙擊手"
+      ]
+    },
+    "nodes": {
+      "swordsman.0.sword_mastery": {
+        "raw": "Sword Mastery",
+        "nameZh": "單手劍使用熟練度"
+      },
+      "swordsman.0.tempered": {
+        "raw": "Filo templado",
+        "nameZh": "淬鍊之刃"
+      },
+      "swordsman.0.bash_dmg": {
+        "raw": "Bash mejorado",
+        "nameZh": "強化狂擊"
+      },
+      "swordsman.0.deep_cut": {
+        "raw": "Tajo profundo",
+        "nameZh": "深切"
+      },
+      "swordsman.0.fatal_blow": {
+        "raw": "Fatal Blow",
+        "nameZh": "攻擊弱點"
+      },
+      "swordsman.0.magnum_dmg": {
+        "raw": "Magnum potenciado",
+        "nameZh": "強化怒爆"
+      },
+      "swordsman.0.two_hand": {
+        "raw": "Two-Hand Mastery",
+        "nameZh": "雙手劍使用熟練度"
+      },
+      "swordsman.0.weapon_mastery": {
+        "raw": "Maestría del arma",
+        "nameZh": "武器精通"
+      },
+      "swordsman.0.giant_slayer": {
+        "raw": "Matagigantes",
+        "nameZh": "巨人剋星"
+      },
+      "swordsman.0.magnum_cd": {
+        "raw": "Magnum rápido",
+        "nameZh": "迅捷怒爆"
+      },
+      "swordsman.0.coup": {
+        "raw": "Golpe de gracia",
+        "nameZh": "致命一擊"
+      },
+      "swordsman.0.magnum_mark": {
+        "raw": "Llamas de Magnum",
+        "nameZh": "怒爆之焰"
+      },
+      "swordsman.0.lethal": {
+        "raw": "Precisión letal",
+        "nameZh": "致命精準"
+      },
+      "swordsman.0.warrior_reach": {
+        "raw": "Alcance del guerrero",
+        "nameZh": "戰士之距"
+      },
+      "swordsman.0.magnum_inferno": {
+        "raw": "Magnum infernal",
+        "nameZh": "地獄怒爆"
+      },
+      "swordsman.0.shout_weaken": {
+        "raw": "Voz de mando",
+        "nameZh": "號令之聲"
+      },
+      "swordsman.0.shout_dread": {
+        "raw": "Pavor",
+        "nameZh": "恐懼"
+      },
+      "swordsman.0.bowling_bash": {
+        "raw": "Bash demoledor",
+        "nameZh": "粉碎狂擊"
+      },
+      "swordsman.1.brutality": {
+        "raw": "Brutalidad",
+        "nameZh": "殘暴"
+      },
+      "swordsman.1.charge": {
+        "raw": "Carga",
+        "nameZh": "衝鋒"
+      },
+      "swordsman.1.double_slash": {
+        "raw": "Doble tajo",
+        "nameZh": "雙重斬擊"
+      },
+      "swordsman.1.frenzy": {
+        "raw": "Frenesí",
+        "nameZh": "狂亂"
+      },
+      "swordsman.1.auto_berserk": {
+        "raw": "Auto Berserk",
+        "nameZh": "狂暴狀態"
+      },
+      "swordsman.1.quicken": {
+        "raw": "Two-Hand Quicken",
+        "nameZh": "雙手劍攻擊速度增加"
+      },
+      "swordsman.1.bloodthirst": {
+        "raw": "Sed de sangre",
+        "nameZh": "嗜血"
+      },
+      "swordsman.1.relentless": {
+        "raw": "Filo implacable",
+        "nameZh": "無情之刃"
+      },
+      "swordsman.1.cleave": {
+        "raw": "Tajos encadenados",
+        "nameZh": "連鎖斬擊"
+      },
+      "swordsman.1.adrenaline": {
+        "raw": "Adrenalina",
+        "nameZh": "腎上腺素"
+      },
+      "swordsman.1.roar": {
+        "raw": "Rugido",
+        "nameZh": "咆哮"
+      },
+      "swordsman.1.steel_fury": {
+        "raw": "Furia de acero",
+        "nameZh": "鋼鐵之怒"
+      },
+      "swordsman.1.berserk": {
+        "raw": "Berserk",
+        "nameZh": "狂暴"
+      },
+      "swordsman.1.dance_dmg": {
+        "raw": "Paso de baile",
+        "nameZh": "舞步"
+      },
+      "swordsman.1.dance_cd": {
+        "raw": "Danza veloz",
+        "nameZh": "迅捷之舞"
+      },
+      "swordsman.1.dance_area": {
+        "raw": "Torbellino",
+        "nameZh": "旋風"
+      },
+      "swordsman.1.dance_finale": {
+        "raw": "Danza de la muerte",
+        "nameZh": "死亡之舞"
+      },
+      "swordsman.2.hard_skin": {
+        "raw": "Piel dura",
+        "nameZh": "堅韌皮膚"
+      },
+      "swordsman.2.stance": {
+        "raw": "Postura firme",
+        "nameZh": "穩固架勢"
+      },
+      "swordsman.2.recovery": {
+        "raw": "Recuperación",
+        "nameZh": "恢復"
+      },
+      "swordsman.2.shield_mastery": {
+        "raw": "Maestría con escudo",
+        "nameZh": "盾牌精通"
+      },
+      "swordsman.2.provoke_area": {
+        "raw": "Grito de guerra",
+        "nameZh": "戰吼"
+      },
+      "swordsman.2.endure_cd": {
+        "raw": "Resistencia",
+        "nameZh": "韌性"
+      },
+      "swordsman.2.moving_recovery": {
+        "raw": "Moving HP Recovery",
+        "nameZh": "移動時恢復HP"
+      },
+      "swordsman.2.guard_up": {
+        "raw": "Guardia alzada",
+        "nameZh": "舉盾防禦"
+      },
+      "swordsman.2.taunt": {
+        "raw": "Provocación brutal",
+        "nameZh": "兇猛挑釁"
+      },
+      "swordsman.2.faith": {
+        "raw": "Convicción",
+        "nameZh": "信念"
+      },
+      "swordsman.2.endure_heal": {
+        "raw": "Tesón",
+        "nameZh": "毅力"
+      },
+      "swordsman.2.shield_bash_dmg": {
+        "raw": "Golpe de escudo",
+        "nameZh": "盾擊"
+      },
+      "swordsman.2.shield_bash_reach": {
+        "raw": "Vanguardia",
+        "nameZh": "先鋒"
+      },
+      "swordsman.2.bulldozer": {
+        "raw": "Apisonadora",
+        "nameZh": "壓路機"
+      },
+      "swordsman.2.parry": {
+        "raw": "Shield Mastery",
+        "nameZh": "盾牌精通"
+      },
+      "swordsman.2.presence": {
+        "raw": "Presencia",
+        "nameZh": "威壓"
+      },
+      "swordsman.2.immovable": {
+        "raw": "Inamovible",
+        "nameZh": "不動如山"
+      },
+      "swordsman.2.wall": {
+        "raw": "Muro",
+        "nameZh": "壁壘"
+      },
+      "swordsman.2.last_breath": {
+        "raw": "Último aliento",
+        "nameZh": "最後一息"
+      },
+      "mage.0.firebolt_dmg": {
+        "raw": "Llama viva",
+        "nameZh": "生命之焰"
+      },
+      "mage.0.firewall_dmg": {
+        "raw": "Muro abrasador",
+        "nameZh": "灼熱之牆"
+      },
+      "mage.0.inner_heat": {
+        "raw": "Calor interior",
+        "nameZh": "內在熱能"
+      },
+      "mage.0.firebolt_bolts": {
+        "raw": "Ráfaga ígnea",
+        "nameZh": "火焰彈幕"
+      },
+      "mage.0.fire_infusion": {
+        "raw": "Infusión de fuego",
+        "nameZh": "火焰附加"
+      },
+      "mage.0.firebolt_count": {
+        "raw": "Fuego múltiple",
+        "nameZh": "多重火焰"
+      },
+      "mage.0.firewall_cd": {
+        "raw": "Muro rápido",
+        "nameZh": "快速火牆"
+      },
+      "mage.0.combustion": {
+        "raw": "Combustión",
+        "nameZh": "燃燒"
+      },
+      "mage.0.sight_count": {
+        "raw": "Más llamas",
+        "nameZh": "更多火焰"
+      },
+      "mage.0.pyro": {
+        "raw": "Pirotecnia",
+        "nameZh": "煙火術"
+      },
+      "mage.0.warmth": {
+        "raw": "Calor reconfortante",
+        "nameZh": "舒適的溫暖"
+      },
+      "mage.0.eternal_fire": {
+        "raw": "Fuego eterno",
+        "nameZh": "永恆之火"
+      },
+      "mage.0.fire_conduit": {
+        "raw": "Conducto ígneo",
+        "nameZh": "火焰導管"
+      },
+      "mage.0.heat_wave": {
+        "raw": "Ola de calor",
+        "nameZh": "熱浪"
+      },
+      "mage.0.orbit_flames": {
+        "raw": "Llamas orbitales",
+        "nameZh": "環繞火焰"
+      },
+      "mage.0.pyromaniac": {
+        "raw": "Pirómano",
+        "nameZh": "縱火狂"
+      },
+      "mage.0.firestorm": {
+        "raw": "Firestorm",
+        "nameZh": "火焰風暴"
+      },
+      "mage.0.meteor": {
+        "raw": "Fuego gemelo",
+        "nameZh": "雙生之火"
+      },
+      "mage.1.coldbolt_dmg": {
+        "raw": "Frío penetrante",
+        "nameZh": "刺骨寒冷"
+      },
+      "mage.1.coldbolt_bolts": {
+        "raw": "Ráfaga gélida",
+        "nameZh": "冰霜彈幕"
+      },
+      "mage.1.frost_dmg": {
+        "raw": "Increase SP Recovery",
+        "nameZh": "禪心"
+      },
+      "mage.1.energy_coat": {
+        "raw": "Energy Coat",
+        "nameZh": "能量外套"
+      },
+      "mage.1.water_infusion": {
+        "raw": "Infusión de hielo",
+        "nameZh": "冰霜附加"
+      },
+      "mage.1.freeze": {
+        "raw": "Congelación",
+        "nameZh": "冰凍"
+      },
+      "mage.1.shatter": {
+        "raw": "Fragmentación",
+        "nameZh": "粉碎"
+      },
+      "mage.1.glaciation": {
+        "raw": "Glaciación",
+        "nameZh": "冰河化"
+      },
+      "mage.1.frost_armor": {
+        "raw": "Armadura de escarcha",
+        "nameZh": "冰霜護甲"
+      },
+      "mage.1.ice_rain": {
+        "raw": "Lluvia de hielo",
+        "nameZh": "冰雨"
+      },
+      "mage.1.frost_chain": {
+        "raw": "Escarcha en cadena",
+        "nameZh": "連鎖冰霜"
+      },
+      "mage.1.water_conduit": {
+        "raw": "Conducto gélido",
+        "nameZh": "冰霜導管"
+      },
+      "mage.1.winter_skin": {
+        "raw": "Piel de invierno",
+        "nameZh": "冬之膚"
+      },
+      "mage.1.slow": {
+        "raw": "Escarcha persistente",
+        "nameZh": "殘留冰霜"
+      },
+      "mage.1.frost_area": {
+        "raw": "Ventisca",
+        "nameZh": "暴風雪"
+      },
+      "mage.1.eternal_winter": {
+        "raw": "Deep Freeze",
+        "nameZh": "深度冰凍"
+      },
+      "mage.2.soul_dmg": {
+        "raw": "Alma poderosa",
+        "nameZh": "強大靈魂"
+      },
+      "mage.2.lightning_dmg": {
+        "raw": "Alto voltaje",
+        "nameZh": "高壓電"
+      },
+      "mage.2.lightning_bolts": {
+        "raw": "Ráfaga voltaica",
+        "nameZh": "電壓彈幕"
+      },
+      "mage.2.quick_cast": {
+        "raw": "Conjuro veloz",
+        "nameZh": "迅速詠唱"
+      },
+      "mage.2.wind_infusion": {
+        "raw": "Infusión de rayo",
+        "nameZh": "雷電附加"
+      },
+      "mage.2.stone_curse": {
+        "raw": "Stone Curse",
+        "nameZh": "石化術"
+      },
+      "mage.2.soul_count": {
+        "raw": "Legión de almas",
+        "nameZh": "靈魂軍團"
+      },
+      "mage.2.storm_dmg": {
+        "raw": "Tormenta furiosa",
+        "nameZh": "狂暴風暴"
+      },
+      "mage.2.storm_area": {
+        "raw": "Frente tormentoso",
+        "nameZh": "風暴前線"
+      },
+      "mage.2.storm_cd": {
+        "raw": "Tormenta rápida",
+        "nameZh": "快速風暴"
+      },
+      "mage.2.napalm_area": {
+        "raw": "Napalm potenciado",
+        "nameZh": "強化心靈爆破"
+      },
+      "mage.2.wind_conduit": {
+        "raw": "Conducto voltaico",
+        "nameZh": "電壓導管"
+      },
+      "mage.2.double_cast": {
+        "raw": "Double Casting",
+        "nameZh": "雙重施法"
+      },
+      "mage.2.arcane_power": {
+        "raw": "Poder arcano",
+        "nameZh": "奧術之力"
+      },
+      "mage.2.clearcast": {
+        "raw": "Clearcast",
+        "nameZh": "清晰施法"
+      },
+      "mage.2.soul_split": {
+        "raw": "Alma dividida",
+        "nameZh": "分裂靈魂"
+      },
+      "mage.2.soul_ward": {
+        "raw": "Escudo de almas",
+        "nameZh": "靈魂之盾"
+      },
+      "mage.2.lord_of_storms": {
+        "raw": "Electrical Mayhem",
+        "nameZh": "電力混沌"
+      },
+      "archer.0.owls_eye": {
+        "raw": "Owl's Eye",
+        "nameZh": "梟之眼"
+      },
+      "archer.0.ds_dmg": {
+        "raw": "Flechas afiladas",
+        "nameZh": "銳利箭矢"
+      },
+      "archer.0.bow_mastery": {
+        "raw": "Maestría con el arco",
+        "nameZh": "弓術精通"
+      },
+      "archer.0.kiting": {
+        "raw": "Paso de arquero",
+        "nameZh": "弓手步伐"
+      },
+      "archer.0.ds_cd": {
+        "raw": "Tensado rápido",
+        "nameZh": "快速拔箭"
+      },
+      "archer.0.ds_count": {
+        "raw": "Salva prolongada",
+        "nameZh": "延伸齊射"
+      },
+      "archer.0.piercing": {
+        "raw": "Flecha penetrante",
+        "nameZh": "貫穿之箭"
+      },
+      "archer.0.retreat_cd": {
+        "raw": "Retirada rápida",
+        "nameZh": "快速撤退"
+      },
+      "archer.0.hunter": {
+        "raw": "Instinto de cazador",
+        "nameZh": "獵人本能"
+      },
+      "archer.0.covering_fire": {
+        "raw": "Disparo de cobertura",
+        "nameZh": "掩護射擊"
+      },
+      "archer.0.serrated": {
+        "raw": "Puntas dentadas",
+        "nameZh": "鋸齒箭頭"
+      },
+      "archer.0.ds_ramp": {
+        "raw": "Presa marcada",
+        "nameZh": "標記獵物"
+      },
+      "archer.0.twin_arrows": {
+        "raw": "Flechas gemelas",
+        "nameZh": "雙生之箭"
+      },
+      "archer.0.vultures_eye": {
+        "raw": "Vulture's Eye",
+        "nameZh": "鷹眼"
+      },
+      "archer.0.weak_point": {
+        "raw": "Punto débil",
+        "nameZh": "弱點"
+      },
+      "archer.0.strafe_storm": {
+        "raw": "Tormenta de salvas",
+        "nameZh": "齊射風暴"
+      },
+      "archer.1.haste": {
+        "raw": "Mente ágil",
+        "nameZh": "敏捷心智"
+      },
+      "archer.1.arcane_dmg": {
+        "raw": "Disparo arcano",
+        "nameZh": "奧術射擊精通"
+      },
+      "archer.1.pulse_area": {
+        "raw": "Pulso amplio",
+        "nameZh": "寬廣脈衝"
+      },
+      "archer.1.live_flame": {
+        "raw": "Llama viva",
+        "nameZh": "生命之焰"
+      },
+      "archer.1.fire_area": {
+        "raw": "Fuego extendido",
+        "nameZh": "蔓延之火"
+      },
+      "archer.1.insight": {
+        "raw": "Intuición",
+        "nameZh": "洞察"
+      },
+      "archer.1.fire_targets": {
+        "raw": "Flechas ígneas",
+        "nameZh": "火焰箭"
+      },
+      "archer.1.arcane_surge": {
+        "raw": "Ráfaga arcana",
+        "nameZh": "奧術連發"
+      },
+      "archer.1.gravity": {
+        "raw": "Gravedad",
+        "nameZh": "重力"
+      },
+      "archer.1.elemental_focus": {
+        "raw": "Foco elemental",
+        "nameZh": "元素專注"
+      },
+      "archer.1.embers": {
+        "raw": "Ascuas",
+        "nameZh": "餘燼"
+      },
+      "archer.1.arcane_twin": {
+        "raw": "Disparo doble",
+        "nameZh": "雙重射擊"
+      },
+      "archer.1.reach": {
+        "raw": "Alcance arcano",
+        "nameZh": "奧術射程"
+      },
+      "archer.1.flow": {
+        "raw": "Flujo arcano",
+        "nameZh": "奧術之流"
+      },
+      "archer.1.convergence": {
+        "raw": "Convergencia elemental",
+        "nameZh": "元素匯聚"
+      },
+      "archer.2.field": {
+        "raw": "Campo de tiro",
+        "nameZh": "射擊場"
+      },
+      "archer.2.improve_concentration": {
+        "raw": "Concentración prolongada",
+        "nameZh": "持久專注"
+      },
+      "archer.2.siege_stance": {
+        "raw": "Posición de asedio",
+        "nameZh": "圍攻架勢"
+      },
+      "archer.2.camouflage": {
+        "raw": "Camuflaje",
+        "nameZh": "偽裝"
+      },
+      "archer.2.shower_dmg": {
+        "raw": "Abanico letal",
+        "nameZh": "致命扇射"
+      },
+      "archer.2.shower_volley": {
+        "raw": "Andanada extra",
+        "nameZh": "額外齊射"
+      },
+      "archer.2.mark_prey": {
+        "raw": "Marcar presa",
+        "nameZh": "標記獵物"
+      },
+      "archer.2.rain_dmg": {
+        "raw": "Lluvia letal",
+        "nameZh": "致命之雨"
+      },
+      "archer.2.more_arrows": {
+        "raw": "Más flechas",
+        "nameZh": "更多箭矢"
+      },
+      "archer.2.weighted": {
+        "raw": "Flechas lastradas",
+        "nameZh": "加重箭矢"
+      },
+      "archer.2.repel_dmg": {
+        "raw": "Flecha cargada",
+        "nameZh": "蓄力之箭"
+      },
+      "archer.2.repel_cd": {
+        "raw": "Recarga rápida",
+        "nameZh": "快速裝填"
+      },
+      "archer.2.repel_wide": {
+        "raw": "Saeta aturdidora",
+        "nameZh": "暈眩之箭"
+      },
+      "archer.2.arrow_crafting": {
+        "raw": "Arrow Crafting",
+        "nameZh": "製作箭"
+      },
+      "archer.2.siege_rain": {
+        "raw": "Asedio total",
+        "nameZh": "全面圍攻"
+      },
+      "acolyte.0.angelus": {
+        "raw": "Angelus",
+        "nameZh": "天使之護"
+      },
+      "acolyte.0.heal_dmg": {
+        "raw": "Sanación divina",
+        "nameZh": "神聖治療"
+      },
+      "acolyte.0.aqua_dmg": {
+        "raw": "Agua bendita",
+        "nameZh": "聖水"
+      },
+      "acolyte.0.divine_protection": {
+        "raw": "Divine Protection",
+        "nameZh": "天使之護"
+      },
+      "acolyte.0.heal_area": {
+        "raw": "Pulso amplio",
+        "nameZh": "寬廣脈衝"
+      },
+      "acolyte.0.bless_dur": {
+        "raw": "Bendición duradera",
+        "nameZh": "持久賜福"
+      },
+      "acolyte.0.grace_dmg": {
+        "raw": "Gracia desbordante",
+        "nameZh": "滿溢恩典"
+      },
+      "acolyte.0.aqua_area": {
+        "raw": "Charco extenso",
+        "nameZh": "寬廣水窪"
+      },
+      "acolyte.0.meditatio": {
+        "raw": "Meditatio",
+        "nameZh": "冥想術"
+      },
+      "acolyte.0.heal_cd": {
+        "raw": "Heal rápido",
+        "nameZh": "快速治癒"
+      },
+      "acolyte.0.aqua_heal": {
+        "raw": "Agua viva",
+        "nameZh": "生命之水"
+      },
+      "acolyte.0.bless_haste": {
+        "raw": "Bendición compartida",
+        "nameZh": "共享賜福"
+      },
+      "acolyte.0.assumptio": {
+        "raw": "Assumptio",
+        "nameZh": "聖母之祈福"
+      },
+      "acolyte.0.aqua_slow": {
+        "raw": "Charco sagrado",
+        "nameZh": "神聖水窪"
+      },
+      "acolyte.0.basilica": {
+        "raw": "Basilica",
+        "nameZh": "聖域"
+      },
+      "acolyte.0.mana_recharge": {
+        "raw": "Mana Recharge",
+        "nameZh": "魔力回充"
+      },
+      "acolyte.0.fountain": {
+        "raw": "Fuente de vida",
+        "nameZh": "生命之泉"
+      },
+      "acolyte.1.demon_bane": {
+        "raw": "Demon Bane",
+        "nameZh": "天使之擊"
+      },
+      "acolyte.1.holy_dmg": {
+        "raw": "Luz cegadora",
+        "nameZh": "致盲之光"
+      },
+      "acolyte.1.crucis_dmg": {
+        "raw": "Cruz ardiente",
+        "nameZh": "燃燒十字"
+      },
+      "acolyte.1.holy_cd": {
+        "raw": "Plegaria rápida",
+        "nameZh": "快速祈禱"
+      },
+      "acolyte.1.crucis_area": {
+        "raw": "Cruz extendida",
+        "nameZh": "寬廣十字"
+      },
+      "acolyte.1.decagi_area": {
+        "raw": "Lentitud divina",
+        "nameZh": "神聖遲緩"
+      },
+      "acolyte.1.lex_divina": {
+        "raw": "Lex Divina",
+        "nameZh": "神聖沉默"
+      },
+      "acolyte.1.holy_count": {
+        "raw": "Doble luz",
+        "nameZh": "雙重之光"
+      },
+      "acolyte.1.sin": {
+        "raw": "Peso del pecado",
+        "nameZh": "罪孽之重"
+      },
+      "acolyte.1.lex_aeterna": {
+        "raw": "Lex Aeterna",
+        "nameZh": "永恆之語"
+      },
+      "acolyte.1.condemn": {
+        "raw": "Condena",
+        "nameZh": "定罪"
+      },
+      "acolyte.1.judgement": {
+        "raw": "Juicio",
+        "nameZh": "審判"
+      },
+      "acolyte.1.faith": {
+        "raw": "Fe",
+        "nameZh": "信仰"
+      },
+      "acolyte.1.crucis_dur": {
+        "raw": "Suelo consagrado",
+        "nameZh": "聖化之地"
+      },
+      "acolyte.1.suffragium": {
+        "raw": "Suffragium",
+        "nameZh": "讚美詩"
+      },
+      "acolyte.1.purify": {
+        "raw": "Purificación",
+        "nameZh": "淨化"
+      },
+      "acolyte.1.zeal": {
+        "raw": "Celo",
+        "nameZh": "熱忱"
+      },
+      "acolyte.1.divine_judgement": {
+        "raw": "Juicio divino",
+        "nameZh": "神聖審判"
+      },
+      "acolyte.2.mace_mastery": {
+        "raw": "Mace Mastery",
+        "nameZh": "權杖使用熟練度"
+      },
+      "acolyte.2.smite_dmg": {
+        "raw": "Mazazo",
+        "nameZh": "錘擊"
+      },
+      "acolyte.2.ruwach_dmg": {
+        "raw": "Orbes ardientes",
+        "nameZh": "燃燒光球"
+      },
+      "acolyte.2.increase_agi": {
+        "raw": "Increase AGI",
+        "nameZh": "加速術"
+      },
+      "acolyte.2.fervor": {
+        "raw": "Fervor",
+        "nameZh": "熱忱"
+      },
+      "acolyte.2.ruwach_count": {
+        "raw": "Más orbes",
+        "nameZh": "更多光球"
+      },
+      "acolyte.2.iron_hand": {
+        "raw": "Iron Hand",
+        "nameZh": "鐵沙掌"
+      },
+      "acolyte.2.smite_cd": {
+        "raw": "Castigo certero",
+        "nameZh": "必然懲戒"
+      },
+      "acolyte.2.triple_attack": {
+        "raw": "Triple Attack",
+        "nameZh": "六合拳"
+      },
+      "acolyte.2.ruwach_cd": {
+        "raw": "Orbes veloces",
+        "nameZh": "迅捷光球"
+      },
+      "acolyte.2.blessed_hand": {
+        "raw": "Mano bendita",
+        "nameZh": "受祝福之手"
+      },
+      "acolyte.2.investigate": {
+        "raw": "Investigate",
+        "nameZh": "浸透勁"
+      },
+      "acolyte.2.holy_rhythm": {
+        "raw": "Ritmo sagrado",
+        "nameZh": "神聖節奏"
+      },
+      "acolyte.2.holy_sweep": {
+        "raw": "Barrido sagrado",
+        "nameZh": "神聖橫掃"
+      },
+      "acolyte.2.faith_power": {
+        "raw": "Fuerza de la fe",
+        "nameZh": "信仰之力"
+      },
+      "acolyte.2.bless_proc": {
+        "raw": "Bendición fugaz",
+        "nameZh": "瞬間賜福"
+      },
+      "acolyte.2.light_strike": {
+        "raw": "Golpe de luz",
+        "nameZh": "光之打擊"
+      },
+      "thief.0.toxicology": {
+        "raw": "Toxicología",
+        "nameZh": "毒物學"
+      },
+      "thief.0.edp": {
+        "raw": "Enchant Deadly Poison",
+        "nameZh": "致命塗毒"
+      },
+      "thief.0.venom_mix": {
+        "raw": "Venenos combinados",
+        "nameZh": "混合劇毒"
+      },
+      "thief.0.poison": {
+        "raw": "Veneno concentrado",
+        "nameZh": "濃縮毒素"
+      },
+      "thief.0.envenom_cd": {
+        "raw": "Puñaladas rápidas",
+        "nameZh": "快速刺擊"
+      },
+      "thief.0.fan": {
+        "raw": "Puñales en abanico",
+        "nameZh": "短劍散射"
+      },
+      "thief.0.poison_react": {
+        "raw": "Reacción tóxica",
+        "nameZh": "毒性反應"
+      },
+      "thief.0.venom_splasher": {
+        "raw": "Venom Splasher",
+        "nameZh": "毒性感染"
+      },
+      "thief.0.bomb_area": {
+        "raw": "Salpicadura tóxica",
+        "nameZh": "毒液飛濺"
+      },
+      "thief.0.bomb_cd": {
+        "raw": "Frascos a mano",
+        "nameZh": "藥瓶在手"
+      },
+      "thief.0.toxin": {
+        "raw": "Toxina lenta",
+        "nameZh": "緩效毒素"
+      },
+      "thief.0.bomb_count": {
+        "raw": "Lluvia de frascos",
+        "nameZh": "藥瓶彈幕"
+      },
+      "thief.0.envenom_dmg": {
+        "raw": "Hoja tóxica",
+        "nameZh": "劇毒之刃"
+      },
+      "thief.0.potent": {
+        "raw": "Venenos potentes",
+        "nameZh": "強效毒素"
+      },
+      "thief.0.fumes": {
+        "raw": "Vapores tóxicos",
+        "nameZh": "毒性煙霧"
+      },
+      "thief.1.double_attack": {
+        "raw": "Double Attack",
+        "nameZh": "二刀連擊"
+      },
+      "thief.1.dagger": {
+        "raw": "Maestría con la hoja",
+        "nameZh": "刀刃精通"
+      },
+      "thief.1.quick_hands": {
+        "raw": "Manos rápidas",
+        "nameZh": "快手"
+      },
+      "thief.1.fan_dmg": {
+        "raw": "Cuchillas afiladas",
+        "nameZh": "磨利之刃"
+      },
+      "thief.1.blind": {
+        "raw": "Ceguera",
+        "nameZh": "致盲"
+      },
+      "thief.1.fan_area": {
+        "raw": "Abanico abierto",
+        "nameZh": "寬廣扇射"
+      },
+      "thief.1.stone_dmg": {
+        "raw": "Pedrada",
+        "nameZh": "投石"
+      },
+      "thief.1.sand_cd": {
+        "raw": "Arena a mano",
+        "nameZh": "沙子在手"
+      },
+      "thief.1.strip": {
+        "raw": "Strip Armor",
+        "nameZh": "卸除鎧甲"
+      },
+      "thief.1.thief_eye": {
+        "raw": "Ojo de ladrón",
+        "nameZh": "盜賊之眼"
+      },
+      "thief.1.stone_stun": {
+        "raw": "Piedra certera",
+        "nameZh": "精準投石"
+      },
+      "thief.1.sand_area": {
+        "raw": "Arena a distancia",
+        "nameZh": "遠距撒沙"
+      },
+      "thief.1.raid": {
+        "raw": "Barrido traicionero",
+        "nameZh": "奸詐橫掃"
+      },
+      "thief.1.stone_count": {
+        "raw": "Lluvia de piedras",
+        "nameZh": "石雨"
+      },
+      "thief.1.reflexes": {
+        "raw": "Reflejos",
+        "nameZh": "反射神經"
+      },
+      "thief.1.crit_blow": {
+        "raw": "Filo certero",
+        "nameZh": "真實之刃"
+      },
+      "thief.1.gangster": {
+        "raw": "Gangster Paradise",
+        "nameZh": "流氓天國"
+      },
+      "thief.1.sonic_blow": {
+        "raw": "Adrenaline Rush",
+        "nameZh": "速度激發"
+      },
+      "thief.2.improve_dodge": {
+        "raw": "Improve Dodge",
+        "nameZh": "殘影"
+      },
+      "thief.2.stealth": {
+        "raw": "Sigilo",
+        "nameZh": "潛行"
+      },
+      "thief.2.hiding_cd": {
+        "raw": "Ocultación rápida",
+        "nameZh": "快速隱匿"
+      },
+      "thief.2.breath": {
+        "raw": "Respiro",
+        "nameZh": "喘息"
+      },
+      "thief.2.hiding_dur": {
+        "raw": "Ocultación larga",
+        "nameZh": "持久隱匿"
+      },
+      "thief.2.shadow_fan": {
+        "raw": "Salida de las sombras",
+        "nameZh": "自暗影而出"
+      },
+      "thief.2.backslide": {
+        "raw": "Paso atrás",
+        "nameZh": "後跳"
+      },
+      "thief.2.reject": {
+        "raw": "Reject Sword",
+        "nameZh": "劍刃反彈"
+      },
+      "thief.2.step_cd": {
+        "raw": "Paso fugaz",
+        "nameZh": "瞬步"
+      },
+      "thief.2.tough": {
+        "raw": "Piel curtida",
+        "nameZh": "鞣製皮革"
+      },
+      "thief.2.preserve": {
+        "raw": "Preserve",
+        "nameZh": "自由保護"
+      },
+      "thief.2.opportunist": {
+        "raw": "Oportunista",
+        "nameZh": "機會主義者"
+      },
+      "thief.2.step_dur": {
+        "raw": "Sombra persistente",
+        "nameZh": "殘影"
+      },
+      "thief.2.caltrop_count": {
+        "raw": "Más abrojos",
+        "nameZh": "更多撒菱"
+      },
+      "thief.2.instinct": {
+        "raw": "Instinto",
+        "nameZh": "本能"
+      },
+      "thief.2.caltrop_dur": {
+        "raw": "Abrojos oxidados",
+        "nameZh": "生鏽撒菱"
+      },
+      "thief.2.ambush": {
+        "raw": "Emboscada",
+        "nameZh": "伏擊"
+      },
+      "thief.2.dimension_door": {
+        "raw": "Dimension Door",
+        "nameZh": "次元之門"
+      },
+      "thief.2.cloaking": {
+        "raw": "Sombra errante",
+        "nameZh": "遊蕩暗影"
+      },
+      "merchant.0.overcharge": {
+        "raw": "Overcharge",
+        "nameZh": "高價賣出"
+      },
+      "merchant.0.haggle": {
+        "raw": "Regateo",
+        "nameZh": "討價還價"
+      },
+      "merchant.0.discount": {
+        "raw": "Discount",
+        "nameZh": "低價買進"
+      },
+      "merchant.0.zeny_count": {
+        "raw": "Lluvia densa",
+        "nameZh": "密集之雨"
+      },
+      "merchant.0.vend_cd": {
+        "raw": "Reposición",
+        "nameZh": "補貨"
+      },
+      "merchant.0.good_eye": {
+        "raw": "Buen ojo",
+        "nameZh": "銳眼"
+      },
+      "merchant.0.zeny_slow": {
+        "raw": "Calderilla",
+        "nameZh": "零錢"
+      },
+      "merchant.0.zeny_mark": {
+        "raw": "Marca duradera",
+        "nameZh": "持久標記"
+      },
+      "merchant.0.vend_lure": {
+        "raw": "Reclamo",
+        "nameZh": "誘餌"
+      },
+      "merchant.0.efficient": {
+        "raw": "Carga eficiente",
+        "nameZh": "高效負重"
+      },
+      "merchant.0.vend_dur": {
+        "raw": "Liquidación",
+        "nameZh": "清倉大拍賣"
+      },
+      "merchant.0.zeny_cd": {
+        "raw": "Bolsa amplia",
+        "nameZh": "深錢包"
+      },
+      "merchant.0.zeny_pierce": {
+        "raw": "Saldo",
+        "nameZh": "撿便宜"
+      },
+      "merchant.0.investment": {
+        "raw": "Inversión",
+        "nameZh": "投資"
+      },
+      "merchant.0.vending": {
+        "raw": "Gran comerciante",
+        "nameZh": "大商人"
+      },
+      "merchant.1.pushcart": {
+        "raw": "Pushcart",
+        "nameZh": "手推車使用"
+      },
+      "merchant.1.cart_dmg": {
+        "raw": "Carro pesado",
+        "nameZh": "重型手推車"
+      },
+      "merchant.1.rush_dmg": {
+        "raw": "Embestida",
+        "nameZh": "衝鋒"
+      },
+      "merchant.1.reinforced": {
+        "raw": "Carro reforzado",
+        "nameZh": "強化手推車"
+      },
+      "merchant.1.cart_cd": {
+        "raw": "Ruedas engrasadas",
+        "nameZh": "潤滑車輪"
+      },
+      "merchant.1.cart_area": {
+        "raw": "Carro de largo alcance",
+        "nameZh": "長程手推車"
+      },
+      "merchant.1.rush_cd": {
+        "raw": "Ruedas nuevas",
+        "nameZh": "新輪子"
+      },
+      "merchant.1.brute": {
+        "raw": "Fuerza bruta",
+        "nameZh": "蠻力"
+      },
+      "merchant.1.enlarge_cd": {
+        "raw": "Carga aligerada",
+        "nameZh": "減輕負重"
+      },
+      "merchant.1.rush_stun": {
+        "raw": "Arrollar",
+        "nameZh": "碾壓"
+      },
+      "merchant.1.cart_count": {
+        "raw": "Doble vuelta",
+        "nameZh": "雙重迴旋"
+      },
+      "merchant.1.enlarge_dur": {
+        "raw": "Carga máxima",
+        "nameZh": "滿載"
+      },
+      "merchant.1.rush_knock": {
+        "raw": "Golpe certero",
+        "nameZh": "真實打擊"
+      },
+      "merchant.1.axe_mastery": {
+        "raw": "Maestría con hacha",
+        "nameZh": "斧術精通"
+      },
+      "merchant.1.momentum": {
+        "raw": "Momento",
+        "nameZh": "動能"
+      },
+      "merchant.1.cart_termination": {
+        "raw": "Cart Termination",
+        "nameZh": "手推車終結技"
+      },
+      "merchant.2.strength": {
+        "raw": "Fuerza",
+        "nameZh": "力量"
+      },
+      "merchant.2.mammo_dmg": {
+        "raw": "Zeny pesado",
+        "nameZh": "沉重金幣"
+      },
+      "merchant.2.weapon_research": {
+        "raw": "Weapon Research",
+        "nameZh": "武器研究"
+      },
+      "merchant.2.mammo_cd": {
+        "raw": "Golpe rápido",
+        "nameZh": "快速打擊"
+      },
+      "merchant.2.uproar_cd": {
+        "raw": "Grito frecuente",
+        "nameZh": "頻繁吶喊"
+      },
+      "merchant.2.mammo_area": {
+        "raw": "Impacto",
+        "nameZh": "衝擊"
+      },
+      "merchant.2.uproar_dur": {
+        "raw": "Grito potente",
+        "nameZh": "強力吶喊"
+      },
+      "merchant.2.aim": {
+        "raw": "Puntería",
+        "nameZh": "瞄準"
+      },
+      "merchant.2.hilt": {
+        "raw": "Hilt Binding",
+        "nameZh": "武器保有"
+      },
+      "merchant.2.hammerfall": {
+        "raw": "Hammer Fall",
+        "nameZh": "大地之擊"
+      },
+      "merchant.2.armor_break": {
+        "raw": "Rompecorazas",
+        "nameZh": "破甲者"
+      },
+      "merchant.2.crit_hit": {
+        "raw": "Golpe crítico",
+        "nameZh": "爆擊打擊"
+      },
+      "merchant.2.adrenaline": {
+        "raw": "Adrenaline Rush",
+        "nameZh": "速度激發"
+      },
+      "merchant.2.overthrust": {
+        "raw": "Over Thrust",
+        "nameZh": "凶砍"
+      },
+      "merchant.2.melt": {
+        "raw": "Meltdown",
+        "nameZh": "野蠻凶砍"
+      },
+      "merchant.2.maximize": {
+        "raw": "Maximize Power",
+        "nameZh": "武器值最大化"
+      },
+      "taekwon.0.mild_wind": {
+        "raw": "Mild Wind",
+        "nameZh": "溫和之風"
+      },
+      "taekwon.0.tornado_dmg": {
+        "raw": "Patada huracanada",
+        "nameZh": "颶風踢"
+      },
+      "taekwon.0.wind": {
+        "raw": "Viento",
+        "nameZh": "風"
+      },
+      "taekwon.0.tornado_cd": {
+        "raw": "Giro rápido",
+        "nameZh": "快速迴旋"
+      },
+      "taekwon.0.round_dmg": {
+        "raw": "Patada circular",
+        "nameZh": "迴旋踢"
+      },
+      "taekwon.0.dizzy": {
+        "raw": "Mareo",
+        "nameZh": "暈眩"
+      },
+      "taekwon.0.round_area": {
+        "raw": "Gran barrido",
+        "nameZh": "大橫掃"
+      },
+      "taekwon.0.lightness": {
+        "raw": "Ligereza",
+        "nameZh": "輕盈"
+      },
+      "taekwon.0.whirl": {
+        "raw": "Remolino",
+        "nameZh": "旋風"
+      },
+      "taekwon.0.round_cd": {
+        "raw": "Ritmo circular",
+        "nameZh": "迴旋節奏"
+      },
+      "taekwon.0.storm_eye": {
+        "raw": "Ojo del huracán",
+        "nameZh": "颶風之眼"
+      },
+      "taekwon.0.gale": {
+        "raw": "Vendaval",
+        "nameZh": "強風"
+      },
+      "taekwon.0.warm": {
+        "raw": "Warm Wind",
+        "nameZh": "溫暖的風"
+      },
+      "taekwon.0.cyclone": {
+        "raw": "Ciclón",
+        "nameZh": "氣旋"
+      },
+      "taekwon.0.typhoon": {
+        "raw": "Tifón",
+        "nameZh": "颱風"
+      },
+      "taekwon.1.kihop": {
+        "raw": "Kihop",
+        "nameZh": "氣合"
+      },
+      "taekwon.1.heel_dmg": {
+        "raw": "Talonazo",
+        "nameZh": "腳跟踢"
+      },
+      "taekwon.1.fist": {
+        "raw": "Puños de acero",
+        "nameZh": "鋼鐵之拳"
+      },
+      "taekwon.1.heel_cd": {
+        "raw": "Ritmo",
+        "nameZh": "節奏"
+      },
+      "taekwon.1.counter_dmg": {
+        "raw": "Contragolpe",
+        "nameZh": "反擊"
+      },
+      "taekwon.1.precision": {
+        "raw": "Precisión",
+        "nameZh": "精準"
+      },
+      "taekwon.1.concussion": {
+        "raw": "Conmoción",
+        "nameZh": "腦震盪"
+      },
+      "taekwon.1.counter_cd": {
+        "raw": "Reflejos",
+        "nameZh": "反射神經"
+      },
+      "taekwon.1.vital": {
+        "raw": "Golpe vital",
+        "nameZh": "要害打擊"
+      },
+      "taekwon.1.counter_area": {
+        "raw": "Contraataque amplio",
+        "nameZh": "廣域反擊"
+      },
+      "taekwon.1.flying": {
+        "raw": "Patada voladora",
+        "nameZh": "飛踢"
+      },
+      "taekwon.1.heel_area": {
+        "raw": "Hacha de talón",
+        "nameZh": "腳跟斧"
+      },
+      "taekwon.1.combo": {
+        "raw": "Combo",
+        "nameZh": "連擊"
+      },
+      "taekwon.1.feeling": {
+        "raw": "Feeling",
+        "nameZh": "感覺"
+      },
+      "taekwon.1.devil": {
+        "raw": "Devil",
+        "nameZh": "太陽和月亮和星星的惡魔"
+      },
+      "taekwon.1.celestial": {
+        "raw": "Hacha celeste",
+        "nameZh": "天之斧"
+      },
+      "taekwon.2.peaceful_break": {
+        "raw": "Peaceful Break",
+        "nameZh": "平安的休息"
+      },
+      "taekwon.2.tempered": {
+        "raw": "Cuerpo templado",
+        "nameZh": "淬鍊之軀"
+      },
+      "taekwon.2.breathing": {
+        "raw": "Respiración",
+        "nameZh": "呼吸"
+      },
+      "taekwon.2.sprint_cd": {
+        "raw": "Carrerilla",
+        "nameZh": "助跑"
+      },
+      "taekwon.2.guard": {
+        "raw": "Guardia",
+        "nameZh": "防禦"
+      },
+      "taekwon.2.sprint_dur": {
+        "raw": "Fondo",
+        "nameZh": "耐力"
+      },
+      "taekwon.2.temper": {
+        "raw": "Temple",
+        "nameZh": "鍛鍊"
+      },
+      "taekwon.2.dodge": {
+        "raw": "Flee",
+        "nameZh": "迴避"
+      },
+      "taekwon.2.meditation": {
+        "raw": "Meditación",
+        "nameZh": "冥想"
+      },
+      "taekwon.2.mission": {
+        "raw": "Taekwon Mission",
+        "nameZh": "太拳任務"
+      },
+      "taekwon.2.stride": {
+        "raw": "Zancada",
+        "nameZh": "大步"
+      },
+      "taekwon.2.iron_body": {
+        "raw": "Cuerpo de hierro",
+        "nameZh": "鋼鐵之軀"
+      },
+      "taekwon.2.comfort": {
+        "raw": "Comfort",
+        "nameZh": "平安感"
+      },
+      "taekwon.2.knowledge": {
+        "raw": "Knowledge",
+        "nameZh": "知識"
+      },
+      "taekwon.2.soul_link": {
+        "raw": "Soul Link",
+        "nameZh": "靈魂連結"
+      },
+      "ninja.0.dagger_throwing": {
+        "raw": "Dagger Throwing Practice",
+        "nameZh": "飛刀修練"
+      },
+      "ninja.0.shuriken_dmg": {
+        "raw": "Filo de shuriken",
+        "nameZh": "手裡劍之刃"
+      },
+      "ninja.0.wrist": {
+        "raw": "Muñeca firme",
+        "nameZh": "穩定手腕"
+      },
+      "ninja.0.shuriken_cd": {
+        "raw": "Lanzamiento rápido",
+        "nameZh": "快速投擲"
+      },
+      "ninja.0.huuma_dmg": {
+        "raw": "Huuma afilado",
+        "nameZh": "銳利風魔"
+      },
+      "ninja.0.shuriken_count": {
+        "raw": "Más shurikens",
+        "nameZh": "更多手裡劍"
+      },
+      "ninja.0.huuma_cd": {
+        "raw": "Huuma rápido",
+        "nameZh": "快速風魔"
+      },
+      "ninja.0.zeny_throw": {
+        "raw": "Zeny Nage",
+        "nameZh": "擲錢術"
+      },
+      "ninja.0.pierce": {
+        "raw": "Shuriken perforante",
+        "nameZh": "貫穿手裡劍"
+      },
+      "ninja.0.huuma_pierce": {
+        "raw": "Huuma perforante",
+        "nameZh": "貫穿風魔"
+      },
+      "ninja.0.barrage": {
+        "raw": "Andanada",
+        "nameZh": "彈幕"
+      },
+      "ninja.0.huuma_basic": {
+        "raw": "Huuma al cuerpo",
+        "nameZh": "風魔打擊"
+      },
+      "ninja.0.kunai_rain": {
+        "raw": "Lluvia de kunais",
+        "nameZh": "苦無之雨"
+      },
+      "ninja.0.giant_wheel": {
+        "raw": "Rueda gigante",
+        "nameZh": "巨輪"
+      },
+      "ninja.0.blaze_shuriken": {
+        "raw": "Blaze Shuriken",
+        "nameZh": "烈焰手裡劍"
+      },
+      "ninja.1.ninja_soul": {
+        "raw": "Soul",
+        "nameZh": "靈魂"
+      },
+      "ninja.1.petals_dmg": {
+        "raw": "Pétalos ardientes",
+        "nameZh": "燃燒花瓣"
+      },
+      "ninja.1.strike_dmg": {
+        "raw": "Descarga",
+        "nameZh": "放電"
+      },
+      "ninja.1.chakra": {
+        "raw": "Chakra",
+        "nameZh": "查克拉"
+      },
+      "ninja.1.petals_count": {
+        "raw": "Más pétalos",
+        "nameZh": "更多花瓣"
+      },
+      "ninja.1.strike_area": {
+        "raw": "Campo eléctrico",
+        "nameZh": "電場"
+      },
+      "ninja.1.petals_cd": {
+        "raw": "Sellos rápidos",
+        "nameZh": "快速結印"
+      },
+      "ninja.1.strike_cd": {
+        "raw": "Trueno veloz",
+        "nameZh": "迅捷雷霆"
+      },
+      "ninja.1.expansion": {
+        "raw": "Expansión",
+        "nameZh": "擴張"
+      },
+      "ninja.1.casting": {
+        "raw": "Sellos de mano",
+        "nameZh": "結印"
+      },
+      "ninja.1.ice": {
+        "raw": "Hyousensou",
+        "nameZh": "冰閃槍"
+      },
+      "ninja.1.fire_dragon": {
+        "raw": "Dragón de fuego",
+        "nameZh": "火龍"
+      },
+      "ninja.1.exorcism": {
+        "raw": "Exorcismo ninja",
+        "nameZh": "忍者驅魔"
+      },
+      "ninja.1.izayoi": {
+        "raw": "Izayoi",
+        "nameZh": "十六夜"
+      },
+      "ninja.1.elements": {
+        "raw": "Dominio elemental",
+        "nameZh": "元素精通"
+      },
+      "ninja.1.raigeki": {
+        "raw": "Raigeki",
+        "nameZh": "雷擊"
+      },
+      "ninja.2.cicada": {
+        "raw": "Cicada Skin Shed",
+        "nameZh": "金蟬脫殼"
+      },
+      "ninja.2.kunai_dmg": {
+        "raw": "Kunai envenenado",
+        "nameZh": "毒苦無"
+      },
+      "ninja.2.wind_feet": {
+        "raw": "Pies de viento",
+        "nameZh": "疾風之足"
+      },
+      "ninja.2.kunai_cd": {
+        "raw": "Mano rápida",
+        "nameZh": "快手"
+      },
+      "ninja.2.vital_point": {
+        "raw": "Punto vital",
+        "nameZh": "要害"
+      },
+      "ninja.2.kunai_count": {
+        "raw": "Más kunais",
+        "nameZh": "更多苦無"
+      },
+      "ninja.2.lethal": {
+        "raw": "Golpe letal",
+        "nameZh": "致命一擊"
+      },
+      "ninja.2.illusion": {
+        "raw": "Ilusión",
+        "nameZh": "幻影"
+      },
+      "ninja.2.shadow": {
+        "raw": "Sombra",
+        "nameZh": "暗影"
+      },
+      "ninja.2.mist": {
+        "raw": "Kasumikiri",
+        "nameZh": "霞斬"
+      },
+      "ninja.2.kunai_poison": {
+        "raw": "Veneno ninja",
+        "nameZh": "忍者之毒"
+      },
+      "ninja.2.tatami": {
+        "raw": "Tatami Gaeshi",
+        "nameZh": "翻疊"
+      },
+      "ninja.2.issen": {
+        "raw": "Final Strike",
+        "nameZh": "一閃擊"
+      },
+      "ninja.2.yamikumo": {
+        "raw": "Yamikumo",
+        "nameZh": "闇雲"
+      },
+      "ninja.2.kunai_storm": {
+        "raw": "Tormenta de kunais",
+        "nameZh": "苦無風暴"
+      },
+      "gunslinger.0.chain_action": {
+        "raw": "Chain Action",
+        "nameZh": "連鎖衝擊"
+      },
+      "gunslinger.0.triple_dmg": {
+        "raw": "Balas de punta hueca",
+        "nameZh": "空尖彈"
+      },
+      "gunslinger.0.rapid_dmg": {
+        "raw": "Gatillo fácil",
+        "nameZh": "扳機狂"
+      },
+      "gunslinger.0.triple_cd": {
+        "raw": "Recarga rápida",
+        "nameZh": "快速裝填"
+      },
+      "gunslinger.0.rapid_count": {
+        "raw": "Ráfaga larga",
+        "nameZh": "長連射"
+      },
+      "gunslinger.0.gun_mastery": {
+        "raw": "Gatillo rápido",
+        "nameZh": "快速扳機"
+      },
+      "gunslinger.0.triple_count": {
+        "raw": "Cargador ampliado",
+        "nameZh": "擴充彈匣"
+      },
+      "gunslinger.0.rapid_cd": {
+        "raw": "Fuego continuo",
+        "nameZh": "持續射擊"
+      },
+      "gunslinger.0.fling": {
+        "raw": "Fling",
+        "nameZh": "投擲硬幣"
+      },
+      "gunslinger.0.basic_count": {
+        "raw": "Disparo doble",
+        "nameZh": "雙重射擊"
+      },
+      "gunslinger.0.gatling": {
+        "raw": "Gatling Fever",
+        "nameZh": "格林狂熱"
+      },
+      "gunslinger.0.adjustment": {
+        "raw": "Adjustment",
+        "nameZh": "終極閃躲"
+      },
+      "gunslinger.0.heat_barrel": {
+        "raw": "Heat Barrel",
+        "nameZh": "熱槍管"
+      },
+      "gunslinger.0.fire_dance": {
+        "raw": "Fire Dance",
+        "nameZh": "火之舞"
+      },
+      "gunslinger.0.full_buster": {
+        "raw": "Full Buster",
+        "nameZh": "全面破壞"
+      },
+      "gunslinger.1.madness": {
+        "raw": "Madness Canceller",
+        "nameZh": "瘋狂凱斯樂"
+      },
+      "gunslinger.1.spread_dmg": {
+        "raw": "Perdigones",
+        "nameZh": "鹿彈"
+      },
+      "gunslinger.1.desperado_dmg": {
+        "raw": "Desperado letal",
+        "nameZh": "致命亡命之徒"
+      },
+      "gunslinger.1.vest": {
+        "raw": "Chaleco",
+        "nameZh": "防彈背心"
+      },
+      "gunslinger.1.spread_area": {
+        "raw": "Cono amplio",
+        "nameZh": "寬錐"
+      },
+      "gunslinger.1.desperado_count": {
+        "raw": "Más ráfagas",
+        "nameZh": "更多連射"
+      },
+      "gunslinger.1.spread_cd": {
+        "raw": "Bombeo rápido",
+        "nameZh": "快速上膛"
+      },
+      "gunslinger.1.desperado_cd": {
+        "raw": "Desenfunde",
+        "nameZh": "快速拔槍"
+      },
+      "gunslinger.1.tough": {
+        "raw": "Duro",
+        "nameZh": "強韌"
+      },
+      "gunslinger.1.knockback": {
+        "raw": "Postas",
+        "nameZh": "獨頭彈"
+      },
+      "gunslinger.1.dust": {
+        "raw": "Dust",
+        "nameZh": "彈片四射"
+      },
+      "gunslinger.1.slug": {
+        "raw": "Slug Shot",
+        "nameZh": "獨頭彈射擊"
+      },
+      "gunslinger.1.p_alter": {
+        "raw": "Platinum Alter",
+        "nameZh": "白金祭壇"
+      },
+      "gunslinger.1.mass_spiral": {
+        "raw": "Mass Spiral",
+        "nameZh": "螺旋射擊"
+      },
+      "gunslinger.1.banishing": {
+        "raw": "Banishing Buster",
+        "nameZh": "驅逐爆破"
+      },
+      "gunslinger.1.last_stand": {
+        "raw": "Desperado infinito",
+        "nameZh": "無盡亡命之徒"
+      },
+      "gunslinger.2.single_action": {
+        "raw": "Single Action",
+        "nameZh": "單槍射擊"
+      },
+      "gunslinger.2.tracking_dmg": {
+        "raw": "Bala perforante",
+        "nameZh": "穿甲彈"
+      },
+      "gunslinger.2.snake_eye": {
+        "raw": "Snake Eye",
+        "nameZh": "瞄準之眼"
+      },
+      "gunslinger.2.tracking_cd": {
+        "raw": "Cerrojo",
+        "nameZh": "栓動式"
+      },
+      "gunslinger.2.drift_dmg": {
+        "raw": "Granada potente",
+        "nameZh": "強力榴彈"
+      },
+      "gunslinger.2.sight": {
+        "raw": "Mira",
+        "nameZh": "瞄準鏡"
+      },
+      "gunslinger.2.headshot": {
+        "raw": "Disparo en la cabeza",
+        "nameZh": "爆頭"
+      },
+      "gunslinger.2.drift_area": {
+        "raw": "Metralla",
+        "nameZh": "破片"
+      },
+      "gunslinger.2.calm": {
+        "raw": "Calma",
+        "nameZh": "冷靜"
+      },
+      "gunslinger.2.drift_cd": {
+        "raw": "Granadas en serie",
+        "nameZh": "榴彈齊射"
+      },
+      "gunslinger.2.tracking_count": {
+        "raw": "Doble objetivo",
+        "nameZh": "雙重目標"
+      },
+      "gunslinger.2.bullseye": {
+        "raw": "Bull's Eye",
+        "nameZh": "正中紅心"
+      },
+      "gunslinger.2.drift_stun": {
+        "raw": "Onda expansiva",
+        "nameZh": "衝擊波"
+      },
+      "gunslinger.2.magical_bullet": {
+        "raw": "Magical Bullet",
+        "nameZh": "魔術彈"
+      },
+      "gunslinger.2.fallen_angel": {
+        "raw": "Fallen Angel",
+        "nameZh": "墮天使"
+      },
+      "gunslinger.2.hammer_of_god": {
+        "raw": "Hammer of God",
+        "nameZh": "神之鎚"
+      }
+    }
+  },
+  "petNamesZh": {
+    "poring": {
+      "nameZh": "波利",
+      "eggId": 9001,
+      "eggZh": "波利寵物蛋",
+      "accId": 10013,
+      "accZh": "寵物書包"
+    },
+    "lunatic": {
+      "nameZh": "瘋兔",
+      "eggId": 9004,
+      "eggZh": "瘋兔寵物蛋",
+      "accId": 10007,
+      "accZh": "寵物髮帶"
+    },
+    "drops": {
+      "nameZh": "土波利",
+      "eggId": 9002,
+      "eggZh": "土波利寵物蛋",
+      "accId": 10013,
+      "accZh": "寵物書包"
+    },
+    "picky": {
+      "nameZh": "小雞",
+      "eggId": 9005,
+      "eggZh": "小雞寵物蛋",
+      "accId": 10012,
+      "accZh": "寵物蛋殼帽"
+    },
+    "savage_babe": {
+      "nameZh": "小野豬",
+      "eggId": 9009,
+      "eggZh": "小野豬寵物蛋",
+      "accId": 10015,
+      "accZh": "寵物圍兜兜"
+    },
+    "baby_desert_wolf": {
+      "nameZh": "沙漠幼狼",
+      "eggId": 9010,
+      "eggZh": "沙漠幼狼寵物蛋",
+      "accId": 10003,
+      "accZh": "潛水頭盔"
+    },
+    "rocker": {
+      "nameZh": "搖滾蝗蟲",
+      "eggId": 9011,
+      "eggZh": "搖滾蝗蟲寵物蛋",
+      "accId": 10014,
+      "accZh": "蝗蟲眼鏡"
+    },
+    "familiar": {
+      "nameZh": "吸血蝙蝠",
+      "eggId": 9138,
+      "eggZh": "吸血蝙蝠寵物蛋",
+      "accId": 10031,
+      "accZh": "死亡之扣環"
+    },
+    "mastering": {
+      "nameZh": "波利之王",
+      "eggId": 9069,
+      "eggZh": "波利之王寵物蛋",
+      "accId": null,
+      "accZh": null
+    },
+    "whisper": {
+      "nameZh": "白幽靈",
+      "eggId": 9045,
+      "eggZh": "白幽靈寵物蛋",
+      "accId": 10027,
+      "accZh": "寵物靈環"
+    },
+    "spore": {
+      "nameZh": "魔菇",
+      "eggId": 9012,
+      "eggZh": "魔菇寵物蛋",
+      "accId": 10017,
+      "accZh": "樹皮褲"
+    },
+    "poison_spore": {
+      "nameZh": "毒魔菇",
+      "eggId": 9013,
+      "eggZh": "毒魔菇寵物蛋",
+      "accId": 10017,
+      "accZh": "樹皮褲"
+    },
+    "poporing": {
+      "nameZh": "波波利",
+      "eggId": 9003,
+      "eggZh": "波波利寵物蛋",
+      "accId": 10013,
+      "accZh": "寵物書包"
+    },
+    "smokie": {
+      "nameZh": "狸貓",
+      "eggId": 9015,
+      "eggZh": "貍貓寵物蛋",
+      "accId": 10019,
+      "accZh": "紅色領巾"
+    },
+    "dokebi": {
+      "nameZh": "土人",
+      "eggId": 9019,
+      "eggZh": "土人寵物蛋",
+      "accId": 10005,
+      "accZh": "三色假髮"
+    },
+    "nine_tail": {
+      "nameZh": "九尾狐",
+      "eggId": 9095,
+      "eggZh": "九尾狐寵物蛋",
+      "accId": 10040,
+      "accZh": "紅色鈴鐺項圈"
+    },
+    "willow": {
+      "nameZh": "樹精",
+      "eggId": 9103,
+      "eggZh": "樹精寵物蛋",
+      "accId": 10023,
+      "accZh": "綠色福袋"
+    },
+    "angeling": {
+      "nameZh": "天使波利",
+      "eggId": 9088,
+      "eggZh": "天使波利寵物蛋",
+      "accId": null,
+      "accZh": null
+    },
+    "munak": {
+      "nameZh": "殭屍",
+      "eggId": 9018,
+      "eggZh": "殭屍寵物蛋",
+      "accId": 10008,
+      "accZh": "體罰棒"
+    },
+    "bon_gun": {
+      "nameZh": "妖道",
+      "eggId": 9025,
+      "eggZh": "妖道寵物蛋",
+      "accId": 10020,
+      "accZh": "靈幻道士之劍"
+    },
+    "sohee": {
+      "nameZh": "鬼女",
+      "eggId": 9020,
+      "eggZh": "鬼女寵物蛋",
+      "accId": 10016,
+      "accZh": "寵物鈴鐺"
+    },
+    "hyegun": {
+      "nameZh": "妖君",
+      "eggId": 9093,
+      "eggZh": "妖君寵物蛋",
+      "accId": null,
+      "accZh": null
+    },
+    "cat_o_nine_tail": {
+      "nameZh": "狂暴月夜貓",
+      "eggId": 9096,
+      "eggZh": "狂暴月夜貓寵物蛋",
+      "accId": null,
+      "accZh": null
+    },
+    "moonlight": {
+      "nameZh": "月夜貓",
+      "eggId": 9112,
+      "eggZh": "月夜貓寵物蛋",
+      "accId": null,
+      "accZh": null
+    },
+    "dark_snake_lord": {
+      "nameZh": "蛇王",
+      "eggId": 9148,
+      "eggZh": "Dark Lord Egg",
+      "accId": null,
+      "accZh": null
+    }
+  },
   "cards": {
     "4001": {
       "mob": "poring",
@@ -1619,153 +6778,178 @@
   "pets": {
     "poring": {
       "eggId": 9001,
+      "accId": 10013,
       "from": null,
       "secret": false,
-      "bonusSig": "qy(3),Vi(.01)"
+      "bonusSig": "bv(3),cr(.01)"
     },
     "lunatic": {
       "eggId": 9004,
+      "accId": 10007,
       "from": null,
       "secret": false,
-      "bonusSig": "Vi(.02),Ap(.02)"
+      "bonusSig": "cr(.02),om(.02)"
     },
     "drops": {
       "eggId": 9002,
+      "accId": 10013,
       "from": null,
       "secret": false,
-      "bonusSig": "Ap(.04)"
+      "bonusSig": "om(.04)"
     },
     "picky": {
       "eggId": 9005,
+      "accId": 10012,
       "from": null,
       "secret": false,
-      "bonusSig": "_y(2),Ap(.02)"
+      "bonusSig": "wv(2),om(.02)"
     },
     "savage_babe": {
       "eggId": 9009,
+      "accId": 10015,
       "from": null,
       "secret": false,
-      "bonusSig": "Iy(2),Ry(40)"
+      "bonusSig": "kv(2),xv(40)"
     },
     "baby_desert_wolf": {
       "eggId": 9010,
+      "accId": 10003,
       "from": null,
       "secret": false,
-      "bonusSig": "hl(2),zC(.02)"
+      "bonusSig": "jl(2),UT(.02)"
     },
     "rocker": {
       "eggId": 9011,
+      "accId": 10014,
       "from": null,
       "secret": false,
-      "bonusSig": "d2(.5),Ry(25)"
+      "bonusSig": "nM(.5),xv(25)"
     },
     "familiar": {
       "eggId": 9138,
+      "accId": 10031,
       "from": null,
       "secret": false,
-      "bonusSig": "hl(3)"
+      "bonusSig": "jl(3)"
     },
     "mastering": {
       "eggId": 9069,
+      "accId": null,
       "from": "poring",
       "secret": false,
-      "bonusSig": "qy(4),Vi(.02),Oy(.02)"
+      "bonusSig": "bv(4),cr(.02),Mv(.02)"
     },
     "whisper": {
       "eggId": 9045,
+      "accId": 10027,
       "from": null,
       "secret": false,
-      "bonusSig": "Oy(.05)"
+      "bonusSig": "Mv(.05)"
     },
     "spore": {
       "eggId": 9012,
+      "accId": 10017,
       "from": null,
       "secret": false,
-      "bonusSig": "By(3)"
+      "bonusSig": "Sv(3)"
     },
     "poison_spore": {
       "eggId": 9013,
+      "accId": 10017,
       "from": null,
       "secret": false,
-      "bonusSig": "_y(2),hl(2)"
+      "bonusSig": "wv(2),jl(2)"
     },
     "poporing": {
       "eggId": 9003,
+      "accId": 10013,
       "from": null,
       "secret": false,
-      "bonusSig": "qy(2),u2(.03)"
+      "bonusSig": "bv(2),oM(.03)"
     },
     "smokie": {
       "eggId": 9015,
+      "accId": 10019,
       "from": null,
       "secret": false,
-      "bonusSig": "HC(2),Oy(.02)"
+      "bonusSig": "KT(2),Mv(.02)"
     },
     "dokebi": {
       "eggId": 9019,
+      "accId": 10005,
       "from": null,
       "secret": false,
-      "bonusSig": "hl(2),GC(.03)"
+      "bonusSig": "jl(2),VT(.03)"
     },
     "nine_tail": {
       "eggId": 9095,
+      "accId": 10040,
       "from": null,
       "secret": false,
-      "bonusSig": "Vi(.02),By(2)"
+      "bonusSig": "cr(.02),Sv(2)"
     },
     "willow": {
       "eggId": 9103,
+      "accId": 10023,
       "from": null,
       "secret": false,
-      "bonusSig": "hl(3)"
+      "bonusSig": "jl(3)"
     },
     "angeling": {
       "eggId": 9088,
+      "accId": null,
       "from": "mastering",
       "secret": false,
-      "bonusSig": "UC(.05),KC(.15)"
+      "bonusSig": "WT(.05),XT(.15)"
     },
     "munak": {
       "eggId": 9018,
+      "accId": 10008,
       "from": null,
       "secret": false,
-      "bonusSig": "VC(2),hl(2)"
+      "bonusSig": "YT(2),jl(2)"
     },
     "bon_gun": {
       "eggId": 9025,
+      "accId": 10020,
       "from": null,
       "secret": false,
-      "bonusSig": "Iy(3),Ry(20)"
+      "bonusSig": "kv(3),xv(20)"
     },
     "sohee": {
       "eggId": 9020,
+      "accId": 10016,
       "from": null,
       "secret": false,
-      "bonusSig": "_y(2),By(2)"
+      "bonusSig": "wv(2),Sv(2)"
     },
     "hyegun": {
       "eggId": 9093,
+      "accId": null,
       "from": "bon_gun",
       "secret": false,
-      "bonusSig": "Iy(4),u2(.04)"
+      "bonusSig": "kv(4),oM(.04)"
     },
     "cat_o_nine_tail": {
       "eggId": 9096,
+      "accId": null,
       "from": "nine_tail",
       "secret": false,
-      "bonusSig": "Vi(.04),d2(.6)"
+      "bonusSig": "cr(.04),nM(.6)"
     },
     "moonlight": {
       "eggId": 9112,
+      "accId": null,
       "from": null,
       "secret": false,
-      "bonusSig": "Vi(.04),WC(.6),h2(.03)"
+      "bonusSig": "cr(.04),JT(.6),iM(.03)"
     },
     "dark_snake_lord": {
       "eggId": 9148,
+      "accId": null,
       "from": null,
       "secret": true,
-      "bonusSig": "Ap(.04),Vi(.03),h2(.03)"
+      "bonusSig": "om(.04),cr(.03),iM(.03)"
     }
   },
   "dropsM2": {
@@ -2598,7 +7782,7 @@
     "louyang": {
       "runLength": 1020,
       "rareId": "dark_snake_lord",
-      "rareChance": 0.16,
+      "rareChance": 0.2,
       "charExp": 0.02,
       "jobExp": 3,
       "bossHpHash": "ebf37d4d99"

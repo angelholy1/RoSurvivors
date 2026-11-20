@@ -11,19 +11,25 @@
    - **禁止**無故整份讀取 `data/builds.js`（473 KB）、`data/catalog.js`（195 KB）、`data/trees.js`（109 KB）。
    - 一律先執行 `node sync/diff-live.js`，**只閱讀 `sync/last-diff.md`**。
    - 若新增裝備／卡片／怪物／天賦需要查詢實碼細節與繁中譯名，一律用**精準的 Node 腳本只抽取指定 ID（單次輸出 ≤ 60 行）**。
-2. **全站零 Unicode Emoji 鐵律**
+2. **官方繁中譯名一致鐵律（嚴禁自行翻譯或沿用非官方別名）**
+   - 本站所有**裝備、卡片、寵物、寵物飾品、怪物、關卡、職業（一轉／二轉）、主動技能、一轉天賦分支與節點名稱**，一律**必須與 `ro-survivors.com` 遊戲本體 `zh-TW` 實碼譯名 100% 一致**，**嚴禁 AI 自行直譯英文或套用非遊戲本體別名**！
+   - 線上官方繁中譯名由 `sync/diff-live.js` 自動從 `assets/manifest.json`（裝備／卡片英文名）＋ `build/soul_linker-*.js` 內建繁中翻譯引擎（`itemDict` 對應裝備與卡片、`uiDict` + `enDict` + `termDict` 對應怪物／關卡／職業／技能／天賦）擷取並寫入 `sync/baseline.json` 的 8 大譯名對照表：
+     `itemNamesZh`、`cardNamesZh`、`monsterNamesZh`、`stageNamesZh`、`jobNamesZh`、`skillNamesZh`、`talentNamesZh`、`petNamesZh`。
+   - 允許僅於極少數**同中文名不同 ID** 的區分處於尾端加上括號標籤（如燈籠節變體 `〔燈籠節〕`、雙階同名裝 `（Tier 1）/（Tier 2）/（劇情）`、關卡狀態 `（防衛劇情）/（尚未開放）`），但**基底名稱必須 100% 等於官方繁中譯名**（由 `sync/validate.js` 自動強制攔截）。
+   - 同步新增或改名任何項目時，除了更新 `data/catalog.js`／`data/stages.js`／`data/trees.js` 外，**必須連同 `data/builds.js` 攻略內文、`app.js`、`index.html` 與 `meta/T0_BUILDS.md` 中提及該名稱的文案一併對齊**（注意循環譯名防撞，如 `劍魚／異變魚／狄奧斯`、`腐屍／殭屍／殭屍帽`、`蝗蟲之王／森靈`、`白幽靈／幽靈波利`）。
+3. **全站零 Unicode Emoji 鐵律**
    - `index.html`、`styles.css`、`app.js` 與全部 `data/*.js` **嚴禁出現任何 Unicode Emoji**（如星星、火焰、打勾、警告符號等，由 `sync/validate.js` 以 `EMOJI_RE` 強制攔截）。
    - 站內圖示一律透過 `data/icons.js` 的 `RO_ICONS` SVG Key 渲染。
-3. **二轉未實裝防呆鐵律**
+4. **二轉未實裝防呆鐵律**
    - 務必檢查 `sync/last-diff.md` 頂部的 **「二轉實裝偵測」** 欄位。
    - 只要二轉天賦樹與二轉主動技能仍未實裝：
      - **嚴禁**在 `data/trees.js` 新增二轉天賦樹（僅允許 9 大一轉職系：`swordsman`, `mage`, `archer`, `acolyte`, `thief`, `merchant`, `taekwon`, `ninja`, `gunslinger`）。
      - **嚴禁**在 `data/builds.js` 的 `runSkills` 加入未實裝二轉主動技能（維持現行一轉 1 武器＋4 主動技）。
-4. **設計風格與頁籤範圍不可退化**
+5. **設計風格與頁籤範圍不可退化**
    - 維持「風格 A：RO 盧恩羊皮紙公會手冊」與**雙分頁精簡結構**（分頁 1：職業流派攻略；分頁 2：關卡與掉落機率）。
    - **禁止**重新加回已移除的「寵物圖鑑分頁」「專有名詞分頁」「配點試算器」「流派對比頁」。
    - **禁止**將 `app.js` 的線上掉落公式退回舊版循序模型（`surv *= (1 - rawPct)`）；必須維持 `mysteryDrop + dropSeeded` 加權抽樣模型。
-5. **Windows PowerShell 與 Git 安全規範**
+6. **Windows PowerShell 與 Git 安全規範**
    - 本機環境為 Windows PowerShell 5.1：**不可使用 `&&` 串接指令**（請改用 `;` 與 `if ($LASTEXITCODE -eq 0)`）。
    - Git 提交繁中訊息時，**必須先將訊息寫成 UTF-8 無 BOM 暫存檔再執行 `git commit -F`**，避免 PowerShell 字碼頁造成亂碼。
    - **嚴禁**執行 `git push --force` 或寫入任何本機絕對路徑（例如 `C:\Users\...`）到專案檔案中。
@@ -63,14 +69,15 @@ node sync/diff-live.js
 完成後，**只讀取 `sync/last-diff.md`**。
 - **捷徑結束條件**：如果 `sync/last-diff.md` 顯示 **「版本與資料均無變動」**，且使用者沒有額外指定手動修改 → **立即停止所有後續步驟**，直接回報使用者目前網站與線上版本一致、無須更新（不改檔案、不 Commit）。
 
-### Step 2：精準抽取新增／異動項目細節（僅在有新增項目時執行）
-`sync/last-diff.md` 已直接列出大部分差異（含 `M2` 怪物 `{id, rate}`、裝備 `slot/tier/wtype/jobs`、卡片 `mob/slot`、關卡參數、最新繁中 Patch Notes）。
+### Step 2：精準抽取新增／異動項目細節（僅在有新增或譯名異動時執行）
+`sync/last-diff.md` 已直接列出大部分差異（含 `M2` 怪物 `{id, rate}`、裝備 `slot/tier/wtype/jobs`、卡片 `mob/slot`、關卡參數、**8 大官方繁中譯名異動清單**、最新繁中 Patch Notes）。
 
-若 `last-diff.md` 出現**新增裝備 ID、新增卡片 ID、新增寵物、新增怪物、新增關卡或天賦節點異動**，需要查出它的**完整數值、詞條與官方繁中譯名**時：
-- 用一小段臨時 `node` 腳本（可透過 PowerShell Here-String `@' ... '@ | node` 執行，**不要留暫存檔在專案內**）fetch 線上 bundle 後，**只搜尋並印出該特定 ID 附近的定義與繁中翻譯鍵**。
-- 線上 `main-*.js` 的常見結構提示：
+若 `last-diff.md` 出現**新增裝備 ID、新增卡片 ID、新增寵物、新增怪物、新增關卡、譯名異動或天賦節點異動**，需要查出它的**完整數值、詞條與官方繁中譯名**時：
+- **官方繁中譯名來源一律直接查詢 `sync/baseline.json`**（更新後之 `itemNamesZh` / `cardNamesZh` / `monsterNamesZh` / `stageNamesZh` / `jobNamesZh` / `skillNamesZh` / `talentNamesZh` / `petNamesZh`）或透過 `sync/diff-live.js` 內建的 `buildLiveZhTranslators()` 轉換，**嚴禁自行翻譯**！
+- 用一小段臨時 `node` 腳本（可透過 PowerShell Here-String `@' ... '@ | node` 執行，**不要留暫存檔在專案內**）查詢指定 ID 的實碼數值與官方繁中鍵名。
+- 線上 `main-*.js` / `soul_linker-*.js` 的常見結構提示：
   - 版本與繁中 Patch Notes：搜尋 `## Beta `。
-  - 裝備基底與詞條：從 `diff-live.js` 內的解析邏輯（`sync/diff-live.js` 第 120–245 行）可知實碼變數位置，優先參考 `sync/diff-live.js` 的正規表示式，而非盲目全檔 grep。
+  - 裝備基底、詞條與官方繁中字典：優先參考 `sync/diff-live.js` 的解析邏輯（`buildLiveZhTranslators()` 與 `buildLiveSnapshot()`），而非盲目全檔 grep。
   - **嚴禁**把超過 100 行的原始碼印出來讀。
 
 ### Step 3：依差異報告精準更新對應檔案
@@ -151,9 +158,10 @@ node sync/validate.js
 | `EMOJI_FORBIDDEN` | 網站檔案混入 Unicode Emoji | 移除所有 Emoji，改用純文字或 `data/icons.js` SVG |
 | `UNIMPLEMENTED_T2_TREE` | `data/trees.js` 出現非 9 大一轉樹的鍵名 | 刪除未實裝二轉樹（除非官方已正式實裝並同步更新規則） |
 | `VERSION_MISMATCH` | `data/stages.js` 的 `meta.version` 與 `baseline.json` 不同 | 對齊 `RO_STAGES.meta.version` 為最新線上版號 |
+| `ITEM_NAME_MISMATCH` / `CARD_NAME_MISMATCH` / `CARD_MOB_NAME_MISMATCH` / `PET_NAME_MISMATCH` / `PET_ACC_NAME_MISMATCH` / `MONSTER_NAME_MISMATCH` / `STAGE_NAME_MISMATCH` / `JOB_NAME_MISMATCH` / `SKILL_NAME_MISMATCH` / `BRANCH_NAME_MISMATCH` / `TALENT_NAME_MISMATCH` | 任何裝備／卡片／寵物／寵飾／怪物／關卡／職業／主動技／天賦譯名與遊戲實碼繁中不一致 | **禁止自行另譯**！直接對齊 `sync/baseline.json` 對應的 `*NamesZh` 官方繁中譯名，並同步檢查 `data/builds.js` 攻略內文 |
 | `M2_MISSING_MOB` / `M2_DROP_DIFF` | `data/stages.js` 怪物缺少或 `drops` 與線上 `M2` 不同 | 照 `last-diff.md` 或 `baseline.json.dropsM2` 精準補齊 `{id, rate}` |
 | `WEAPON_ILLEGAL` / `GEAR_ILLEGAL` | 某流派配了該職業無法穿的裝備 | 更換 `data/builds.js` 該流派的合法裝備 ID，或核對 `catalog.js` |
-| `CARD_WRONG_SLOT` / `PROSE_CARD_SLOT` | 卡片插槽與實碼 `compound` 不符，或文案寫錯槽位 | 核對 `baseline.json.cards[id].slot`（記住 `#4172` 武器 / `#4372` 頭飾 / `#4048` 飾品） |
+| `CARD_WRONG_SLOT` / `PROSE_CARD_SLOT` | 卡片插槽與實碼 `compound` 不符，或文案寫錯槽位 | 核對 `baseline.json.cards[id].slot`（記住 `#4172` 紙妖卡片=武器 / `#4372` 白素貞卡片=頭飾 / `#4048` 毒魔菇卡片=飾品） |
 | `SHIELD_WITH_2H` / `SHIELD_CARD_2H` | 雙手武器流派誤留盾牌或盾牌卡片 | 清空 `cardsBySlot.shield = []` 並移除 `gears` 中盾牌 |
 | `TALENT_SUM_NOT_50` / `TALENT_REQ` / `TALENT_TIER` / `TALENT_SHIELD_DEAD` / `TALENT_WEAPON_MISMATCH` | 一轉 50 點天賦總點數、前置、層門檻或武器/盾鎖定衝突 | 修正該流派 `t1Plan.alloc` 與 `order`（若是因本次天賦改版造成，標記需進入 `meta/SOP.md`） |
 | `PHYS_MAGIC_PET` / `PHYS_INT_CARD` | 純物理流派 (`INT=1`) 誤配法寵或純 INT 卡 | 換為物理／泛用寵物與卡片 |
