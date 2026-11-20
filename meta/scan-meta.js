@@ -24,7 +24,7 @@ const ctx = vm.createContext(sandbox);
 for (const rel of ["data/trees.js", "data/catalog.js", "data/builds.js"]) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, rel), "utf8"), ctx);
 }
-const { RO_TREES, RO_CATALOG, RO_BUILDS } = ctx;
+const { RO_TREES, RO_SKILLS, RO_CATALOG, RO_BUILDS } = ctx;
 const GEAR_MAP = Object.fromEntries(RO_CATALOG.items.map(g => [g.id, g]));
 const BASELINE_PATH = path.join(ROOT, "sync", "baseline.json");
 const baseline = fs.existsSync(BASELINE_PATH) ? JSON.parse(fs.readFileSync(BASELINE_PATH, "utf8")) : null;
@@ -95,8 +95,10 @@ if (!families.length) {
         const bPow = basicPow(ps.scaling === "ranged" ? atkRanged : ps.scaling === "magic" ? matk : atkMelee, rankNum, daggerExp).toFixed(1);
 
         const tag = `${ps.isT0 ? "T0" : "備選"}/${ps.verified ? "實戰驗證" : "實碼推算"}`;
+        const skNames = (ps.runSkills || []).map(sk => (RO_SKILLS[sk.id] && RO_SKILLS[sk.id].name) || sk.id).join("／");
         console.log(`    * [${tag}] ${ps.name} (${ps.id})`);
-        console.log(`      素質: STR ${st.str} / AGI ${st.agi} / VIT ${st.vit} / INT ${st.int} / DEX ${st.dex} / LUK ${st.luk} | 主武: #${w0 ? w0.id : "?"}`);
+        console.log(`      素質: STR ${st.str} / AGI ${st.agi} / VIT ${st.vit} / INT ${st.int} / DEX ${st.dex} / LUK ${st.luk} | 主武: ${w0 ? `#${w0.id} ${w0.nameZh}` : "?"}`);
+        console.log(`      1+4技能(官方繁中): ${skNames || "-"}`);
         console.log(`      實碼倍率: 近戰=${pMelee}x | 遠程=${pRanged}x | 魔法=${pMagic}x | 混傷=${pHybrid}x | 普攻=${bPow}x`);
       }
     }
