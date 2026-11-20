@@ -1,0 +1,3235 @@
+{
+  "source": "https://ro-survivors.com/build/main-DYrSsWlK.js + https://ro-survivors.com/build/soul_linker-DK2o6MJV.js",
+  "version": "Beta 0.7.6",
+  "buildHash": "f7ad3c447",
+  "buildTime": "2026-11-18T19:41:03.000Z",
+  "latestPatchNotesZh": "## Beta 0.7.6 — 2026 年 11 月 19 日\n\n### 燈籠節\n- [調整] 蛇王在更多燈籠節關卡中出現：16%（之前為 12.5%）。點香時仍為 50%。\n- [調整] 扭蛋給出更多外觀：每次轉蛋 29.5%（之前為 19.5%）。裝備降為 70%（之前為 80%），卡片維持 0.5%。\n- [改善] 組隊點香：隊長提議前往燈籠節時，每位隊員可以直接在「準備好了嗎？」視窗點香，不必先去找節慶主持人。\n- [新增] 關卡開始 5 秒後（組隊時從所有人都進場起算）會顯示誰點了香。\n- [修正] 燈籠節組隊：隊員的關卡時間比隊長慢時（遊戲幀數低、停在卡片畫面，或重新連線、繼續關卡），可能拿不到隊伍已擊敗頭目的扭蛋（尤其是白素貞和蛇王）。現在以關卡開始後的實際時間為準。\n\n### 遊戲\n- [新增] 升級時的「自動」按鈕：隨機選一張卡片，之後本局的每次升級都會自動隨機選擇，遊戲不會暫停。\n\n### 隊伍\n- [修正] 組隊時，隊長離開、改由其他人主持本局後，頭目會照原本的時間出現。之前若新隊長的時間比原隊長快（分頁在背景、遊戲幀數很低），那段時間內該出現的頭目會一次全部冒出來。\n- [修正] 組隊：磁鐵現在會把寶箱吸到撿到的人身邊，而不是隊長身邊。\n\n### 交易與好友\n- [修正] 手機與平板交易：點一下裝備或卡片會打開它的資料（名稱、品質、階級、類型、屬性、詞條與卡片）以及對你職業的 GS，並可在那裡加入或移除。之前完全看不到對方提供的東西。\n- [修正] 好友：好友很多時，親密度那一行不會再蓋到下一列。\n\n### 帳號\n- [修正] iPhone、iPad 與行動網路：遊玩中連線的 IP 改變時（例如使用 iCloud 私密轉送，或在 Wi-Fi 與行動數據之間切換），不會再被當成同網路的另一個帳號。之前即使你已經在遊戲裡，也可能被擋在外面並要等 10 分鐘。\n- [調整] 暫時取消同一個網路最多 3 個帳號同時遊玩的限制，以及帳號之間需間隔 10 分鐘的等待。\n- [修正] 廣場因為你的網路已有太多帳號在玩而讓你離開時，現在會說明原因，而不是直接回到標題畫面。\n- [修正] 伺服器滿人排隊時，切換到其他分頁（例如去看天賦）不會再失去排隊位置。\n\n### 修正\n- [修正] 手把：只用手把遊玩現在也算有在操作。之前廣場過 5 分鐘就會把你判定為閒置，即使你正在玩。\n- [修正] 背包：史詩與傳說裝備的光暈不會再讓背包分頁卡頓。\n- [修正] 在 1920x1080 下選擇武器的視窗不會再超出畫面（之前無法關閉）。\n- [修正] Windows 7 與舊版瀏覽器：升級卡片恢復背景，可以正常閱讀。\n- [修正] 開始新關卡時，不會再留著上一場的狀態圖示（例如剛才另一個角色的）。\n- [修正] 傳說盾牌：弓箭手或獵人拿到時也會有技能傷害詞條。\n- [修正] 無盡之塔：繼續已儲存的挑戰時，選擇神祇的視窗不會再停在畫面上。\n- [修正] Firefox：在角色選擇畫面雙擊角色可以再次直接進入遊戲。\n- [修正] Firefox：在設定中更改選項後，按 ESC 可以再次關閉視窗，WASD 也能再次移動角色。\n- [修正] 在大螢幕上，頻道列表不會再超出畫面。\n- [修正] 造型師：如果你已經通過無盡之塔第 50 層，打開造型師時就會解鎖 Blood Savage 染色，不必先去找塔之守護者。\n\n## Beta 0.7.4 — 2026 年 11 月 18 日\n\n### 交易與好友\n- [調整] 親密度：只要一起組隊遊玩到 MVP 倒下就算數，不再需要兩人都打到 MVP。\n- [修正] 和好友組隊遊玩燈籠節時，親密度現在也會增加（之前只有其他關卡會計算）。",
+  "gear": {
+    "1107": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "검",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1124": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "검",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1126": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "검",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1131": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "검",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1133": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "검",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1138": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "검",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1163": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "양손검",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1207": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "단검",
+      "jobs": [
+        "alchemist",
+        "archer",
+        "assassin",
+        "bard",
+        "blacksmith",
+        "crusader",
+        "hunter",
+        "knight",
+        "mage",
+        "merchant",
+        "ninja",
+        "rogue",
+        "sage",
+        "swordsman",
+        "thief",
+        "wizard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1216": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "단검",
+      "jobs": [
+        "alchemist",
+        "archer",
+        "assassin",
+        "bard",
+        "blacksmith",
+        "crusader",
+        "hunter",
+        "knight",
+        "mage",
+        "merchant",
+        "ninja",
+        "rogue",
+        "sage",
+        "swordsman",
+        "thief",
+        "wizard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1219": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "단검",
+      "jobs": [
+        "alchemist",
+        "archer",
+        "assassin",
+        "bard",
+        "blacksmith",
+        "crusader",
+        "hunter",
+        "knight",
+        "mage",
+        "merchant",
+        "ninja",
+        "rogue",
+        "sage",
+        "swordsman",
+        "thief",
+        "wizard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1222": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "단검",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1228": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "단검",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1250": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "단검",
+      "jobs": [
+        "assassin",
+        "rogue",
+        "thief"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1252": {
+      "slot": "weapon",
+      "tier": 3,
+      "wtype": "카타르",
+      "jobs": [
+        "assassin"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1253": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "단검",
+      "jobs": [
+        "assassin",
+        "rogue",
+        "thief"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1254": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "카타르",
+      "jobs": [
+        "assassin"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1256": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "카타르",
+      "jobs": [
+        "assassin"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1258": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "카타르",
+      "jobs": [
+        "assassin"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1261": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "단검",
+      "jobs": [
+        "assassin",
+        "rogue",
+        "thief"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1262": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "카타르",
+      "jobs": [
+        "assassin"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1265": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "단검",
+      "jobs": [
+        "assassin",
+        "rogue",
+        "thief"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1304": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "도끼",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1351": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "양손도끼",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1370": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "양손도끼",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1377": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "양손도끼",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1408": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "창",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1466": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "양손창",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1504": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "클럽",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1513": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "클럽",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1519": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "클럽",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1528": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "클럽",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1550": {
+      "slot": "weapon",
+      "tier": 3,
+      "wtype": "책",
+      "jobs": [
+        "priest",
+        "sage"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1553": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "책",
+      "jobs": [
+        "priest",
+        "sage"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1555": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "책",
+      "jobs": [
+        "priest",
+        "sage"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1557": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "책",
+      "jobs": [
+        "priest",
+        "sage"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1558": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "책",
+      "jobs": [
+        "priest",
+        "sage"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1604": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "롯드",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1610": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "롯드",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1613": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "롯드",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1704": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "활",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1718": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "활",
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "1722": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "활",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1734": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "활",
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "1801": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": null,
+      "jobs": [
+        "soul_linker",
+        "star_gladiator",
+        "taekwon"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1803": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "너클",
+      "jobs": [
+        "monk"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1805": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "너클",
+      "jobs": [
+        "monk"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1809": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "너클",
+      "jobs": [
+        "monk"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1812": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "너클",
+      "jobs": [
+        "monk"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1813": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "너클",
+      "jobs": [
+        "monk"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1901": {
+      "slot": "weapon",
+      "tier": 3,
+      "wtype": "악기",
+      "jobs": [
+        "bard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1905": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "악기",
+      "jobs": [
+        "bard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1909": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "악기",
+      "jobs": [
+        "bard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1913": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "악기",
+      "jobs": [
+        "bard"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "1950": {
+      "slot": "weapon",
+      "tier": 3,
+      "wtype": "채찍",
+      "jobs": [
+        "bard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1954": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "채찍",
+      "jobs": [
+        "bard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1958": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "채찍",
+      "jobs": [
+        "bard"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "1964": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "채찍",
+      "jobs": [
+        "bard"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "2103": {
+      "slot": "shield",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2107": {
+      "slot": "shield",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2110": {
+      "slot": "shield",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2114": {
+      "slot": "shield",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2115": {
+      "slot": "shield",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2124": {
+      "slot": "shield",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2201": {
+      "slot": "head_mid",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2212": {
+      "slot": "head_mid",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2213": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2214": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2234": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2235": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2246": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2251": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2252": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2254": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2255": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2256": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2260": {
+      "slot": "head_mid",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2274": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2280": {
+      "slot": "head_top",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2282": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2285": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2286": {
+      "slot": "head_mid",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2287": {
+      "slot": "head_top",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2288": {
+      "slot": "head_low",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2291": {
+      "slot": "head_mid",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2292": {
+      "slot": "head_low",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2296": {
+      "slot": "head_mid",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2297": {
+      "slot": "head_low",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2299": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2307": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2311": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2314": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2316": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2320": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2321": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2330": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2335": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2353": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2367": {
+      "slot": "armor",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2405": {
+      "slot": "shoes",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2411": {
+      "slot": "shoes",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2418": {
+      "slot": "shoes",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2419": {
+      "slot": "shoes",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2424": {
+      "slot": "shoes",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2503": {
+      "slot": "garment",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2505": {
+      "slot": "garment",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2507": {
+      "slot": "garment",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2509": {
+      "slot": "garment",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2511": {
+      "slot": "garment",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2515": {
+      "slot": "garment",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2603": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2605": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2607": {
+      "slot": "acc",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2608": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2614": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2615": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2616": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2617": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2619": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2620": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2627": {
+      "slot": "acc",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "2678": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "2679": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "5012": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "5013": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "5017": {
+      "slot": "head_top",
+      "tier": 1,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "5035": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    },
+    "5038": {
+      "slot": "head_top",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": true,
+      "season": null
+    },
+    "13001": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "단검",
+      "jobs": [
+        "ninja"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "13104": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "권총",
+      "jobs": [
+        "gunslinger"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "13151": {
+      "slot": "weapon",
+      "tier": 1,
+      "wtype": "라이플",
+      "jobs": [
+        "gunslinger"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "13156": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "샷건",
+      "jobs": [
+        "gunslinger"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "13160": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "샷건",
+      "jobs": [
+        "gunslinger"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "13301": {
+      "slot": "weapon",
+      "tier": 2,
+      "wtype": "수리검",
+      "jobs": [
+        "ninja"
+      ],
+      "rare": false,
+      "season": null
+    },
+    "13303": {
+      "slot": "weapon",
+      "tier": 0,
+      "wtype": "수리검",
+      "jobs": [
+        "ninja"
+      ],
+      "rare": true,
+      "season": null
+    },
+    "22847": {
+      "slot": "acc",
+      "tier": 0,
+      "wtype": null,
+      "jobs": null,
+      "rare": false,
+      "season": null
+    }
+  },
+  "cards": {
+    "4001": {
+      "mob": "poring",
+      "slot": "armor"
+    },
+    "4002": {
+      "mob": "fabre",
+      "slot": "armor"
+    },
+    "4003": {
+      "mob": "pupa",
+      "slot": "armor"
+    },
+    "4004": {
+      "mob": "drops",
+      "slot": "accessory"
+    },
+    "4006": {
+      "mob": "lunatic",
+      "slot": "garment"
+    },
+    "4007": {
+      "mob": "peco_egg",
+      "slot": "armor"
+    },
+    "4008": {
+      "mob": "picky",
+      "slot": "armor"
+    },
+    "4009": {
+      "mob": "chonchon",
+      "slot": "garment"
+    },
+    "4010": {
+      "mob": "willow",
+      "slot": "headgear"
+    },
+    "4012": {
+      "mob": "thief_bug_egg",
+      "slot": "armor"
+    },
+    "4014": {
+      "mob": "roda_frog",
+      "slot": "armor"
+    },
+    "4015": {
+      "mob": "condor",
+      "slot": "accessory"
+    },
+    "4016": {
+      "mob": "thief_bug",
+      "slot": "armor"
+    },
+    "4017": {
+      "mob": "savage_babe",
+      "slot": "weapon"
+    },
+    "4019": {
+      "mob": "hornet",
+      "slot": "weapon"
+    },
+    "4020": {
+      "mob": "familiar",
+      "slot": "weapon"
+    },
+    "4021": {
+      "mob": "rocker",
+      "slot": "accessory"
+    },
+    "4022": {
+      "mob": "spore",
+      "slot": "armor"
+    },
+    "4023": {
+      "mob": "baby_desert_wolf",
+      "slot": "weapon"
+    },
+    "4024": {
+      "mob": "plankton",
+      "slot": "weapon"
+    },
+    "4025": {
+      "mob": "skeleton",
+      "slot": "weapon"
+    },
+    "4026": {
+      "mob": "thief_bug_female",
+      "slot": "weapon"
+    },
+    "4027": {
+      "mob": "kukre",
+      "slot": "accessory"
+    },
+    "4028": {
+      "mob": "tarou",
+      "slot": "accessory"
+    },
+    "4029": {
+      "mob": "wolf",
+      "slot": "weapon"
+    },
+    "4030": {
+      "mob": "mandragora",
+      "slot": "weapon"
+    },
+    "4033": {
+      "mob": "poporing",
+      "slot": "headgear"
+    },
+    "4034": {
+      "mob": "worm_tail",
+      "slot": "accessory"
+    },
+    "4035": {
+      "mob": "hydra",
+      "slot": "weapon"
+    },
+    "4037": {
+      "mob": "snake",
+      "slot": "weapon"
+    },
+    "4038": {
+      "mob": "zombie",
+      "slot": "armor"
+    },
+    "4040": {
+      "mob": "creamy",
+      "slot": "accessory"
+    },
+    "4044": {
+      "mob": "smokie",
+      "slot": "accessory"
+    },
+    "4047": {
+      "mob": "ghostring",
+      "slot": "armor"
+    },
+    "4048": {
+      "mob": "poison_spore",
+      "slot": "accessory"
+    },
+    "4049": {
+      "mob": "vadon",
+      "slot": "weapon"
+    },
+    "4052": {
+      "mob": "elder_willow",
+      "slot": "headgear"
+    },
+    "4054": {
+      "mob": "angeling",
+      "slot": "armor"
+    },
+    "4055": {
+      "mob": "marina",
+      "slot": "weapon"
+    },
+    "4060": {
+      "mob": "goblin",
+      "slot": "weapon"
+    },
+    "4061": {
+      "mob": "cornutus",
+      "slot": "armor"
+    },
+    "4066": {
+      "mob": "orc_warrior",
+      "slot": "shield"
+    },
+    "4069": {
+      "mob": "drainliar",
+      "slot": "weapon"
+    },
+    "4073": {
+      "mob": "pirate_skel",
+      "slot": "accessory"
+    },
+    "4074": {
+      "mob": "bigfoot",
+      "slot": "shield"
+    },
+    "4077": {
+      "mob": "phen",
+      "slot": "accessory"
+    },
+    "4084": {
+      "mob": "marine_sphere",
+      "slot": "accessory"
+    },
+    "4085": {
+      "mob": "orc_skeleton",
+      "slot": "weapon"
+    },
+    "4086": {
+      "mob": "skel_soldier",
+      "slot": "weapon"
+    },
+    "4089": {
+      "mob": "sword_fish",
+      "slot": "armor"
+    },
+    "4090": {
+      "mob": "munak",
+      "slot": "shield"
+    },
+    "4091": {
+      "mob": "kobold",
+      "slot": "weapon"
+    },
+    "4093": {
+      "mob": "obeaune",
+      "slot": "accessory"
+    },
+    "4094": {
+      "mob": "skel_archer",
+      "slot": "weapon"
+    },
+    "4095": {
+      "mob": "marse",
+      "slot": "garment"
+    },
+    "4098": {
+      "mob": "dokebi",
+      "slot": "armor"
+    },
+    "4100": {
+      "mob": "sohee",
+      "slot": "shoes"
+    },
+    "4102": {
+      "mob": "whisper",
+      "slot": "garment"
+    },
+    "4103": {
+      "mob": "horong",
+      "slot": "accessory"
+    },
+    "4111": {
+      "mob": "strouf",
+      "slot": "weapon"
+    },
+    "4123": {
+      "mob": "eddga",
+      "slot": "shoes"
+    },
+    "4125": {
+      "mob": "deviace",
+      "slot": "weapon"
+    },
+    "4128": {
+      "mob": "golden_thief_bug",
+      "slot": "shield"
+    },
+    "4131": {
+      "mob": "moonlight",
+      "slot": "shoes"
+    },
+    "4137": {
+      "mob": "drake",
+      "slot": "weapon"
+    },
+    "4143": {
+      "mob": "orc_hero",
+      "slot": "headgear"
+    },
+    "4144": {
+      "mob": "osiris",
+      "slot": "accessory"
+    },
+    "4147": {
+      "mob": "baphomet",
+      "slot": "weapon"
+    },
+    "4159": {
+      "mob": "nine_tail",
+      "slot": "garment"
+    },
+    "4172": {
+      "mob": "the_paper",
+      "slot": "weapon"
+    },
+    "4174": {
+      "mob": "deviling",
+      "slot": "garment"
+    },
+    "4178": {
+      "mob": "dragon_tail",
+      "slot": "garment"
+    },
+    "4179": {
+      "mob": "dragon_fly",
+      "slot": "garment"
+    },
+    "4183": {
+      "mob": "vagabond_wolf",
+      "slot": "garment"
+    },
+    "4195": {
+      "mob": "leaf_cat",
+      "slot": "armor"
+    },
+    "4197": {
+      "mob": "mastering",
+      "slot": "accessory"
+    },
+    "4199": {
+      "mob": "merman",
+      "slot": "accessory"
+    },
+    "4210": {
+      "mob": "wanderer",
+      "slot": "shoes"
+    },
+    "4211": {
+      "mob": "vocal",
+      "slot": "headgear"
+    },
+    "4212": {
+      "mob": "bon_gun",
+      "slot": "accessory"
+    },
+    "4217": {
+      "mob": "live_peach_tree",
+      "slot": "headgear"
+    },
+    "4221": {
+      "mob": "skeleton_general",
+      "slot": "shoes"
+    },
+    "4225": {
+      "mob": "stone_shooter",
+      "slot": "accessory"
+    },
+    "4227": {
+      "mob": "spring_rabbit",
+      "slot": "accessory"
+    },
+    "4239": {
+      "mob": "iron_fist",
+      "slot": "weapon"
+    },
+    "4259": {
+      "mob": "wooden_golem",
+      "slot": "armor"
+    },
+    "4266": {
+      "mob": "eclipse",
+      "slot": "garment"
+    },
+    "4283": {
+      "mob": "greatest_general",
+      "slot": "accessory"
+    },
+    "4287": {
+      "mob": "kapha",
+      "slot": "garment"
+    },
+    "4290": {
+      "mob": "cat_o_nine_tail",
+      "slot": "shoes"
+    },
+    "4296": {
+      "mob": "cramp",
+      "slot": "headgear"
+    },
+    "4306": {
+      "mob": "toad",
+      "slot": "garment"
+    },
+    "4314": {
+      "mob": "penomena",
+      "slot": "shield"
+    },
+    "4328": {
+      "mob": "hyegun",
+      "slot": "garment"
+    },
+    "4330": {
+      "mob": "dark_snake_lord",
+      "slot": "headgear"
+    },
+    "4372": {
+      "mob": "bacsojin",
+      "slot": "headgear"
+    },
+    "4524": {
+      "mob": "king_dramoh",
+      "slot": "headgear"
+    },
+    "4525": {
+      "mob": "kraken",
+      "slot": "garment"
+    }
+  },
+  "pets": {
+    "poring": {
+      "eggId": 9001,
+      "from": null,
+      "secret": false,
+      "bonusSig": "qy(3),Vi(.01)"
+    },
+    "lunatic": {
+      "eggId": 9004,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Vi(.02),Ap(.02)"
+    },
+    "drops": {
+      "eggId": 9002,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Ap(.04)"
+    },
+    "picky": {
+      "eggId": 9005,
+      "from": null,
+      "secret": false,
+      "bonusSig": "_y(2),Ap(.02)"
+    },
+    "savage_babe": {
+      "eggId": 9009,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Iy(2),Ry(40)"
+    },
+    "baby_desert_wolf": {
+      "eggId": 9010,
+      "from": null,
+      "secret": false,
+      "bonusSig": "hl(2),zC(.02)"
+    },
+    "rocker": {
+      "eggId": 9011,
+      "from": null,
+      "secret": false,
+      "bonusSig": "d2(.5),Ry(25)"
+    },
+    "familiar": {
+      "eggId": 9138,
+      "from": null,
+      "secret": false,
+      "bonusSig": "hl(3)"
+    },
+    "mastering": {
+      "eggId": 9069,
+      "from": "poring",
+      "secret": false,
+      "bonusSig": "qy(4),Vi(.02),Oy(.02)"
+    },
+    "whisper": {
+      "eggId": 9045,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Oy(.05)"
+    },
+    "spore": {
+      "eggId": 9012,
+      "from": null,
+      "secret": false,
+      "bonusSig": "By(3)"
+    },
+    "poison_spore": {
+      "eggId": 9013,
+      "from": null,
+      "secret": false,
+      "bonusSig": "_y(2),hl(2)"
+    },
+    "poporing": {
+      "eggId": 9003,
+      "from": null,
+      "secret": false,
+      "bonusSig": "qy(2),u2(.03)"
+    },
+    "smokie": {
+      "eggId": 9015,
+      "from": null,
+      "secret": false,
+      "bonusSig": "HC(2),Oy(.02)"
+    },
+    "dokebi": {
+      "eggId": 9019,
+      "from": null,
+      "secret": false,
+      "bonusSig": "hl(2),GC(.03)"
+    },
+    "nine_tail": {
+      "eggId": 9095,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Vi(.02),By(2)"
+    },
+    "willow": {
+      "eggId": 9103,
+      "from": null,
+      "secret": false,
+      "bonusSig": "hl(3)"
+    },
+    "angeling": {
+      "eggId": 9088,
+      "from": "mastering",
+      "secret": false,
+      "bonusSig": "UC(.05),KC(.15)"
+    },
+    "munak": {
+      "eggId": 9018,
+      "from": null,
+      "secret": false,
+      "bonusSig": "VC(2),hl(2)"
+    },
+    "bon_gun": {
+      "eggId": 9025,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Iy(3),Ry(20)"
+    },
+    "sohee": {
+      "eggId": 9020,
+      "from": null,
+      "secret": false,
+      "bonusSig": "_y(2),By(2)"
+    },
+    "hyegun": {
+      "eggId": 9093,
+      "from": "bon_gun",
+      "secret": false,
+      "bonusSig": "Iy(4),u2(.04)"
+    },
+    "cat_o_nine_tail": {
+      "eggId": 9096,
+      "from": "nine_tail",
+      "secret": false,
+      "bonusSig": "Vi(.04),d2(.6)"
+    },
+    "moonlight": {
+      "eggId": 9112,
+      "from": null,
+      "secret": false,
+      "bonusSig": "Vi(.04),WC(.6),h2(.03)"
+    },
+    "dark_snake_lord": {
+      "eggId": 9148,
+      "from": null,
+      "secret": true,
+      "bonusSig": "Ap(.04),Vi(.03),h2(.03)"
+    }
+  },
+  "dropsM2": {
+    "poring": [
+      {
+        "id": 1202,
+        "rate": 100
+      },
+      {
+        "id": 2102,
+        "rate": 2
+      }
+    ],
+    "lunatic": [
+      {
+        "id": 2262,
+        "rate": 4
+      }
+    ],
+    "fabre": [
+      {
+        "id": 1502,
+        "rate": 80
+      }
+    ],
+    "pupa": [
+      {
+        "id": 2102,
+        "rate": 2
+      }
+    ],
+    "drops": [
+      {
+        "id": 1602,
+        "rate": 80
+      }
+    ],
+    "picky": [
+      {
+        "id": 2302,
+        "rate": 150
+      }
+    ],
+    "peco_egg": [
+      {
+        "id": 2102,
+        "rate": 2
+      }
+    ],
+    "condor": [
+      {
+        "id": 1702,
+        "rate": 150
+      }
+    ],
+    "savage_babe": [
+      {
+        "id": 1302,
+        "rate": 100
+      }
+    ],
+    "hornet": [
+      {
+        "id": 1208,
+        "rate": 15
+      }
+    ],
+    "thief_bug_egg": [
+      {
+        "id": 2102,
+        "rate": 2
+      }
+    ],
+    "baby_desert_wolf": [
+      {
+        "id": 2306,
+        "rate": 80
+      },
+      {
+        "id": 13011,
+        "rate": 5
+      }
+    ],
+    "rocker": [
+      {
+        "id": 2298,
+        "rate": 4
+      },
+      {
+        "id": 1402,
+        "rate": 80
+      }
+    ],
+    "familiar": [
+      {
+        "id": 1105,
+        "rate": 20
+      },
+      {
+        "id": 2209,
+        "rate": 15
+      }
+    ],
+    "eclipse": [
+      {
+        "id": 2250,
+        "rate": 200
+      },
+      {
+        "id": 2355,
+        "rate": 1000
+      }
+    ],
+    "vocal": [
+      {
+        "id": 2247,
+        "rate": 50
+      },
+      {
+        "id": 2420,
+        "rate": 1000
+      }
+    ],
+    "mastering": [
+      {
+        "id": 5035,
+        "rate": 500
+      },
+      {
+        "id": 2257,
+        "rate": 200
+      },
+      {
+        "id": 2116,
+        "rate": 1000
+      }
+    ],
+    "creamy": [
+      {
+        "id": 2321,
+        "rate": 10
+      },
+      {
+        "id": 2207,
+        "rate": 2
+      }
+    ],
+    "mandragora": [
+      {
+        "id": 1405,
+        "rate": 30
+      }
+    ],
+    "roda_frog": [
+      {
+        "id": 2424,
+        "rate": 15
+      }
+    ],
+    "toad": [
+      {
+        "id": 2244,
+        "rate": 50
+      },
+      {
+        "id": 2424,
+        "rate": 30
+      }
+    ],
+    "dragon_fly": [
+      {
+        "id": 2245,
+        "rate": 200
+      },
+      {
+        "id": 2607,
+        "rate": 3000
+      }
+    ],
+    "tarou": [
+      {
+        "id": 2288,
+        "rate": 20
+      }
+    ],
+    "drainliar": [
+      {
+        "id": 2286,
+        "rate": 15
+      }
+    ],
+    "cramp": [
+      {
+        "id": 2616,
+        "rate": 10
+      }
+    ],
+    "plankton": [
+      {
+        "id": 2615,
+        "rate": 10
+      }
+    ],
+    "tarou_bite": [
+      {
+        "id": 2292,
+        "rate": 150
+      },
+      {
+        "id": 2627,
+        "rate": 100
+      },
+      {
+        "id": 2620,
+        "rate": 50
+      }
+    ],
+    "tarou_plague": [
+      {
+        "id": 2292,
+        "rate": 150
+      },
+      {
+        "id": 2627,
+        "rate": 100
+      },
+      {
+        "id": 2620,
+        "rate": 50
+      }
+    ],
+    "tarou_burrow": [
+      {
+        "id": 2292,
+        "rate": 150
+      },
+      {
+        "id": 2627,
+        "rate": 100
+      },
+      {
+        "id": 2620,
+        "rate": 50
+      }
+    ],
+    "thief_bug": [
+      {
+        "id": 2303,
+        "rate": 120
+      },
+      {
+        "id": 2304,
+        "rate": 80
+      }
+    ],
+    "thief_bug_female": [
+      {
+        "id": 1108,
+        "rate": 15
+      }
+    ],
+    "golden_thief_bug": [
+      {
+        "id": 1524,
+        "rate": 150
+      },
+      {
+        "id": 2246,
+        "rate": 250
+      },
+      {
+        "id": 2610,
+        "rate": 2000
+      }
+    ],
+    "kukre": [
+      {
+        "id": 2503,
+        "rate": 80
+      },
+      {
+        "id": 2405,
+        "rate": 40
+      }
+    ],
+    "marina": [
+      {
+        "id": 1604,
+        "rate": 60
+      },
+      {
+        "id": 2607,
+        "rate": 30
+      }
+    ],
+    "hydra": [
+      {
+        "id": 1704,
+        "rate": 50
+      },
+      {
+        "id": 13104,
+        "rate": 30
+      },
+      {
+        "id": 2201,
+        "rate": 30
+      }
+    ],
+    "whisper": [
+      {
+        "id": 2333,
+        "rate": 10
+      }
+    ],
+    "penomena": [
+      {
+        "id": 2308,
+        "rate": 150
+      },
+      {
+        "id": 2505,
+        "rate": 150
+      },
+      {
+        "id": 2406,
+        "rate": 100
+      }
+    ],
+    "sword_fish": [
+      {
+        "id": 1117,
+        "rate": 25
+      },
+      {
+        "id": 2257,
+        "rate": 2
+      }
+    ],
+    "pirate_skel": [
+      {
+        "id": 2211,
+        "rate": 250
+      },
+      {
+        "id": 1104,
+        "rate": 250
+      },
+      {
+        "id": 2287,
+        "rate": 15
+      }
+    ],
+    "ghostring": [
+      {
+        "id": 2274,
+        "rate": 100
+      },
+      {
+        "id": 2336,
+        "rate": 50
+      }
+    ],
+    "drake": [
+      {
+        "id": 1125,
+        "rate": 950
+      },
+      {
+        "id": 1127,
+        "rate": 600
+      },
+      {
+        "id": 1128,
+        "rate": 400
+      },
+      {
+        "id": 5019,
+        "rate": 350
+      },
+      {
+        "id": 1135,
+        "rate": 150
+      },
+      {
+        "id": 1189,
+        "rate": 100
+      }
+    ],
+    "vadon": [
+      {
+        "id": 2104,
+        "rate": 10
+      }
+    ],
+    "cornutus": [
+      {
+        "id": 2102,
+        "rate": 15
+      }
+    ],
+    "marse": [
+      {
+        "id": 2205,
+        "rate": 20
+      }
+    ],
+    "obeaune": [
+      {
+        "id": 2607,
+        "rate": 20
+      }
+    ],
+    "phen": [
+      {
+        "id": 2424,
+        "rate": 15
+      }
+    ],
+    "marine_sphere": [
+      {
+        "id": 2605,
+        "rate": 5
+      }
+    ],
+    "merman": [
+      {
+        "id": 1460,
+        "rate": 20
+      },
+      {
+        "id": 2205,
+        "rate": 10
+      }
+    ],
+    "deviace": [
+      {
+        "id": 2205,
+        "rate": 300
+      },
+      {
+        "id": 2424,
+        "rate": 150
+      },
+      {
+        "id": 2505,
+        "rate": 100
+      }
+    ],
+    "strouf": [
+      {
+        "id": 1460,
+        "rate": 200
+      },
+      {
+        "id": 2424,
+        "rate": 150
+      },
+      {
+        "id": 2603,
+        "rate": 100
+      }
+    ],
+    "king_dramoh": [
+      {
+        "id": 2235,
+        "rate": 150
+      },
+      {
+        "id": 2104,
+        "rate": 300
+      },
+      {
+        "id": 2603,
+        "rate": 100
+      }
+    ],
+    "kraken": [
+      {
+        "id": 2205,
+        "rate": 500
+      },
+      {
+        "id": 2509,
+        "rate": 250
+      },
+      {
+        "id": 1460,
+        "rate": 200
+      },
+      {
+        "id": 2235,
+        "rate": 100
+      }
+    ],
+    "willow": [
+      {
+        "id": 1610,
+        "rate": 50
+      },
+      {
+        "id": 2103,
+        "rate": 60
+      }
+    ],
+    "nine_tail": [
+      {
+        "id": 2505,
+        "rate": 50
+      },
+      {
+        "id": 2605,
+        "rate": 30
+      },
+      {
+        "id": 1711,
+        "rate": 40
+      }
+    ],
+    "spore": [
+      {
+        "id": 2220,
+        "rate": 40
+      }
+    ],
+    "poporing": [
+      {
+        "id": 1207,
+        "rate": 5
+      }
+    ],
+    "snake": [
+      {
+        "id": 1117,
+        "rate": 15
+      }
+    ],
+    "worm_tail": [
+      {
+        "id": 1408,
+        "rate": 30
+      }
+    ],
+    "poison_spore": [
+      {
+        "id": 2221,
+        "rate": 20
+      }
+    ],
+    "wolf": [
+      {
+        "id": 2308,
+        "rate": 10
+      }
+    ],
+    "smokie": [
+      {
+        "id": 2213,
+        "rate": 1
+      }
+    ],
+    "elder_willow": [
+      {
+        "id": 2329,
+        "rate": 30
+      }
+    ],
+    "bigfoot": [
+      {
+        "id": 2289,
+        "rate": 5
+      }
+    ],
+    "greatest_general": [
+      {
+        "id": 2272,
+        "rate": 1
+      }
+    ],
+    "dokebi": [
+      {
+        "id": 1517,
+        "rate": 2
+      },
+      {
+        "id": 1613,
+        "rate": 1
+      }
+    ],
+    "dragon_tail": [
+      {
+        "id": 2207,
+        "rate": 8
+      },
+      {
+        "id": 2226,
+        "rate": 2
+      }
+    ],
+    "angeling": [
+      {
+        "id": 2254,
+        "rate": 100
+      },
+      {
+        "id": 2324,
+        "rate": 60
+      },
+      {
+        "id": 2282,
+        "rate": 1
+      }
+    ],
+    "deviling": [
+      {
+        "id": 2255,
+        "rate": 100
+      }
+    ],
+    "vagabond_wolf": [
+      {
+        "id": 2248,
+        "rate": 200
+      }
+    ],
+    "moonlight": [
+      {
+        "id": 1525,
+        "rate": 150
+      },
+      {
+        "id": 1234,
+        "rate": 100
+      },
+      {
+        "id": 1648,
+        "rate": 100
+      },
+      {
+        "id": 1477,
+        "rate": 50
+      }
+    ],
+    "eddga": [
+      {
+        "id": 2268,
+        "rate": 250
+      },
+      {
+        "id": 1258,
+        "rate": 500
+      },
+      {
+        "id": 1133,
+        "rate": 150
+      },
+      {
+        "id": 13046,
+        "rate": 100
+      }
+    ],
+    "zombie": [
+      {
+        "id": 2212,
+        "rate": 30
+      },
+      {
+        "id": 2608,
+        "rate": 30
+      }
+    ],
+    "horong": [
+      {
+        "id": 1351,
+        "rate": 40
+      },
+      {
+        "id": 13151,
+        "rate": 30
+      },
+      {
+        "id": 2107,
+        "rate": 20
+      }
+    ],
+    "skeleton": [
+      {
+        "id": 1505,
+        "rate": 80
+      },
+      {
+        "id": 2609,
+        "rate": 30
+      }
+    ],
+    "skel_archer": [
+      {
+        "id": 1708,
+        "rate": 35
+      },
+      {
+        "id": 2285,
+        "rate": 3
+      }
+    ],
+    "skel_soldier": [
+      {
+        "id": 1216,
+        "rate": 50
+      },
+      {
+        "id": 1214,
+        "rate": 12
+      }
+    ],
+    "munak": [
+      {
+        "id": 2305,
+        "rate": 100
+      },
+      {
+        "id": 2404,
+        "rate": 15
+      },
+      {
+        "id": 2264,
+        "rate": 2
+      },
+      {
+        "id": 2337,
+        "rate": 1
+      }
+    ],
+    "bon_gun": [
+      {
+        "id": 5046,
+        "rate": 1
+      }
+    ],
+    "sohee": [
+      {
+        "id": 2504,
+        "rate": 5
+      },
+      {
+        "id": 1217,
+        "rate": 5
+      },
+      {
+        "id": 2277,
+        "rate": 1
+      }
+    ],
+    "skeleton_general": [
+      {
+        "id": 1219,
+        "rate": 80
+      },
+      {
+        "id": 1220,
+        "rate": 35
+      },
+      {
+        "id": 2274,
+        "rate": 1
+      }
+    ],
+    "cat_o_nine_tail": [
+      {
+        "id": 1234,
+        "rate": 150
+      },
+      {
+        "id": 5008,
+        "rate": 1
+      },
+      {
+        "id": 2603,
+        "rate": 100
+      }
+    ],
+    "hyegun": [
+      {
+        "id": 2406,
+        "rate": 1
+      }
+    ]
+  },
+  "stages": {
+    "prontera": {
+      "runLength": null,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": 0.25,
+      "bossHpHash": null
+    },
+    "sunken": {
+      "runLength": 780,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": 2,
+      "bossHpHash": null
+    },
+    "byalan": {
+      "runLength": 900,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": 1.8,
+      "bossHpHash": null
+    },
+    "payon": {
+      "runLength": 1020,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": 2.2,
+      "bossHpHash": null
+    },
+    "payon_cave": {
+      "runLength": 1020,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": 3,
+      "bossHpHash": null
+    },
+    "louyang": {
+      "runLength": 1020,
+      "rareId": "dark_snake_lord",
+      "rareChance": 0.16,
+      "charExp": 0.02,
+      "jobExp": 3,
+      "bossHpHash": "ebf37d4d99"
+    },
+    "prt_castle": {
+      "runLength": 90,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": null,
+      "bossHpHash": null
+    },
+    "endless": {
+      "runLength": 1000000000,
+      "rareId": null,
+      "rareChance": null,
+      "charExp": null,
+      "jobExp": null,
+      "bossHpHash": null
+    }
+  },
+  "vP": {
+    "bash": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "magnum": [
+      "aura",
+      "area",
+      "melee",
+      "physical",
+      "fire"
+    ],
+    "sword_dance": [
+      "aura",
+      "area",
+      "melee",
+      "physical",
+      "neutral"
+    ],
+    "provoke": [
+      "aura",
+      "area",
+      "neutral"
+    ],
+    "demoralizing_shout": [
+      "aura",
+      "area",
+      "melee",
+      "physical",
+      "neutral"
+    ],
+    "shield_bash": [
+      "melee",
+      "projectile",
+      "pierce",
+      "physical",
+      "neutral"
+    ],
+    "endure": [
+      "buff"
+    ],
+    "hp_recovery": [
+      "buff"
+    ],
+    "firebolt": [
+      "ranged_strike",
+      "multi",
+      "burst",
+      "magic",
+      "fire"
+    ],
+    "coldbolt": [
+      "ranged_strike",
+      "multi",
+      "burst",
+      "magic",
+      "water"
+    ],
+    "lightning": [
+      "ranged_strike",
+      "multi",
+      "burst",
+      "magic",
+      "wind"
+    ],
+    "soul_strike": [
+      "ranged_strike",
+      "multi",
+      "burst",
+      "magic",
+      "ghost"
+    ],
+    "napalm": [
+      "ranged_strike",
+      "area",
+      "magic",
+      "ghost"
+    ],
+    "frost_diver": [
+      "ranged_strike",
+      "single",
+      "magic",
+      "water"
+    ],
+    "fire_wall": [
+      "ground",
+      "area",
+      "persistent",
+      "magic",
+      "fire"
+    ],
+    "sight": [
+      "orbit",
+      "magic",
+      "fire"
+    ],
+    "thunderstorm": [
+      "ground",
+      "area",
+      "magic",
+      "wind"
+    ],
+    "double_strafe": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "arrow_shower": [
+      "ranged_strike",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "arrow_rain": [
+      "ground",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "retreat": [
+      "projectile",
+      "single",
+      "pierce",
+      "physical",
+      "neutral"
+    ],
+    "arcane_shot": [
+      "ranged_strike",
+      "single",
+      "physical",
+      "hybrid",
+      "ghost"
+    ],
+    "fire_arrow": [
+      "ranged_strike",
+      "area",
+      "physical",
+      "hybrid",
+      "fire"
+    ],
+    "arrow_repel": [
+      "projectile",
+      "pierce",
+      "physical",
+      "neutral"
+    ],
+    "concentration": [
+      "buff"
+    ],
+    "heal": [
+      "aura",
+      "area",
+      "magic",
+      "holy"
+    ],
+    "holy_light": [
+      "ranged_strike",
+      "multi",
+      "magic",
+      "holy"
+    ],
+    "ruwach": [
+      "orbit",
+      "magic",
+      "holy"
+    ],
+    "decrease_agi": [
+      "aura",
+      "area",
+      "magic",
+      "holy"
+    ],
+    "signum_crucis": [
+      "ground",
+      "area",
+      "persistent",
+      "magic",
+      "holy"
+    ],
+    "aqua_benedicta": [
+      "ground",
+      "area",
+      "persistent",
+      "magic",
+      "holy"
+    ],
+    "blessing": [
+      "buff"
+    ],
+    "holy_smite": [
+      "melee",
+      "single",
+      "physical",
+      "holy"
+    ],
+    "envenom": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "sand_attack": [
+      "melee",
+      "area",
+      "physical",
+      "earth"
+    ],
+    "poison_bomb": [
+      "melee",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "shadowstep": [
+      "buff",
+      "melee",
+      "physical"
+    ],
+    "fan_of_knives": [
+      "melee",
+      "aura",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "caltrops": [
+      "melee",
+      "ground",
+      "area",
+      "persistent",
+      "physical",
+      "neutral"
+    ],
+    "throw_stone": [
+      "melee",
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "hiding": [
+      "buff"
+    ],
+    "mammonite": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "cart_revolution": [
+      "melee",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "zeny_rain": [
+      "melee",
+      "ground",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "cart_rush": [
+      "melee",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "vending": [
+      "melee",
+      "ground",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "crazy_uproar": [
+      "buff"
+    ],
+    "enlarge_weight": [
+      "buff"
+    ],
+    "tornado_kick": [
+      "aura",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "heel_drop": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "roundhouse": [
+      "aura",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "counter_kick": [
+      "aura",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "sprint": [
+      "buff"
+    ],
+    "shuriken": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "kunai": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "huuma": [
+      "projectile",
+      "pierce",
+      "return",
+      "physical",
+      "neutral"
+    ],
+    "flaming_petals": [
+      "ground",
+      "area",
+      "magic",
+      "fire"
+    ],
+    "lightning_strike": [
+      "aura",
+      "area",
+      "magic",
+      "wind"
+    ],
+    "triple_action": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "rapid_shower": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "spread_attack": [
+      "aura",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "desperado": [
+      "aura",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "ground_drift": [
+      "ground",
+      "area",
+      "physical",
+      "neutral"
+    ],
+    "tracking": [
+      "ranged_strike",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_bow": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_gun": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_shuriken": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_rod": [
+      "projectile",
+      "single",
+      "magic",
+      "neutral"
+    ],
+    "atk_infused": [
+      "projectile",
+      "single",
+      "magic",
+      "neutral"
+    ],
+    "atk_infused_melee": [
+      "melee",
+      "single",
+      "magic",
+      "neutral"
+    ],
+    "atk_sword": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_twohand": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_axe2": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_axe": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_spear": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_lance": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_dagger": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_blunt": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_fist": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_katar": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_knuckle": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_book": [
+      "melee",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_instrument": [
+      "projectile",
+      "single",
+      "physical",
+      "neutral"
+    ],
+    "atk_whip": [
+      "ranged_strike",
+      "single",
+      "physical",
+      "neutral"
+    ]
+  },
+  "vPAnomalies": [
+    "tornado_kick: [\"aura\",\"area\",\"physical\",\"neutral\"]",
+    "roundhouse: [\"aura\",\"area\",\"physical\",\"neutral\"]",
+    "counter_kick: [\"aura\",\"area\",\"physical\",\"neutral\"]"
+  ],
+  "t1TreeHashes": {
+    "swordsman": {
+      "count": 54,
+      "hash": "34c0f050d3"
+    },
+    "mage": {
+      "count": 52,
+      "hash": "bb44751e5b"
+    },
+    "archer": {
+      "count": 46,
+      "hash": "49ee95b9dc"
+    },
+    "acolyte": {
+      "count": 52,
+      "hash": "3156dccea1"
+    },
+    "thief": {
+      "count": 52,
+      "hash": "721548cfd0"
+    },
+    "merchant": {
+      "count": 47,
+      "hash": "32ae6fcdde"
+    },
+    "taekwon": {
+      "count": 46,
+      "hash": "69ad5d4bbc"
+    },
+    "ninja": {
+      "count": 46,
+      "hash": "a6dc5892e3"
+    },
+    "gunslinger": {
+      "count": 47,
+      "hash": "813e20232c"
+    }
+  },
+  "skillHashes": {
+    "bash": "629f4c5f52",
+    "magnum": "57b2b51534",
+    "sword_dance": "1c8e328467",
+    "provoke": "02dca63607",
+    "demoralizing_shout": "ed5d573a33",
+    "shield_bash": "b45e5237c1",
+    "endure": "6105275186",
+    "hp_recovery": "d8c02d2d53",
+    "firebolt": "3f328dbe8e",
+    "coldbolt": "1d65c74f88",
+    "lightning": "65655a4c3c",
+    "soul_strike": "c25ed2b381",
+    "napalm": "c9c3f93000",
+    "fire_wall": "67b2cf75c1",
+    "frost_diver": "e83d3afdfe",
+    "sight": "37f173eabb",
+    "thunderstorm": "bc4293f595",
+    "double_strafe": "fdc66c4e77",
+    "arrow_shower": "b4b3b91a62",
+    "arrow_rain": "2d2acf3753",
+    "retreat": "42f55b3495",
+    "arcane_shot": "aca9cac3d1",
+    "fire_arrow": "92b9d33aab",
+    "arrow_repel": "b907fbd633",
+    "concentration": "75b1a82f00",
+    "heal": "092d2e23e4",
+    "holy_light": "b46c77b292",
+    "ruwach": "5498528f2a",
+    "decrease_agi": "b4a0898719",
+    "signum_crucis": "32d0a06403",
+    "aqua_benedicta": "4e699b330b",
+    "blessing": "d55b74d910",
+    "holy_smite": "73ba854d1c",
+    "envenom": "343d0a2a17",
+    "sand_attack": "1ce2bf287d",
+    "throw_stone": "fe151e73d8",
+    "hiding": "05071fc6f2",
+    "poison_bomb": "646d3ed9f8",
+    "shadowstep": "fbbd9e6fe4",
+    "fan_of_knives": "4786987e63",
+    "caltrops": "cace7647c9",
+    "mammonite": "2968b3ffa3",
+    "cart_revolution": "e8fd4e6edf",
+    "crazy_uproar": "f9640239ff",
+    "enlarge_weight": "db97813fce",
+    "zeny_rain": "9c22e19b6d",
+    "cart_rush": "2af51ab7fd",
+    "vending": "7690720b9b",
+    "tornado_kick": "ac1fa9739e",
+    "heel_drop": "03bd633cd7",
+    "roundhouse": "761fe22112",
+    "counter_kick": "79b09eaf19",
+    "sprint": "a2e2ef1cff",
+    "shuriken": "0d49014a6c",
+    "kunai": "f8541a5160",
+    "huuma": "72b4a49253",
+    "flaming_petals": "e9011acaf1",
+    "lightning_strike": "c3e4dd59ef",
+    "triple_action": "8018a8a676",
+    "rapid_shower": "e5cb892502",
+    "spread_attack": "bd1536d178",
+    "desperado": "1a2a15fb43",
+    "ground_drift": "2e3a9eb799",
+    "tracking": "18a9f4939b"
+  },
+  "t2Status": {
+    "t2ActiveSkillsImplemented": false,
+    "summary": "二轉主動技尚未實裝（仍維持一轉 1 武器＋4 主動技與一轉 50 點天賦）。"
+  }
+}

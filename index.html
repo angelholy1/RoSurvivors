@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RO Survivors Beta 0.7.2 全職業攻略｜配點、裝備、燈籠節、無限塔、寶箱甜蜜點與卡片圖鑑</title>
+  <title>RO Survivors 盧恩公會手冊｜Beta 0.7.6 職業流派配裝與關卡掉落攻略</title>
   <link rel="stylesheet" href="styles.css" />
+  <script defer src="data/icons.js"></script>
+  <script defer src="data/trees.js"></script>
+  <script defer src="data/catalog.js"></script>
+  <script defer src="data/stages.js"></script>
+  <script defer src="data/builds.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body data-family="mage" data-job="wizard">
@@ -13,444 +18,113 @@
       <div class="brand">
         <span class="brand-crest" data-icon="crest"></span>
         <div>
-          RO Survivors 全職業攻略圖鑑
-          <span class="brand-sub">BETA 0.7.2（adc0fdf6）實碼現況・裝備掉落・燈籠節・無限塔・天賦與卡片核對資料站</span>
+          <div class="brand-title">RO Survivors 盧恩公會手冊</div>
+          <div class="brand-sub">Beta 0.7.6（f7ad3c447）實碼對齊・職業流派配裝・局內挑卡・關卡掉落機率</div>
         </div>
       </div>
-      <nav class="nav-links" role="tablist" aria-label="頁面分頁切換">
-        <a href="#jobs" class="nav-tab active" role="tab" aria-selected="true" data-tab="jobs">職業攻略 <span class="nav-tab-count">16</span></a>
-        <a href="#stages" class="nav-tab" role="tab" aria-selected="false" data-tab="stages">關卡怪物與掉落 <span class="nav-tab-count">11</span></a>
-        <a href="#pets" class="nav-tab" role="tab" aria-selected="false" data-tab="pets">寵物與難度 <span class="nav-tab-count">24</span></a>
-        <a href="#gear" class="nav-tab" role="tab" aria-selected="false" data-tab="gear">裝備圖鑑 <span class="nav-tab-count">182</span></a>
-        <a href="#cards" class="nav-tab" role="tab" aria-selected="false" data-tab="cards">卡片圖鑑 <span class="nav-tab-count">98</span></a>
-        <a href="#guide" class="nav-tab" role="tab" aria-selected="false" data-tab="guide">寶箱與詞彙 <span class="nav-tab-count">51</span></a>
-        <a href="#calculator" class="nav-tab" role="tab" aria-selected="false" data-tab="calculator">素質模擬機</a>
-        <a href="#compare" class="nav-tab" role="tab" aria-selected="false" data-tab="compare">全職速查表</a>
+      <nav class="top-nav" role="tablist" aria-label="主要分頁">
+        <button type="button" class="nav-tab active" role="tab" aria-selected="true" data-tab="builds">
+          <span class="ico" data-icon="builds"></span>
+          <span>職業流派攻略</span>
+          <span class="nav-badge">16 職</span>
+        </button>
+        <button type="button" class="nav-tab" role="tab" aria-selected="false" data-tab="stages">
+          <span class="ico" data-icon="stages"></span>
+          <span>關卡與掉落機率</span>
+          <span class="nav-badge">11 圖</span>
+        </button>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="tab-panel active" id="tab-jobs" data-tab-panel="jobs" role="tabpanel">
-    <section class="hero">
-      <div class="hero-badge-row">
-        <span class="pill gold">Beta 0.7.2（adc0fdf6）實碼現況校對</span>
-        <span class="pill accent">16 條路線（遠程改推 STR 53 / 祭司主推高詠驅魔 / 流氓全弓分流）</span>
-        <span class="pill">Lv1→99 階梯（628/1273）・燈籠節 50 裝 11 卡・無限塔</span>
-      </div>
-      <h1>RO Survivors 全職業深度攻略指南：Beta 0.7.2 實碼配點、燈籠節與無限塔更新</h1>
-      <p class="hero-lead">
-        完整對齊 Beta 0.7.2（<code>adc0fdf6</code>）實碼：包含 6 大常駐一轉職系（12 條二轉路線）與 4 條擴展職業，並依實碼遠程 <code>STR+3×DEX</code> 與一轉 <code>1+4</code> 機制重新校對主推配點（含祭司高詠驅魔 B1 正統點法、遠程四職 STR 副屬收益與 Beta 0.6.10 流氓全弓弩分流），全面通過 Lv 1→99 階梯上限（<strong>1,273 點</strong>，滿 99 消耗 <strong>628 點</strong>）、天賦前置與 <code>wL()</code> 校驗。
-      </p>
-      <div class="notice-box">
-        <span class="icon" data-icon="target"></span>
-        <div>
-          <strong>Beta 0.7.2 現況與近期改版重點提醒：</strong>目前二轉已可<strong>變更外觀、提升基礎 HP／移速與套用 <code>rank = 2</code> 階傷倍率（普攻冪次指數 <code>basicExpBonus +0.15</code>，非打怪經驗 EXP！；0.7.1 已回滾誤開的測試傷害）</strong>，並解鎖<strong>無限塔</strong>入場資格（須正式帳號＋二轉）；但「<strong>二轉 50 點天賦樹、第 5 格主動技能欄、二轉主動技、刺客雙持／拳刃、騎兵坐騎、二轉書本/樂器</strong>」依然尚未實裝進局！此外 Beta 0.6.10–0.7.2 已開放<strong>盜賊／流氓使用全弓弩</strong>（刺客除外）、戰利品改回<strong>地面掉落（+250% 拾取半徑）並停用郵差寄送</strong>，且新增<strong>累積升級（<code>B</code> 鍵）</strong>、<strong>磁鐵吸寶箱</strong>、<strong>Armero 60 KP 武器商人</strong>、<strong>外觀分頁（含 200 擊殺成就）</strong>與季節關卡<strong>洛陽《燈籠節》</strong>。
+    <!-- ==================== 分頁 1：職業流派攻略 ==================== -->
+    <section class="tab-panel active" id="tab-builds" data-tab-panel="builds" role="tabpanel">
+      <div class="guild-banner">
+        <div class="guild-banner-left">
+          <span class="banner-seal"><span class="ico" data-icon="seal"></span>Beta 0.7.6 實碼現況</span>
+          <p class="banner-text">
+            本手冊專注整理遊戲內未直接說明的<strong>流派核心、一轉 50 點配點、裝備嵌卡搭配與局內挑卡策略</strong>；未開放的二轉技能與二轉天賦樹一律不列示，避免誤導。
+          </p>
+        </div>
+        <div class="banner-meta">
+          <span>版本 <code>Beta 0.7.6</code></span>
+          <span>建置 <code>f7ad3c447</code></span>
         </div>
       </div>
-    </section>
 
-    <section class="section rules-section" id="rules">
-      <details class="rules-drawer" id="rules-drawer">
-        <summary class="rules-drawer-summary">
-          <span class="rules-drawer-summary-left">
-            <span class="icon" data-icon="scroll"></span>
-            <span>實碼核心數值與 Beta 0.7.2 實際生效機制（Ni 倍率 / 1+4 限制 / d5 補正 / 一二轉差異）</span>
-          </span>
-          <span class="rules-drawer-toggle"></span>
-        </summary>
-        <div class="rules-grid">
-          <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="spark"></span>實碼攻防倍率與階梯成本</div>
-            <p>Lv 1→99 總素質點數上限為 <strong>1,273 點</strong>（滿單屬 99 消耗 <strong>628 點</strong>；<code>99+80+53 = 628+431+214 = 1,273</code>）。實碼先將屬性換算為面板 <code>ATK = 3×STR</code>、<code>遠程 = 武ATK+STR+3×DEX</code>（STR 直接加進遠程曲線！）或 <code>MATK = 3×INT</code> 再送入 <code>Ni(val, rank)</code>（<code>a = val / 15.46</code>）；滿 99（297 面板）時一轉倍率 <strong>17.61×</strong>、轉職 <code>rank = 2</code> 躍升至 <strong>54.17×</strong>。</p>
-          </article>
-          <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="lock"></span>雙層天賦樹與 Beta 0.7.2 啟用狀態</div>
-            <p>實戰中目前僅「<strong>一轉 50 點天賦</strong>」實際生效；二轉 50 點單分支天賦樹在 Beta 0.7.2 尚未開放，網站保留其作為<strong>未來前瞻預覽</strong>。任意節點前置（<code>req / req2</code>）均須點滿、第 <code>L</code> 層需同分支累積 <code>≥ L×5</code> 點、互斥路線（<code>.a/.b</code>）只能擇一；全技能「衝擊／重複」已在 0.7 統一更名為「<strong>脈衝</strong>」。</p>
-          </article>
-          <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="target"></span>1+4 武器格、d5 加成與流氓全弓</div>
-            <p>Beta 0.7.2 全職業實戰欄位維持<strong>左 1 武器普攻＋右 4 一轉主動</strong>。實碼 <code>d5</code> 對三系依單／雙手武器加算倍率：劍士／商人為單手 <strong>+0.75</strong>／雙手 <strong>+1.25</strong>、盜賊為單手 <strong>+0.35</strong>／雙手 <strong>+0.50</strong>。Beta 0.6.10 起盜賊與流氓已解禁<strong>全部弓弩</strong>（<code>#1711/#1724</code>），唯刺客仍不可拿弓或雙持，雙手武器依舊鎖盾牌槽。</p>
-          </article>
-          <article class="rule-card">
-            <div class="rule-head"><span class="icon" data-icon="speed"></span>Beta 0.7 技能修復與過渡職實況</div>
-            <p>Beta 0.7 重大修復：① 劍士<strong>怒爆／劍舞／降士氣吶喊</strong>修正為正統近戰 <code>STR</code> 傷害；② 法師<strong>雷擊術</strong> <code>+0.2s</code> 延遲改隨 <code>DEX</code> 縮減，<strong>100 DEX 可真瞬發</strong>；③ 商人<strong>手推車攻擊</strong>神祇彈跳範圍改隨 <code>% area</code> 放大；④ 服事 <code>Ruwach</code> 依舊自動取 <code>max(物攻, 魔攻)</code>；⑤ <strong>靈媒師</strong>進局仍強制用一轉跆拳 STR 踢技且禁裝法杖。</p>
-          </article>
+      <!-- 職業選擇區 -->
+      <section class="panel-block" aria-label="職業選擇">
+        <div class="block-head">
+          <h2><span class="ico" data-icon="compass"></span>挑選職業（各職業預設顯示現行 T0 首選流派）</h2>
+          <span class="block-sub">先點選目標職業，下方即可切換流派並直接抄配點與配裝</span>
         </div>
-      </details>
+        <div id="roster-container"></div>
+      </section>
+
+      <!-- 選定職業詳細攻略區 -->
+      <section class="detail-shell" id="detail-shell" aria-live="polite"></section>
     </section>
 
-    <section class="section" id="roster">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="users"></span>第 1 區・切換職業（點選一轉 → 解鎖挑選二轉）</h2>
-        <span class="section-sub">上方有「點按圓點 ○」的為可切換按鈕；想一次比較全 16 職業也可點 <a href="#compare">全職速查表 →</a></span>
+    <!-- ==================== 分頁 2：關卡與掉落機率 ==================== -->
+    <section class="tab-panel" id="tab-stages" data-tab-panel="stages" role="tabpanel" hidden>
+      <div class="guild-banner">
+        <div class="guild-banner-left">
+          <span class="banner-seal"><span class="ico" data-icon="stages"></span>線上實碼掉率公式</span>
+          <p class="banner-text">
+            線上帳號採 <code>mysteryDrop + dropSeeded</code> <strong>加權抽樣模型</strong>：總掉落率 <code>u = 1 - Π(1 - min(1, xm × 難度))</code>，單件率為 <code>u × (xm / Σxm)</code>，<strong>與掉落列表排序無關</strong>；組隊一般怪卡率與寵蛋除以 <code>partyScale.count</code>（2 人 ÷2 / 3 人 ÷2.75）。洛陽燈籠節蛇王自然 <strong>16%</strong>（點香 <strong>50%</strong>）、扭蛋外觀 <strong>29.5%</strong>／裝備 <strong>70%</strong>／卡片 <strong>0.5%</strong>。
+          </p>
+        </div>
       </div>
 
-      <div id="roster-container"></div>
-    </section>
+      <section class="panel-block">
+        <div class="block-head">
+          <h2><span class="ico" data-icon="stages"></span>關卡地圖與怪物掉落查詢</h2>
+          <span class="block-sub">支援跨關卡搜尋怪物、裝備名稱、#編號或卡片</span>
+        </div>
+        <div class="stage-selector" id="stage-selector" role="group" aria-label="選擇關卡地圖"></div>
 
-    <section class="section detail-section" id="detail">
-      <div class="detail-connector" aria-hidden="true">
-        <span class="detail-connector-pill"><span class="icon" data-icon="arrowDown"></span>第 2 區・挑選流派按鈕 → 下方閱讀對應配點・配裝・配卡攻略</span>
-      </div>
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="target"></span>目前檢視：<span id="active-job-breadcrumb" style="color:var(--accent)">魔法師 → 巫師</span></h2>
-        <span class="section-sub">先點擊下方「流派切換按鈕」，接著就能直接順著閱讀該流派專屬的成長邏輯、配點、配裝與插卡指南</span>
-      </div>
-      <div class="detail-shell" id="detail-shell"></div>
-    </section>
-    </div>
-
-    <div class="tab-panel" id="tab-stages" data-tab-panel="stages" role="tabpanel" hidden>
-    <section class="section" id="stages">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="map"></span>關卡怪物陣容、波次與精確掉落機率</h2>
-        <span class="section-sub">實碼解析 Beta 0.7.2 全 11 張關卡／模式（7 常駐＋1 季節《燈籠節》＋1《無限塔》＋2 T3 預告），試算每隻怪的裝備、卡片與寵物蛋機率</span>
-      </div>
-
-      <div class="socket-rule-bar">
-        <span class="pill gold">常駐裝備掉率 <code>F9()</code>：一般怪 <strong>0.015%～0.030%</strong>；Boss 武器 <strong>5%</strong>、防具／飾品 <strong>10%～15%</strong>（地面拾取 +250%、取消郵差）</span>
-        <span class="pill accent">洛陽《燈籠節》固定 <strong>2.5× 怪 / 2.0× 事件</strong>：無一般裝／寵蛋，改掉<strong>扭蛋球</strong>（出 50 節慶裝＋49 外觀＋11 新卡），白素貞 2m 限時＆ <strong>7.5% 召喚蛇王</strong></span>
-        <span class="pill">無限塔須<strong>正式帳號＋二轉</strong>解鎖（每通關一正篇 MVP 起跳 +10 層，60s/層達 80% 怪分過關，50–65 層解鎖 Blood Savage 外觀染色）</span>
-      </div>
-
-      <div class="stage-controls-wrap">
-        <div class="roster-filters" id="stage-selector" role="group" aria-label="選擇關卡地圖"></div>
-        <div class="roster-controls" style="margin-top:12px;">
-          <div class="roster-filters" id="stage-diff-filters" role="group" aria-label="試算難度倍率">
-            <button type="button" class="filter-pill active" data-stage-diff="1">難度 1.0× (上限 4 件)</button>
-            <button type="button" class="filter-pill" data-stage-diff="1.5">難度 1.5× (上限 6 件)</button>
-            <button type="button" class="filter-pill" data-stage-diff="2">難度 2.0× (上限 8 件)</button>
-            <button type="button" class="filter-pill" data-stage-diff="2.5">難度 2.5× (上限 10 件)</button>
+        <div class="stage-toolbar">
+          <div class="pill-group" id="stage-diff-filters" role="group" aria-label="難度倍率">
+            <button type="button" class="pill-btn active" data-stage-diff="1">難度 1.0×</button>
+            <button type="button" class="pill-btn" data-stage-diff="1.5">難度 1.5×</button>
+            <button type="button" class="pill-btn" data-stage-diff="2">難度 2.0×</button>
+            <button type="button" class="pill-btn" data-stage-diff="2.5">難度 2.5×</button>
           </div>
-          <div class="roster-filters" id="stage-mob-filters" role="group" aria-label="怪物分類篩選">
-            <button type="button" class="filter-pill active" data-stage-mob-filter="all">全部怪物</button>
-            <button type="button" class="filter-pill" data-stage-mob-filter="boss">僅顯示 Mini / MVP</button>
-            <button type="button" class="filter-pill" data-stage-mob-filter="loot">僅顯示有實裝掉落</button>
+          <div class="pill-group" id="stage-mob-filters" role="group" aria-label="怪物分類">
+            <button type="button" class="pill-btn active" data-stage-mob-filter="all">全部怪物</button>
+            <button type="button" class="pill-btn" data-stage-mob-filter="boss">僅 Mini / MVP</button>
+            <button type="button" class="pill-btn" data-stage-mob-filter="loot">僅有實裝掉落</button>
           </div>
-          <input type="search" id="stage-search" class="roster-search" placeholder="跨關卡搜尋：怪物（虎王 / 波利）、裝備（髮夾 / 鏡盾）、卡片或寵物..." aria-label="跨關卡搜尋怪物與掉落" />
+          <label class="search-box">
+            <span class="ico" data-icon="search"></span>
+            <input type="search" id="stage-search" placeholder="跨關卡搜尋：德雷克、波爾多、#1648、鏡盾、鬼火..." aria-label="跨關卡搜尋怪物與掉落" />
+          </label>
         </div>
-      </div>
+        <div class="stage-status-line" id="stages-count-label"></div>
+      </section>
 
-      <div class="cards-status-bar" id="stages-count-label" style="margin:10px 0 12px;"></div>
       <div id="stage-overview"></div>
       <div class="stage-mob-grid" id="stage-monsters-grid"></div>
     </section>
-    </div>
-
-    <div class="tab-panel" id="tab-pets" data-tab-panel="pets" role="tabpanel" hidden>
-    <section class="section" id="pets">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="pet"></span>寵物系統、24 隻全圖鑑與刷蛋／難度調整攻略</h2>
-        <span class="section-sub">實碼解析：掉率公式、親密度進化機制與 5 項難度滑桿最佳刷寶配置</span>
-      </div>
-
-      <div class="pet-mech-grid">
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="spark"></span>寵物蛋掉落與帳號共享規則</div>
-          <p>對應怪物死亡時掉落寵物蛋，全帳號共享：一般怪基礎機率 <strong>0.01%</strong>（<code>1e-4</code>）、Mini/MVP 為 <strong>0.1%</strong>（<code>0.001</code>），皆會乘上難度總倍率（單人最高 <strong>×2.5</strong> → <code>0.025% / 0.25%</code>），組隊則另有 <strong>2 人 ×2／3 人 ×2.75</strong> 怪物生成倍率（不吃尋寶率 Discovery）。<strong>注意：</strong>劇情關、洛陽《燈籠節》與《無限塔》均不直接掉落寵物蛋（燈籠節改掉扭蛋）；Beta 0.6.10 起若組隊全員均已擁有某寵則不再掉該重複寵蛋；同局每種寵限掉 1 顆，需撐到該局結束才會孵化。</p>
-        </article>
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="pet"></span>親密度成長、專屬飾品與 4 隻進化寵</div>
-          <p>剛孵化親密度為 <strong>250</strong>（上限 1,000），帶上場作戰每 <strong>5 秒 +1 點</strong>（約 41.7 分鐘達親密、55 分鐘達忠誠；Beta 0.6.8 起新增單人遊玩寵物對話）。加成倍率：普通 (0+) <strong>×0.5</strong>、親密 (≥750) <strong>×0.75</strong>、忠誠 (≥910) <strong>×1.0</strong>；19 隻具飾品欄位的基本款達「親密」可花 <strong>200 卡普拉點數</strong>買專屬飾品將加成翻成 <strong>×1.5 倍</strong>（配忠誠最高 ×1.5×；其中 16 隻另含場內穿戴外觀）。其中 4 隻頭目寵需用前階<strong>忠誠 ≥910 ＋ 累計擊殺該頭目 5 次</strong>，找廣場「寵物管理員」進化（原寵保留）：<code>波利 → 波利之王 → 天使波利</code>、<code>妖道 → 妖仙女</code>、<code>九尾狐 → 狂暴月夜貓</code>；僅「月夜花」由斐揚洞穴 MVP 直接掉蛋。</p>
-        </article>
-        <article class="rule-card">
-          <div class="rule-head"><span class="icon" data-icon="target"></span>難度滑桿實戰拆解（含「事件數量」）</div>
-          <p>難度倍率（<code>lr</code>，單人最高 ×2.5、組隊最高 ×2.0）平均分配於 5 個滑桿（每項滿格約貢獻 +0.30×）。<strong>「事件數量（events）」</strong>實碼邏輯為 <code>菁英間隔 = 45s ÷ 倍率</code>、<code>大規模怪潮間隔 = 120s ÷ 倍率</code>，拉高可大量增加菁英掉箱與卡片機會；若怕拉全滿翻車，刷蛋/刷卡推薦順序：<strong>優先拉滿「怪物數量」＋「怪物血量」→ 依裝備量力拉高「事件數量（1.5x~2.0x）」與「怪物傷害」</strong>，「怪物速度」最後再視走位調整。</p>
-        </article>
-      </div>
-
-      <div class="table-wrap" style="margin-bottom:18px;">
-        <table>
-          <thead>
-            <tr>
-              <th>難度滑桿名稱（中文／原文）</th>
-              <th>調整範圍（單人／組隊）</th>
-              <th>對掉寶與寵物蛋貢獻</th>
-              <th>實碼影響說明與配置建議</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>怪物數量</strong><br /><small style="color:var(--text-dim)">Número de enemigos</small></td>
-              <td>1.0× – 3.5×（組隊上限 3.0×）</td>
-              <td>難度倍率 + 怪海母數雙重提升（最划算）</td>
-              <td>同時提高場上最大怪數上限與每秒出怪率；只要清怪能力夠，拉滿對刷卡/刷蛋最賺。</td>
-            </tr>
-            <tr>
-              <td><strong>怪物血量</strong><br /><small style="color:var(--text-dim)">Vida de los enemigos</small></td>
-              <td>1.0× – 2.5×（組隊上限 2.0×）</td>
-              <td>佔難度倍率 1/5（滿格 +0.30×）</td>
-              <td>僅延長擊殺時間但不增加生存暴斃風險，機體成形後建議第二優先拉高或拉滿。</td>
-            </tr>
-            <tr>
-              <td><strong>怪物傷害</strong><br /><small style="color:var(--text-dim)">Daño de los enemigos</small></td>
-              <td>1.0× – 1.75×（組隊上限 1.5×）</td>
-              <td>佔難度倍率 1/5（滿格 +0.30×）</td>
-              <td>小怪／菁英／頭目攻擊倍率。若護甲與黃金蟲/惡魔波利減傷齊全可逐步拉高。</td>
-            </tr>
-            <tr>
-              <td><strong>怪物速度</strong><br /><small style="color:var(--text-dim)">Velocidad de los enemigos</small></td>
-              <td>1.0× – 1.75×（組隊上限 1.5×）</td>
-              <td>佔難度倍率 1/5（滿格 +0.30×）</td>
-              <td>近戰被貼臉或無敵風箏時最有感的速度壓力；刷低階圖時拉滿可加快怪自己跑來送頭。</td>
-            </tr>
-            <tr>
-              <td><strong>事件數量</strong><br /><small style="color:var(--text-dim)">Número de eventos</small></td>
-              <td>1.0× – 2.5×（組隊上限 2.0×）</td>
-              <td>佔難度倍率 1/5 ＋ 增加菁英與怪潮密度</td>
-              <td><code>45s÷倍率</code> 出菁英（基礎 5× 經驗＋掉寶箱）、<code>120s÷倍率</code> 觸發大怪潮包圍。安全建議開 1.5×～2.0×，穩吃怪潮才開滿 2.5×。</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="roster-controls">
-        <div class="roster-filters" id="pet-filters" role="group" aria-label="寵物分類篩選">
-          <button type="button" class="filter-pill active" data-pet-filter="all">全部寵物 (24)</button>
-          <button type="button" class="filter-pill" data-pet-filter="mob">一般怪掉落 (19)</button>
-          <button type="button" class="filter-pill" data-pet-filter="mvp">MVP 直掉 (1)</button>
-          <button type="button" class="filter-pill" data-pet-filter="evo">Boss 進化 (4)</button>
-          <button type="button" class="filter-pill" data-pet-filter="dps">暴擊／傷害</button>
-          <button type="button" class="filter-pill" data-pet-filter="cast">冷卻／詠唱／INT</button>
-          <button type="button" class="filter-pill" data-pet-filter="survive">減傷／HP／閃避</button>
-        </div>
-        <input type="search" id="pet-search" class="roster-search" placeholder="搜尋寵物名稱、加成（如 暴擊 / 冷卻 / 普隆德拉 / 飾品）..." aria-label="搜尋寵物" />
-      </div>
-
-      <div class="pet-grid" id="pets-grid"></div>
-    </section>
-    </div>
-
-    <div class="tab-panel" id="tab-gear" data-tab-panel="gear" role="tabpanel" hidden>
-    <section class="section" id="gear">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="shield"></span>全 182 件可入手裝備圖鑑與刷取來源</h2>
-        <span class="section-sub">實碼完整收錄 Beta 0.7.2 常駐 132 件掉落／劇情裝備 ＋ 洛陽《燈籠節》扭蛋限定 50 件 Tier 2 裝備（共 78 武器＋104 防具飾品）</span>
-      </div>
-
-      <div class="socket-rule-bar">
-        <span class="pill gold">常駐開放 Tier 1–2（含《燈籠節》50 件帳號綁定 T2 裝）；Tier 3 獸人村＆金字塔仍標示「即將推出」尚未實裝</span>
-        <span class="pill accent">Beta 0.7 規則更新：Armero 武器商（60 KP 重購初始武）、礦石精煉收購改為礦石半價加算；Beta 0.7.2 蛇王球傳說裝皆附帶一轉技能 <code>+% 傷</code>，盾牌不再骰出弓箭手技能詞條</span>
-        <span class="pill">所有裝備 ATK／MATK／DEF 皆由實碼統一公式 <code>wL()</code> 依 Tier 與品質產生；沉沒劇情武單角限領 1 次，王城徽章 #22847 需未二轉首通</span>
-        <a href="#detail-gear" class="loadout-sublink">看目前職業專屬配裝推薦 →</a>
-      </div>
-
-      <div class="roster-controls" style="flex-direction:column;align-items:stretch;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-          <div class="roster-filters" id="gear-slot-filters" role="group" aria-label="依裝備部位篩選">
-            <button type="button" class="filter-pill active" data-gear-slot="all">全部裝備 (182)</button>
-            <button type="button" class="filter-pill" data-gear-slot="weapon">武器 (78)</button>
-            <button type="button" class="filter-pill" data-gear-slot="shield">盾牌 (6)</button>
-            <button type="button" class="filter-pill" data-gear-slot="head">頭飾上中下 (45)</button>
-            <button type="button" class="filter-pill" data-gear-slot="armor">鎧甲 (18)</button>
-            <button type="button" class="filter-pill" data-gear-slot="garment">披肩 (9)</button>
-            <button type="button" class="filter-pill" data-gear-slot="shoes">鞋子 (6)</button>
-            <button type="button" class="filter-pill" data-gear-slot="acc">飾品 (20)</button>
-          </div>
-          <span class="pill" id="gear-count-label">顯示 182 / 182 件裝備</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-          <div class="segmented" id="gear-source-filters" role="group" aria-label="依入手來源與階級篩選">
-            <button type="button" class="active" data-gear-source="all">全部來源 (182)</button>
-            <button type="button" data-gear-source="festival">燈籠節扭蛋 (50)</button>
-            <button type="button" data-gear-source="rare">稀有賣價×3 (8)</button>
-            <button type="button" data-gear-source="boss">MVP／Mini 王掉</button>
-            <button type="button" data-gear-source="mob">一般怪掉落</button>
-            <button type="button" data-gear-source="t2">Tier 2 現況頂階</button>
-            <button type="button" data-gear-source="story">劇情關取得</button>
-          </div>
-          <input type="search" id="gear-search" class="roster-search" placeholder="搜尋裝備中英名、詞條或掉落怪（例：波爾多 / 鏡盾 / 天使羽翼 / 月夜花 / 鬼火）..." aria-label="搜尋裝備" />
-        </div>
-      </div>
-
-      <div class="gear-grid" id="gear-grid"></div>
-    </section>
-    </div>
-
-    <div class="tab-panel" id="tab-cards" data-tab-panel="cards" role="tabpanel" hidden>
-    <section class="section" id="cards">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="card"></span>全 98 張卡片圖鑑與插槽品質規則</h2>
-        <span class="section-sub">涵蓋武器、防具、頭飾、盾牌／雙持副手與雙飾品；含 Beta 0.7 新增 11 張《燈籠節》扭蛋限定怪物／王卡</span>
-      </div>
-
-      <div class="socket-rule-bar">
-        <span class="pill gold">卡片基礎掉率與寵蛋相同：一般怪 0.01%／Boss 0.1% × 難度倍率（地面 +250% 拾取、節慶 11 張改從扭蛋抽出、劇情/無限塔無掉落）</span>
-        <span class="pill accent">武器卡槽隨品質增加：普通0 / 優良1 / 稀有2 / 史詩3 / 傳說4 洞</span>
-        <span class="pill">防具／盾／披肩／鞋／頭上中下／雙飾品卡槽：普通0 / 優良0 / 稀有1 / 史詩1 / 傳說2 洞</span>
-        <span class="pill">Beta 0.7.2 刺客雙持 (VL) 尚未啟用，全單手武器副手皆配盾牌並插盾卡（雙手武器無盾牌槽；雙持武器卡為未來二轉前瞻）</span>
-        <a href="#guide" class="loadout-sublink">搞不懂尋寶率／雙重詠唱／寶箱遞減甜蜜點？查看【寶箱與詞彙】詳解 →</a>
-      </div>
-
-      <div class="roster-controls" style="flex-direction:column;align-items:stretch;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-          <div class="roster-filters" id="card-slot-filters" role="group" aria-label="依裝備部位篩選卡片">
-            <button type="button" class="filter-pill active" data-card-slot="all">全部部位 (98)</button>
-            <button type="button" class="filter-pill" data-card-slot="weapon">武器 (25)</button>
-            <button type="button" class="filter-pill" data-card-slot="armor">鎧甲 (17)</button>
-            <button type="button" class="filter-pill" data-card-slot="garment">披肩 (14)</button>
-            <button type="button" class="filter-pill" data-card-slot="shoes">鞋子 (6)</button>
-            <button type="button" class="filter-pill" data-card-slot="headgear">頭飾 (10)</button>
-            <button type="button" class="filter-pill" data-card-slot="shield">盾牌 (5)</button>
-            <button type="button" class="filter-pill" data-card-slot="accessory">飾品 (21)</button>
-          </div>
-          <span class="pill" id="cards-count-label">顯示 98 / 98 張卡片</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-          <div class="segmented" id="card-status-filters" role="group" aria-label="掉落開放狀態篩選">
-            <button type="button" class="active" data-card-status="all">全部卡片 (98)</button>
-            <button type="button" data-card-status="active">目前可實戰入手 (89)</button>
-            <button type="button" data-card-status="pending">未開放地圖／未實裝 (9)</button>
-          </div>
-          <input type="search" id="card-search" class="roster-search" placeholder="搜尋卡名、怪物或加成（例：德雷克 / 暴擊 / 冷卻 / 減傷 / 斐揚）..." aria-label="搜尋卡片" />
-        </div>
-      </div>
-
-      <div class="cards-grid" id="cards-grid"></div>
-    </section>
-    </div>
-
-    <div class="tab-panel" id="tab-guide" data-tab-panel="guide" role="tabpanel" hidden>
-    <section class="section" id="guide">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="book"></span>寶箱圖鑑・邊際遞減甜蜜點與詞彙詳解</h2>
-        <span class="section-sub">收錄局內寶箱全部 51 項道具（藥水／秘藥／祝福／料理／通用神祇，已補入尋寶藥水 <code>p_discovery</code>）與技能專屬神祇的實碼遞減公式與 +N 推薦停損點，並整合遊戲名詞與戰鬥機制詳解（各職業專屬挑卡權重＆寶箱順位請見「職業攻略」分頁）</span>
-      </div>
-
-      <div class="guide-block" id="guide-chest">
-        <div class="guide-block-head">
-          <div>
-            <h3>一、局內寶箱 5 大欄位機制・遞減曲線與全 51 項道具圖鑑</h3>
-            <p>搞懂每種屬性吃到第幾次開始嚴重遞減或撞牆封頂（基礎減傷 60%／含暫時增益 75%、迴避 50%、吸血每秒 3% HP、範圍／跑速／距離 P0 軟頂、尋寶率實碼 <code>bS=3 (+300%)</code> 硬截斷頂峰金率 7.48%），不再把金幣浪費在無效精煉</p>
-          </div>
-          <span class="pill gold">來源實測：main &amp; soul_linker 實碼公式（Beta 0.7.2）</span>
-        </div>
-
-        <div class="pet-mech-grid" id="chest-mech-cards"></div>
-
-        <div class="chest-models-grid" id="chest-models-grid"></div>
-
-        <div class="roster-controls" style="flex-direction:column;align-items:stretch;">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="roster-filters" id="chest-slot-filters" role="group" aria-label="依寶箱欄位篩選">
-              <button type="button" class="filter-pill active" data-chest-slot="all">全部道具 (51)</button>
-              <button type="button" class="filter-pill" data-chest-slot="potion">藥水 Potion (12)</button>
-              <button type="button" class="filter-pill" data-chest-slot="elixir">秘藥 Elixir (10)</button>
-              <button type="button" class="filter-pill" data-chest-slot="blessing">祝福 Blessing (10)</button>
-              <button type="button" class="filter-pill" data-chest-slot="dish">料理 Dish (6)</button>
-              <button type="button" class="filter-pill" data-chest-slot="deity">通用神祇 Deity (13)</button>
-            </div>
-            <span class="pill" id="chest-count-label">顯示 51 / 51 項道具（另有技能專屬神祇）</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="segmented" id="chest-model-filters" role="group" aria-label="依邊際效益模型篩選">
-              <button type="button" class="active" data-chest-model="all">全部遞減曲線</button>
-              <button type="button" data-chest-model="hard_cap">硬上限封頂</button>
-              <button type="button" data-chest-model="hyperbolic_inverse">雙曲線遞減</button>
-              <button type="button" data-chest-model="soft_asymptote_p0">P0 軟上限</button>
-              <button type="button" data-chest-model="discovery_curve">尋寶曲線</button>
-              <button type="button" data-chest-model="additive_dilution">加算稀釋</button>
-              <button type="button" data-chest-model="stat_growth">主屬成長</button>
-            </div>
-            <input type="search" id="chest-search" class="roster-search" placeholder="搜尋寶箱道具、屬性或甜蜜點（例：吸血 / 減傷 / 冷卻 / 記憶之神 / P0）..." aria-label="搜尋寶箱道具" />
-          </div>
-        </div>
-
-        <div id="chest-skill-deity-banner"></div>
-        <div class="cards-grid chest-comp-grid" id="chest-grid"></div>
-      </div>
-
-      <div class="guide-block" id="guide-glossary">
-        <div class="guide-block-head">
-          <div>
-            <h3>二、名詞與局內機制詳解（點選下方分類篩選）</h3>
-            <p>釐清容易搞混的詞條效果、實際公式與避坑盲點（含尋寶率與雙重詠唱說明）</p>
-          </div>
-          <span class="pill">共 9 項核心局內詞條與戰鬥公式</span>
-        </div>
-        <div class="roster-controls">
-          <div class="roster-filters" id="glossary-filters" role="group" aria-label="名詞分類篩選">
-            <button type="button" class="filter-pill active" data-glossary-cat="all">全部名詞 (9)</button>
-            <button type="button" class="filter-pill" data-glossary-cat="loot">尋寶與寶箱 (2)</button>
-            <button type="button" class="filter-pill" data-glossary-cat="combat">雙重詠唱與冷卻 (2)</button>
-            <button type="button" class="filter-pill" data-glossary-cat="cards">選卡屬性對照 (4)</button>
-            <button type="button" class="filter-pill" data-glossary-cat="defense">防禦與減傷 (1)</button>
-          </div>
-          <input id="glossary-search" class="roster-search" type="search" placeholder="搜尋名詞：尋寶率 / 雙重詠唱 / 貫穿 / 減傷..." aria-label="搜尋名詞與機制" />
-        </div>
-        <div class="glossary-grid" id="glossary-grid"></div>
-      </div>
-
-      <div class="guide-crosslink-box">
-        <div>
-          <h3>想知道你的職業「寶箱 5 格第 1→3 順位＆升級卡權重」請至職業攻略頁</h3>
-          <p>每個職業分頁都已整合專屬挑卡優先級、開寶箱該等哪些神祇與藥水、以及實戰農裝地圖來源；此頁專注提供全寶箱道具遞減分析與名詞規則。</p>
-        </div>
-        <div class="guide-crosslink-actions">
-          <a href="#detail-priority" class="btn secondary" style="text-decoration:none;"><span class="icon" data-icon="target"></span>查看目前職業挑卡＆寶箱順位</a>
-          <a href="#gear" class="btn" style="text-decoration:none;"><span class="icon" data-icon="shield"></span>瀏覽全 182 件裝備圖鑑</a>
-        </div>
-      </div>
-    </section>
-    </div>
-
-    <div class="tab-panel" id="tab-calculator" data-tab-panel="calculator" role="tabpanel" hidden>
-    <section class="section" id="calculator">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="calc"></span>實碼素質分配預算與倍率模擬機</h2>
-        <span class="section-sub">選取任意職業或流派，即時試算 1→99 點數消耗與實戰面板倍率</span>
-      </div>
-      <div class="calc-shell">
-        <div class="calc-top">
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <label for="calc-job-select" class="toggle-label">試算職業：</label>
-            <select id="calc-job-select" class="calc-select" aria-label="選擇試算職業"></select>
-            <div class="segmented" id="calc-job-mode" role="group" aria-label="傷害倍率模型">
-              <button type="button" data-calc-mode="melee">近戰 STR</button>
-              <button type="button" data-calc-mode="ranged">遠程 DEX</button>
-              <button type="button" class="active" data-calc-mode="magic">魔法 INT</button>
-            </div>
-          </div>
-          <div class="segmented" id="calc-presets" role="group" aria-label="快速套用範本"></div>
-        </div>
-        <div class="calc-grid">
-          <div class="calc-sliders" id="calc-sliders"></div>
-          <div class="calc-results" id="calc-results"></div>
-        </div>
-      </div>
-    </section>
-    </div>
-
-    <div class="tab-panel" id="tab-compare" data-tab-panel="compare" role="tabpanel" hidden>
-    <section class="section" id="compare">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon" data-icon="table"></span>全 16 職業路線核心參數速查表</h2>
-        <span class="section-sub">點擊任一列可切換至「職業攻略」分頁檢視該職業天賦與配點順序</span>
-      </div>
-      <div class="table-wrap">
-        <table id="compare-table">
-          <thead>
-            <tr>
-              <th>職業路線</th>
-              <th>主力傷害公式</th>
-              <th>主推滿等配點 (Lv99)</th>
-              <th>左側武器建議</th>
-              <th>推薦天賦分支</th>
-              <th>核心實戰技能摘要</th>
-            </tr>
-          </thead>
-          <tbody id="compare-tbody"></tbody>
-        </table>
-      </div>
-    </section>
-    </div>
 
     <footer class="footer">
-      <span>RO Survivors Beta 0.7.2（v2026.11.16 · adc0fdf6）全職業資料整理（純離線靜態網站，可於本地瀏覽器與 GitHub Pages 直接開啟）</span>
-      <span>所有素質費用、倍率、掉落、燈籠節與天賦依賴均直接核對自 Beta 0.7.2 遊戲前端實碼</span>
+      <span>RO Survivors 盧恩公會手冊・Beta 0.7.6（f7ad3c447 · 2026-11-19）・純靜態離線／GitHub Pages 相容</span>
+      <span>全站資料經 <code>sync/validate.js</code> 實碼驗證（零未實裝二轉配點・零錯槽・零廢點）</span>
     </footer>
   </main>
+
+  <!-- 手機版單手底部導覽列 -->
+  <nav class="mobile-bottom-nav" role="tablist" aria-label="手機版主導覽">
+    <button type="button" class="mobile-nav-btn active" data-tab="builds">
+      <span class="ico" data-icon="builds"></span>
+      <span>職業流派</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-tab="stages">
+      <span class="ico" data-icon="stages"></span>
+      <span>關卡掉落</span>
+    </button>
+  </nav>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
