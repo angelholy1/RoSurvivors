@@ -37,6 +37,12 @@
     shoes: "shoes",
     acc: "accessory"
   };
+  const NON_DAMAGING_SKILLS = new Set([
+    "provoke", "endure", "hp_recovery", "frost_diver", "concentration",
+    "blessing", "hiding", "crazy_uproar", "enlarge_weight", "sprint"
+  ]);
+  const STAT_KEYS_ORDER = ["str", "agi", "vit", "int", "dex", "luk"];
+  const STAT_LABEL_UP = { str: "STR", agi: "AGI", vit: "VIT", int: "INT", dex: "DEX", luk: "LUK" };
 
   const state = {
     activeTab: "builds",
@@ -236,7 +242,182 @@
       </div>`;
   }
 
-  function renderArmoryGridHtml(ps) {
+  function getPlaystyleProfile(ps, statVar) {
+    const st = (statVar && statVar.stats) || {};
+    const titleTxt = `${ps.name || ""} ${ps.tagline || ""}`;
+    const isLowHp = /狂暴|壓血|殘血/.test(titleTxt);
+    const isDot = /燃燒|地獄怒爆|毒藥|施毒|劇毒|持續傷/.test(titleTxt);
+    const isMagic = ps.scaling === "magic";
+    const isHybrid = ps.scaling === "hybrid" || (!isMagic && (st.int || 1) > 10 && ((st.dex || 1) > 10 || (st.str || 1) > 10));
+    const isPurePhys = !isMagic && !isHybrid && (st.int || 1) <= 1;
+    const isRanged = ps.scaling === "ranged";
+    const sortedStats = STAT_KEYS_ORDER
+      .filter(k => (st[k] || 1) > 1)
+      .sort((a, b) => (st[b] || 1) - (st[a] || 1));
+    return { st, isLowHp, isDot, isMagic, isHybrid, isPurePhys, isRanged, sortedStats };
+  }
+
+  function renderGearRollGuideHtml(ctx) {
+    const { job, ps, statVar } = ctx;
+    const prof = getPlaystyleProfile(ps, statVar);
+
+    // 1. Damaging skills eligible for Legendary +10% ~ +20% skill-damage line
+    const dmgSkills = (ps.runSkills || [])
+      .filter(sk => !NON_DAMAGING_SKILLS.has(sk.id))
+      .map(sk => (SKILLS[sk.id] && SKILLS[sk.id].name) || sk.id);
+    const skillText = dmgSkills.length ? dmgSkills.join(" ／ ") : "本流派主力輸出技能";
+
+    // 2. Random 6-stat priority (T2 +2 per line; Purple/Gold roll 2 distinct stats)
+    const statText = prof.sortedStats.length
+      ? prof.sortedStats.map(k => STAT_LABEL_UP[k]).join(" ＞ ")
+      : "主攻屬性 ＞ 副屬性";
+
+    // 3. Random offense line (T2 +2%; Blue/Purple/Gold roll 1 from crit/cd/area, plus pierce on armor & bow/gun)
+    const canPierce = prof.isRanged || prof.isHybrid || ["archer", "gunslinger", "ninja"].includes(job.firstJob);
+    let offenseText = "冷卻縮減 ＞ 爆擊率 ＞ 技能範圍";
+    if (prof.isLowHp || /暴擊|三連跳|暗影/.test(ps.name || "")) {
+      offenseText = "爆擊率 ＞ 冷卻縮減 ＞ 技能範圍";
+    } else if (canPierce) {
+      offenseText = "冷卻縮減 ＞ 爆擊率 ＞ 貫穿（鎧甲／弓槍） ＞ 技能範圍";
+    } else if (prof.isMagic) {
+      offenseText = "冷卻縮減 ＞ 技能範圍 ＞ 爆擊率";
+    }
+
+    // 4. Random defense/utility line (Purple/Gold roll 1 from spd/armor/flee/hp/discovery)
+    const utilText = prof.isLowHp
+      ? "護甲 +0.8 ／ 移速 +2% ／ 迴避 +2%（壓血流勿刻意追最大HP；農裝換尋寶 +6%）"
+      : "移速 +2% ／ 護甲 +0.8 ＞ 迴避 +2% ／ 最大HP +10（農裝期可選尋寶率 +6%）";
+
+    return `
+      <section class="gear-roll-guide" aria-label="裝備隨機詞條與換裝指南">
+        <div class="roll-guide-banner">
+          <span class="roll-guide-badge">${ico("spark")}<span>隨機詞條與換裝鐵則</span></span>
+          <p class="roll-guide-rule">
+            防具／頭飾／飾品除 <strong>#22847 巡邏徽章</strong> 具固有特效外，同階基礎 DEF 近乎相同，底材僅差在 <strong>1 條保底詞條</strong>；實戰強度順序為：<strong>品質洞數（金 2 洞 ＞ 藍紫 1 洞 ＞ 白綠 0 洞）≥ 傳說核心技能傷（+10~20%）與隨機主屬／進攻條 ＞ Tier 2 ＞ 底材名稱</strong>。先打到好詞條的次選金裝可直接穿！
+          </p>
+        </div>
+        <div class="roll-guide-grid">
+          <div class="roll-guide-cell is-legend">
+            <div class="roll-cell-kicker">${ico("star")}<span>傳說金裝技能條（+10~20%）必追</span></div>
+            <div class="roll-cell-val">${esc(skillText)}</div>
+            <div class="roll-cell-sub">僅傳說金裝必帶 1 條技能傷；對中核心輸出技直接拉開巨大差距。</div>
+          </div>
+          <div class="roll-guide-cell">
+            <div class="roll-cell-kicker"><span>隨機六圍詞條（T2 每條 +2）</span></div>
+            <div class="roll-cell-val">${esc(statText)}</div>
+            <div class="roll-cell-sub">紫／金裝固定帶 2 條不重複六圍；對中主屬在二轉三次方公式下收益極高。</div>
+          </div>
+          <div class="roll-guide-cell">
+            <div class="roll-cell-kicker"><span>隨機進攻詞條（T2 每條 +2%）</span></div>
+            <div class="roll-cell-val">${esc(offenseText)}</div>
+            <div class="roll-cell-sub">藍／紫／金裝各帶 1 條；頭上／頭中／頭下金裝皆有 2 洞可插頭飾卡。</div>
+          </div>
+          <div class="roll-guide-cell">
+            <div class="roll-cell-kicker"><span>隨機防禦／功能（紫・金必帶 1 條）</span></div>
+            <div class="roll-cell-val">${esc(utilText)}</div>
+            <div class="roll-cell-sub">推高難優先移速與護甲防秒殺，常駐農裝／農卡可留尋寶率。</div>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function getAltGearsForSlot(job, ps, statVar, slot, excludeIds) {
+    const prof = getPlaystyleProfile(ps, statVar);
+    const primaryStat = prof.sortedStats[0] || (prof.isMagic ? "int" : prof.isRanged ? "dex" : "str");
+    const secondaryStats = new Set(prof.sortedStats.slice(1));
+
+    const scoreItem = (it) => {
+      const af = it.affixLine || "";
+      if (prof.isPurePhys && (/\bINT\s*\+/.test(af) || /詠唱速度/.test(af))) return -999;
+      if (prof.isMagic && /\bSTR\s*\+/.test(af)) return -999;
+      if (prof.isPurePhys && /毒\/火\/流血/.test(af) && !prof.isDot) return -20;
+
+      let s = (it.effTier || 1) * 100;
+      if (slot === "armor" || slot === "garment") s += (it.base && it.base.def ? it.base.def * 2 : 0);
+
+      if (af.includes(STAT_LABEL_UP[primaryStat] + " +")) s += 42;
+      for (const sk of secondaryStats) {
+        if (af.includes(STAT_LABEL_UP[sk] + " +")) s += 24;
+      }
+      if (/總傷/.test(af)) s += 45;
+      if (/冷卻縮減|Haste/.test(af)) s += 30;
+      if (/暴擊率/.test(af)) s += (prof.isLowHp || !prof.isMagic ? 28 : 22);
+      if (/傷害減免/.test(af)) s += 26;
+      if (/固定護甲/.test(af)) s += (prof.isMagic ? 16 : 22);
+      if (/移動速度/.test(af)) s += 20;
+      if (/迴避|Flee/.test(af)) s += 14;
+      if (/回血\/秒/.test(af)) s += 13;
+      if (/最大HP/.test(af)) s += (prof.isLowHp ? 2 : 12);
+      if (/詠唱速度/.test(af)) s += (prof.isMagic || prof.isHybrid ? 28 : -999);
+      if (/殘血增傷/.test(af)) s += (prof.isLowHp ? 46 : -12);
+      if (/持續傷/.test(af)) s += (prof.isDot ? 38 : -8);
+      if (/命中暈眩/.test(af)) s += 10;
+      if (/吃肉|肉塊/.test(af)) s += 5;
+
+      // Slight preference for permanent farmable gear when stats tie
+      if (it.sourceType !== "festival") s += 3;
+      if (it.id === 22847) s += 35;
+      return s;
+    };
+
+    const candidates = (CATALOG.items || []).filter(it => {
+      if (it.slot !== slot) return false;
+      if (excludeIds.has(it.id)) return false;
+      if (it.sourceType === "upcoming") return false;
+      if (it.jobs && it.jobs.length && !it.jobs.includes(job.key) && !it.jobs.includes(job.firstJob)) return false;
+      if (it.isStoryOnce && it.storyJobs && !it.storyJobs.includes(job.firstJob)) return false;
+      return true;
+    });
+
+    const scored = candidates
+      .map(it => ({ it, score: scoreItem(it) }))
+      .filter(x => x.score > -100)
+      .sort((a, b) => b.score - a.score || a.it.id - b.it.id);
+
+    // Prefer Tier 2+ first; fall back to Tier 1 only if fewer than 2 results
+    const t2 = scored.filter(x => (x.it.effTier || 1) >= 2);
+    const pool = t2.length ? t2 : scored;
+
+    const picked = [];
+    const seenName = new Set();
+    const seenAffix = new Set();
+    for (const { it } of pool) {
+      const cleanName = (it.nameZh || "").replace(/\s*\[[^\]]*\]|\s*（[^）]*）|\s*〔[^〕]*〕/g, "").trim();
+      const afKey = (it.affixLine || "").trim();
+      if (seenName.has(cleanName)) continue;
+      if (afKey && seenAffix.has(afKey) && pool.length > 2) continue;
+      seenName.add(cleanName);
+      if (afKey) seenAffix.add(afKey);
+      picked.push(it);
+      if (picked.length >= 2) break;
+    }
+    return picked;
+  }
+
+  function renderAltGearsHtml(alts) {
+    if (!alts || !alts.length) return "";
+    const rows = alts.map(g => {
+      const cleanName = (g.nameZh || "").replace(/\s*\[[^\]]*舊碼\]/g, "");
+      const srcTag = g.id === 22847 ? "王城劇情" : g.sourceType === "festival" ? "燈籠節" : `T${g.effTier || 1} 常駐`;
+      const srcCls = g.sourceType === "festival" ? "is-season" : "";
+      return `
+        <div class="alt-gear-row">
+          <div class="alt-gear-top">
+            <strong>#${g.id} ${esc(cleanName)}</strong>
+            <span class="alt-gear-tag ${srcCls}">${esc(srcTag)}</span>
+          </div>
+          <div class="alt-gear-affix">${ico("star")}<span>保底：${esc(g.affixLine || "隨機詞條")}</span></div>
+        </div>`;
+    }).join("");
+    return `
+      <div class="alt-gears-box">
+        <div class="alt-gears-label">次選／堪用替代底材（先出金裝好詞條可直接用）</div>
+        ${rows}
+      </div>`;
+  }
+
+  function renderArmoryGridHtml(ctx) {
+    const { job, ps, statVar } = ctx;
     const cardsBySlot = (ps.loadout && ps.loadout.cardsBySlot) || {};
     const weapons = (ps.gear && ps.gear.weapons) || [];
     const gears = (ps.gear && ps.gear.gears) || [];
@@ -267,7 +448,7 @@
               <span class="equip-id-pill">#${primaryW.id}</span>
             </div>
             <div class="equip-name">${esc(primaryW.nameZh)}</div>
-            <div class="equip-affix">${esc(primaryWRec.roleTag || "")}${primaryW.affixLine ? " ・ " + esc(primaryW.affixLine) : ""}</div>
+            <div class="equip-affix">${esc(primaryWRec.roleTag || "")}${primaryW.affixLine ? " ・ 保底：" + esc(primaryW.affixLine) : ""}</div>
             <div class="equip-reason">${esc(primaryWRec.reason || ps.gear.weaponNote || "")}</div>
             ${primaryW.dropSummary ? `<div class="equip-source">掉落來源：${esc(primaryW.dropSummary)}</div>` : ""}
             ${altHtml ? `<div class="alt-weapons-list">${altHtml}</div>` : ""}
@@ -276,10 +457,11 @@
         </article>`);
     }
 
-    // 2. Shield (either active shield gear + cards, OR explicit 2H locked slot!)
+    // 2. Shield (either active shield gear + alts + cards, OR explicit 2H locked slot!)
     const shieldGearRec = gears.find(gr => GEAR_MAP[gr.id] && GEAR_MAP[gr.id].slot === "shield");
     if (shieldGearRec && !isNoShield) {
       const sg = GEAR_MAP[shieldGearRec.id];
+      const shieldAlts = getAltGearsForSlot(job, ps, statVar, "shield", new Set([sg.id]));
       cards.push(`
         <article class="equip-card">
           <div>
@@ -288,9 +470,10 @@
               <span class="equip-id-pill">#${sg.id}</span>
             </div>
             <div class="equip-name">${esc(sg.nameZh)}</div>
-            <div class="equip-affix">${esc(sg.affixLine || shieldGearRec.slotTag || "")}</div>
+            <div class="equip-affix">${ico("star")}<span>底材保底：${esc(sg.affixLine || shieldGearRec.slotTag || "")}</span></div>
             <div class="equip-reason">${esc(shieldGearRec.reason || "")}</div>
             ${sg.dropSummary ? `<div class="equip-source">來源：${esc(sg.dropSummary)}</div>` : ""}
+            ${renderAltGearsHtml(shieldAlts)}
           </div>
           ${renderSocketBoxHtml("盾牌", cardsBySlot.shield)}
         </article>`);
@@ -308,8 +491,9 @@
         </article>`);
     }
 
-    // 3. Other Gear Slots (Head Top/Mid/Low, Armor, Garment, Shoes, Dual Acc) with Embedded Cards
+    // 3. Other Gear Slots (Head Top/Mid/Low, Armor, Garment, Shoes, Dual Acc) with Alts & Embedded Cards
     let accCardAttached = false;
+    const usedAccIds = new Set(gears.filter(gr => GEAR_MAP[gr.id] && GEAR_MAP[gr.id].slot === "acc").map(gr => gr.id));
     for (const gr of gears) {
       const g = GEAR_MAP[gr.id];
       if (!g || g.slot === "shield") continue;
@@ -321,8 +505,12 @@
           accCardAttached = true;
         }
       } else if (cardSlotKey) {
-        socketHtml = renderSocketBoxHtml(g.slot === "head_top" ? "頭飾" : SLOT_LABEL[g.slot], cardsBySlot[cardSlotKey]);
+        socketHtml = renderSocketBoxHtml(g.slot === "head_top" ? "頭飾（上／中／下共用）" : SLOT_LABEL[g.slot], cardsBySlot[cardSlotKey]);
       }
+      const excl = g.slot === "acc" ? usedAccIds : new Set([g.id]);
+      const altList = getAltGearsForSlot(job, ps, statVar, g.slot, excl);
+      if (g.slot === "acc") altList.forEach(a => usedAccIds.add(a.id));
+      const affixPrefix = g.id === 22847 ? "固有特效：" : "底材保底：";
       cards.push(`
         <article class="equip-card">
           <div>
@@ -331,9 +519,10 @@
               <span class="equip-id-pill">#${g.id}</span>
             </div>
             <div class="equip-name">${esc(g.nameZh)}</div>
-            <div class="equip-affix">${esc(g.affixLine || gr.slotTag || "")}</div>
+            <div class="equip-affix">${ico("star")}<span>${affixPrefix}${esc(g.affixLine || gr.slotTag || "")}</span></div>
             <div class="equip-reason">${esc(gr.reason || "")}</div>
             ${g.dropSummary ? `<div class="equip-source">來源：${esc(g.dropSummary)}</div>` : ""}
+            ${renderAltGearsHtml(altList)}
           </div>
           ${socketHtml}
         </article>`);
@@ -620,9 +809,10 @@
       <!-- 裝備＋卡片一體嵌卡配裝室 -->
       <div class="section-title-row">
         <h3>${ico("slot_shield")}<span>裝備與卡片一體配裝室</span></h3>
-        <span>每件推薦裝備下方直接嵌入實碼合法插槽卡片，雙手武器自動鎖定盾槽</span>
+        <span>含流派隨機詞條挑裝指南、全部位次選替代底材與實碼合法卡片插槽；雙手武器自動鎖定盾槽</span>
       </div>
-      <section class="armory-grid">${renderArmoryGridHtml(ps)}</section>
+      ${renderGearRollGuideHtml(ctx)}
+      <section class="armory-grid">${renderArmoryGridHtml(ctx)}</section>
 
       <!-- 局內倖存者挑卡核心（紅綠燈） -->
       <section class="two-col-grid">
