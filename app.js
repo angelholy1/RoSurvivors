@@ -30,8 +30,8 @@
     weapon: "weapon",
     shield: "shield",
     head_top: "headgear",
-    head_mid: null,
-    head_low: null,
+    head_mid: "headgear",
+    head_low: "headgear",
     armor: "armor",
     garment: "garment",
     shoes: "shoes",
@@ -218,7 +218,7 @@
     ].join("\n");
   }
 
-  function renderSocketBoxHtml(slotLabel, cardRecs) {
+  function renderSocketBoxHtml(slotLabel, cardRecs, sharedHint) {
     if (!cardRecs || !cardRecs.length) return "";
     const rows = cardRecs.map(cr => {
       const c = CARD_MAP[cr.id];
@@ -235,9 +235,13 @@
           </div>
         </div>`;
     }).join("");
+    const labelTitle = /\d$/.test(slotLabel) ? `${slotLabel} 插槽卡片` : `${slotLabel}插槽卡片`;
     return `
       <div class="socket-box">
-        <div class="socket-box-label">${ico("card_gem")}<span>${esc(slotLabel)}插槽卡片</span></div>
+        <div class="socket-box-label">
+          <span class="socket-box-title">${ico("card_gem")}<span>${esc(labelTitle)}</span></span>
+          ${sharedHint ? `<span class="socket-shared-hint">${esc(sharedHint)}</span>` : ""}
+        </div>
         ${rows}
       </div>`;
   }
@@ -400,13 +404,15 @@
       const cleanName = (g.nameZh || "").replace(/\s*\[[^\]]*舊碼\]/g, "");
       const srcTag = g.id === 22847 ? "普隆德拉城" : g.sourceType === "festival" ? "燈籠節" : `T${g.effTier || 1} 常駐`;
       const srcCls = g.sourceType === "festival" ? "is-season" : "";
+      const affixPrefix = g.id === 22847 ? "固有特效：" : "保底：";
       return `
         <div class="alt-gear-row">
           <div class="alt-gear-top">
             <strong>#${g.id} ${esc(cleanName)}</strong>
             <span class="alt-gear-tag ${srcCls}">${esc(srcTag)}</span>
           </div>
-          <div class="alt-gear-affix">${ico("star")}<span>保底：${esc(g.affixLine || "隨機詞條")}</span></div>
+          <div class="alt-gear-affix">${ico("star")}<span>${affixPrefix}${esc(g.affixLine || "隨機詞條")}</span></div>
+          ${g.dropSummary ? `<div class="alt-gear-source">來源：${esc(g.dropSummary)}</div>` : ""}
         </div>`;
     }).join("");
     return `
@@ -492,20 +498,23 @@
     }
 
     // 3. Other Gear Slots (Head Top/Mid/Low, Armor, Garment, Shoes, Dual Acc) with Alts & Embedded Cards
-    let accCardAttached = false;
+    let accIndex = 0;
     const usedAccIds = new Set(gears.filter(gr => GEAR_MAP[gr.id] && GEAR_MAP[gr.id].slot === "acc").map(gr => gr.id));
     for (const gr of gears) {
       const g = GEAR_MAP[gr.id];
       if (!g || g.slot === "shield") continue;
       const cardSlotKey = GEAR_SLOT_TO_CARD_SLOT[g.slot];
+      let slotDisplay = SLOT_LABEL[g.slot] || g.slotZh || g.slot;
       let socketHtml = "";
       if (cardSlotKey === "accessory") {
-        if (!accCardAttached) {
-          socketHtml = renderSocketBoxHtml("雙飾品", cardsBySlot.accessory);
-          accCardAttached = true;
-        }
+        accIndex++;
+        slotDisplay = `飾品 ${accIndex}`;
+        const accHint = g.id === 22847 ? "飾品卡池通用・稀有 1 洞" : "飾品卡池通用・金裝 2 洞";
+        socketHtml = renderSocketBoxHtml(slotDisplay, cardsBySlot.accessory, accHint);
+      } else if (cardSlotKey === "headgear") {
+        socketHtml = renderSocketBoxHtml(slotDisplay, cardsBySlot.headgear, "頭飾卡池通用・金裝 2 洞");
       } else if (cardSlotKey) {
-        socketHtml = renderSocketBoxHtml(g.slot === "head_top" ? "頭飾（上／中／下共用）" : SLOT_LABEL[g.slot], cardsBySlot[cardSlotKey]);
+        socketHtml = renderSocketBoxHtml(slotDisplay, cardsBySlot[cardSlotKey]);
       }
       const excl = g.slot === "acc" ? usedAccIds : new Set([g.id]);
       const altList = getAltGearsForSlot(job, ps, statVar, g.slot, excl);
@@ -515,7 +524,7 @@
         <article class="equip-card">
           <div>
             <div class="equip-head">
-              <span class="equip-slot-tag">${ico("slot_" + g.slot)}<span>${esc(SLOT_LABEL[g.slot] || g.slotZh || g.slot)}</span></span>
+              <span class="equip-slot-tag">${ico("slot_" + g.slot)}<span>${esc(slotDisplay)}</span></span>
               <span class="equip-id-pill">#${g.id}</span>
             </div>
             <div class="equip-name">${esc(g.nameZh)}</div>
