@@ -44,6 +44,63 @@
   const STAT_KEYS_ORDER = ["str", "agi", "vit", "int", "dex", "luk"];
   const STAT_LABEL_UP = { str: "STR", agi: "AGI", vit: "VIT", int: "INT", dex: "DEX", luk: "LUK" };
 
+  // Live Lantern Festival (faroles) gacha ball specs: B3 / N3 / y5 in main-*.js
+  const LOUYANG_GACHA_BALLS = [
+    {
+      id: "festival",
+      nameZh: "節慶扭蛋",
+      sourceZh: "02:30 舞獅、05:00 猴桃木、07:30 邪骸浪人、10:00 機木人、12:00 元宵童子與彈簧兔（每王必掉 1 顆）",
+      cosmeticPct: 28,
+      cosmeticCount: 31,
+      gearPct: 71,
+      gearQualityZh: "稀有 60% ／ 史詩 40%",
+      cardPct: 1,
+      incenseShards: 20,
+      tierCls: "is-festival",
+      cardIds: [4195, 4172, 4287, 4225, 4239, 4210, 4259, 4227, 4217]
+    },
+    {
+      id: "white_lady",
+      nameZh: "白素貞扭蛋",
+      sourceZh: "14:00 MVP 白素貞（2 分鐘限時擊敗必掉 1 顆）",
+      cosmeticPct: 35,
+      cosmeticCount: 9,
+      gearPct: 63,
+      gearQualityZh: "史詩 80% ／ 傳說 20%",
+      cardPct: 2,
+      incenseShards: 10,
+      tierCls: "is-whitelady",
+      cardIds: [4372]
+    },
+    {
+      id: "snake_lord",
+      nameZh: "蛇王扭蛋",
+      sourceZh: "14:06 隱藏 MVP 蛇王（白素貞倒下後自然 20%／點香 75% 出現，必掉 1 顆）",
+      cosmeticPct: 60,
+      cosmeticCount: 9,
+      gearPct: 38,
+      gearQualityZh: "傳說金裝 100%（必帶技能 +% 傷）",
+      cardPct: 2,
+      incenseShards: 5,
+      tierCls: "is-snakelord",
+      cardIds: [4330]
+    }
+  ];
+  const FESTIVAL_EXCLUSIVE_IDS = new Set([
+    13420, 1166, 13030, 1724, 2322, 2399, 2526, 2527, 2553,
+    2700, 2708, 2666, 2986, 28560, 18713, 18753, 18893, 18725, 18677
+  ]);
+  const GACHA_SLOT_TABS = [
+    { key: "all", label: "全部位" },
+    { key: "weapon", label: "武器" },
+    { key: "shield", label: "盾牌" },
+    { key: "head", label: "頭飾" },
+    { key: "armor", label: "鎧甲" },
+    { key: "garment", label: "披肩" },
+    { key: "shoes", label: "鞋子" },
+    { key: "acc", label: "飾品" }
+  ];
+
   const state = {
     activeTab: "builds",
     activeJob: "wizard",
@@ -55,7 +112,9 @@
     activeStage: "prontera",
     stageDiff: 1,
     stageMobFilter: "all",
-    stageQuery: ""
+    stageQuery: "",
+    gachaSlotFilter: "all",
+    gachaOriginFilter: "all"
   };
 
   for (const jKey of (BUILDS.jobOrder || [])) {
@@ -976,22 +1035,42 @@
 
       if (mob.cardId) {
         const c = CARD_MAP[mob.cardId];
-        const cardPct = (isBoss ? (STAGES.meta.cardBaseBoss || 0.001) : (STAGES.meta.cardBaseMob || 0.0001)) * 100 * diffMult;
-        rows.push(`
-          <div class="loot-row is-card">
-            <div class="loot-row-top">
-              <div>
-                <span class="loot-item-name">${esc(c ? c.nameZh : (mob.nameZh + "卡片"))}</span>
-                <span class="loot-id">#${mob.cardId}（${esc(c ? c.slotZh : "卡片")}）</span>
+        if (stage.status === "season") {
+          const ball = LOUYANG_GACHA_BALLS.find(b => b.cardIds.includes(mob.cardId));
+          const perCardPct = ball ? (ball.cardPct / ball.cardIds.length) : 0;
+          const ballLabel = ball ? `${ball.nameZh} ${perCardPct.toFixed(ball.cardIds.length > 1 ? 2 : 1)}%` : "扭蛋抽出";
+          rows.push(`
+            <div class="loot-row is-card">
+              <div class="loot-row-top">
+                <div>
+                  <span class="loot-item-name">${esc(c ? c.nameZh : (mob.nameZh + "卡片"))}</span>
+                  <span class="loot-id">#${mob.cardId}（${esc(c ? c.slotZh : "卡片")}）</span>
+                </div>
+                <span class="loot-rate-num">${esc(ballLabel)}</span>
               </div>
-              <span class="loot-rate-num">${formatDropPct(cardPct)}</span>
-            </div>
-            <div class="loot-bar-track"><div class="loot-bar-fill" style="width:${isBoss ? 22 : 10}%"></div></div>
-            <div class="loot-sub-meta">
-              <span>${esc(c ? c.bonusText : "")}</span>
-              <span>${!isBoss ? "組隊小怪 ÷2 / ÷2.75" : "單場受卡片上限 o.card 限制"}</span>
-            </div>
-          </div>`);
+              <div class="loot-sub-meta">
+                <span>${esc(c ? c.bonusText : "")}</span>
+                <span>場內不直接掉卡・改由扭蛋抽出</span>
+              </div>
+            </div>`);
+        } else {
+          const cardPct = (isBoss ? (STAGES.meta.cardBaseBoss || 0.001) : (STAGES.meta.cardBaseMob || 0.0001)) * 100 * diffMult;
+          rows.push(`
+            <div class="loot-row is-card">
+              <div class="loot-row-top">
+                <div>
+                  <span class="loot-item-name">${esc(c ? c.nameZh : (mob.nameZh + "卡片"))}</span>
+                  <span class="loot-id">#${mob.cardId}（${esc(c ? c.slotZh : "卡片")}）</span>
+                </div>
+                <span class="loot-rate-num">${formatDropPct(cardPct)}</span>
+              </div>
+              <div class="loot-bar-track"><div class="loot-bar-fill" style="width:${isBoss ? 22 : 10}%"></div></div>
+              <div class="loot-sub-meta">
+                <span>${esc(c ? c.bonusText : "")}</span>
+                <span>${!isBoss ? "組隊小怪 ÷2 / ÷2.75" : "單場受卡片上限 o.card 限制"}</span>
+              </div>
+            </div>`);
+        }
       }
 
       if (mob.petId) {
@@ -1014,8 +1093,8 @@
         rows.push(`
           <div class="loot-row is-evo">
             <div class="loot-row-top">
-              <span class="loot-item-name">季節扭蛋球掉落</span>
-              <span class="loot-rate-num">必掉扭蛋</span>
+              <span class="loot-item-name">${isBoss ? "季節扭蛋球掉落" : "燈籠節掉落規則"}</span>
+              <span class="loot-rate-num">${isBoss ? "必掉扭蛋" : "見上方扭蛋池"}</span>
             </div>
             <div class="loot-sub-meta"><span>${esc(mob.festivalBall)}</span></div>
           </div>`);
@@ -1063,6 +1142,194 @@
       </article>`;
   }
 
+  function getFestivalItems() {
+    return (CATALOG.items || []).filter(it => it.season === "faroles");
+  }
+
+  function matchGachaSlot(slot, filterKey) {
+    if (filterKey === "all") return true;
+    if (filterKey === "head") return slot === "head_top" || slot === "head_mid" || slot === "head_low";
+    return slot === filterKey;
+  }
+
+  function formatItemStatSummary(it) {
+    const lv = it.live || it.base || {};
+    const parts = [];
+    if (lv.atk > 0) parts.push(`ATK ${lv.atk}${lv.atkQ4 ? `~${lv.atkQ4}` : ""}`);
+    if (lv.matk > 0) parts.push(`MATK ${lv.matk}${lv.matkQ4 ? `~${lv.matkQ4}` : ""}`);
+    if (lv.def > 0) parts.push(`DEF ${lv.def}`);
+    return parts.join(" · ");
+  }
+
+  function renderFestivalItemCardHtml(it, totalPoolCount) {
+    const isExcl = FESTIVAL_EXCLUSIVE_IDS.has(it.id);
+    const kindLbl = isExcl ? "東方限定" : "節慶變體";
+    const kindCls = isExcl ? "is-exclusive" : "is-variant";
+    const statLine = formatItemStatSummary(it);
+    const n = Math.max(1, totalPoolCount || 50);
+    const pFest = (71 / n).toFixed(2);
+    const pWL = (63 / n).toFixed(2);
+    const pSL = (38 / n).toFixed(2);
+    return `
+      <div class="gacha-item-card">
+        <div class="gacha-item-top">
+          <div>
+            <span class="gacha-item-name">${esc(it.nameZh)}</span>
+            <span class="loot-id">#${it.id}</span>
+          </div>
+          <span class="gacha-kind-pill ${kindCls}">${kindLbl}</span>
+        </div>
+        <div class="gacha-item-meta">
+          <span>${esc(it.wtypeZh ? `${it.slotZh}・${it.wtypeZh}${it.isTwoHanded ? "（雙手）" : "（單手）"}` : (SLOT_LABEL[it.slot] || it.slotZh))}</span>
+          ${statLine ? `<span>${esc(statLine)}</span>` : ""}
+        </div>
+        <div class="gacha-item-affix">${ico("star")}<span>保底：${esc(it.affixLine || "隨機詞條")}</span></div>
+        <div class="gacha-item-jobs">職業：${esc(it.jobsZh || "全職業通用")}</div>
+        <div class="gacha-item-odds">單抽機率：節慶 ${pFest}% ｜ 白素貞 ${pWL}% ｜ 蛇王 ${pSL}%</div>
+      </div>`;
+  }
+
+  function renderFestivalGachaSectionHtml() {
+    const allFest = getFestivalItems();
+    const totalCount = allFest.length;
+
+    // 1. Three Gacha Balls cards with exact rates & exclusive card pools
+    const ballsHtml = LOUYANG_GACHA_BALLS.map(b => {
+      const perCard = (b.cardPct / Math.max(1, b.cardIds.length)).toFixed(b.cardIds.length > 1 ? 2 : 1);
+      const cardRows = b.cardIds.map(cid => {
+        const c = CARD_MAP[cid];
+        if (!c) return "";
+        return `
+          <div class="gacha-card-row">
+            <div class="gacha-card-top">
+              <span><strong>${esc(c.nameZh)}</strong> <span class="loot-id">#${c.id}（${esc(c.slotZh)}）</span></span>
+              <span class="gacha-card-pct">${perCard}%</span>
+            </div>
+            <div class="gacha-card-stat">${esc(c.bonusText)}</div>
+          </div>`;
+      }).join("");
+      return `
+        <article class="gacha-ball-card ${b.tierCls}">
+          <div class="gacha-ball-head">
+            <h4>${ico("spark")}<span>${esc(b.nameZh)}</span></h4>
+            <span class="gacha-shard-pill">重複外觀 ${b.incenseShards} 碎片＝1 香</span>
+          </div>
+          <div class="gacha-ball-src">${esc(b.sourceZh)}</div>
+          <div class="gacha-split-bar" aria-label="轉出機率比例">
+            <div class="gacha-seg is-gear" style="width:${b.gearPct}%" title="裝備 ${b.gearPct}%"></div>
+            <div class="gacha-seg is-cosmetic" style="width:${b.cosmeticPct}%" title="外觀 ${b.cosmeticPct}%"></div>
+            <div class="gacha-seg is-card" style="width:${Math.max(3, b.cardPct)}%" title="卡片 ${b.cardPct}%"></div>
+          </div>
+          <div class="gacha-odds-list">
+            <div><span class="gacha-dot is-gear"></span><strong>裝備 ${b.gearPct}%</strong>：${esc(b.gearQualityZh)}（共 ${totalCount} 件 T2 池，單件 ${(b.gearPct / Math.max(1, totalCount)).toFixed(2)}%）</div>
+            <div><span class="gacha-dot is-cosmetic"></span><strong>外觀 ${b.cosmeticPct}%</strong>：${b.cosmeticCount} 款節慶外觀（遊戲內收藏頁可見）</div>
+            <div><span class="gacha-dot is-card"></span><strong>卡片 ${b.cardPct}%</strong>：${b.cardIds.length > 1 ? `${b.cardIds.length} 張專屬卡均分（單張 ${perCard}%）` : `必中下表專屬王卡（${perCard}%）`}</div>
+          </div>
+          <div class="gacha-cards-box">
+            <div class="gacha-cards-lbl">${ico("card_gem")}<span>本球專屬卡片池（${b.cardIds.length} 張）</span></div>
+            ${cardRows}
+          </div>
+        </article>`;
+    }).join("");
+
+    // 2. Shared 50-item T2 Festival Equipment Pool with slot & origin filters
+    const originFiltered = allFest.filter(it => {
+      if (state.gachaOriginFilter === "exclusive") return FESTIVAL_EXCLUSIVE_IDS.has(it.id);
+      if (state.gachaOriginFilter === "variant") return !FESTIVAL_EXCLUSIVE_IDS.has(it.id);
+      return true;
+    });
+    const visibleItems = originFiltered.filter(it => matchGachaSlot(it.slot, state.gachaSlotFilter));
+
+    const slotPills = GACHA_SLOT_TABS.map(tab => {
+      const cnt = originFiltered.filter(it => matchGachaSlot(it.slot, tab.key)).length;
+      const act = state.gachaSlotFilter === tab.key ? "active" : "";
+      return `<button type="button" class="pill-btn ${act}" data-gacha-slot="${tab.key}">${esc(tab.label)} (${cnt})</button>`;
+    }).join("");
+
+    const originPills = [
+      { key: "all", label: `全部 (${totalCount})` },
+      { key: "exclusive", label: `東方限定 (${allFest.filter(i => FESTIVAL_EXCLUSIVE_IDS.has(i.id)).length})` },
+      { key: "variant", label: `節慶變體 (${allFest.filter(i => !FESTIVAL_EXCLUSIVE_IDS.has(i.id)).length})` }
+    ].map(o => `<button type="button" class="pill-btn ${state.gachaOriginFilter === o.key ? "active" : ""}" data-gacha-origin="${o.key}">${esc(o.label)}</button>`).join("");
+
+    return `
+      <section class="panel-block gacha-panel" aria-label="燈籠節三大扭蛋轉出清單">
+        <div class="block-head">
+          <h2>${ico("spark")}<span>燈籠節三大扭蛋：完整裝備（${totalCount} 件）與卡片（11 張）轉出清單</span></h2>
+          <span class="block-sub">遊戲內僅列外觀收藏；實碼三大扭蛋共用以下全部 ${totalCount} 件帳號綁定 Tier 2 裝備池，差別在於品質與專屬卡池</span>
+        </div>
+        <div class="gacha-balls-grid">${ballsHtml}</div>
+        <div class="gacha-gear-section">
+          <div class="gacha-gear-head">
+            <h3>${ico("slot_weapon")}<span>三球共用・燈籠節限定 Tier 2 裝備池（顯示 ${visibleItems.length} / ${totalCount} 件）</span></h3>
+            <span class="gacha-gear-note">皆為帳號綁定 T2 裝；節慶球出藍/紫、白素貞球出紫/金、蛇王球 100% 出傳說金裝（帶技能傷）</span>
+          </div>
+          <div class="gacha-toolbar">
+            <div class="pill-group" role="group" aria-label="裝備類型篩選">${originPills}</div>
+            <div class="pill-group" role="group" aria-label="裝備部位篩選">${slotPills}</div>
+          </div>
+          <div class="gacha-items-grid">
+            ${visibleItems.length ? visibleItems.map(it => renderFestivalItemCardHtml(it, totalCount)).join("") : `<div class="loot-empty" style="grid-column:1/-1">此篩選條件下無裝備。</div>`}
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function matchFestivalSearch(q) {
+    if (!q) return { items: [], cards: [] };
+    const allFest = getFestivalItems();
+    const items = allFest.filter(it => {
+      const hay = [
+        "#" + it.id, String(it.id), it.nameZh, it.nameEn,
+        it.slotZh || "", it.wtypeZh || "", it.affixLine || "",
+        it.jobsZh || "全職業通用", "燈籠節", "節慶扭蛋", "白素貞扭蛋", "蛇王扭蛋", "扭蛋"
+      ].join(" ").toLowerCase();
+      return hay.includes(q);
+    });
+    const cards = [];
+    for (const ball of LOUYANG_GACHA_BALLS) {
+      for (const cid of ball.cardIds) {
+        const c = CARD_MAP[cid];
+        if (!c) continue;
+        const hay = [
+          "#" + c.id, String(c.id), c.nameZh, c.nameEn, c.mobZh, c.slotZh,
+          c.bonusText, ball.nameZh, "燈籠節", "扭蛋"
+        ].join(" ").toLowerCase();
+        if (hay.includes(q)) cards.push({ card: c, ball });
+      }
+    }
+    return { items, cards };
+  }
+
+  function renderFestivalSearchResultsHtml(hit, q) {
+    if (!hit.items.length && !hit.cards.length) return "";
+    const totalCount = getFestivalItems().length;
+    const cardsHtml = hit.cards.map(({ card, ball }) => {
+      const perCard = (ball.cardPct / ball.cardIds.length).toFixed(ball.cardIds.length > 1 ? 2 : 1);
+      return `
+        <div class="gacha-item-card is-card-hit">
+          <div class="gacha-item-top">
+            <div>
+              <span class="gacha-item-name">${esc(card.nameZh)}</span>
+              <span class="loot-id">#${card.id}（${esc(card.slotZh)}）</span>
+            </div>
+            <span class="gacha-kind-pill is-exclusive">${esc(ball.nameZh)} ${perCard}%</span>
+          </div>
+          <div class="gacha-item-affix">${ico("card_gem")}<span>${esc(card.bonusText)}</span></div>
+          <div class="gacha-item-jobs">來源：${esc(ball.sourceZh)}</div>
+        </div>`;
+    }).join("");
+    const itemsHtml = hit.items.map(it => renderFestivalItemCardHtml(it, totalCount)).join("");
+    return `
+      <section class="panel-block gacha-panel">
+        <div class="block-head">
+          <h2>${ico("spark")}<span>燈籠節扭蛋池命中結果（${hit.items.length} 件裝備・${hit.cards.length} 張卡片）</span></h2>
+          <span class="block-sub">搜尋「${esc(q)}」於三大扭蛋共用裝備池與專屬卡池找到以下項目</span>
+        </div>
+        <div class="gacha-items-grid">${cardsHtml}${itemsHtml}</div>
+      </section>`;
+  }
+
   function renderStagesTab() {
     const selWrap = document.getElementById("stage-selector");
     const ovWrap = document.getElementById("stage-overview");
@@ -1081,12 +1348,14 @@
     const mobCap = Math.floor((STAGES.meta.mobCapPerMult || 4) * diffMult + 1e-6);
 
     let entries = [];
+    let festHit = { items: [], cards: [] };
     if (q) {
       for (const st of (STAGES.stages || [])) {
         for (const e of buildStageMobEntries(st)) {
           if (mobMatchesQuery(e, q)) entries.push(e);
         }
       }
+      festHit = matchFestivalSearch(q);
     } else {
       const stage = STAGE_MAP[state.activeStage] || STAGES.stages[0];
       entries = buildStageMobEntries(stage);
@@ -1103,12 +1372,15 @@
       );
     }
 
+    const festTotalHits = festHit.items.length + festHit.cards.length;
     countEl.textContent = q
-      ? `跨關卡搜尋「${state.stageQuery.trim()}」找到 ${entries.length} 筆結果（依難度 ${diffMult}× 試算）`
-      : `目前顯示 ${entries.length} 隻怪物／頭目（難度 ${diffMult}×・一般怪裝備上限 ${mobCap} 件／場）`;
+      ? `跨關卡搜尋「${state.stageQuery.trim()}」找到 ${entries.length} 隻怪物${festTotalHits ? ` ＋ ${festHit.items.length} 件扭蛋裝／${festHit.cards.length} 張扭蛋卡` : ""}（依難度 ${diffMult}× 試算）`
+      : state.activeStage === "louyang"
+        ? `目前顯示燈籠節三大扭蛋池（50 件裝備・11 張卡片）與 ${entries.length} 隻頭目／怪物（季節活動固定難度）`
+        : `目前顯示 ${entries.length} 隻怪物／頭目（難度 ${diffMult}×・一般怪裝備上限 ${mobCap} 件／場）`;
 
     if (q) {
-      ovWrap.innerHTML = "";
+      ovWrap.innerHTML = renderFestivalSearchResultsHtml(festHit, state.stageQuery.trim());
     } else {
       const st = STAGE_MAP[state.activeStage] || STAGES.stages[0];
       const bossesHtml = (st.bosses || []).map(b => {
@@ -1128,6 +1400,10 @@
           </div>`;
       }).join("");
 
+      const capBadgeText = st.status === "season"
+        ? "季節限定 ｜ 固定難度（頭目必掉扭蛋）"
+        : `難度 ${diffMult}× ｜ 一般怪裝上限 ${mobCap} 件／場`;
+
       ovWrap.innerHTML = `
         <section class="stage-overview-card">
           <div class="stage-ov-top">
@@ -1135,7 +1411,7 @@
               <h3>${esc(st.nameZh)}（Tier ${st.tier}）</h3>
               <p class="stage-ov-sub">${esc(st.nameEn)} ・ ${esc(st.placeZh)} ・ 怪物等級 ${esc(st.levels)}</p>
             </div>
-            <div class="stage-cap-badge">難度 ${diffMult}× ｜ 一般怪裝上限 ${mobCap} 件／場</div>
+            <div class="stage-cap-badge">${esc(capBadgeText)}</div>
           </div>
           <div class="stage-meta-grid">
             <div class="stage-meta-cell"><span>解鎖條件</span><strong>${esc(st.unlockText)}</strong></div>
@@ -1145,12 +1421,15 @@
           ${st.storyNote ? `<div class="stage-story-box">${esc(st.storyNote)}</div>` : ""}
           ${bossesHtml ? `<div style="margin-top:8px"><strong style="font-size:12px;color:var(--text-dim)">Boss 登場時間軸：</strong><div class="boss-timeline">${bossesHtml}</div></div>` : ""}
           ${wavesHtml ? `<div style="margin-top:10px"><strong style="font-size:12px;color:var(--text-dim)">時間波次陣容：</strong><div class="wave-strip">${wavesHtml}</div></div>` : ""}
-        </section>`;
+        </section>
+        ${st.id === "louyang" ? renderFestivalGachaSectionHtml() : ""}`;
     }
 
     gridWrap.innerHTML = entries.length
       ? entries.map(e => renderStageMobCardHtml(e, diffMult, Boolean(q))).join("")
-      : `<div class="loot-empty" style="grid-column:1/-1;padding:24px">找不到符合條件的怪物或掉落物，請調整篩選或關鍵字。</div>`;
+      : festTotalHits > 0
+        ? ""
+        : `<div class="loot-empty" style="grid-column:1/-1;padding:24px">找不到符合條件的怪物或掉落物，請調整篩選或關鍵字。</div>`;
   }
 
   /* ---------------- Event Delegation ---------------- */
@@ -1254,6 +1533,20 @@
       if (mobBtn) {
         state.stageMobFilter = mobBtn.getAttribute("data-stage-mob-filter");
         document.querySelectorAll("[data-stage-mob-filter]").forEach(b => b.classList.toggle("active", b === mobBtn));
+        renderStagesTab();
+        return;
+      }
+
+      const gSlotBtn = e.target.closest("[data-gacha-slot]");
+      if (gSlotBtn) {
+        state.gachaSlotFilter = gSlotBtn.getAttribute("data-gacha-slot") || "all";
+        renderStagesTab();
+        return;
+      }
+
+      const gOrigBtn = e.target.closest("[data-gacha-origin]");
+      if (gOrigBtn) {
+        state.gachaOriginFilter = gOrigBtn.getAttribute("data-gacha-origin") || "all";
         renderStagesTab();
         return;
       }
